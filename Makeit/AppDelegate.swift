@@ -4,7 +4,7 @@
 //
 //  Created by ajaybabu singineedi on 12/04/16.
 //  Copyright © 2016 Exilant Technologies. All rights reserved.
-//
+//  Project Light is the confidential initiation for Makeit Project.
 
 import UIKit
 
