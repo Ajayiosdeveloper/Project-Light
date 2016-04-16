@@ -12,7 +12,6 @@ let enableButtonColor = UIColor(colorLiteralRed: 11/255, green: 97/255, blue: 25
 let kSignupTag = 0
 let kLoginTag = 1
 
-
 class PLUserSignupAndLoginViewController: UITableViewController,UITextFieldDelegate {
     //MARK: Login & Signup Screen View Objects
     @IBOutlet var loginUserNameTextField: UITextField!
@@ -25,6 +24,7 @@ class PLUserSignupAndLoginViewController: UITableViewController,UITextFieldDeleg
     lazy private var userAccountViewModel:PLUserSignupAndLoginViewModel = {
           return PLUserSignupAndLoginViewModel()
     }()
+    var projectsViewController:PLProjectsViewController!
     //MARK: View Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,7 +34,10 @@ class PLUserSignupAndLoginViewController: UITableViewController,UITextFieldDeleg
     }
      override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        
+    }
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        loginUserPasswordTextField.text = ""
     }
     
     //MARK: UITextfield Delegate
@@ -102,13 +105,13 @@ class PLUserSignupAndLoginViewController: UITableViewController,UITextFieldDeleg
     }
     override func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutablePointer<Void>) {
         
-        if keyPath == "signupResultNotifier"{
+        if keyPath == kSignupResultNotifier{
             handleStatus(change,tag:kSignupTag)
-            removeObservationsOn("signupResultNotifier")
+            removeObservationsOn(kSignupResultNotifier)
         }
-        if keyPath == "loginResultNotifier"{
+        if keyPath == kLoginResultNotifier{
            handleStatus(change,tag:kLoginTag)
-           removeObservationsOn("loginResultNotifier")
+           removeObservationsOn(kLoginResultNotifier)
         }
     }
     
@@ -118,18 +121,27 @@ class PLUserSignupAndLoginViewController: UITableViewController,UITextFieldDeleg
             
             if value as! NSNumber == 1 { // Handling Alert Messages for Sign in
                 if tag == 0{showAlertWithMessage("Signup", message: "Success")}
-                else {showAlertWithMessage("Login", message:"Success")}
+                else { presentProjectsViewController()}
             }
             else{ // Handling Alert Messages for Login
                 
                 if tag == 0 {showAlertWithMessage("Failed!", message:"User name already exist.Please try another")}
-                else{showAlertWithMessage("Failed!", message:"Please try later")}
+                else{showAlertWithMessage("Error!", message:"Please try again")}
             }
         }
     }
     
     func removeObservationsOn(KeyPath:String){
         userAccountViewModel.removeObserver(self,forKeyPath:KeyPath)
+    }
+    
+    func presentProjectsViewController(){
+        
+        if (projectsViewController == nil){
+            projectsViewController = self.storyboard?.instantiateViewControllerWithIdentifier("projectsViewController") as! PLProjectsViewController
+            }
+        
+        self.navigationController?.pushViewController(projectsViewController, animated: true)
     }
 
 }

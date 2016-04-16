@@ -59,6 +59,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if remoteHost == NotReachable
         {
             //Handle when Network is disconnected
+            print("Not Reachable")
         }
         else
         {

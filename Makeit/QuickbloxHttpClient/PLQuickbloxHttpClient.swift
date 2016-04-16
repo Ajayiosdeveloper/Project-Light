@@ -9,10 +9,7 @@
 import Foundation
 import Quickblox
 
-let kApplicationId:UInt = 38947
-let kAuthorizationKey = "NpE4OWK3OWRw9K9"
-let kAuthorizationSecret = "LKRmK-E-mjLSyCK"
-let kAccountKey = "ayk6ykv9T2Wx2BxWaNAm"
+
 
 
 class PLQuickbloxHttpClient

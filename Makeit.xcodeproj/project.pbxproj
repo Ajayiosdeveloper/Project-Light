@@ -21,13 +21,15 @@
 		803E04061CBCC95D00C59233 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 803E04051CBCC95D00C59233 /* SystemConfiguration.framework */; };
 		806D4AD51CC1FF110054A9AF /* PLQuickbloxHttpClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 806D4AD41CC1FF110054A9AF /* PLQuickbloxHttpClient.swift */; };
 		806D4AD71CC1FF3C0054A9AF /* PLConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 806D4AD61CC1FF3C0054A9AF /* PLConstants.swift */; };
-		806D4ADB1CC2079F0054A9AF /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 806D4ADA1CC2079F0054A9AF /* Reachability.m */; };
 		806D4AE81CC210910054A9AF /* SVIndefiniteAnimatedView.m in Sources */ = {isa = PBXBuildFile; fileRef = 806D4ADF1CC210910054A9AF /* SVIndefiniteAnimatedView.m */; };
 		806D4AE91CC210910054A9AF /* SVProgressAnimatedView.m in Sources */ = {isa = PBXBuildFile; fileRef = 806D4AE11CC210910054A9AF /* SVProgressAnimatedView.m */; };
 		806D4AEA1CC210910054A9AF /* SVProgressHUD.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 806D4AE31CC210910054A9AF /* SVProgressHUD.bundle */; };
 		806D4AEB1CC210910054A9AF /* SVProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 806D4AE51CC210910054A9AF /* SVProgressHUD.m */; };
 		806D4AEC1CC210910054A9AF /* SVRadialGradientLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 806D4AE71CC210910054A9AF /* SVRadialGradientLayer.m */; };
 		806D4AEE1CC211160054A9AF /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 806D4AED1CC211160054A9AF /* QuartzCore.framework */; };
+		806D4AF41CC260080054A9AF /* PLProjectsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 806D4AF31CC260080054A9AF /* PLProjectsViewController.swift */; };
+		806D4AF61CC2607C0054A9AF /* PLProjectsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 806D4AF51CC2607C0054A9AF /* PLProjectsViewModel.swift */; };
+		806D4AF91CC261280054A9AF /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 806D4AF81CC261280054A9AF /* Reachability.m */; };
 		809F96CB1CBCC35000DD1FE9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 809F96CA1CBCC35000DD1FE9 /* AppDelegate.swift */; };
 		809F96CD1CBCC35000DD1FE9 /* PLUserSignupAndLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 809F96CC1CBCC35000DD1FE9 /* PLUserSignupAndLoginViewController.swift */; };
 		809F96D01CBCC35000DD1FE9 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 809F96CE1CBCC35000DD1FE9 /* Main.storyboard */; };
@@ -71,8 +73,6 @@
 		803E04071CBCD90100C59233 /* Makeit-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Makeit-Bridging-Header.h"; sourceTree = "<group>"; };
 		806D4AD41CC1FF110054A9AF /* PLQuickbloxHttpClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLQuickbloxHttpClient.swift; sourceTree = "<group>"; };
 		806D4AD61CC1FF3C0054A9AF /* PLConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLConstants.swift; sourceTree = "<group>"; };
-		806D4AD91CC2079F0054A9AF /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
-		806D4ADA1CC2079F0054A9AF /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
 		806D4ADE1CC210910054A9AF /* SVIndefiniteAnimatedView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVIndefiniteAnimatedView.h; sourceTree = "<group>"; };
 		806D4ADF1CC210910054A9AF /* SVIndefiniteAnimatedView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVIndefiniteAnimatedView.m; sourceTree = "<group>"; };
 		806D4AE01CC210910054A9AF /* SVProgressAnimatedView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVProgressAnimatedView.h; sourceTree = "<group>"; };
@@ -84,6 +84,10 @@
 		806D4AE61CC210910054A9AF /* SVRadialGradientLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVRadialGradientLayer.h; sourceTree = "<group>"; };
 		806D4AE71CC210910054A9AF /* SVRadialGradientLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVRadialGradientLayer.m; sourceTree = "<group>"; };
 		806D4AED1CC211160054A9AF /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		806D4AF31CC260080054A9AF /* PLProjectsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLProjectsViewController.swift; sourceTree = "<group>"; };
+		806D4AF51CC2607C0054A9AF /* PLProjectsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLProjectsViewModel.swift; sourceTree = "<group>"; };
+		806D4AF71CC261280054A9AF /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Reachability.h; path = Makeit/Libraries/AppleReachability/Reachability.h; sourceTree = SOURCE_ROOT; };
+		806D4AF81CC261280054A9AF /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Reachability.m; path = Makeit/Libraries/AppleReachability/Reachability.m; sourceTree = SOURCE_ROOT; };
 		809F96C71CBCC35000DD1FE9 /* Makeit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Makeit.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		809F96CA1CBCC35000DD1FE9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		809F96CC1CBCC35000DD1FE9 /* PLUserSignupAndLoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PLUserSignupAndLoginViewController.swift; path = ../PLUserSignupAndLoginViewController.swift; sourceTree = "<group>"; };
@@ -171,15 +175,17 @@
 		806D4AD81CC2078D0054A9AF /* AppleReachability */ = {
 			isa = PBXGroup;
 			children = (
-				806D4AD91CC2079F0054A9AF /* Reachability.h */,
-				806D4ADA1CC2079F0054A9AF /* Reachability.m */,
+				806D4AF71CC261280054A9AF /* Reachability.h */,
+				806D4AF81CC261280054A9AF /* Reachability.m */,
 			);
-			path = AppleReachability;
+			name = AppleReachability;
+			path = ../AppleReachability;
 			sourceTree = "<group>";
 		};
 		806D4ADC1CC20FCD0054A9AF /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				806D4AD81CC2078D0054A9AF /* AppleReachability */,
 				806D4ADD1CC210910054A9AF /* SVProgressHUD */,
 			);
 			path = Libraries;
@@ -200,6 +206,36 @@
 				806D4AE71CC210910054A9AF /* SVRadialGradientLayer.m */,
 			);
 			path = SVProgressHUD;
+			sourceTree = "<group>";
+		};
+		806D4AEF1CC25DB50054A9AF /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				806D4AF31CC260080054A9AF /* PLProjectsViewController.swift */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		806D4AF01CC25DB50054A9AF /* Models */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		806D4AF11CC25DB50054A9AF /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				806D4AF51CC2607C0054A9AF /* PLProjectsViewModel.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		806D4AF21CC25DB50054A9AF /* Views */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 		809F96BE1CBCC35000DD1FE9 = {
@@ -227,9 +263,12 @@
 		809F96C91CBCC35000DD1FE9 /* Makeit */ = {
 			isa = PBXGroup;
 			children = (
-				806D4ADC1CC20FCD0054A9AF /* Libraries */,
 				809F96CA1CBCC35000DD1FE9 /* AppDelegate.swift */,
-				806D4AD81CC2078D0054A9AF /* AppleReachability */,
+				806D4AF01CC25DB50054A9AF /* Models */,
+				806D4AF11CC25DB50054A9AF /* ViewModels */,
+				806D4AEF1CC25DB50054A9AF /* Controllers */,
+				806D4AF21CC25DB50054A9AF /* Views */,
+				806D4ADC1CC20FCD0054A9AF /* Libraries */,
 				806D4AD31CC1FEDD0054A9AF /* QuickbloxHttpClient */,
 				80DE821B1CC0D77D00D5017A /* UserSignup&Login  */,
 				809F96CE1CBCC35000DD1FE9 /* Main.storyboard */,
@@ -335,6 +374,7 @@
 				TargetAttributes = {
 					809F96C61CBCC35000DD1FE9 = {
 						CreatedOnToolsVersion = 7.1;
+						DevelopmentTeam = 44XXETDT6W;
 					};
 					809F96DA1CBCC35000DD1FE9 = {
 						CreatedOnToolsVersion = 7.1;
@@ -401,13 +441,15 @@
 			files = (
 				806D4AD71CC1FF3C0054A9AF /* PLConstants.swift in Sources */,
 				809F96CD1CBCC35000DD1FE9 /* PLUserSignupAndLoginViewController.swift in Sources */,
+				806D4AF61CC2607C0054A9AF /* PLProjectsViewModel.swift in Sources */,
 				809F96CB1CBCC35000DD1FE9 /* AppDelegate.swift in Sources */,
 				80DE821D1CC0D87700D5017A /* PLUserSignupAndLoginViewModel.swift in Sources */,
-				806D4ADB1CC2079F0054A9AF /* Reachability.m in Sources */,
 				806D4AEB1CC210910054A9AF /* SVProgressHUD.m in Sources */,
 				806D4AE81CC210910054A9AF /* SVIndefiniteAnimatedView.m in Sources */,
 				806D4AD51CC1FF110054A9AF /* PLQuickbloxHttpClient.swift in Sources */,
+				806D4AF41CC260080054A9AF /* PLProjectsViewController.swift in Sources */,
 				806D4AE91CC210910054A9AF /* SVProgressAnimatedView.m in Sources */,
+				806D4AF91CC261280054A9AF /* Reachability.m in Sources */,
 				806D4AEC1CC210910054A9AF /* SVRadialGradientLayer.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -551,12 +593,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Makeit",
 				);
 				INFOPLIST_FILE = Makeit/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
 					"-lstdc++",
@@ -575,12 +618,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Makeit",
 				);
 				INFOPLIST_FILE = Makeit/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
 					"-lstdc++",
