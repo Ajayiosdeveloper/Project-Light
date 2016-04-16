@@ -19,13 +19,23 @@
 		803E04021CBCC95100C59233 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 803E04011CBCC95100C59233 /* CFNetwork.framework */; };
 		803E04041CBCC95800C59233 /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 803E04031CBCC95800C59233 /* GLKit.framework */; };
 		803E04061CBCC95D00C59233 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 803E04051CBCC95D00C59233 /* SystemConfiguration.framework */; };
+		806D4AD51CC1FF110054A9AF /* PLQuickbloxHttpClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 806D4AD41CC1FF110054A9AF /* PLQuickbloxHttpClient.swift */; };
+		806D4AD71CC1FF3C0054A9AF /* PLConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 806D4AD61CC1FF3C0054A9AF /* PLConstants.swift */; };
+		806D4ADB1CC2079F0054A9AF /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 806D4ADA1CC2079F0054A9AF /* Reachability.m */; };
+		806D4AE81CC210910054A9AF /* SVIndefiniteAnimatedView.m in Sources */ = {isa = PBXBuildFile; fileRef = 806D4ADF1CC210910054A9AF /* SVIndefiniteAnimatedView.m */; };
+		806D4AE91CC210910054A9AF /* SVProgressAnimatedView.m in Sources */ = {isa = PBXBuildFile; fileRef = 806D4AE11CC210910054A9AF /* SVProgressAnimatedView.m */; };
+		806D4AEA1CC210910054A9AF /* SVProgressHUD.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 806D4AE31CC210910054A9AF /* SVProgressHUD.bundle */; };
+		806D4AEB1CC210910054A9AF /* SVProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 806D4AE51CC210910054A9AF /* SVProgressHUD.m */; };
+		806D4AEC1CC210910054A9AF /* SVRadialGradientLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 806D4AE71CC210910054A9AF /* SVRadialGradientLayer.m */; };
+		806D4AEE1CC211160054A9AF /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 806D4AED1CC211160054A9AF /* QuartzCore.framework */; };
 		809F96CB1CBCC35000DD1FE9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 809F96CA1CBCC35000DD1FE9 /* AppDelegate.swift */; };
-		809F96CD1CBCC35000DD1FE9 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 809F96CC1CBCC35000DD1FE9 /* ViewController.swift */; };
+		809F96CD1CBCC35000DD1FE9 /* PLUserSignupAndLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 809F96CC1CBCC35000DD1FE9 /* PLUserSignupAndLoginViewController.swift */; };
 		809F96D01CBCC35000DD1FE9 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 809F96CE1CBCC35000DD1FE9 /* Main.storyboard */; };
 		809F96D21CBCC35000DD1FE9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 809F96D11CBCC35000DD1FE9 /* Assets.xcassets */; };
 		809F96D51CBCC35000DD1FE9 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 809F96D31CBCC35000DD1FE9 /* LaunchScreen.storyboard */; };
 		809F96E01CBCC35000DD1FE9 /* MakeitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 809F96DF1CBCC35000DD1FE9 /* MakeitTests.swift */; };
 		809F96EB1CBCC35000DD1FE9 /* MakeitUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 809F96EA1CBCC35000DD1FE9 /* MakeitUITests.swift */; };
+		80DE821D1CC0D87700D5017A /* PLUserSignupAndLoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80DE821C1CC0D87700D5017A /* PLUserSignupAndLoginViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -59,9 +69,24 @@
 		803E04031CBCC95800C59233 /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = System/Library/Frameworks/GLKit.framework; sourceTree = SDKROOT; };
 		803E04051CBCC95D00C59233 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		803E04071CBCD90100C59233 /* Makeit-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Makeit-Bridging-Header.h"; sourceTree = "<group>"; };
+		806D4AD41CC1FF110054A9AF /* PLQuickbloxHttpClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLQuickbloxHttpClient.swift; sourceTree = "<group>"; };
+		806D4AD61CC1FF3C0054A9AF /* PLConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLConstants.swift; sourceTree = "<group>"; };
+		806D4AD91CC2079F0054A9AF /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
+		806D4ADA1CC2079F0054A9AF /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
+		806D4ADE1CC210910054A9AF /* SVIndefiniteAnimatedView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVIndefiniteAnimatedView.h; sourceTree = "<group>"; };
+		806D4ADF1CC210910054A9AF /* SVIndefiniteAnimatedView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVIndefiniteAnimatedView.m; sourceTree = "<group>"; };
+		806D4AE01CC210910054A9AF /* SVProgressAnimatedView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVProgressAnimatedView.h; sourceTree = "<group>"; };
+		806D4AE11CC210910054A9AF /* SVProgressAnimatedView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVProgressAnimatedView.m; sourceTree = "<group>"; };
+		806D4AE21CC210910054A9AF /* SVProgressHUD-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SVProgressHUD-Prefix.pch"; sourceTree = "<group>"; };
+		806D4AE31CC210910054A9AF /* SVProgressHUD.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = SVProgressHUD.bundle; sourceTree = "<group>"; };
+		806D4AE41CC210910054A9AF /* SVProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVProgressHUD.h; sourceTree = "<group>"; };
+		806D4AE51CC210910054A9AF /* SVProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVProgressHUD.m; sourceTree = "<group>"; };
+		806D4AE61CC210910054A9AF /* SVRadialGradientLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVRadialGradientLayer.h; sourceTree = "<group>"; };
+		806D4AE71CC210910054A9AF /* SVRadialGradientLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVRadialGradientLayer.m; sourceTree = "<group>"; };
+		806D4AED1CC211160054A9AF /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		809F96C71CBCC35000DD1FE9 /* Makeit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Makeit.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		809F96CA1CBCC35000DD1FE9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		809F96CC1CBCC35000DD1FE9 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		809F96CC1CBCC35000DD1FE9 /* PLUserSignupAndLoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PLUserSignupAndLoginViewController.swift; path = ../PLUserSignupAndLoginViewController.swift; sourceTree = "<group>"; };
 		809F96CF1CBCC35000DD1FE9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		809F96D11CBCC35000DD1FE9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		809F96D41CBCC35000DD1FE9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -72,6 +97,7 @@
 		809F96E61CBCC35000DD1FE9 /* MakeitUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MakeitUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		809F96EA1CBCC35000DD1FE9 /* MakeitUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MakeitUITests.swift; sourceTree = "<group>"; };
 		809F96EC1CBCC35000DD1FE9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		80DE821C1CC0D87700D5017A /* PLUserSignupAndLoginViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLUserSignupAndLoginViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -79,6 +105,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				806D4AEE1CC211160054A9AF /* QuartzCore.framework in Frameworks */,
 				803E04061CBCC95D00C59233 /* SystemConfiguration.framework in Frameworks */,
 				803E04041CBCC95800C59233 /* GLKit.framework in Frameworks */,
 				803E04021CBCC95100C59233 /* CFNetwork.framework in Frameworks */,
@@ -114,6 +141,7 @@
 		803E03EE1CBCC85600C59233 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				806D4AED1CC211160054A9AF /* QuartzCore.framework */,
 				803E04051CBCC95D00C59233 /* SystemConfiguration.framework */,
 				803E04031CBCC95800C59233 /* GLKit.framework */,
 				803E04011CBCC95100C59233 /* CFNetwork.framework */,
@@ -129,6 +157,49 @@
 			);
 			name = Frameworks;
 			path = Makeit;
+			sourceTree = "<group>";
+		};
+		806D4AD31CC1FEDD0054A9AF /* QuickbloxHttpClient */ = {
+			isa = PBXGroup;
+			children = (
+				806D4AD41CC1FF110054A9AF /* PLQuickbloxHttpClient.swift */,
+				806D4AD61CC1FF3C0054A9AF /* PLConstants.swift */,
+			);
+			path = QuickbloxHttpClient;
+			sourceTree = "<group>";
+		};
+		806D4AD81CC2078D0054A9AF /* AppleReachability */ = {
+			isa = PBXGroup;
+			children = (
+				806D4AD91CC2079F0054A9AF /* Reachability.h */,
+				806D4ADA1CC2079F0054A9AF /* Reachability.m */,
+			);
+			path = AppleReachability;
+			sourceTree = "<group>";
+		};
+		806D4ADC1CC20FCD0054A9AF /* Libraries */ = {
+			isa = PBXGroup;
+			children = (
+				806D4ADD1CC210910054A9AF /* SVProgressHUD */,
+			);
+			path = Libraries;
+			sourceTree = "<group>";
+		};
+		806D4ADD1CC210910054A9AF /* SVProgressHUD */ = {
+			isa = PBXGroup;
+			children = (
+				806D4ADE1CC210910054A9AF /* SVIndefiniteAnimatedView.h */,
+				806D4ADF1CC210910054A9AF /* SVIndefiniteAnimatedView.m */,
+				806D4AE01CC210910054A9AF /* SVProgressAnimatedView.h */,
+				806D4AE11CC210910054A9AF /* SVProgressAnimatedView.m */,
+				806D4AE21CC210910054A9AF /* SVProgressHUD-Prefix.pch */,
+				806D4AE31CC210910054A9AF /* SVProgressHUD.bundle */,
+				806D4AE41CC210910054A9AF /* SVProgressHUD.h */,
+				806D4AE51CC210910054A9AF /* SVProgressHUD.m */,
+				806D4AE61CC210910054A9AF /* SVRadialGradientLayer.h */,
+				806D4AE71CC210910054A9AF /* SVRadialGradientLayer.m */,
+			);
+			path = SVProgressHUD;
 			sourceTree = "<group>";
 		};
 		809F96BE1CBCC35000DD1FE9 = {
@@ -156,8 +227,11 @@
 		809F96C91CBCC35000DD1FE9 /* Makeit */ = {
 			isa = PBXGroup;
 			children = (
+				806D4ADC1CC20FCD0054A9AF /* Libraries */,
 				809F96CA1CBCC35000DD1FE9 /* AppDelegate.swift */,
-				809F96CC1CBCC35000DD1FE9 /* ViewController.swift */,
+				806D4AD81CC2078D0054A9AF /* AppleReachability */,
+				806D4AD31CC1FEDD0054A9AF /* QuickbloxHttpClient */,
+				80DE821B1CC0D77D00D5017A /* UserSignup&Login  */,
 				809F96CE1CBCC35000DD1FE9 /* Main.storyboard */,
 				809F96D11CBCC35000DD1FE9 /* Assets.xcassets */,
 				809F96D31CBCC35000DD1FE9 /* LaunchScreen.storyboard */,
@@ -182,6 +256,15 @@
 				809F96EC1CBCC35000DD1FE9 /* Info.plist */,
 			);
 			path = MakeitUITests;
+			sourceTree = "<group>";
+		};
+		80DE821B1CC0D77D00D5017A /* UserSignup&Login  */ = {
+			isa = PBXGroup;
+			children = (
+				809F96CC1CBCC35000DD1FE9 /* PLUserSignupAndLoginViewController.swift */,
+				80DE821C1CC0D87700D5017A /* PLUserSignupAndLoginViewModel.swift */,
+			);
+			path = "UserSignup&Login ";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -291,6 +374,7 @@
 				809F96D51CBCC35000DD1FE9 /* LaunchScreen.storyboard in Resources */,
 				809F96D21CBCC35000DD1FE9 /* Assets.xcassets in Resources */,
 				809F96D01CBCC35000DD1FE9 /* Main.storyboard in Resources */,
+				806D4AEA1CC210910054A9AF /* SVProgressHUD.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -315,8 +399,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				809F96CD1CBCC35000DD1FE9 /* ViewController.swift in Sources */,
+				806D4AD71CC1FF3C0054A9AF /* PLConstants.swift in Sources */,
+				809F96CD1CBCC35000DD1FE9 /* PLUserSignupAndLoginViewController.swift in Sources */,
 				809F96CB1CBCC35000DD1FE9 /* AppDelegate.swift in Sources */,
+				80DE821D1CC0D87700D5017A /* PLUserSignupAndLoginViewModel.swift in Sources */,
+				806D4ADB1CC2079F0054A9AF /* Reachability.m in Sources */,
+				806D4AEB1CC210910054A9AF /* SVProgressHUD.m in Sources */,
+				806D4AE81CC210910054A9AF /* SVIndefiniteAnimatedView.m in Sources */,
+				806D4AD51CC1FF110054A9AF /* PLQuickbloxHttpClient.swift in Sources */,
+				806D4AE91CC210910054A9AF /* SVProgressAnimatedView.m in Sources */,
+				806D4AEC1CC210910054A9AF /* SVRadialGradientLayer.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -464,7 +556,13 @@
 					"$(PROJECT_DIR)/Makeit",
 				);
 				INFOPLIST_FILE = Makeit/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				OTHER_LDFLAGS = (
+					"-lstdc++",
+					"-ObjC",
+					"-lxml2",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.ExilantTechnologies.Makeit;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Makeit-Bridging-Header.h";
@@ -482,7 +580,13 @@
 					"$(PROJECT_DIR)/Makeit",
 				);
 				INFOPLIST_FILE = Makeit/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				OTHER_LDFLAGS = (
+					"-lstdc++",
+					"-ObjC",
+					"-lxml2",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.ExilantTechnologies.Makeit;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Makeit-Bridging-Header.h";

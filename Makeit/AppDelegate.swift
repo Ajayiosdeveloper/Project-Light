@@ -12,10 +12,22 @@ import UIKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
+    var reachability:Reachability!
 
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-        // Override point for customization after application launch.
+       
+        //Connecting Client Application with Quickblox API
+        QBSettings.setApplicationID(kApplicationId)
+        QBSettings.setAuthKey(kAuthorizationKey)
+        QBSettings.setAuthSecret(kAuthorizationSecret)
+        QBSettings.setAccountKey(kAccountKey)
+        
+        //Checking Newtwork Reachability and observing Newtork changes with observer
+        
+        reachability = Reachability.reachabilityForInternetConnection()
+        NSNotificationCenter.defaultCenter().addObserver(self, selector:Selector("handleNewtorkChanges"), name:kReachabilityChangedNotification, object:nil)
+        reachability.startNotifier()
         return true
     }
 
@@ -41,6 +53,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
 
+    func handleNewtorkChanges(){
+        
+        let remoteHost = reachability.currentReachabilityStatus() as NetworkStatus
+        if remoteHost == NotReachable
+        {
+            //Handle when Network is disconnected
+        }
+        else
+        {
+           //Handle when newtwok gets connected
+        }
+    }
 
 }
 
