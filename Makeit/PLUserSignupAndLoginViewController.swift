@@ -90,6 +90,7 @@ class PLUserSignupAndLoginViewController: UITableViewController,UITextFieldDeleg
        do {
               userAccountViewModel.addObserver(self, forKeyPath: "signupResultNotifier", options: NSKeyValueObservingOptions.New, context:nil)
               try userAccountViewModel.validateUserSignupCredentials(signupUserNameTextField.text!, password:signupUserPasswordTextField.text!, confirmPassword:signupUserConfirmPasswordTextField.text!)
+              self.view.endEditing(true)
         }
         catch LocalValidations.WeakUserName{showAlertWithMessage("Username invalid", message:"it must be atleast 3 characters long")}
         catch LocalValidations.ImproperUserName{showAlertWithMessage("Username invalid", message:"it should not contain white spaces")}
@@ -100,8 +101,19 @@ class PLUserSignupAndLoginViewController: UITableViewController,UITextFieldDeleg
     
     func showAlertWithMessage(title:String,message:String)
     {
-        let alert = UIAlertView(title: title, message: message, delegate:nil, cancelButtonTitle:nil, otherButtonTitles:"Ok") as UIAlertView
-        alert.show()
+        if #available(iOS 9, *)
+        {
+            let alertController = UIAlertController(title:title, message:message, preferredStyle: UIAlertControllerStyle.Alert)
+            let action = UIAlertAction(title:"Ok", style: UIAlertActionStyle.Default, handler: { (action) -> Void in
+            })
+            alertController.addAction(action)
+            self.presentViewController(alertController, animated:true, completion:nil)
+        }
+        else{
+            let alert = UIAlertView(title: title, message: message, delegate:nil, cancelButtonTitle:nil, otherButtonTitles:"Ok") as UIAlertView
+            alert.show()
+         }
+        
     }
     override func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutablePointer<Void>) {
         
@@ -120,7 +132,7 @@ class PLUserSignupAndLoginViewController: UITableViewController,UITextFieldDeleg
         if let _ = change, value = change![NSKeyValueChangeNewKey]{
             
             if value as! NSNumber == 1 { // Handling Alert Messages for Sign in
-                if tag == 0{showAlertWithMessage("Signup", message: "Success")}
+                if tag == 0{presentProjectsViewController(); clearTextfields()}
                 else { presentProjectsViewController()}
             }
             else{ // Handling Alert Messages for Login
@@ -142,6 +154,12 @@ class PLUserSignupAndLoginViewController: UITableViewController,UITextFieldDeleg
             }
         
         self.navigationController?.pushViewController(projectsViewController, animated: true)
+    }
+    
+    func clearTextfields(){
+      self.loginUserNameTextField.text = self.signupUserNameTextField.text
+      self.signupUserNameTextField.text = ""; self.signupUserPasswordTextField.text = ""
+      self.signupUserConfirmPasswordTextField.text = ""
     }
 
 }

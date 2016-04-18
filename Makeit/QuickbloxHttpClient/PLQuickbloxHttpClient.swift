@@ -22,17 +22,19 @@ class PLQuickbloxHttpClient
             user.password = password
             SVProgressHUD.showWithStatus("Signing up")
             QBRequest.signUp(user, successBlock: { (response, retrievedUser) -> Void in
-            SVProgressHUD.dismiss()
+        
+            self.initiateUserLogin(name, password:password, completion: {[weak self] (com) -> Void in
+                completion(com)
+                self!.saveUserCredentialsInDefaults(name,password:password)
+            })
                 
-                    completion(true)
             })
             { (errorResponse) -> Void in
                     
                   SVProgressHUD.dismiss()
                   completion(false)
             }
-    
-   }
+    }
     
     //User Login Service with Quickblok
     
@@ -40,6 +42,7 @@ class PLQuickbloxHttpClient
         
        SVProgressHUD.showWithStatus("Loging in")
        QBRequest.logInWithUserLogin(name, password: password, successBlock: { (response, retrievedUser) -> Void in
+        NSUserDefaults.standardUserDefaults().setValue(retrievedUser?.ID, forKey:"USER_ID")
         completion(true)
         SVProgressHUD.dismiss()
         
@@ -50,6 +53,33 @@ class PLQuickbloxHttpClient
         }
     }
     
+    //Saving login credentials to Defaults
     
+    func  saveUserCredentialsInDefaults(name:String,password:String){
+        NSUserDefaults.standardUserDefaults().setValue(name, forKey:"USER_NAME")
+        NSUserDefaults.standardUserDefaults().setValue(password, forKey:"USER_PASSWORD")
+    }
+    
+    //Creating a New Project in QuickBlox
+    
+    func createNewProjectWith(name:String,description:String) {
+        
+        let customObject = QBCOCustomObject()
+        customObject.className = "PLProject"
+        customObject.fields?.setValue(name, forKey: "name")
+        customObject.fields?.setValue(description, forKey: "description")
+        QBRequest.createObject(customObject, successBlock: { (response,object) in
+            
+          }) { (response) in
+                
+                print(response)
+        }
+    }
+    
+    
+    func fetchProjectsOfUserWith(id:UInt) {
+        
+        
+    }
     
 }

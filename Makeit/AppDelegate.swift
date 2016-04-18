@@ -28,6 +28,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         reachability = Reachability.reachabilityForInternetConnection()
         NSNotificationCenter.defaultCenter().addObserver(self, selector:Selector("handleNewtorkChanges"), name:kReachabilityChangedNotification, object:nil)
         reachability.startNotifier()
+        
         return true
     }
 

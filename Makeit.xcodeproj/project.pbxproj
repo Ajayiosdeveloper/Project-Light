@@ -19,6 +19,8 @@
 		803E04021CBCC95100C59233 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 803E04011CBCC95100C59233 /* CFNetwork.framework */; };
 		803E04041CBCC95800C59233 /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 803E04031CBCC95800C59233 /* GLKit.framework */; };
 		803E04061CBCC95D00C59233 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 803E04051CBCC95D00C59233 /* SystemConfiguration.framework */; };
+		806CA5AF1CC4B27F00E401A1 /* PLAddProjectViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 806CA5AE1CC4B27F00E401A1 /* PLAddProjectViewController.swift */; };
+		806CA5B11CC4B2A400E401A1 /* PLAddProjectViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 806CA5B01CC4B2A400E401A1 /* PLAddProjectViewModel.swift */; };
 		806D4AD51CC1FF110054A9AF /* PLQuickbloxHttpClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 806D4AD41CC1FF110054A9AF /* PLQuickbloxHttpClient.swift */; };
 		806D4AD71CC1FF3C0054A9AF /* PLConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 806D4AD61CC1FF3C0054A9AF /* PLConstants.swift */; };
 		806D4AE81CC210910054A9AF /* SVIndefiniteAnimatedView.m in Sources */ = {isa = PBXBuildFile; fileRef = 806D4ADF1CC210910054A9AF /* SVIndefiniteAnimatedView.m */; };
@@ -71,6 +73,8 @@
 		803E04031CBCC95800C59233 /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = System/Library/Frameworks/GLKit.framework; sourceTree = SDKROOT; };
 		803E04051CBCC95D00C59233 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		803E04071CBCD90100C59233 /* Makeit-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Makeit-Bridging-Header.h"; sourceTree = "<group>"; };
+		806CA5AE1CC4B27F00E401A1 /* PLAddProjectViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLAddProjectViewController.swift; sourceTree = "<group>"; };
+		806CA5B01CC4B2A400E401A1 /* PLAddProjectViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLAddProjectViewModel.swift; sourceTree = "<group>"; };
 		806D4AD41CC1FF110054A9AF /* PLQuickbloxHttpClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLQuickbloxHttpClient.swift; sourceTree = "<group>"; };
 		806D4AD61CC1FF3C0054A9AF /* PLConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLConstants.swift; sourceTree = "<group>"; };
 		806D4ADE1CC210910054A9AF /* SVIndefiniteAnimatedView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVIndefiniteAnimatedView.h; sourceTree = "<group>"; };
@@ -212,6 +216,7 @@
 			isa = PBXGroup;
 			children = (
 				806D4AF31CC260080054A9AF /* PLProjectsViewController.swift */,
+				806CA5AE1CC4B27F00E401A1 /* PLAddProjectViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -227,6 +232,7 @@
 			isa = PBXGroup;
 			children = (
 				806D4AF51CC2607C0054A9AF /* PLProjectsViewModel.swift */,
+				806CA5B01CC4B2A400E401A1 /* PLAddProjectViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -439,11 +445,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				806CA5B11CC4B2A400E401A1 /* PLAddProjectViewModel.swift in Sources */,
 				806D4AD71CC1FF3C0054A9AF /* PLConstants.swift in Sources */,
 				809F96CD1CBCC35000DD1FE9 /* PLUserSignupAndLoginViewController.swift in Sources */,
 				806D4AF61CC2607C0054A9AF /* PLProjectsViewModel.swift in Sources */,
 				809F96CB1CBCC35000DD1FE9 /* AppDelegate.swift in Sources */,
 				80DE821D1CC0D87700D5017A /* PLUserSignupAndLoginViewModel.swift in Sources */,
+				806CA5AF1CC4B27F00E401A1 /* PLAddProjectViewController.swift in Sources */,
 				806D4AEB1CC210910054A9AF /* SVProgressHUD.m in Sources */,
 				806D4AE81CC210910054A9AF /* SVIndefiniteAnimatedView.m in Sources */,
 				806D4AD51CC1FF110054A9AF /* PLQuickbloxHttpClient.swift in Sources */,

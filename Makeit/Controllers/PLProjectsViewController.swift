@@ -11,6 +11,7 @@ import UIKit
 
 class PLProjectsViewController: UITableViewController {
     
+    var addProjectViewController:PLAddProjectViewController?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,12 +22,13 @@ class PLProjectsViewController: UITableViewController {
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
+        print(NSUserDefaults.standardUserDefaults().valueForKey("USER_ID"))
     }
     
     func addLogoutBarButtonItem(){
         
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Logout", style: UIBarButtonItemStyle.Plain, target:self, action:Selector("performLogout"))
-    
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Logout", style: UIBarButtonItemStyle.Plain, target:self, action:#selector(PLProjectsViewController.performLogout))
+         
     }
     
     func performLogout()
@@ -36,12 +38,15 @@ class PLProjectsViewController: UITableViewController {
     
     func addNewProject()
     {
-         self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Add, target: self, action: Selector("addNewProjectToList"))
+         self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Add, target: self, action: #selector(PLProjectsViewController.addNewProjectToList))
     }
     
     func addNewProjectToList()
     {
-        
+        if addProjectViewController == nil{
+           addProjectViewController = self.storyboard?.instantiateViewControllerWithIdentifier("PLAddProjectViewController") as? PLAddProjectViewController
+        }
+        self.navigationController?.pushViewController(addProjectViewController!, animated: true)
     }
     
     
