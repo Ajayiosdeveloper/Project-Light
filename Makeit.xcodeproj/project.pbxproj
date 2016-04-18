@@ -39,6 +39,7 @@
 		809F96D51CBCC35000DD1FE9 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 809F96D31CBCC35000DD1FE9 /* LaunchScreen.storyboard */; };
 		809F96E01CBCC35000DD1FE9 /* MakeitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 809F96DF1CBCC35000DD1FE9 /* MakeitTests.swift */; };
 		809F96EB1CBCC35000DD1FE9 /* MakeitUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 809F96EA1CBCC35000DD1FE9 /* MakeitUITests.swift */; };
+		80BB3EF61CC4F4BE009FAE11 /* PLProject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80BB3EF51CC4F4BE009FAE11 /* PLProject.swift */; };
 		80DE821D1CC0D87700D5017A /* PLUserSignupAndLoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80DE821C1CC0D87700D5017A /* PLUserSignupAndLoginViewModel.swift */; };
 /* End PBXBuildFile section */
 
@@ -105,6 +106,7 @@
 		809F96E61CBCC35000DD1FE9 /* MakeitUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MakeitUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		809F96EA1CBCC35000DD1FE9 /* MakeitUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MakeitUITests.swift; sourceTree = "<group>"; };
 		809F96EC1CBCC35000DD1FE9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		80BB3EF51CC4F4BE009FAE11 /* PLProject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLProject.swift; sourceTree = "<group>"; };
 		80DE821C1CC0D87700D5017A /* PLUserSignupAndLoginViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLUserSignupAndLoginViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -224,6 +226,7 @@
 		806D4AF01CC25DB50054A9AF /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				80BB3EF51CC4F4BE009FAE11 /* PLProject.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -459,6 +462,7 @@
 				806D4AE91CC210910054A9AF /* SVProgressAnimatedView.m in Sources */,
 				806D4AF91CC261280054A9AF /* Reachability.m in Sources */,
 				806D4AEC1CC210910054A9AF /* SVRadialGradientLayer.m in Sources */,
+				80BB3EF61CC4F4BE009FAE11 /* PLProject.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -76,10 +76,18 @@ class PLQuickbloxHttpClient
         }
     }
     
-    
-    func fetchProjectsOfUserWith(id:UInt) {
-        
-        
+    func fetchProjectsOfUserWith(completion:(result:[AnyObject]?)->Void) {
+      
+        QBRequest.objectsWithClassName("PLProject", successBlock: { (response,objects) in
+            
+                completion(result: objects)
+            
+            print(response)
+            
+            }) { (error) in
+                
+              }
     }
-    
+        
+
 }

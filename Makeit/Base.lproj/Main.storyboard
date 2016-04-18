@@ -296,6 +296,9 @@
                             <outlet property="delegate" destination="MIT-US-M2p" id="ekH-XI-9kV"/>
                         </connections>
                     </tableView>
+                    <connections>
+                        <outlet property="projectTableView" destination="MKd-7c-8Ym" id="ugO-dv-smI"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qL8-2a-yHH" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -422,7 +425,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="i6L-AU-k5t" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-598" y="429"/>
+            <point key="canvasLocation" x="-451" y="503"/>
         </scene>
     </scenes>
 </document>
