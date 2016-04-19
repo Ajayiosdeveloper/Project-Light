@@ -11,13 +11,13 @@ import UIKit
 class PLProject: NSObject {
     
     var name:String
-    var subTitle: String
+    var subTitle: String?
     var createdBy:UInt
     var projectId:String?
     var parentId:String?
     
     
-    init(projectName:String,subTitle:String) {
+    init(projectName:String,subTitle:String? = nil) {
         
         name = projectName
         self.subTitle = subTitle

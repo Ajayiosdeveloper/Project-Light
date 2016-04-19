@@ -62,7 +62,7 @@ class PLQuickbloxHttpClient
     
     //Creating a New Project in QuickBlox
     
-    func createNewProjectWith(name:String,description:String) {
+    func createNewProjectWith(name:String,description:String,completion:(Bool)->Void) {
         
         let customObject = QBCOCustomObject()
         customObject.className = "PLProject"
@@ -70,24 +70,39 @@ class PLQuickbloxHttpClient
         customObject.fields?.setValue(description, forKey: "description")
         QBRequest.createObject(customObject, successBlock: { (response,object) in
             
+            completion(true)
+            
           }) { (response) in
                 
-                print(response)
+                completion(false)
         }
     }
     
     func fetchProjectsOfUserWith(completion:(result:[AnyObject]?)->Void) {
-      
-        QBRequest.objectsWithClassName("PLProject", successBlock: { (response,objects) in
-            
-                completion(result: objects)
-            
-            print(response)
-            
-            }) { (error) in
-                
-              }
-    }
         
+        let extendedParameters = NSMutableDictionary()
+        
+        let userId = QBSession.currentSession().currentUser?.ID
+        
+        extendedParameters["user_id"] = userId
+        
+        QBRequest.objectsWithClassName("PLProject", extendedRequest:extendedParameters, successBlock: { (res,objects,page) in
+            
+               completion(result:objects)
+            
+            }) { (response) in
+                
+                
+        }
+   }
+    
+    func userLogout() {
+        
+        QBRequest.logOutWithSuccessBlock({ (response) in
+            
+            
+            }, errorBlock:nil)
+    
+    }
 
 }

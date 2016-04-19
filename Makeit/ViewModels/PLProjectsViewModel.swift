@@ -17,13 +17,10 @@ class PLProjectsViewModel: NSObject {
    override init() {
         
         super.init()
-    
-        fetchProjectsFromRemote()
-    
-    }
+}
    
     func fetchProjectsFromRemote() {
-        
+        projectList.removeAll(keepCapacity: true)
         quickBloxClient.fetchProjectsOfUserWith{(result) in
             
             if let _ = result{
@@ -41,19 +38,14 @@ class PLProjectsViewModel: NSObject {
         for (i,_) in container.enumerate()
         {
             let remoteObject = container[i] as! QBCOCustomObject
-            
-           
-            
-            
             let name = remoteObject.fields!["name"] as! String
             let description = remoteObject.fields!["description"] as? String
-            let project = PLProject(projectName:name, subTitle:description!)
+            let project = PLProject(projectName:name, subTitle:description)
             project.projectId = remoteObject.ID
             project.createdBy = remoteObject.userID
             project.parentId = remoteObject.parentID
             projectList.append(project)
         }
-        
         willChangeValueForKey("projectList")
         didChangeValueForKey("projectList")
     }
@@ -73,12 +65,25 @@ class PLProjectsViewModel: NSObject {
     func subTitleAtIndexPath(indexPath:NSInteger) -> String {
         
         let project = projectList[indexPath]
-        return project.subTitle
+        if let _ = project.subTitle{
+            return project.subTitle!
+        }
+        return ""
     }
     
     func didSelectRowAtIndex(index:Int) -> PLProject {
         
         return projectList[index]
     }
+    
+    func removeAllProjects() {
+        
+        projectList.removeAll()
+    }
 
+    func performLogout()  {
+        
+        quickBloxClient.userLogout()
+        projectList.removeAll()
+    }
 }

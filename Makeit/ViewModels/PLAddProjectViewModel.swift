@@ -11,10 +11,24 @@ import UIKit
 class PLAddProjectViewModel: NSObject {
     
     var quickBloxClient:PLQuickbloxHttpClient = PLQuickbloxHttpClient()
+    var isProjectCreated:Bool = false
+    
+    func validateProjectDetails(name:String) -> Bool {
+        
+        if name.characters.count == 0
+        {
+            return false
+        }
+       return true
+    }
 
     func createNewProjectWith(name:String,description:String){
         
-        quickBloxClient.createNewProjectWith(name, description: description)
+        quickBloxClient.createNewProjectWith(name, description: description){[weak self]result in
+            self!.isProjectCreated = result
+            self!.willChangeValueForKey("isProjectCreated")
+            self!.didChangeValueForKey("isProjectCreated")
+        }
     }
     
 }

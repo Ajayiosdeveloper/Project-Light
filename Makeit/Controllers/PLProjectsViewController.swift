@@ -14,33 +14,32 @@ class PLProjectsViewController: UITableViewController {
     @IBOutlet var projectTableView: UITableView!
     
     var addProjectViewController:PLAddProjectViewController?
-    var addProjectViewModel:PLProjectsViewModel = PLProjectsViewModel()
+    var addProjectViewModel:PLProjectsViewModel!
     var animateCell:[Bool] = [Bool]()
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationItem.title = "Projects"
         addLogoutBarButtonItem()
         addNewProject()
-        addProjectViewModel.addObserver(self, forKeyPath:"projectList", options: NSKeyValueObservingOptions.New, context:nil)
-        
-        
     }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        
-        
+        addProjectViewModel = PLProjectsViewModel()
+        addProjectViewModel.addObserver(self, forKeyPath:"projectList", options: NSKeyValueObservingOptions.New, context:nil)
+            addProjectViewModel.fetchProjectsFromRemote()
     }
     
     func addLogoutBarButtonItem(){
         
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Logout", style: UIBarButtonItemStyle.Plain, target:self, action:#selector(PLProjectsViewController.performLogout))
-         
-    }
+         }
     
     func performLogout()
     {
-        self.navigationController?.popToRootViewControllerAnimated(true)
+        addProjectViewModel.performLogout()
+        self.projectTableView.reloadData()
+        self.navigationController?.popViewControllerAnimated(true)
     }
     
     func addNewProject()
@@ -102,10 +101,13 @@ class PLProjectsViewController: UITableViewController {
     
     override func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutablePointer<Void>) {
         if keyPath == "projectList"
-        {
-             for _ in 1...addProjectViewModel.rowsCount(){ animateCell.append(false)}
-             projectTableView.reloadData()
-             addProjectViewModel.removeObserver(self, forKeyPath:"projectList")
+        {    if addProjectViewModel.rowsCount() > 0
+          {
+            for _ in 0...addProjectViewModel.rowsCount(){ animateCell.append(false)}
+            projectTableView.reloadData()
+            addProjectViewModel.removeObserver(self, forKeyPath:"projectList")
+            
+            }
         }
         
     }

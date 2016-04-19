@@ -322,7 +322,7 @@
                                     <constraint firstAttribute="height" constant="21" id="5jz-VT-oaV"/>
                                     <constraint firstAttribute="width" constant="66" id="IKW-wA-zDN"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <color key="textColor" name="controlShadowColor" catalog="System" colorSpace="catalog"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -394,6 +394,8 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="projectDescription" destination="3hp-HR-aWq" id="3kb-Th-iuR"/>
+                        <outlet property="projectName" destination="IsS-uh-ETE" id="tta-fB-peX"/>
                         <outlet property="searchDisplayController" destination="ac1-lL-Nkh" id="Lg3-rf-1i9"/>
                     </connections>
                 </viewController>
