@@ -8,11 +8,12 @@
 
 import UIKit
 
-class PLAddProjectViewController: UIViewController {
+class PLAddProjectViewController: UIViewController,UISearchBarDelegate,UITextFieldDelegate {
     
     @IBOutlet var projectName: UITextField!
     @IBOutlet var projectDescription: UITextField!
     
+    @IBOutlet var contributorsSearchField: UISearchBar!
     
     lazy var addProjectViewModel:PLAddProjectViewModel = {
      
@@ -22,6 +23,7 @@ class PLAddProjectViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         addDoneBarButtonItem()
+        projectName.delegate = self
         // Do any additional setup after loading the view.
     }
     
@@ -85,8 +87,25 @@ class PLAddProjectViewController: UIViewController {
         
     }
     
+    func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
+        
+        let userEnteredString = textField.text
+        let newString = (userEnteredString! as NSString).stringByReplacingCharactersInRange(range, withString: string) as NSString
+        contributorsSearchField.prompt = "Add contributors to \(newString)"
+        
+        
+        
+        return true
+    }
     
     
+    func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
+        
+        if searchText.characters.count > 3
+        {
+           // addProjectViewModel.getUsersWithName(searchText)
+        }
+    }
     
     /*
     // MARK: - Navigation

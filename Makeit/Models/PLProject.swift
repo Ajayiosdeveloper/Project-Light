@@ -25,6 +25,5 @@ class PLProject: NSObject {
         projectId = nil
         parentId = nil
     }
-    
-
 }
+

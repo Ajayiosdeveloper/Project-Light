@@ -149,7 +149,7 @@ class PLProjectsViewController: UITableViewController {
             projectTableView.reloadData()
             projectViewModel.removeObserver(self, forKeyPath:"projectList")
             observerContext = 1
-            }
+        } else{ activityIndicatorView.stopAnimating() }
         }
         
     }

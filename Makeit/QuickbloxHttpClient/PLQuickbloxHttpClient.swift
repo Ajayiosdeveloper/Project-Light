@@ -122,6 +122,19 @@ class PLQuickbloxHttpClient
         }
     }
     
+    //Getting Users having name
     
+    func getListOfUsersWithName(name:String) {
+        
+        let generalResponse = QBGeneralResponsePage(currentPage:1, perPage:100)
+        
+        QBRequest.usersWithFullName(name, page: generalResponse, successBlock: { (response, page,qbUsers) in
+            
+            print(qbUsers?.count)
+            
+            }) { (response) in
+                
+            }
+        }
 
 }

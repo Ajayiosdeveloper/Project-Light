@@ -31,4 +31,9 @@ class PLAddProjectViewModel: NSObject {
         }
     }
     
+    func getUsersWithName(name:String) {
+        
+        quickBloxClient.getListOfUsersWithName(name)
+    }
+    
 }
