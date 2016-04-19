@@ -26,7 +26,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         //Checking Newtwork Reachability and observing Newtork changes with observer
         
         reachability = Reachability.reachabilityForInternetConnection()
-        NSNotificationCenter.defaultCenter().addObserver(self, selector:Selector("handleNewtorkChanges"), name:kReachabilityChangedNotification, object:nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector:#selector(AppDelegate.handleNewtorkChanges), name:kReachabilityChangedNotification, object:nil)
         reachability.startNotifier()
         
         return true

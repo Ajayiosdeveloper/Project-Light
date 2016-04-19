@@ -153,7 +153,7 @@ class PLUserSignupAndLoginViewController: UITableViewController,UITextFieldDeleg
             projectsViewController = self.storyboard?.instantiateViewControllerWithIdentifier("projectsViewController") as! PLProjectsViewController
             }
         
-        self.navigationController?.pushViewController(projectsViewController, animated: true)
+        self.navigationController?.pushViewController(projectsViewController, animated: false)
     }
     
     func clearTextfields(){

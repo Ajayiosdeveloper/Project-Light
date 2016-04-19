@@ -86,4 +86,17 @@ class PLProjectsViewModel: NSObject {
         quickBloxClient.userLogout()
         projectList.removeAll()
     }
+    
+    func deleteProjectAtIndexPathOfRow(row:Int,completion:(Bool)->Void) {
+        
+        let project = self.projectList[row]
+        quickBloxClient.deleteProjectWithId(project.projectId!){[weak self]result in
+            
+            if result { completion(true) }
+            else {completion(false)}
+    }
+        
+        
+        
+    }
 }

@@ -32,6 +32,7 @@
 		806D4AF41CC260080054A9AF /* PLProjectsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 806D4AF31CC260080054A9AF /* PLProjectsViewController.swift */; };
 		806D4AF61CC2607C0054A9AF /* PLProjectsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 806D4AF51CC2607C0054A9AF /* PLProjectsViewModel.swift */; };
 		806D4AF91CC261280054A9AF /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 806D4AF81CC261280054A9AF /* Reachability.m */; };
+		808AA2ED1CC6060800685226 /* PLDynamicEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 808AA2EC1CC6060800685226 /* PLDynamicEngine.swift */; };
 		809F96CB1CBCC35000DD1FE9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 809F96CA1CBCC35000DD1FE9 /* AppDelegate.swift */; };
 		809F96CD1CBCC35000DD1FE9 /* PLUserSignupAndLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 809F96CC1CBCC35000DD1FE9 /* PLUserSignupAndLoginViewController.swift */; };
 		809F96D01CBCC35000DD1FE9 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 809F96CE1CBCC35000DD1FE9 /* Main.storyboard */; };
@@ -93,6 +94,7 @@
 		806D4AF51CC2607C0054A9AF /* PLProjectsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLProjectsViewModel.swift; sourceTree = "<group>"; };
 		806D4AF71CC261280054A9AF /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Reachability.h; path = Makeit/Libraries/AppleReachability/Reachability.h; sourceTree = SOURCE_ROOT; };
 		806D4AF81CC261280054A9AF /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Reachability.m; path = Makeit/Libraries/AppleReachability/Reachability.m; sourceTree = SOURCE_ROOT; };
+		808AA2EC1CC6060800685226 /* PLDynamicEngine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLDynamicEngine.swift; sourceTree = "<group>"; };
 		809F96C71CBCC35000DD1FE9 /* Makeit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Makeit.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		809F96CA1CBCC35000DD1FE9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		809F96CC1CBCC35000DD1FE9 /* PLUserSignupAndLoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PLUserSignupAndLoginViewController.swift; path = ../PLUserSignupAndLoginViewController.swift; sourceTree = "<group>"; };
@@ -247,6 +249,14 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
+		808AA2EB1CC605DE00685226 /* Dynamics&Animations */ = {
+			isa = PBXGroup;
+			children = (
+				808AA2EC1CC6060800685226 /* PLDynamicEngine.swift */,
+			);
+			path = "Dynamics&Animations";
+			sourceTree = "<group>";
+		};
 		809F96BE1CBCC35000DD1FE9 = {
 			isa = PBXGroup;
 			children = (
@@ -273,6 +283,7 @@
 			isa = PBXGroup;
 			children = (
 				809F96CA1CBCC35000DD1FE9 /* AppDelegate.swift */,
+				808AA2EB1CC605DE00685226 /* Dynamics&Animations */,
 				806D4AF01CC25DB50054A9AF /* Models */,
 				806D4AF11CC25DB50054A9AF /* ViewModels */,
 				806D4AEF1CC25DB50054A9AF /* Controllers */,
@@ -455,6 +466,7 @@
 				809F96CB1CBCC35000DD1FE9 /* AppDelegate.swift in Sources */,
 				80DE821D1CC0D87700D5017A /* PLUserSignupAndLoginViewModel.swift in Sources */,
 				806CA5AF1CC4B27F00E401A1 /* PLAddProjectViewController.swift in Sources */,
+				808AA2ED1CC6060800685226 /* PLDynamicEngine.swift in Sources */,
 				806D4AEB1CC210910054A9AF /* SVProgressHUD.m in Sources */,
 				806D4AE81CC210910054A9AF /* SVIndefiniteAnimatedView.m in Sources */,
 				806D4AD51CC1FF110054A9AF /* PLQuickbloxHttpClient.swift in Sources */,

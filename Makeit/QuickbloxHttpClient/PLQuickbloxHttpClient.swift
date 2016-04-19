@@ -19,6 +19,7 @@ class PLQuickbloxHttpClient
     {
             let user = QBUUser()
             user.login = name
+            user.fullName = name
             user.password = password
             SVProgressHUD.showWithStatus("Signing up")
             QBRequest.signUp(user, successBlock: { (response, retrievedUser) -> Void in
@@ -78,6 +79,8 @@ class PLQuickbloxHttpClient
         }
     }
     
+    //Fetching all the Projects of the logged in User
+    
     func fetchProjectsOfUserWith(completion:(result:[AnyObject]?)->Void) {
         
         let extendedParameters = NSMutableDictionary()
@@ -96,13 +99,29 @@ class PLQuickbloxHttpClient
         }
    }
     
+    //Perform lagout
+    
     func userLogout() {
         
         QBRequest.logOutWithSuccessBlock({ (response) in
             
-            
-            }, errorBlock:nil)
-    
+        }, errorBlock:nil)
     }
+    
+    //Deleting a Project in the QuickBlox Server
+    
+    func deleteProjectWithId(projectId:String,completion:(Bool)->Void) {
+        
+        QBRequest.deleteObjectWithID(projectId, className:"PLProject", successBlock: { (response) in
+            
+            completion(true)
+            
+            }) { (response) in
+                
+              completion(false)
+        }
+    }
+    
+    
 
 }

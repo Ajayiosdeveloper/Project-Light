@@ -24,6 +24,11 @@ class PLAddProjectViewController: UIViewController {
         addDoneBarButtonItem()
         // Do any additional setup after loading the view.
     }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(true)
+        self.projectName.becomeFirstResponder()
+    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -52,6 +57,7 @@ class PLAddProjectViewController: UIViewController {
             if value as! NSNumber == 1 {
             
               self.navigationController?.popViewControllerAnimated(true)
+              self.projectName.text = ""; self.projectDescription.text = ""
             }
             else{ // Handling Alert Messages for Login
                 
@@ -78,6 +84,9 @@ class PLAddProjectViewController: UIViewController {
         }
         
     }
+    
+    
+    
     
     /*
     // MARK: - Navigation
