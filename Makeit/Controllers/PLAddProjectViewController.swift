@@ -78,7 +78,9 @@ class PLAddProjectViewController: UIViewController,UISearchBarDelegate,UITextFie
             if value as! NSNumber == 1 {
             
               self.navigationController?.popViewControllerAnimated(true)
-              self.projectName.text = ""; self.projectDescription.text = ""
+              
+                self.cleanUp()
+            
             }
             else{ // Handling Alert Messages for Login
                 
@@ -205,5 +207,15 @@ class PLAddProjectViewController: UIViewController,UISearchBarDelegate,UITextFie
             addProjectViewModel.andOrRemoveContributor(member)
             
             contributorsTableView.reloadData()
+    }
+    
+    func cleanUp(){
+        
+        self.projectName.text = ""; self.projectDescription.text = ""
+        self.contributorsSearchField.text = ""
+        self.contributorsSearchField.prompt = "Add contributors to Project"
+        addProjectViewModel.selectedContributors.removeAll()
+        self.contributorsTableView.reloadData()
+
     }
 }
