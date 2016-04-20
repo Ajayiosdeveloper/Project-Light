@@ -32,6 +32,8 @@
 		806D4AF41CC260080054A9AF /* PLProjectsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 806D4AF31CC260080054A9AF /* PLProjectsViewController.swift */; };
 		806D4AF61CC2607C0054A9AF /* PLProjectsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 806D4AF51CC2607C0054A9AF /* PLProjectsViewModel.swift */; };
 		806D4AF91CC261280054A9AF /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 806D4AF81CC261280054A9AF /* Reachability.m */; };
+		8073C8CE1CC737F400AE4CB6 /* PLDisplayMembersPopover.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8073C8CD1CC737F400AE4CB6 /* PLDisplayMembersPopover.swift */; };
+		8073C8D01CC744DE00AE4CB6 /* PLTeamMemberModelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8073C8CF1CC744DE00AE4CB6 /* PLTeamMemberModelView.swift */; };
 		808AA2ED1CC6060800685226 /* PLDynamicEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 808AA2EC1CC6060800685226 /* PLDynamicEngine.swift */; };
 		809F96CB1CBCC35000DD1FE9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 809F96CA1CBCC35000DD1FE9 /* AppDelegate.swift */; };
 		809F96CD1CBCC35000DD1FE9 /* PLUserSignupAndLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 809F96CC1CBCC35000DD1FE9 /* PLUserSignupAndLoginViewController.swift */; };
@@ -94,6 +96,8 @@
 		806D4AF51CC2607C0054A9AF /* PLProjectsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLProjectsViewModel.swift; sourceTree = "<group>"; };
 		806D4AF71CC261280054A9AF /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Reachability.h; path = Makeit/Libraries/AppleReachability/Reachability.h; sourceTree = SOURCE_ROOT; };
 		806D4AF81CC261280054A9AF /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Reachability.m; path = Makeit/Libraries/AppleReachability/Reachability.m; sourceTree = SOURCE_ROOT; };
+		8073C8CD1CC737F400AE4CB6 /* PLDisplayMembersPopover.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLDisplayMembersPopover.swift; sourceTree = "<group>"; };
+		8073C8CF1CC744DE00AE4CB6 /* PLTeamMemberModelView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLTeamMemberModelView.swift; sourceTree = "<group>"; };
 		808AA2EC1CC6060800685226 /* PLDynamicEngine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLDynamicEngine.swift; sourceTree = "<group>"; };
 		809F96C71CBCC35000DD1FE9 /* Makeit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Makeit.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		809F96CA1CBCC35000DD1FE9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -221,6 +225,7 @@
 			children = (
 				806D4AF31CC260080054A9AF /* PLProjectsViewController.swift */,
 				806CA5AE1CC4B27F00E401A1 /* PLAddProjectViewController.swift */,
+				8073C8CD1CC737F400AE4CB6 /* PLDisplayMembersPopover.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -238,6 +243,7 @@
 			children = (
 				806D4AF51CC2607C0054A9AF /* PLProjectsViewModel.swift */,
 				806CA5B01CC4B2A400E401A1 /* PLAddProjectViewModel.swift */,
+				8073C8CF1CC744DE00AE4CB6 /* PLTeamMemberModelView.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -470,8 +476,10 @@
 				806D4AEB1CC210910054A9AF /* SVProgressHUD.m in Sources */,
 				806D4AE81CC210910054A9AF /* SVIndefiniteAnimatedView.m in Sources */,
 				806D4AD51CC1FF110054A9AF /* PLQuickbloxHttpClient.swift in Sources */,
+				8073C8D01CC744DE00AE4CB6 /* PLTeamMemberModelView.swift in Sources */,
 				806D4AF41CC260080054A9AF /* PLProjectsViewController.swift in Sources */,
 				806D4AE91CC210910054A9AF /* SVProgressAnimatedView.m in Sources */,
+				8073C8CE1CC737F400AE4CB6 /* PLDisplayMembersPopover.swift in Sources */,
 				806D4AF91CC261280054A9AF /* Reachability.m in Sources */,
 				806D4AEC1CC210910054A9AF /* SVRadialGradientLayer.m in Sources */,
 				80BB3EF61CC4F4BE009FAE11 /* PLProject.swift in Sources */,

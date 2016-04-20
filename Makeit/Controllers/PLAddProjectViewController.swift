@@ -8,12 +8,18 @@
 
 import UIKit
 
-class PLAddProjectViewController: UIViewController,UISearchBarDelegate,UITextFieldDelegate {
+
+class PLAddProjectViewController: UIViewController,UISearchBarDelegate,UITextFieldDelegate,UIPopoverPresentationControllerDelegate,UITableViewDelegate,UITableViewDataSource,PLContributorTableViewDelegate {
     
     @IBOutlet var projectName: UITextField!
     @IBOutlet var projectDescription: UITextField!
-    
     @IBOutlet var contributorsSearchField: UISearchBar!
+    var  diplayMembersPopover:PLDisplayMembersPopover!
+    var activityIndicatorView:UIActivityIndicatorView!
+    var teamMemberViewModel:PLTeamMemberModelView!
+   
+    
+    @IBOutlet var contributorsTableView: UITableView!
     
     lazy var addProjectViewModel:PLAddProjectViewModel = {
      
@@ -24,12 +30,24 @@ class PLAddProjectViewController: UIViewController,UISearchBarDelegate,UITextFie
         super.viewDidLoad()
         addDoneBarButtonItem()
         projectName.delegate = self
+        
         // Do any additional setup after loading the view.
     }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(true)
         self.projectName.becomeFirstResponder()
+        addActivityIndicatorView()
+    }
+    
+    func  addActivityIndicatorView() {
+        if activityIndicatorView == nil{
+            
+            activityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.Gray)
+            activityIndicatorView.center = self.view.center
+            activityIndicatorView.hidesWhenStopped = true
+            self.view.addSubview(activityIndicatorView)
+           }
     }
 
     override func didReceiveMemoryWarning() {
@@ -44,11 +62,11 @@ class PLAddProjectViewController: UIViewController,UISearchBarDelegate,UITextFie
    
     func performDone()
     {
+        activityIndicatorView.startAnimating()
         addProjectViewModel.addObserver(self, forKeyPath:"isProjectCreated", options: NSKeyValueObservingOptions.New, context:nil)
         if addProjectViewModel.validateProjectDetails(projectName.text!){
             addProjectViewModel.createNewProjectWith(projectName.text!,description:projectDescription.text!)
-        }else {showAlertWithMessage("error!", message:"enter Project name")}
-        
+        }else {activityIndicatorView.stopAnimating();showAlertWithMessage("error!", message:"enter Project name")}
     }
     
     override func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutablePointer<Void>) {
@@ -56,6 +74,7 @@ class PLAddProjectViewController: UIViewController,UISearchBarDelegate,UITextFie
         if keyPath == "isProjectCreated" {
         if let _ = change, value = change![NSKeyValueChangeNewKey]{
             
+            activityIndicatorView.stopAnimating()
             if value as! NSNumber == 1 {
             
               self.navigationController?.popViewControllerAnimated(true)
@@ -101,20 +120,90 @@ class PLAddProjectViewController: UIViewController,UISearchBarDelegate,UITextFie
     
     func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
         
-        if searchText.characters.count > 3
+        if searchText.characters.count >= 3
         {
-           // addProjectViewModel.getUsersWithName(searchText)
+            addProjectViewModel.getUsersWithName(searchText){[weak self] members in
+                
+                if let _ = members{
+                self!.teamMemberViewModel = PLTeamMemberModelView(searchMembers: members!)
+                self!.performSegueWithIdentifier("DisplayMembersPopover", sender:self)
+                }else{print("No matches Found")}
+                
+            }
+        }
+        if searchText.characters.count == 0
+        {
+            dismissPopover()
         }
     }
     
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+        
+        diplayMembersPopover = segue.destinationViewController as? PLDisplayMembersPopover
+        
+        diplayMembersPopover.delegate = self
+        
+        if #available(iOS 8.0, *) {
+            
+             diplayMembersPopover.teamMemberModelView = teamMemberViewModel;
+             diplayMembersPopover.popoverPresentationController?.delegate = self
+             diplayMembersPopover.popoverPresentationController?.permittedArrowDirections = .Down
+            } else {
+            // Fallback on earlier versions
+        }
     }
-    */
+    
+    
+    @available(iOS 8.0, *)
+    func adaptivePresentationStyleForPresentationController(controller: UIPresentationController) -> UIModalPresentationStyle {
+        
+        return .None
+    }
+    
+    func dismissPopover()  {
+       
+        if let _ = diplayMembersPopover{
+            
+            diplayMembersPopover.dismissViewControllerAnimated(true, completion:nil)
+        }
+        
+    }
 
+     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        return 1
+    }
+    
+     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        
+        return addProjectViewModel.numberOfRowsInTableView()
+    }
+    
+      func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        
+        let cell = tableView.dequeueReusableCellWithIdentifier("Cell")! as UITableViewCell
+        cell.textLabel?.text = addProjectViewModel.titleAtIndexPathOfRow(indexPath.row)
+        
+        return cell
+    }
+    
+     func tableView(tableView: UITableView, commitEditingStyle editingStyle:
+        UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
+        if editingStyle == .Delete
+        {
+            
+            addProjectViewModel.deleteSelectedContributor(indexPath.row)
+           
+           self.contributorsTableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Automatic)
+            
+           
+        }
+    }
+    
+    
+    func reloadTableViewWithComtributors(member:PLTeamMember){
+        
+            addProjectViewModel.andOrRemoveContributor(member)
+            
+            contributorsTableView.reloadData()
+    }
 }

@@ -10,8 +10,14 @@ import UIKit
 
 class PLAddProjectViewModel: NSObject {
     
+    var selectedContributors:[PLTeamMember]!
     var quickBloxClient:PLQuickbloxHttpClient = PLQuickbloxHttpClient()
     var isProjectCreated:Bool = false
+    
+    override init() {
+        
+        selectedContributors = [PLTeamMember]()
+    }
     
     func validateProjectDetails(name:String) -> Bool {
         
@@ -24,16 +30,100 @@ class PLAddProjectViewModel: NSObject {
 
     func createNewProjectWith(name:String,description:String){
         
-        quickBloxClient.createNewProjectWith(name, description: description){[weak self]result in
-            self!.isProjectCreated = result
-            self!.willChangeValueForKey("isProjectCreated")
-            self!.didChangeValueForKey("isProjectCreated")
+        if self.selectedContributors.count == 0 {
+            
+            quickBloxClient.createNewProjectWith(name, description: description){[weak self]result,projectId in
+                self!.isProjectCreated = result
+                self!.willChangeValueForKey("isProjectCreated")
+                self!.didChangeValueForKey("isProjectCreated")
+            }
+        }
+        else{
+            
+            quickBloxClient.createNewProjectWith(name, description: description){[weak self]result,projectId in
+                
+                var qbObjects:[QBCOCustomObject] = [QBCOCustomObject]()
+                
+                for each in self!.selectedContributors{
+                    
+                   let qbCustomObject = QBCOCustomObject()
+                   qbCustomObject.className = "PLProjectMember"
+                   qbCustomObject.fields?.setObject(each.fullName, forKey:"name")
+                   qbCustomObject.fields?.setObject(projectId, forKey:"_parent_id")
+                   qbObjects.append(qbCustomObject)
+                }
+                
+                self!.quickBloxClient.createNewProjectWithContributors(qbObjects){result in
+                    
+                    self!.isProjectCreated = result
+                    self!.willChangeValueForKey("isProjectCreated")
+                    self!.didChangeValueForKey("isProjectCreated")
+               }
+            }
+        }
+       
+    }
+    
+    func getUsersWithName(name:String,completion:([PLTeamMember]?)->Void) {
+        
+        var teamMembers:[PLTeamMember] = [PLTeamMember]()
+        
+        quickBloxClient.getListOfUsersWithName(name){ users in
+            
+              if let _ = users{
+                
+              for qbMember in users!
+              {
+                if qbMember.ID != QBSession.currentSession().currentUser?.ID{
+                    
+                    let teamMember = PLTeamMember(name:qbMember.fullName!, id: qbMember.ID)
+                    
+                    teamMembers.append(teamMember)
+                }
+                
+                
+
+            }
+                
+                completion(teamMembers)
+                
+              } else {completion(nil)}
+           }
+    }
+    
+    func numberOfRowsInTableView()->Int
+    {
+        return self.selectedContributors.count
+    }
+    
+    func titleAtIndexPathOfRow(row:Int)->String
+    {
+        let member = selectedContributors[row]
+        
+        return member.fullName
+    }
+    
+    func andOrRemoveContributor(member:PLTeamMember){
+        
+        if self.selectedContributors.count == 0 { self.selectedContributors.append(member)}
+        else{
+            
+            if self.selectedContributors.contains(member){
+                
+               let index = self.selectedContributors.indexOf(member)
+                
+               self.selectedContributors.removeAtIndex(index!)
+                
+            }else{
+                
+                self.selectedContributors.append(member)
+            }
         }
     }
-    
-    func getUsersWithName(name:String) {
+  
+    func deleteSelectedContributor(index:Int) {
         
-        quickBloxClient.getListOfUsersWithName(name)
+        self.selectedContributors.removeAtIndex(index)
     }
-    
+
 }

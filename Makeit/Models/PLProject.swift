@@ -27,3 +27,19 @@ class PLProject: NSObject {
     }
 }
 
+class PLTeamMember: NSObject {
+    
+    var fullName:String
+    var memberId:UInt
+    
+    init(name:String,id:UInt) {
+        fullName = name
+        memberId = 0
+    }
+    
+}
+
+func ==(lhs:PLTeamMember,rhs:PLTeamMember) -> Bool {
+    
+    return (lhs.fullName == rhs.fullName && lhs.memberId == rhs.memberId)
+}

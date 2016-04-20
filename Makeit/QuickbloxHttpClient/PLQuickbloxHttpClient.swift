@@ -63,17 +63,32 @@ class PLQuickbloxHttpClient
     
     //Creating a New Project in QuickBlox
     
-    func createNewProjectWith(name:String,description:String,completion:(Bool)->Void) {
+    func createNewProjectWith(name:String,description:String,completion:(Bool,String)->Void) {
         
         let customObject = QBCOCustomObject()
         customObject.className = "PLProject"
         customObject.fields?.setValue(name, forKey: "name")
         customObject.fields?.setValue(description, forKey: "description")
         QBRequest.createObject(customObject, successBlock: { (response,object) in
-            
-            completion(true)
+        
+            completion(true,object!.ID!)
             
           }) { (response) in
+                
+                completion(false,"")
+        }
+    }
+    
+    
+    //Create a New Project with Contributors in QuickBlox
+    
+    func createNewProjectWithContributors(members:[QBCOCustomObject],completion:(Bool)->Void){
+        
+          QBRequest.createObjects(members, className:"PLProjectMember", successBlock: { (response, contributors) in
+            
+                 completion(true)
+            
+            }) { (response) in
                 
                 completion(false)
         }
@@ -124,13 +139,13 @@ class PLQuickbloxHttpClient
     
     //Getting Users having name
     
-    func getListOfUsersWithName(name:String) {
+    func getListOfUsersWithName(name:String,completion:([QBUUser]?)->Void) {
         
-        let generalResponse = QBGeneralResponsePage(currentPage:1, perPage:100)
+        let generalResponse = QBGeneralResponsePage(currentPage:1, perPage:30)
         
         QBRequest.usersWithFullName(name, page: generalResponse, successBlock: { (response, page,qbUsers) in
             
-            print(qbUsers?.count)
+            if qbUsers?.count > 0{ completion(qbUsers) } else { completion(nil)}
             
             }) { (response) in
                 
