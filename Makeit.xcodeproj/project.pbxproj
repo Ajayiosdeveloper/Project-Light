@@ -34,6 +34,12 @@
 		806D4AF91CC261280054A9AF /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 806D4AF81CC261280054A9AF /* Reachability.m */; };
 		8073C8CE1CC737F400AE4CB6 /* PLDisplayMembersPopover.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8073C8CD1CC737F400AE4CB6 /* PLDisplayMembersPopover.swift */; };
 		8073C8D01CC744DE00AE4CB6 /* PLTeamMemberModelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8073C8CF1CC744DE00AE4CB6 /* PLTeamMemberModelView.swift */; };
+		8078A46B1CC88BD1008AC4DD /* PLProjectDetailTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8078A46A1CC88BD1008AC4DD /* PLProjectDetailTableViewController.swift */; };
+		8078A46D1CC88C11008AC4DD /* PLProjectDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8078A46C1CC88C11008AC4DD /* PLProjectDetailViewModel.swift */; };
+		80879D3B1CC8DC1C00B41D2D /* PLProjectCommentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80879D3A1CC8DC1C00B41D2D /* PLProjectCommentViewController.swift */; };
+		80879D3D1CC8DC5300B41D2D /* PLProjectCommentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80879D3C1CC8DC5300B41D2D /* PLProjectCommentViewModel.swift */; };
+		80879D3F1CC8E70100B41D2D /* PLProjectAssignmentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80879D3E1CC8E70100B41D2D /* PLProjectAssignmentViewController.swift */; };
+		80879D411CC8E71D00B41D2D /* PLProjectAssignmentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80879D401CC8E71D00B41D2D /* PLProjectAssignmentViewModel.swift */; };
 		808AA2ED1CC6060800685226 /* PLDynamicEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 808AA2EC1CC6060800685226 /* PLDynamicEngine.swift */; };
 		809F96CB1CBCC35000DD1FE9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 809F96CA1CBCC35000DD1FE9 /* AppDelegate.swift */; };
 		809F96CD1CBCC35000DD1FE9 /* PLUserSignupAndLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 809F96CC1CBCC35000DD1FE9 /* PLUserSignupAndLoginViewController.swift */; };
@@ -98,6 +104,12 @@
 		806D4AF81CC261280054A9AF /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Reachability.m; path = Makeit/Libraries/AppleReachability/Reachability.m; sourceTree = SOURCE_ROOT; };
 		8073C8CD1CC737F400AE4CB6 /* PLDisplayMembersPopover.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLDisplayMembersPopover.swift; sourceTree = "<group>"; };
 		8073C8CF1CC744DE00AE4CB6 /* PLTeamMemberModelView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLTeamMemberModelView.swift; sourceTree = "<group>"; };
+		8078A46A1CC88BD1008AC4DD /* PLProjectDetailTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLProjectDetailTableViewController.swift; sourceTree = "<group>"; };
+		8078A46C1CC88C11008AC4DD /* PLProjectDetailViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLProjectDetailViewModel.swift; sourceTree = "<group>"; };
+		80879D3A1CC8DC1C00B41D2D /* PLProjectCommentViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLProjectCommentViewController.swift; sourceTree = "<group>"; };
+		80879D3C1CC8DC5300B41D2D /* PLProjectCommentViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLProjectCommentViewModel.swift; sourceTree = "<group>"; };
+		80879D3E1CC8E70100B41D2D /* PLProjectAssignmentViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLProjectAssignmentViewController.swift; sourceTree = "<group>"; };
+		80879D401CC8E71D00B41D2D /* PLProjectAssignmentViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLProjectAssignmentViewModel.swift; sourceTree = "<group>"; };
 		808AA2EC1CC6060800685226 /* PLDynamicEngine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLDynamicEngine.swift; sourceTree = "<group>"; };
 		809F96C71CBCC35000DD1FE9 /* Makeit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Makeit.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		809F96CA1CBCC35000DD1FE9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -226,6 +238,9 @@
 				806D4AF31CC260080054A9AF /* PLProjectsViewController.swift */,
 				806CA5AE1CC4B27F00E401A1 /* PLAddProjectViewController.swift */,
 				8073C8CD1CC737F400AE4CB6 /* PLDisplayMembersPopover.swift */,
+				8078A46A1CC88BD1008AC4DD /* PLProjectDetailTableViewController.swift */,
+				80879D3A1CC8DC1C00B41D2D /* PLProjectCommentViewController.swift */,
+				80879D3E1CC8E70100B41D2D /* PLProjectAssignmentViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -244,6 +259,9 @@
 				806D4AF51CC2607C0054A9AF /* PLProjectsViewModel.swift */,
 				806CA5B01CC4B2A400E401A1 /* PLAddProjectViewModel.swift */,
 				8073C8CF1CC744DE00AE4CB6 /* PLTeamMemberModelView.swift */,
+				8078A46C1CC88C11008AC4DD /* PLProjectDetailViewModel.swift */,
+				80879D3C1CC8DC5300B41D2D /* PLProjectCommentViewModel.swift */,
+				80879D401CC8E71D00B41D2D /* PLProjectAssignmentViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -465,17 +483,23 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				80879D3F1CC8E70100B41D2D /* PLProjectAssignmentViewController.swift in Sources */,
 				806CA5B11CC4B2A400E401A1 /* PLAddProjectViewModel.swift in Sources */,
 				806D4AD71CC1FF3C0054A9AF /* PLConstants.swift in Sources */,
 				809F96CD1CBCC35000DD1FE9 /* PLUserSignupAndLoginViewController.swift in Sources */,
 				806D4AF61CC2607C0054A9AF /* PLProjectsViewModel.swift in Sources */,
 				809F96CB1CBCC35000DD1FE9 /* AppDelegate.swift in Sources */,
+				8078A46B1CC88BD1008AC4DD /* PLProjectDetailTableViewController.swift in Sources */,
 				80DE821D1CC0D87700D5017A /* PLUserSignupAndLoginViewModel.swift in Sources */,
 				806CA5AF1CC4B27F00E401A1 /* PLAddProjectViewController.swift in Sources */,
+				80879D411CC8E71D00B41D2D /* PLProjectAssignmentViewModel.swift in Sources */,
 				808AA2ED1CC6060800685226 /* PLDynamicEngine.swift in Sources */,
+				80879D3B1CC8DC1C00B41D2D /* PLProjectCommentViewController.swift in Sources */,
 				806D4AEB1CC210910054A9AF /* SVProgressHUD.m in Sources */,
 				806D4AE81CC210910054A9AF /* SVIndefiniteAnimatedView.m in Sources */,
+				8078A46D1CC88C11008AC4DD /* PLProjectDetailViewModel.swift in Sources */,
 				806D4AD51CC1FF110054A9AF /* PLQuickbloxHttpClient.swift in Sources */,
+				80879D3D1CC8DC5300B41D2D /* PLProjectCommentViewModel.swift in Sources */,
 				8073C8D01CC744DE00AE4CB6 /* PLTeamMemberModelView.swift in Sources */,
 				806D4AF41CC260080054A9AF /* PLProjectsViewController.swift in Sources */,
 				806D4AE91CC210910054A9AF /* SVProgressAnimatedView.m in Sources */,

@@ -95,8 +95,31 @@ class PLProjectsViewModel: NSObject {
             if result { completion(true) }
             else {completion(false)}
     }
+  }
+    
+    
+    func getProjectMembersList(projectId:String,completion:([PLTeamMember]?)->Void) {
         
-        
-        
+        var teamMembers:[PLTeamMember] = [PLTeamMember]()
+        quickBloxClient.fetchTeamMembersOfProjectId(projectId){ members in
+            
+            if let _ = members{
+                
+                for each in members! {
+                    
+                  let member = PLTeamMember(name:"", id:0)
+                  member.fullName = (each.fields?.valueForKey("name"))! as! String
+                  member.projectId = projectId
+                  member.memberId = each.ID!
+                 teamMembers.append(member)
+                
+                }
+                
+                completion(teamMembers)
+                
+                }
+            
+            else { completion(nil) }
+        }
     }
 }

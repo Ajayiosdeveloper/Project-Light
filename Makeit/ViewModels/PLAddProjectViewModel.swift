@@ -78,11 +78,11 @@ class PLAddProjectViewModel: NSObject {
                     
                     let teamMember = PLTeamMember(name:qbMember.fullName!, id: qbMember.ID)
                     
+                    print("Member id is :\(teamMember.memberId)")
+                    
                     teamMembers.append(teamMember)
                 }
                 
-                
-
             }
                 
                 completion(teamMembers)

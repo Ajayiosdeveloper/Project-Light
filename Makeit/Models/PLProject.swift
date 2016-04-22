@@ -30,13 +30,36 @@ class PLProject: NSObject {
 class PLTeamMember: NSObject {
     
     var fullName:String
-    var memberId:UInt
+    var memberId:String
+    var projectId:String
     
     init(name:String,id:UInt) {
         fullName = name
-        memberId = 0
+        memberId = ""
+        projectId = ""
+        
     }
     
+}
+
+
+class PLCommitment: NSObject {
+    
+    var name:String = ""
+    var details: String = ""
+    var commitmentId:String = ""
+    var targetDate:String = ""
+    
+    
+}
+
+class PLAssignment: NSObject {
+    
+    var name:String = ""
+    var details: String = ""
+    var commitmentId:String = ""
+    var targetDate:String = ""
+    var assignees:[String] = [String]()
 }
 
 func ==(lhs:PLTeamMember,rhs:PLTeamMember) -> Bool {

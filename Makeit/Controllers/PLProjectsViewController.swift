@@ -12,7 +12,8 @@ import UIKit
 class PLProjectsViewController: UITableViewController {
     
     @IBOutlet var projectTableView: UITableView!
-    
+    var selectedProjectId:String?
+    var selectedProjectName:String!
     var addProjectViewController:PLAddProjectViewController?
     var projectViewModel:PLProjectsViewModel!
     var activityIndicatorView:UIActivityIndicatorView!
@@ -94,17 +95,29 @@ class PLProjectsViewController: UITableViewController {
         return cell
     }
     
+    
+    
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
         let selected = projectViewModel.didSelectRowAtIndex(indexPath.row) as PLProject
+        selectedProjectId = selected.projectId
+        selectedProjectName = selected.name
         print(selected.name)
         print(selected.subTitle)
         print(selected.createdBy)
         print(selected.projectId)
         print(selected.parentId)
         
+        projectViewModel.getProjectMembersList(selectedProjectId!){ resultedMembers in
+            
+            if let _ = resultedMembers{
+                
+              self.performSegueWithIdentifier("toProjectDetails", sender: resultedMembers)
+            }
+        }
+       
+        
     }
-    
     override func tableView(tableView: UITableView, commitEditingStyle editingStyle:
         UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
         if editingStyle == .Delete
@@ -132,7 +145,7 @@ class PLProjectsViewController: UITableViewController {
         {
             let transformRotate = CATransform3DTranslate(CATransform3DIdentity, -500, 10, 0)
             cell.layer.transform = transformRotate
-            UIView.animateWithDuration(0.5) {
+            UIView.animateWithDuration(0.3) {
                 
                 cell.layer.transform = CATransform3DIdentity
             }
@@ -152,5 +165,15 @@ class PLProjectsViewController: UITableViewController {
         } else{ activityIndicatorView.stopAnimating() }
         }
         
+    }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        
+        let resulted = sender as! [PLTeamMember]
+        let detailViewController = segue.destinationViewController as! PLProjectDetailTableViewController
+        detailViewController.projectName = selectedProjectName
+        detailViewController.projectId = selectedProjectId
+        let projectDetailViewModel = PLProjectDetailViewModel(members:resulted)
+        detailViewController.projectDetailViewModel = projectDetailViewModel
     }
 }

@@ -92,6 +92,8 @@ class PLQuickbloxHttpClient
                 
                 completion(false)
         }
+        
+        
     }
     
     //Fetching all the Projects of the logged in User
@@ -151,5 +153,120 @@ class PLQuickbloxHttpClient
                 
             }
         }
+    
+    
+    //Fetch Team Members of Project with ProjectId
+    
+    func fetchTeamMembersOfProjectId(id:String,completion:([QBCOCustomObject]?)->Void) {
+        
+        let extendedReq = NSMutableDictionary()
+        extendedReq.setObject(id, forKey:"_parent_id")
+        
+        QBRequest.objectsWithClassName("PLProjectMember", extendedRequest: extendedReq, successBlock: { (_, objects, _) in
+            
+            print("PRAISE THE LORD")
+            
+            completion(objects)
+            
+        }) { (res) in
+            
+            completion(nil)
+        }
+       
 
+        
+    }
+    
+    
+    //Create a Commitment for Project in QuickBlox
+    
+    func createCommitmentForProject(id:String,date:String,name:String,description:String,completion:(Bool)->Void) {
+        
+        let customObject = QBCOCustomObject()
+        customObject.className = "PLProjectCommitment"
+        customObject.fields?.setValue(name, forKey: "name")
+        customObject.fields?.setValue(description, forKey: "description")
+        customObject.fields?.setValue(date, forKey:"targetDate")
+        customObject.fields?.setValue(id, forKey:"_parent_id")
+        QBRequest.createObject(customObject, successBlock: { (response,object) in
+            
+            print("PRAISE THE LORD")
+            completion(true)
+            
+            }) { (res) in
+                
+                completion(false)
+                print("Handle error")
+        }
+}
+    
+    //Create Assignment for Project in QuickBlox
+    
+    func createAssignmentForProject(id:String,date:String,name:String,description:String,assignees:[String],completion:(Bool)->Void) {
+        
+        let customObject = QBCOCustomObject()
+        customObject.className = "PLProjectAssignment"
+        customObject.fields?.setValue(name, forKey: "name")
+        customObject.fields?.setValue(description, forKey: "description")
+        customObject.fields?.setValue(date, forKey:"targetDate")
+        customObject.fields?.setValue(assignees, forKey: "assignees")
+        customObject.fields?.setValue(id, forKey:"_parent_id")
+        
+        QBRequest.createObject(customObject, successBlock: { (res,object) in
+            
+            print("PRAISE THE LORD")
+            
+            }) { (res) in
+                
+                print("Handle Error")
+        }
+    }
+    
+    //Fetching Commitments for Project
+    
+    func fetchCommitmentsForProject(id:String,completion:(Bool,[QBCOCustomObject]?)->Void)
+    {
+        let extendedReq = NSMutableDictionary()
+        
+        extendedReq.setValue(id, forKey:"_parent_id")
+        
+        QBRequest.objectsWithClassName("PLProjectCommitment", extendedRequest: extendedReq, successBlock: { (res, commitments, page) in
+            
+            
+            print("PRAISE THE LORD")
+            
+            completion(true,commitments)
+            
+            }) { (res) in
+             
+                print("handle error")
+                
+                completion(false,nil)
+        }
+        
+    }
+   //Fetching Assignments for Project
+    
+    func fetchAssignmentsForProject(id:String,completion:(Bool,[QBCOCustomObject]?)->Void) {
+        
+        let extendedReq = NSMutableDictionary()
+        
+        extendedReq.setValue(id, forKey:"_parent_id")
+        
+        QBRequest.objectsWithClassName("PLProjectAssignment", extendedRequest: extendedReq, successBlock: { (res, assignments, page) in
+            
+            print("PRAISE THE LORD")
+            
+            completion(true,assignments)
+            
+        }) { (res) in
+        
+            print("handle error")
+            
+            completion(false,nil)
+        }
+        
+    }
+    
+    
 }
