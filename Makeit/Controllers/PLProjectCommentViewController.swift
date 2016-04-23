@@ -16,8 +16,10 @@ class PLProjectCommentViewController: UITableViewController {
 
     @IBOutlet var commitmentDescriptionTextView: UITextView!
     
-    var projectId:String!
     
+    
+    var projectId:String!
+   
     lazy  var commitmentViewModel:PLProjectCommentViewModel = {
         
         return PLProjectCommentViewModel()
@@ -40,6 +42,18 @@ class PLProjectCommentViewController: UITableViewController {
         super.viewWillAppear(animated)
         commitmentDatePicker.date = NSDate()
         self.commitmentNameTextField.becomeFirstResponder()
+        if let _ = commitmentViewModel.commitment
+        {
+           commitmentNameTextField.text = commitmentViewModel.commitmentName()
+           commitmentDescriptionTextView.text = commitmentViewModel.commitmentDescription()
+           commitmentTargetDateTextField.text = commitmentViewModel.commitmentTargetDate()
+           self.navigationItem.rightBarButtonItem?.enabled = false
+           self.navigationItem.rightBarButtonItem?.tintColor = UIColor.clearColor()
+            
+        }else {self.navigationItem.rightBarButtonItem?.enabled = true ;
+               self.navigationItem.rightBarButtonItem?.tintColor = nil;
+               clearFields()
+        }
     }
 
     func addDoneBarButtonItem(){
@@ -52,7 +66,7 @@ class PLProjectCommentViewController: UITableViewController {
        let toolBar = UIToolbar()
        toolBar.barStyle = UIBarStyle.Default
        toolBar.sizeToFit()
-       let doneButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Done, target:self, action: #selector(PLProjectCommentViewController.peformDateSelection))
+       let  doneButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Done, target:self, action: #selector(PLProjectCommentViewController.peformDateSelection))
         toolBar.items = [doneButton]
         commitmentTargetDateTextField.inputAccessoryView = toolBar
     }
@@ -82,6 +96,18 @@ class PLProjectCommentViewController: UITableViewController {
         self.commitmentTargetDateTextField.resignFirstResponder()
          commitmentTargetDateTextField.text = NSDateFormatter.localizedStringFromDate(commitmentDatePicker.date, dateStyle: NSDateFormatterStyle.MediumStyle, timeStyle: NSDateFormatterStyle.NoStyle)
         commitmentDescriptionTextView.becomeFirstResponder()
+    }
+    
+    func clearFields(){
+        
+        commitmentNameTextField.text = ""
+        commitmentDescriptionTextView.text = ""
+        commitmentTargetDateTextField.text = ""
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        super.viewDidDisappear(animated)
+        commitmentViewModel.commitment = nil
     }
 
     override func didReceiveMemoryWarning() {

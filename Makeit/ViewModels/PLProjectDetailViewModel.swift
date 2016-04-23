@@ -121,6 +121,7 @@ class PLProjectDetailViewModel: NSObject {
                 assignment.details = (each.fields?.objectForKey("description"))! as! String
                 assignment.targetDate = (each.fields?.objectForKey("targetDate"))! as! String
                 assignment.assignees = (each.fields?.objectForKey("assignees"))! as! [String]
+                assignment.assineesUserIds = (each.fields?.objectForKey("assigneeUserId"))! as! [UInt]
                 self.assignments.append(assignment)
               }
                 completion(true)
@@ -131,5 +132,22 @@ class PLProjectDetailViewModel: NSObject {
 
     }
     
+    func selectedCommitmentFor(row:Int)->PLCommitment?
+    {
+        if row <= self.commitments.count
+        {
+            return commitments[row]
+        }
+        return nil
+    }
+    
+    func selectedAssignment(row:Int) -> PLAssignment? {
+        
+        if  row <= self.assignments.count
+        {
+            return assignments[row]
+        }
+        return nil
+    }
     
 }

@@ -32,11 +32,13 @@ class PLTeamMember: NSObject {
     var fullName:String
     var memberId:String
     var projectId:String
+    var memberUserId:UInt
     
     init(name:String,id:UInt) {
         fullName = name
         memberId = ""
         projectId = ""
+        memberUserId = 0
         
     }
     
@@ -60,6 +62,7 @@ class PLAssignment: NSObject {
     var commitmentId:String = ""
     var targetDate:String = ""
     var assignees:[String] = [String]()
+    var assineesUserIds:[UInt] = [UInt]()
 }
 
 func ==(lhs:PLTeamMember,rhs:PLTeamMember) -> Bool {

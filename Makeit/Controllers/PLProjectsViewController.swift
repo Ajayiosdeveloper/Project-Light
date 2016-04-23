@@ -21,17 +21,18 @@ class PLProjectsViewController: UITableViewController {
     var observerContext = 0
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.navigationItem.title = "Projects"
+                self.navigationItem.title = "Projects"
         addLogoutBarButtonItem()
         addNewProject()
-       
+        
     }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
+       
         projectViewModel = PLProjectsViewModel()
         projectViewModel.addObserver(self, forKeyPath:"projectList", options: NSKeyValueObservingOptions.New, context:&observerContext)
-            projectViewModel.fetchProjectsFromRemote()
+        projectViewModel.fetchProjectsFromRemote()
         addActivityIndicatorView()
     }
     
@@ -56,7 +57,8 @@ class PLProjectsViewController: UITableViewController {
         if observerContext == 0 {projectViewModel.removeObserver(self, forKeyPath:"projectList")}
         projectViewModel.performLogout()
         self.projectTableView.reloadData()
-        self.navigationController?.popViewControllerAnimated(true)
+        self.navigationController?.popToRootViewControllerAnimated(true)
+      
     }
     
     func addNewProject()
@@ -176,4 +178,6 @@ class PLProjectsViewController: UITableViewController {
         let projectDetailViewModel = PLProjectDetailViewModel(members:resulted)
         detailViewController.projectDetailViewModel = projectDetailViewModel
     }
+  
+   
 }

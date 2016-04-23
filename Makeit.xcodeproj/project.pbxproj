@@ -14,7 +14,6 @@
 		803E03F81CBCC8B000C59233 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 803E03F71CBCC8B000C59233 /* CoreGraphics.framework */; };
 		803E03FA1CBCC8BF00C59233 /* libresolv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 803E03F91CBCC8BF00C59233 /* libresolv.tbd */; };
 		803E03FC1CBCC93B00C59233 /* libxml2.2.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 803E03FB1CBCC93B00C59233 /* libxml2.2.tbd */; };
-		803E03FE1CBCC94500C59233 /* VideoToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 803E03FD1CBCC94500C59233 /* VideoToolbox.framework */; };
 		803E04001CBCC94A00C59233 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 803E03FF1CBCC94A00C59233 /* MobileCoreServices.framework */; };
 		803E04021CBCC95100C59233 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 803E04011CBCC95100C59233 /* CFNetwork.framework */; };
 		803E04041CBCC95800C59233 /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 803E04031CBCC95800C59233 /* GLKit.framework */; };
@@ -36,6 +35,10 @@
 		8073C8D01CC744DE00AE4CB6 /* PLTeamMemberModelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8073C8CF1CC744DE00AE4CB6 /* PLTeamMemberModelView.swift */; };
 		8078A46B1CC88BD1008AC4DD /* PLProjectDetailTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8078A46A1CC88BD1008AC4DD /* PLProjectDetailTableViewController.swift */; };
 		8078A46D1CC88C11008AC4DD /* PLProjectDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8078A46C1CC88C11008AC4DD /* PLProjectDetailViewModel.swift */; };
+		807FC87A1CCB47920094112E /* PLTeamMemberDetailsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 807FC8791CCB47920094112E /* PLTeamMemberDetailsTableViewController.swift */; };
+		807FC87C1CCB47AF0094112E /* PLTeamMemberDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 807FC87B1CCB47AF0094112E /* PLTeamMemberDetailViewModel.swift */; };
+		807FC87E1CCB55510094112E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 807FC87D1CCB55510094112E /* Foundation.framework */; };
+		807FC8801CCB58430094112E /* VideoToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 807FC87F1CCB58430094112E /* VideoToolbox.framework */; };
 		80879D3B1CC8DC1C00B41D2D /* PLProjectCommentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80879D3A1CC8DC1C00B41D2D /* PLProjectCommentViewController.swift */; };
 		80879D3D1CC8DC5300B41D2D /* PLProjectCommentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80879D3C1CC8DC5300B41D2D /* PLProjectCommentViewModel.swift */; };
 		80879D3F1CC8E70100B41D2D /* PLProjectAssignmentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80879D3E1CC8E70100B41D2D /* PLProjectAssignmentViewController.swift */; };
@@ -49,6 +52,7 @@
 		809F96E01CBCC35000DD1FE9 /* MakeitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 809F96DF1CBCC35000DD1FE9 /* MakeitTests.swift */; };
 		809F96EB1CBCC35000DD1FE9 /* MakeitUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 809F96EA1CBCC35000DD1FE9 /* MakeitUITests.swift */; };
 		80BB3EF61CC4F4BE009FAE11 /* PLProject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80BB3EF51CC4F4BE009FAE11 /* PLProject.swift */; };
+		80DE422D1CCB8A19007C8DDB /* ex.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 80DE422C1CCB8A19007C8DDB /* ex.jpg */; };
 		80DE821D1CC0D87700D5017A /* PLUserSignupAndLoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80DE821C1CC0D87700D5017A /* PLUserSignupAndLoginViewModel.swift */; };
 /* End PBXBuildFile section */
 
@@ -77,7 +81,6 @@
 		803E03F71CBCC8B000C59233 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		803E03F91CBCC8BF00C59233 /* libresolv.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libresolv.tbd; path = usr/lib/libresolv.tbd; sourceTree = SDKROOT; };
 		803E03FB1CBCC93B00C59233 /* libxml2.2.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libxml2.2.tbd; path = usr/lib/libxml2.2.tbd; sourceTree = SDKROOT; };
-		803E03FD1CBCC94500C59233 /* VideoToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = VideoToolbox.framework; path = System/Library/Frameworks/VideoToolbox.framework; sourceTree = SDKROOT; };
 		803E03FF1CBCC94A00C59233 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		803E04011CBCC95100C59233 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		803E04031CBCC95800C59233 /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = System/Library/Frameworks/GLKit.framework; sourceTree = SDKROOT; };
@@ -106,6 +109,10 @@
 		8073C8CF1CC744DE00AE4CB6 /* PLTeamMemberModelView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLTeamMemberModelView.swift; sourceTree = "<group>"; };
 		8078A46A1CC88BD1008AC4DD /* PLProjectDetailTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLProjectDetailTableViewController.swift; sourceTree = "<group>"; };
 		8078A46C1CC88C11008AC4DD /* PLProjectDetailViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLProjectDetailViewModel.swift; sourceTree = "<group>"; };
+		807FC8791CCB47920094112E /* PLTeamMemberDetailsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PLTeamMemberDetailsTableViewController.swift; path = ../ViewModels/PLTeamMemberDetailsTableViewController.swift; sourceTree = "<group>"; };
+		807FC87B1CCB47AF0094112E /* PLTeamMemberDetailViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLTeamMemberDetailViewModel.swift; sourceTree = "<group>"; };
+		807FC87D1CCB55510094112E /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		807FC87F1CCB58430094112E /* VideoToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = VideoToolbox.framework; path = System/Library/Frameworks/VideoToolbox.framework; sourceTree = SDKROOT; };
 		80879D3A1CC8DC1C00B41D2D /* PLProjectCommentViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLProjectCommentViewController.swift; sourceTree = "<group>"; };
 		80879D3C1CC8DC5300B41D2D /* PLProjectCommentViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLProjectCommentViewModel.swift; sourceTree = "<group>"; };
 		80879D3E1CC8E70100B41D2D /* PLProjectAssignmentViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLProjectAssignmentViewController.swift; sourceTree = "<group>"; };
@@ -125,6 +132,7 @@
 		809F96EA1CBCC35000DD1FE9 /* MakeitUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MakeitUITests.swift; sourceTree = "<group>"; };
 		809F96EC1CBCC35000DD1FE9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		80BB3EF51CC4F4BE009FAE11 /* PLProject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLProject.swift; sourceTree = "<group>"; };
+		80DE422C1CCB8A19007C8DDB /* ex.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = ex.jpg; sourceTree = "<group>"; };
 		80DE821C1CC0D87700D5017A /* PLUserSignupAndLoginViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLUserSignupAndLoginViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -133,12 +141,13 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				807FC8801CCB58430094112E /* VideoToolbox.framework in Frameworks */,
+				807FC87E1CCB55510094112E /* Foundation.framework in Frameworks */,
 				806D4AEE1CC211160054A9AF /* QuartzCore.framework in Frameworks */,
 				803E04061CBCC95D00C59233 /* SystemConfiguration.framework in Frameworks */,
 				803E04041CBCC95800C59233 /* GLKit.framework in Frameworks */,
 				803E04021CBCC95100C59233 /* CFNetwork.framework in Frameworks */,
 				803E04001CBCC94A00C59233 /* MobileCoreServices.framework in Frameworks */,
-				803E03FE1CBCC94500C59233 /* VideoToolbox.framework in Frameworks */,
 				803E03FC1CBCC93B00C59233 /* libxml2.2.tbd in Frameworks */,
 				803E03FA1CBCC8BF00C59233 /* libresolv.tbd in Frameworks */,
 				803E03F81CBCC8B000C59233 /* CoreGraphics.framework in Frameworks */,
@@ -169,12 +178,13 @@
 		803E03EE1CBCC85600C59233 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				807FC87F1CCB58430094112E /* VideoToolbox.framework */,
+				807FC87D1CCB55510094112E /* Foundation.framework */,
 				806D4AED1CC211160054A9AF /* QuartzCore.framework */,
 				803E04051CBCC95D00C59233 /* SystemConfiguration.framework */,
 				803E04031CBCC95800C59233 /* GLKit.framework */,
 				803E04011CBCC95100C59233 /* CFNetwork.framework */,
 				803E03FF1CBCC94A00C59233 /* MobileCoreServices.framework */,
-				803E03FD1CBCC94500C59233 /* VideoToolbox.framework */,
 				803E03FB1CBCC93B00C59233 /* libxml2.2.tbd */,
 				803E03F91CBCC8BF00C59233 /* libresolv.tbd */,
 				803E03F71CBCC8B000C59233 /* CoreGraphics.framework */,
@@ -241,6 +251,7 @@
 				8078A46A1CC88BD1008AC4DD /* PLProjectDetailTableViewController.swift */,
 				80879D3A1CC8DC1C00B41D2D /* PLProjectCommentViewController.swift */,
 				80879D3E1CC8E70100B41D2D /* PLProjectAssignmentViewController.swift */,
+				807FC8791CCB47920094112E /* PLTeamMemberDetailsTableViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -262,6 +273,7 @@
 				8078A46C1CC88C11008AC4DD /* PLProjectDetailViewModel.swift */,
 				80879D3C1CC8DC5300B41D2D /* PLProjectCommentViewModel.swift */,
 				80879D401CC8E71D00B41D2D /* PLProjectAssignmentViewModel.swift */,
+				807FC87B1CCB47AF0094112E /* PLTeamMemberDetailViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -288,8 +300,9 @@
 				809F96DE1CBCC35000DD1FE9 /* MakeitTests */,
 				809F96E91CBCC35000DD1FE9 /* MakeitUITests */,
 				809F96C81CBCC35000DD1FE9 /* Products */,
-				803E03EE1CBCC85600C59233 /* Frameworks */,
+				80DE422C1CCB8A19007C8DDB /* ex.jpg */,
 				803E04071CBCD90100C59233 /* Makeit-Bridging-Header.h */,
+				803E03EE1CBCC85600C59233 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -455,6 +468,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				80DE422D1CCB8A19007C8DDB /* ex.jpg in Resources */,
 				809F96D51CBCC35000DD1FE9 /* LaunchScreen.storyboard in Resources */,
 				809F96D21CBCC35000DD1FE9 /* Assets.xcassets in Resources */,
 				809F96D01CBCC35000DD1FE9 /* Main.storyboard in Resources */,
@@ -495,10 +509,12 @@
 				80879D411CC8E71D00B41D2D /* PLProjectAssignmentViewModel.swift in Sources */,
 				808AA2ED1CC6060800685226 /* PLDynamicEngine.swift in Sources */,
 				80879D3B1CC8DC1C00B41D2D /* PLProjectCommentViewController.swift in Sources */,
+				807FC87C1CCB47AF0094112E /* PLTeamMemberDetailViewModel.swift in Sources */,
 				806D4AEB1CC210910054A9AF /* SVProgressHUD.m in Sources */,
 				806D4AE81CC210910054A9AF /* SVIndefiniteAnimatedView.m in Sources */,
 				8078A46D1CC88C11008AC4DD /* PLProjectDetailViewModel.swift in Sources */,
 				806D4AD51CC1FF110054A9AF /* PLQuickbloxHttpClient.swift in Sources */,
+				807FC87A1CCB47920094112E /* PLTeamMemberDetailsTableViewController.swift in Sources */,
 				80879D3D1CC8DC5300B41D2D /* PLProjectCommentViewModel.swift in Sources */,
 				8073C8D01CC744DE00AE4CB6 /* PLTeamMemberModelView.swift in Sources */,
 				806D4AF41CC260080054A9AF /* PLProjectsViewController.swift in Sources */,
@@ -581,6 +597,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_BITCODE = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -626,6 +643,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_BITCODE = NO;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -657,6 +675,7 @@
 				INFOPLIST_FILE = Makeit/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = (
 					"-lstdc++",
 					"-ObjC",
@@ -682,6 +701,7 @@
 				INFOPLIST_FILE = Makeit/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = (
 					"-lstdc++",
 					"-ObjC",

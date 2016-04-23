@@ -202,7 +202,7 @@ class PLQuickbloxHttpClient
     
     //Create Assignment for Project in QuickBlox
     
-    func createAssignmentForProject(id:String,date:String,name:String,description:String,assignees:[String],completion:(Bool)->Void) {
+    func createAssignmentForProject(id:String,date:String,name:String,description:String,assignees:[String],assigneeUserIds:[UInt],completion:(Bool)->Void) {
         
         let customObject = QBCOCustomObject()
         customObject.className = "PLProjectAssignment"
@@ -210,6 +210,7 @@ class PLQuickbloxHttpClient
         customObject.fields?.setValue(description, forKey: "description")
         customObject.fields?.setValue(date, forKey:"targetDate")
         customObject.fields?.setValue(assignees, forKey: "assignees")
+        customObject.fields?.setValue(assigneeUserIds, forKey: "assigneeUserId")
         customObject.fields?.setValue(id, forKey:"_parent_id")
         
         QBRequest.createObject(customObject, successBlock: { (res,object) in

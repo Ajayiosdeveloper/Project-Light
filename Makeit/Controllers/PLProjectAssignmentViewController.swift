@@ -15,28 +15,50 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
     @IBOutlet var assignmenttargetDateTextField: UITextField!
     
     @IBOutlet var assigneeListTableView: UITableView!
+    
    
     @IBOutlet var assignmentDescriptionTextView: UITextView!
     var projectId:String!
     var commitmentDatePicker:UIDatePicker!
     var assignementViewModel:PLProjectAssignmentViewModel!
+   
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        print(assignementViewModel.assigneeList)
 
         addDoneBarButtonItem()
         commitmentDatePicker = UIDatePicker()
         commitmentDatePicker.datePickerMode = .Date
         self.assignmenttargetDateTextField.inputView = commitmentDatePicker
         addDoneButtonToDatePicker()
-       }
+       
+    }
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         if let _ = assignementViewModel, _ = assignementViewModel.assigneeList{
             
             assigneeListTableView.reloadData()
         }
+        
+        if let _ = assignementViewModel.selectedAssignment{
+                assignmentNameTextFiled.text = assignementViewModel.assignmentName()
+                assignmenttargetDateTextField.text = assignementViewModel.assignmentTargetDate()
+                assignmentDescriptionTextView.text = assignementViewModel.assignmentDescription()
+                self.navigationItem.rightBarButtonItem?.enabled = false
+                self.navigationItem.rightBarButtonItem?.tintColor = UIColor.clearColor()
+                assignementViewModel.responsibleForAssigniment()
+                assigneeListTableView.reloadData()
+                assigneeListTableView.allowsSelection = false
+                }else {self.navigationItem.rightBarButtonItem?.enabled = true ;
+                self.navigationItem.rightBarButtonItem?.tintColor = nil;
+                assigneeListTableView.allowsSelection = true
+               clearFields()
+            }
+
     }
+ 
     func addDoneBarButtonItem(){
         
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.Plain, target:self, action:#selector(PLAddProjectViewController.performDone))
@@ -108,10 +130,18 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
     
     func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         
+        if assignementViewModel.selectedAssignment != nil
+        {
+            return "ASSIGNED TO"
+        }
+        
         return "SELECT ONE OR MORE ASSIGNEES"
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        
+        if assignementViewModel.selectedAssignment == nil
+        {
         
         if tableView.cellForRowAtIndexPath(indexPath)?.accessoryType == .Checkmark
         {
@@ -124,8 +154,7 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
             assignementViewModel.addAssignee(indexPath.row)
             
           }
-        
-        print(assignementViewModel.selectedAssigneeList)
+        }
     }
 
     
@@ -134,7 +163,19 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
         // Dispose of any resources that can be recreated.
     }
     
-
+    func clearFields()
+    {
+       assignmentNameTextFiled.text = ""
+       assignmenttargetDateTextField.text = ""
+       assignmentDescriptionTextView.text = ""
+        
+    }
+   
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+        assignementViewModel.selectedAssignment = nil
+    }
+    
     /*
     // MARK: - Navigation
 

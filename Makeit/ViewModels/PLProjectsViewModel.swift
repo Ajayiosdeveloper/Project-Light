@@ -30,7 +30,6 @@ class PLProjectsViewModel: NSObject {
                 self.fillProjectListArrayWithContents(objects)
             }
         }
-    
     }
     
     func fillProjectListArrayWithContents(container:[AnyObject]){
@@ -111,12 +110,11 @@ class PLProjectsViewModel: NSObject {
                   member.fullName = (each.fields?.valueForKey("name"))! as! String
                   member.projectId = projectId
                   member.memberId = each.ID!
-                 teamMembers.append(member)
+                  member.memberUserId = (each.fields?.valueForKey("member_User_Id"))! as! UInt
+                  teamMembers.append(member)
                 
                 }
-                
-                completion(teamMembers)
-                
+                   completion(teamMembers)
                 }
             
             else { completion(nil) }

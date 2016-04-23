@@ -27,7 +27,7 @@ class PLDisplayMembersPopover: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        if (self.presentingViewController != nil && teamMemberModelView != nil){
+        if (self.presentingViewController != nil && teamMemberModelView != nil && teamMemberModelView.numbersOfRows() > 0){
             
             self.preferredContentSize = membersTableView.sizeThatFits((self.presentingViewController?.view.bounds.size)!)
             membersTableView.reloadData()

@@ -21,16 +21,19 @@ class PLUserSignupAndLoginViewController: UITableViewController,UITextFieldDeleg
     @IBOutlet var signupUserPasswordTextField: UITextField!
     @IBOutlet var signupUserConfirmPasswordTextField: UITextField!
     @IBOutlet var userSignup: UIButton!
+    
     lazy private var userAccountViewModel:PLUserSignupAndLoginViewModel = {
           return PLUserSignupAndLoginViewModel()
     }()
+    @IBOutlet var getStartedTableView: UITableView!
     var projectsViewController:PLProjectsViewController!
     //MARK: View Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         userLogin.enabled = false
         userSignup.enabled = false
-        
+      
+
     }
      override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -132,9 +135,10 @@ class PLUserSignupAndLoginViewController: UITableViewController,UITextFieldDeleg
         if let _ = change, value = change![NSKeyValueChangeNewKey]{
             
             if value as! NSNumber == 1 { // Handling Alert Messages for Sign in
-                if tag == 0{presentProjectsViewController(); clearTextfields()}
-                else { presentProjectsViewController()}
-            }
+                if tag == 0{ clearTextfields()}
+                
+                presentProjectsViewController()
+           }
             else{ // Handling Alert Messages for Login
                 
                 if tag == 0 {showAlertWithMessage("Failed!", message:"User name already exist.Please try another")}
@@ -150,10 +154,16 @@ class PLUserSignupAndLoginViewController: UITableViewController,UITextFieldDeleg
     func presentProjectsViewController(){
         
         if (projectsViewController == nil){
-            projectsViewController = self.storyboard?.instantiateViewControllerWithIdentifier("projectsViewController") as! PLProjectsViewController
-            }
         
-        self.navigationController?.pushViewController(projectsViewController, animated: false)
+            projectsViewController = self.storyboard?.instantiateViewControllerWithIdentifier("projectsViewController") as! PLProjectsViewController
+        }
+        if !(self.navigationController?.topViewController?.isKindOfClass(PLAddProjectViewController))!
+        {
+        
+            self.navigationController?.pushViewController(projectsViewController, animated: false)
+
+        }
+        
     }
     
     func clearTextfields(){
@@ -161,7 +171,7 @@ class PLUserSignupAndLoginViewController: UITableViewController,UITextFieldDeleg
       self.signupUserNameTextField.text = ""; self.signupUserPasswordTextField.text = ""
       self.signupUserConfirmPasswordTextField.text = ""
     }
-
+    
 }
 
 

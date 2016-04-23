@@ -15,7 +15,8 @@ enum CommitValidation:ErrorType {
 class PLProjectCommentViewModel: NSObject {
     
     var qbClient:PLQuickbloxHttpClient = PLQuickbloxHttpClient()
-    
+    var commitment:PLCommitment?
+        
     func createCommitmentWith(name:String,targetDate:NSDate,description:String,projectId:String,completion:(Bool)->Void){
         
         print(name)
@@ -43,6 +44,21 @@ class PLProjectCommentViewModel: NSObject {
         }
        
         return true
+    }
+    
+    func commitmentName()->String{
+        
+        return commitment!.name
+    }
+    
+    func commitmentTargetDate() -> String {
+        
+        return commitment!.targetDate
+    }
+    
+    func commitmentDescription() -> String {
+        
+        return commitment!.details
     }
 
 }

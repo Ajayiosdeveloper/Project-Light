@@ -20,7 +20,7 @@ class PLProjectDetailTableViewController: UITableViewController {
    
     override func viewDidLoad() {
         super.viewDidLoad()
-       
+
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -182,6 +182,8 @@ class PLProjectDetailTableViewController: UITableViewController {
             commitmentViewController = self.storyboard?.instantiateViewControllerWithIdentifier("PLProjectCommentViewController") as! PLProjectCommentViewController
             }
         commitmentViewController.projectId = projectId
+       
+    
         self.navigationController?.pushViewController(commitmentViewController, animated: true)
     }
  
@@ -205,10 +207,14 @@ class PLProjectDetailTableViewController: UITableViewController {
         else if indexPath.section  == 1
         {
             showCommitmentViewController()
+             commitmentViewController.commitmentViewModel.commitment = projectDetailViewModel.selectedCommitmentFor(indexPath.row)
+            print(commitmentViewController.commitmentViewModel.commitment)
+            
         }
         else if indexPath.section == 2
         {
             showAssignmentViewController()
+            assignmentViewController.assignementViewModel.selectedAssignment = projectDetailViewModel.selectedAssignment(indexPath.row)
         }
         
         else if indexPath.section == 3{

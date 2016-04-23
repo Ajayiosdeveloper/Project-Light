@@ -49,6 +49,7 @@ class PLAddProjectViewModel: NSObject {
                    let qbCustomObject = QBCOCustomObject()
                    qbCustomObject.className = "PLProjectMember"
                    qbCustomObject.fields?.setObject(each.fullName, forKey:"name")
+                   qbCustomObject.fields?.setObject(each.memberUserId, forKey: "member_User_Id")
                    qbCustomObject.fields?.setObject(projectId, forKey:"_parent_id")
                    qbObjects.append(qbCustomObject)
                 }
@@ -77,12 +78,9 @@ class PLAddProjectViewModel: NSObject {
                 if qbMember.ID != QBSession.currentSession().currentUser?.ID{
                     
                     let teamMember = PLTeamMember(name:qbMember.fullName!, id: qbMember.ID)
-                    
-                    print("Member id is :\(teamMember.memberId)")
-                    
+                    teamMember.memberUserId = qbMember.ID
                     teamMembers.append(teamMember)
                 }
-                
             }
                 
                 completion(teamMembers)
