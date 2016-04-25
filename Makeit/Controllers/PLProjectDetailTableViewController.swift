@@ -8,11 +8,17 @@
 
 import UIKit
 
+protocol ProjectDetailsDelegate:class{
+    func check(details:[String],detailViewModel:PLProjectDetailViewModel)
+}
+
 class PLProjectDetailTableViewController: UITableViewController {
-    
+    weak var delegate:ProjectDetailsDelegate?
     var projectDetailViewModel:PLProjectDetailViewModel!
     var projectName:String!
     var projectId:String!
+    var projectDescription:String!
+    var addProjectViewController:PLAddProjectViewController!
     var commitmentViewController:PLProjectCommentViewController!
     var assignmentViewController:PLProjectAssignmentViewController!
 
@@ -165,6 +171,18 @@ class PLProjectDetailTableViewController: UITableViewController {
     
     func addNewContributor(sender:UIButton) {
         
+        if sender.tag == 0{
+            
+           if addProjectViewController == nil
+           {
+             addProjectViewController = self.storyboard?.instantiateViewControllerWithIdentifier("PLAddProjectViewController") as! PLAddProjectViewController
+            }
+           PLSharedManager.manager.existingContributorsList = projectDetailViewModel.contributors
+           self.delegate = addProjectViewController
+           self.navigationController?.pushViewController(addProjectViewController, animated:true)
+           self.delegate?.check([projectId,projectName,projectDescription],detailViewModel: self.projectDetailViewModel)
+ 
+        }
         if sender.tag == 1
         {
             showCommitmentViewController()
@@ -202,7 +220,11 @@ class PLProjectDetailTableViewController: UITableViewController {
         
         if indexPath.section == 0
         {
-            print("Contributor Assignments")
+            let x = projectDetailViewModel.contributors[indexPath.row]
+            print(x.fullName)
+            print(x.memberId)
+            print(x.memberUserId)
+        
         }
         else if indexPath.section  == 1
         {

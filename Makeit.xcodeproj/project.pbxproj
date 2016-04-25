@@ -38,7 +38,7 @@
 		807FC87A1CCB47920094112E /* PLTeamMemberDetailsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 807FC8791CCB47920094112E /* PLTeamMemberDetailsTableViewController.swift */; };
 		807FC87C1CCB47AF0094112E /* PLTeamMemberDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 807FC87B1CCB47AF0094112E /* PLTeamMemberDetailViewModel.swift */; };
 		807FC87E1CCB55510094112E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 807FC87D1CCB55510094112E /* Foundation.framework */; };
-		807FC8801CCB58430094112E /* VideoToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 807FC87F1CCB58430094112E /* VideoToolbox.framework */; };
+		807FC8801CCB58430094112E /* VideoToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 807FC87F1CCB58430094112E /* VideoToolbox.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		80879D3B1CC8DC1C00B41D2D /* PLProjectCommentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80879D3A1CC8DC1C00B41D2D /* PLProjectCommentViewController.swift */; };
 		80879D3D1CC8DC5300B41D2D /* PLProjectCommentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80879D3C1CC8DC5300B41D2D /* PLProjectCommentViewModel.swift */; };
 		80879D3F1CC8E70100B41D2D /* PLProjectAssignmentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80879D3E1CC8E70100B41D2D /* PLProjectAssignmentViewController.swift */; };

@@ -46,5 +46,23 @@ class PLTeamMemberModelView: NSObject {
 
         return contributor
     }
+    
+    func isContributorAlreadyAdded(index:Int) -> Bool {
+        
+        let contributor = self.searchList[index]
+        
+        let existingContributors = PLSharedManager.manager.existingContributorsList
+        
+        for each in existingContributors
+        {
+            if each.memberUserId == contributor.memberUserId
+            {
+                
+                return true
+            }
+        }
+        
+       return false
+    }
 
 }

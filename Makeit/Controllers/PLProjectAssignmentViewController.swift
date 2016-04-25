@@ -74,15 +74,16 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
             try assignementViewModel.assignmentValidations(assignmentNameTextFiled.text!,targetDate: commitmentDatePicker.date,description: assignmentDescriptionTextView.text,projectId: projectId,assignees:assignementViewModel.getSelectedAssigneeList())
             
             assignementViewModel.createAssignmentForProject(projectId, name:assignmentNameTextFiled.text! , targetDate: commitmentDatePicker.date, description: assignmentDescriptionTextView.text, assignees:assignementViewModel.getSelectedAssigneeList()){result in
-                
                 if result{
+                  dispatch_async(dispatch_get_main_queue(), {
+                        
+                        self.navigationController?.popViewControllerAnimated(true)
+                  })
                     
-                    print("PRAISE THE LORD")
-                    self.navigationController?.popViewControllerAnimated(true)
                 }
-                else {print("Handle error")}
+                else {
                 
-                
+                }
             }
         }
         catch AssignmentValidation.NameEmpty{print("Empty Name")}

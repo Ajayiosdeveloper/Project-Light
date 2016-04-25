@@ -65,6 +65,43 @@ class PLAddProjectViewModel: NSObject {
        
     }
     
+    func addContributorsToExistingProject(id:String,completion:([PLTeamMember])->Void)
+    {
+        
+        
+        var qbObjects:[QBCOCustomObject] = [QBCOCustomObject]()
+        
+        for each in self.selectedContributors{
+            
+            let qbCustomObject = QBCOCustomObject()
+            qbCustomObject.className = "PLProjectMember"
+            qbCustomObject.fields?.setObject(each.fullName, forKey:"name")
+            qbCustomObject.fields?.setObject(each.memberUserId, forKey: "member_User_Id")
+            qbCustomObject.fields?.setObject(id, forKey:"_parent_id")
+            qbObjects.append(qbCustomObject)
+        }
+        
+        self.quickBloxClient.createNewProjectWithContributors(qbObjects){result in
+            
+            var members:[PLTeamMember] = [PLTeamMember]()
+            
+            for each in qbObjects{
+                
+                let name = (each.fields?.objectForKey("name"))! as! String
+                let teamMember = PLTeamMember(name:name, id:0)
+                teamMember.memberUserId = (each.fields?.objectForKey("member_User_Id"))! as! UInt
+                members.append(teamMember)
+            }
+            
+            completion(members)
+            self.isProjectCreated = result
+            self.willChangeValueForKey("isProjectCreated")
+            self.didChangeValueForKey("isProjectCreated")
+        }
+        
+    }
+    
+    
     func getUsersWithName(name:String,completion:([PLTeamMember]?)->Void) {
         
         var teamMembers:[PLTeamMember] = [PLTeamMember]()
@@ -101,22 +138,22 @@ class PLAddProjectViewModel: NSObject {
         return member.fullName
     }
     
-    func andOrRemoveContributor(member:PLTeamMember){
+    func andOrRemoveContributor(member:PLTeamMember)->Bool{
         
         if self.selectedContributors.count == 0 { self.selectedContributors.append(member)}
         else{
             
-            if self.selectedContributors.contains(member){
-                
-               let index = self.selectedContributors.indexOf(member)
-                
-               self.selectedContributors.removeAtIndex(index!)
-                
-            }else{
-                
-                self.selectedContributors.append(member)
+            for contributor in selectedContributors
+            {
+                if contributor.memberUserId == member.memberUserId{
+                    
+                   return false
+                }
             }
+           self.selectedContributors.append(member)
         }
+        
+        return true
     }
   
     func deleteSelectedContributor(index:Int) {

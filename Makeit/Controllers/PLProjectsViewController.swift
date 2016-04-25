@@ -14,6 +14,7 @@ class PLProjectsViewController: UITableViewController {
     @IBOutlet var projectTableView: UITableView!
     var selectedProjectId:String?
     var selectedProjectName:String!
+    var selectedProjectDescription:String!
     var addProjectViewController:PLAddProjectViewController?
     var projectViewModel:PLProjectsViewModel!
     var activityIndicatorView:UIActivityIndicatorView!
@@ -104,6 +105,7 @@ class PLProjectsViewController: UITableViewController {
         let selected = projectViewModel.didSelectRowAtIndex(indexPath.row) as PLProject
         selectedProjectId = selected.projectId
         selectedProjectName = selected.name
+        selectedProjectDescription = selected.subTitle
         print(selected.name)
         print(selected.subTitle)
         print(selected.createdBy)
@@ -175,6 +177,7 @@ class PLProjectsViewController: UITableViewController {
         let detailViewController = segue.destinationViewController as! PLProjectDetailTableViewController
         detailViewController.projectName = selectedProjectName
         detailViewController.projectId = selectedProjectId
+        detailViewController.projectDescription = selectedProjectDescription
         let projectDetailViewModel = PLProjectDetailViewModel(members:resulted)
         detailViewController.projectDetailViewModel = projectDetailViewModel
     }

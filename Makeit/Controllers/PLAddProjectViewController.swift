@@ -9,7 +9,7 @@
 import UIKit
 
 
-class PLAddProjectViewController: UIViewController,UISearchBarDelegate,UITextFieldDelegate,UIPopoverPresentationControllerDelegate,UITableViewDelegate,UITableViewDataSource,PLContributorTableViewDelegate {
+class PLAddProjectViewController: UIViewController,UISearchBarDelegate,UITextFieldDelegate,UIPopoverPresentationControllerDelegate,UITableViewDelegate,UITableViewDataSource,PLContributorTableViewDelegate,ProjectDetailsDelegate {
     
     @IBOutlet var projectName: UITextField!
     @IBOutlet var projectDescription: UITextField!
@@ -17,6 +17,8 @@ class PLAddProjectViewController: UIViewController,UISearchBarDelegate,UITextFie
     var  diplayMembersPopover:PLDisplayMembersPopover!
     var activityIndicatorView:UIActivityIndicatorView!
     var teamMemberViewModel:PLTeamMemberModelView!
+    var projectDetails:[String]!
+    var projectDetailViewModel:PLProjectDetailViewModel!
    
     
     @IBOutlet var contributorsTableView: UITableView!
@@ -31,6 +33,7 @@ class PLAddProjectViewController: UIViewController,UISearchBarDelegate,UITextFie
         addDoneBarButtonItem()
         projectName.delegate = self
         
+        
         // Do any additional setup after loading the view.
     }
     
@@ -38,6 +41,14 @@ class PLAddProjectViewController: UIViewController,UISearchBarDelegate,UITextFie
         super.viewWillAppear(true)
         self.projectName.becomeFirstResponder()
         addActivityIndicatorView()
+        if let _ = projectDetails
+        {
+            self.projectName.text = projectDetails![1]
+            self.projectName.userInteractionEnabled = false
+            self.projectDescription.text = projectDetails![2]
+            self.projectDescription.userInteractionEnabled = false
+            self.contributorsSearchField.prompt = "Add Contributors to \(self.projectName.text!)"
+       }
     }
     
     func  addActivityIndicatorView() {
@@ -64,9 +75,18 @@ class PLAddProjectViewController: UIViewController,UISearchBarDelegate,UITextFie
     {
         activityIndicatorView.startAnimating()
         addProjectViewModel.addObserver(self, forKeyPath:"isProjectCreated", options: NSKeyValueObservingOptions.New, context:nil)
+        if projectDetails == nil{
         if addProjectViewModel.validateProjectDetails(projectName.text!){
             addProjectViewModel.createNewProjectWith(projectName.text!,description:projectDescription.text!)
         }else {activityIndicatorView.stopAnimating();showAlertWithMessage("error!", message:"enter Project name")}
+        }
+        else{
+            
+            addProjectViewModel.addContributorsToExistingProject(projectDetails![0]){[weak self] members in
+                
+                self!.projectDetailViewModel.contributors.appendContentsOf(members)
+            }
+        }
     }
     
     override func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutablePointer<Void>) {
@@ -79,7 +99,7 @@ class PLAddProjectViewController: UIViewController,UISearchBarDelegate,UITextFie
             
               self.navigationController?.popViewControllerAnimated(true)
               
-                self.cleanUp()
+             self.cleanUp()
             
             }
             else{ // Handling Alert Messages for Login
@@ -168,7 +188,6 @@ class PLAddProjectViewController: UIViewController,UISearchBarDelegate,UITextFie
             
             diplayMembersPopover.dismissViewControllerAnimated(true, completion:nil)
         }
-        
     }
 
      func numberOfSectionsInTableView(tableView: UITableView) -> Int {
@@ -204,9 +223,17 @@ class PLAddProjectViewController: UIViewController,UISearchBarDelegate,UITextFie
     
     func reloadTableViewWithComtributors(member:PLTeamMember){
         
-            addProjectViewModel.andOrRemoveContributor(member)
+           if  addProjectViewModel.andOrRemoveContributor(member)
+           {
+                dismissPopover()
+                contributorsTableView.reloadData()
+           }
+           else{
             
-            contributorsTableView.reloadData()
+               dismissPopover()
+               showAlertWithMessage("Failed to add \(member.fullName)", message: "\(member.fullName) is already contributing to ")
+          }
+        
     }
     
     func cleanUp(){
@@ -218,4 +245,14 @@ class PLAddProjectViewController: UIViewController,UISearchBarDelegate,UITextFie
         self.contributorsTableView.reloadData()
 
     }
+    
+    func check(details:[String],detailViewModel:PLProjectDetailViewModel)
+    {
+         projectDetails = details
+         projectDetailViewModel = detailViewModel
+        
+    }
+    
+  
+
 }

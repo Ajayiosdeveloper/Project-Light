@@ -65,6 +65,14 @@ class PLAssignment: NSObject {
     var assineesUserIds:[UInt] = [UInt]()
 }
 
+class PLSharedManager:NSObject{
+    
+    static var manager:PLSharedManager = PLSharedManager()
+    
+    var existingContributorsList:[PLTeamMember] = [PLTeamMember]()
+    
+}
+
 func ==(lhs:PLTeamMember,rhs:PLTeamMember) -> Bool {
     
     return (lhs.fullName == rhs.fullName && lhs.memberId == rhs.memberId)

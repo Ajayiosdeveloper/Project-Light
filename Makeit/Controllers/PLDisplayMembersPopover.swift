@@ -55,31 +55,34 @@ class PLDisplayMembersPopover: UITableViewController {
 
   override  func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
     
-      if tableView.cellForRowAtIndexPath(indexPath)?.accessoryType == .Checkmark
-      {
-          tableView.cellForRowAtIndexPath(indexPath)?.accessoryType = .None
-        
-          // selectedRows.removeObject(indexPath.row)
-        
-           let contributor =  teamMemberModelView.remove(indexPath.row)
-        
-         if let _ = delegate{ delegate?.reloadTableViewWithComtributors(contributor) }
-        
-      }
-      else{
-             tableView.cellForRowAtIndexPath(indexPath)?.accessoryType = .Checkmark
-        
-            // selectedRows.addObject(indexPath.row)
-            // callDelegateWithSelectedRows(selectedRows)
-        
-            let contributor  = teamMemberModelView.add(indexPath.row)
-        
-         if let _ = delegate{ delegate?.reloadTableViewWithComtributors(contributor) }
-        
-        }
+            if teamMemberModelView.isContributorAlreadyAdded(indexPath.row)
+            {
+                let name = teamMemberModelView.titleOfRowAtIndexPath(indexPath.row)
+                 showAlertWithMessage("Failed to add \(name)", message: "\(name) is already contributing to \("Project")")
+            }
+            else{
+                
+                if tableView.cellForRowAtIndexPath(indexPath)?.accessoryType == .Checkmark
+                {
+                    tableView.cellForRowAtIndexPath(indexPath)?.accessoryType = .None
+                    
+                    let contributor =  teamMemberModelView.remove(indexPath.row)
+                    
+                    if let _ = delegate{ delegate?.reloadTableViewWithComtributors(contributor) }
+                    
+                }
+                else{
+                    tableView.cellForRowAtIndexPath(indexPath)?.accessoryType = .Checkmark
+                    
+                    let contributor  = teamMemberModelView.add(indexPath.row)
+                    
+                    if let _ = delegate{ delegate?.reloadTableViewWithComtributors(contributor) }
+                    
+                }
+            }
     
-    
-    }
+   
+   }
     
     override func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
         
@@ -90,7 +93,22 @@ class PLDisplayMembersPopover: UITableViewController {
     }
     
  
-    
+    func showAlertWithMessage(title:String,message:String)
+    {
+        if #available(iOS 9, *)
+        {
+            let alertController = UIAlertController(title:title, message:message, preferredStyle: UIAlertControllerStyle.Alert)
+            let action = UIAlertAction(title:"Ok", style: UIAlertActionStyle.Default, handler: { (action) -> Void in
+            })
+            alertController.addAction(action)
+            self.presentViewController(alertController, animated:true, completion:nil)
+        }
+        else{
+            let alert = UIAlertView(title: title, message: message, delegate:nil, cancelButtonTitle:nil, otherButtonTitles:"Ok") as UIAlertView
+            alert.show()
+        }
+        
+    }
    
     
 }

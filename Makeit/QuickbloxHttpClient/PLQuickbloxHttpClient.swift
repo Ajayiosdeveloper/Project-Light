@@ -217,9 +217,11 @@ class PLQuickbloxHttpClient
             
             print("PRAISE THE LORD")
             
+            completion(true)
+            
             }) { (res) in
                 
-                print("Handle Error")
+                completion(false)
         }
     }
     
