@@ -155,7 +155,9 @@ class PLAddProjectViewController: UIViewController,UISearchBarDelegate,UITextFie
         }
         if searchText.characters.count == 0
         {
-            dismissPopover()
+           dismissPopover()
+            
+        
         }
     }
     
