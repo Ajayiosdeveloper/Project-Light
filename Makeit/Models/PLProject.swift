@@ -70,6 +70,7 @@ class PLSharedManager:NSObject{
     static var manager:PLSharedManager = PLSharedManager()
     
     var existingContributorsList:[PLTeamMember] = [PLTeamMember]()
+    var projectName:String = ""
     
 }
 

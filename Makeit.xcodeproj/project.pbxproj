@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		800318131CCF7D180084514A /* WYPopoverController.m in Sources */ = {isa = PBXBuildFile; fileRef = 800318101CCF7D180084514A /* WYPopoverController.m */; };
+		800318141CCF7D180084514A /* WYStoryboardPopoverSegue.m in Sources */ = {isa = PBXBuildFile; fileRef = 800318121CCF7D180084514A /* WYStoryboardPopoverSegue.m */; };
 		803E03F11CBCC87E00C59233 /* Quickblox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 803E03EF1CBCC87E00C59233 /* Quickblox.framework */; };
 		803E03F21CBCC87E00C59233 /* QuickbloxWebRTC.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 803E03F01CBCC87E00C59233 /* QuickbloxWebRTC.framework */; };
 		803E03F41CBCC89900C59233 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 803E03F31CBCC89900C59233 /* Accelerate.framework */; };
@@ -52,6 +54,7 @@
 		809F96E01CBCC35000DD1FE9 /* MakeitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 809F96DF1CBCC35000DD1FE9 /* MakeitTests.swift */; };
 		809F96EB1CBCC35000DD1FE9 /* MakeitUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 809F96EA1CBCC35000DD1FE9 /* MakeitUITests.swift */; };
 		80BB3EF61CC4F4BE009FAE11 /* PLProject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80BB3EF51CC4F4BE009FAE11 /* PLProject.swift */; };
+		80D3EB1F1CD08A1E00D425C6 /* UserImage.png in Resources */ = {isa = PBXBuildFile; fileRef = 80D3EB1E1CD08A1E00D425C6 /* UserImage.png */; };
 		80DE422D1CCB8A19007C8DDB /* ex.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 80DE422C1CCB8A19007C8DDB /* ex.jpg */; };
 		80DE821D1CC0D87700D5017A /* PLUserSignupAndLoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80DE821C1CC0D87700D5017A /* PLUserSignupAndLoginViewModel.swift */; };
 /* End PBXBuildFile section */
@@ -74,6 +77,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		8003180F1CCF7D180084514A /* WYPopoverController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WYPopoverController.h; sourceTree = "<group>"; };
+		800318101CCF7D180084514A /* WYPopoverController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WYPopoverController.m; sourceTree = "<group>"; };
+		800318111CCF7D180084514A /* WYStoryboardPopoverSegue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WYStoryboardPopoverSegue.h; sourceTree = "<group>"; };
+		800318121CCF7D180084514A /* WYStoryboardPopoverSegue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WYStoryboardPopoverSegue.m; sourceTree = "<group>"; };
 		803E03EF1CBCC87E00C59233 /* Quickblox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Quickblox.framework; sourceTree = "<group>"; };
 		803E03F01CBCC87E00C59233 /* QuickbloxWebRTC.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = QuickbloxWebRTC.framework; sourceTree = "<group>"; };
 		803E03F31CBCC89900C59233 /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
@@ -132,6 +139,7 @@
 		809F96EA1CBCC35000DD1FE9 /* MakeitUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MakeitUITests.swift; sourceTree = "<group>"; };
 		809F96EC1CBCC35000DD1FE9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		80BB3EF51CC4F4BE009FAE11 /* PLProject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLProject.swift; sourceTree = "<group>"; };
+		80D3EB1E1CD08A1E00D425C6 /* UserImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = UserImage.png; path = Makeit/UserImage.png; sourceTree = "<group>"; };
 		80DE422C1CCB8A19007C8DDB /* ex.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = ex.jpg; sourceTree = "<group>"; };
 		80DE821C1CC0D87700D5017A /* PLUserSignupAndLoginViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLUserSignupAndLoginViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -175,6 +183,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		8003180E1CCF7D180084514A /* WYpopoverController */ = {
+			isa = PBXGroup;
+			children = (
+				8003180F1CCF7D180084514A /* WYPopoverController.h */,
+				800318101CCF7D180084514A /* WYPopoverController.m */,
+				800318111CCF7D180084514A /* WYStoryboardPopoverSegue.h */,
+				800318121CCF7D180084514A /* WYStoryboardPopoverSegue.m */,
+			);
+			path = WYpopoverController;
+			sourceTree = "<group>";
+		};
 		803E03EE1CBCC85600C59233 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -219,6 +238,7 @@
 		806D4ADC1CC20FCD0054A9AF /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				8003180E1CCF7D180084514A /* WYpopoverController */,
 				806D4AD81CC2078D0054A9AF /* AppleReachability */,
 				806D4ADD1CC210910054A9AF /* SVProgressHUD */,
 			);
@@ -300,6 +320,7 @@
 				809F96DE1CBCC35000DD1FE9 /* MakeitTests */,
 				809F96E91CBCC35000DD1FE9 /* MakeitUITests */,
 				809F96C81CBCC35000DD1FE9 /* Products */,
+				80D3EB1E1CD08A1E00D425C6 /* UserImage.png */,
 				80DE422C1CCB8A19007C8DDB /* ex.jpg */,
 				803E04071CBCD90100C59233 /* Makeit-Bridging-Header.h */,
 				803E03EE1CBCC85600C59233 /* Frameworks */,
@@ -470,6 +491,7 @@
 			files = (
 				80DE422D1CCB8A19007C8DDB /* ex.jpg in Resources */,
 				809F96D51CBCC35000DD1FE9 /* LaunchScreen.storyboard in Resources */,
+				80D3EB1F1CD08A1E00D425C6 /* UserImage.png in Resources */,
 				809F96D21CBCC35000DD1FE9 /* Assets.xcassets in Resources */,
 				809F96D01CBCC35000DD1FE9 /* Main.storyboard in Resources */,
 				806D4AEA1CC210910054A9AF /* SVProgressHUD.bundle in Resources */,
@@ -507,6 +529,7 @@
 				80DE821D1CC0D87700D5017A /* PLUserSignupAndLoginViewModel.swift in Sources */,
 				806CA5AF1CC4B27F00E401A1 /* PLAddProjectViewController.swift in Sources */,
 				80879D411CC8E71D00B41D2D /* PLProjectAssignmentViewModel.swift in Sources */,
+				800318141CCF7D180084514A /* WYStoryboardPopoverSegue.m in Sources */,
 				808AA2ED1CC6060800685226 /* PLDynamicEngine.swift in Sources */,
 				80879D3B1CC8DC1C00B41D2D /* PLProjectCommentViewController.swift in Sources */,
 				807FC87C1CCB47AF0094112E /* PLTeamMemberDetailViewModel.swift in Sources */,
@@ -515,6 +538,7 @@
 				8078A46D1CC88C11008AC4DD /* PLProjectDetailViewModel.swift in Sources */,
 				806D4AD51CC1FF110054A9AF /* PLQuickbloxHttpClient.swift in Sources */,
 				807FC87A1CCB47920094112E /* PLTeamMemberDetailsTableViewController.swift in Sources */,
+				800318131CCF7D180084514A /* WYPopoverController.m in Sources */,
 				80879D3D1CC8DC5300B41D2D /* PLProjectCommentViewModel.swift in Sources */,
 				8073C8D01CC744DE00AE4CB6 /* PLTeamMemberModelView.swift in Sources */,
 				806D4AF41CC260080054A9AF /* PLProjectsViewController.swift in Sources */,
@@ -668,6 +692,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Makeit",
@@ -681,8 +706,9 @@
 					"-ObjC",
 					"-lxml2",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.ExilantTechnologies.Makeit;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ExilantTechnologies.Make;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Makeit-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
@@ -694,6 +720,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Makeit",
@@ -707,8 +734,9 @@
 					"-ObjC",
 					"-lxml2",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.ExilantTechnologies.Makeit;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ExilantTechnologies.Make;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Makeit-Bridging-Header.h";
 			};
 			name = Release;

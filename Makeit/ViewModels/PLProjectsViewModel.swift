@@ -120,4 +120,45 @@ class PLProjectsViewModel: NSObject {
             else { completion(nil) }
         }
     }
+    
+    func uploadUserAvatar(image:UIImage,completion:(Bool)->Void) {
+        
+        quickBloxClient.uploadProfilePicture(image){ res, blobId in
+            
+            if res
+            {
+                let avatarId = NSInteger(blobId!)
+                
+                NSUserDefaults.standardUserDefaults().setInteger(avatarId, forKey:"AVATAR_ID")
+                
+                completion(true)
+            }
+            else{
+                completion(false)
+            }
+        }
+        
+       
+    }
+    
+    
+    
+    func fetchUserAvatar(completion:(UIImage?)->Void) {
+        
+        let blobId = NSUserDefaults.standardUserDefaults().objectForKey("AVATAR_ID") as! NSInteger
+        
+        let blobInt = UInt(blobId)
+        
+        quickBloxClient.fetchUserAvatarWithBlobId(blobInt) { result in
+            
+            if result != nil {
+            
+               let image = UIImage(data:result!)
+                
+                completion(image)
+            }
+            else{completion(nil)}
+        }
+        
+    }
 }

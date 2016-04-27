@@ -9,7 +9,7 @@
 import UIKit
 
 
-class PLAddProjectViewController: UIViewController,UISearchBarDelegate,UITextFieldDelegate,UIPopoverPresentationControllerDelegate,UITableViewDelegate,UITableViewDataSource,PLContributorTableViewDelegate,ProjectDetailsDelegate {
+class PLAddProjectViewController: UIViewController,UISearchBarDelegate,UITextFieldDelegate,UITableViewDelegate,UITableViewDataSource,PLContributorTableViewDelegate,ProjectDetailsDelegate {
     
     @IBOutlet var projectName: UITextField!
     @IBOutlet var projectDescription: UITextField!
@@ -19,9 +19,10 @@ class PLAddProjectViewController: UIViewController,UISearchBarDelegate,UITextFie
     var teamMemberViewModel:PLTeamMemberModelView!
     var projectDetails:[String]!
     var projectDetailViewModel:PLProjectDetailViewModel!
-   
-    
+    var plPopOverController:WYPopoverController?
+    @IBOutlet var popoverbutton: UIButton!
     @IBOutlet var contributorsTableView: UITableView!
+   
     
     lazy var addProjectViewModel:PLAddProjectViewModel = {
      
@@ -148,47 +149,16 @@ class PLAddProjectViewController: UIViewController,UISearchBarDelegate,UITextFie
                 
                 if let _ = members{
                 self!.teamMemberViewModel = PLTeamMemberModelView(searchMembers: members!)
-                self!.performSegueWithIdentifier("DisplayMembersPopover", sender:self)
+                self!.showPopOver()
                 }else{print("No matches Found")}
                 
             }
         }
         if searchText.characters.count == 0
         {
-           dismissPopover()
+           
             
         
-        }
-    }
-    
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        
-        diplayMembersPopover = segue.destinationViewController as? PLDisplayMembersPopover
-        
-        diplayMembersPopover.delegate = self
-        
-        if #available(iOS 8.0, *) {
-            
-             diplayMembersPopover.teamMemberModelView = teamMemberViewModel;
-             diplayMembersPopover.popoverPresentationController?.delegate = self
-             diplayMembersPopover.popoverPresentationController?.permittedArrowDirections = .Down
-            } else {
-            // Fallback on earlier versions
-        }
-    }
-    
-    
-    @available(iOS 8.0, *)
-    func adaptivePresentationStyleForPresentationController(controller: UIPresentationController) -> UIModalPresentationStyle {
-        
-        return .None
-    }
-    
-    func dismissPopover()  {
-       
-        if let _ = diplayMembersPopover{
-            
-            diplayMembersPopover.dismissViewControllerAnimated(true, completion:nil)
         }
     }
 
@@ -227,12 +197,12 @@ class PLAddProjectViewController: UIViewController,UISearchBarDelegate,UITextFie
         
            if  addProjectViewModel.andOrRemoveContributor(member)
            {
-                dismissPopover()
+                //dismissPopover()
                 contributorsTableView.reloadData()
            }
            else{
             
-               dismissPopover()
+               //dismissPopover()
                showAlertWithMessage("Failed to add \(member.fullName)", message: "\(member.fullName) is already contributing to ")
           }
         
@@ -256,5 +226,33 @@ class PLAddProjectViewController: UIViewController,UISearchBarDelegate,UITextFie
     }
     
   
+    func showPopOver() {
+        
+        if diplayMembersPopover == nil
+        {
+             diplayMembersPopover = self.storyboard?.instantiateViewControllerWithIdentifier("PLDisplayMembersPopover") as? PLDisplayMembersPopover
+            setUpNavigationBarForPopover()
+        }
+        diplayMembersPopover.delegate = self
+        diplayMembersPopover.teamMemberModelView = teamMemberViewModel;
+         plPopOverController!.popoverLayoutMargins = UIEdgeInsetsMake(10, 10, 10, 10);
+        plPopOverController?.popoverContentSize = CGSizeMake(300, 200)
+        plPopOverController!.wantsDefaultContentAppearance = true;
+        plPopOverController?.presentPopoverFromRect(popoverbutton.bounds, inView: popoverbutton, permittedArrowDirections: WYPopoverArrowDirection.Down, animated: true)
+    }
+    
+    func setUpNavigationBarForPopover()
+    {
+        diplayMembersPopover.title = "Select Contributors"
+        diplayMembersPopover.modalInPopover = false
+        diplayMembersPopover.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Done, target:self, action:#selector(PLAddProjectViewController.close))
+        let navigationController = UINavigationController(rootViewController: diplayMembersPopover)
+         plPopOverController = WYPopoverController(contentViewController:navigationController)
+    }
+    
+    func close(){
+        
+        plPopOverController?.dismissPopoverAnimated(true)
+    }
 
 }

@@ -431,11 +431,6 @@
                                 <state key="normal">
                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
-                                <connections>
-                                    <segue destination="4kt-Ma-JUd" kind="popoverPresentation" identifier="DisplayMembersPopover" popoverAnchorView="I1F-3H-Yzp" id="GKb-rH-Ogt">
-                                        <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
-                                    </segue>
-                                </connections>
                             </button>
                             <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xrQ-bo-pOw">
                                 <rect key="frame" x="0.0" y="556" width="600" height="44"/>
@@ -471,6 +466,7 @@
                     <connections>
                         <outlet property="contributorsSearchField" destination="YUb-yP-6MQ" id="1vN-VS-jl1"/>
                         <outlet property="contributorsTableView" destination="ite-8R-ki2" id="Z4b-ZF-0tc"/>
+                        <outlet property="popoverbutton" destination="I1F-3H-Yzp" id="KVX-zs-BAZ"/>
                         <outlet property="projectDescription" destination="3hp-HR-aWq" id="3kb-Th-iuR"/>
                         <outlet property="projectName" destination="IsS-uh-ETE" id="tta-fB-peX"/>
                         <outlet property="searchDisplayController" destination="ac1-lL-Nkh" id="Lg3-rf-1i9"/>
@@ -488,7 +484,7 @@
             </objects>
             <point key="canvasLocation" x="781" y="-211"/>
         </scene>
-        <!--Display Members Popover-->
+        <!--Select Contributors-->
         <scene sceneID="AO2-50-gmG">
             <objects>
                 <tableViewController storyboardIdentifier="PLDisplayMembersPopover" id="4kt-Ma-JUd" customClass="PLDisplayMembersPopover" customModule="Makeit" customModuleProvider="target" sceneMemberID="viewController">
@@ -521,6 +517,7 @@
                         </connections>
                     </tableView>
                     <toolbarItems/>
+                    <navigationItem key="navigationItem" title="Select Contributors" id="mYW-eg-1wC"/>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="membersTableView" destination="xW4-us-PkT" id="kd2-Jv-rpP"/>
@@ -528,7 +525,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rf4-4Z-JIC" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1496" y="-211"/>
+            <point key="canvasLocation" x="1708" y="-211"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="bUm-6Y-YCM">

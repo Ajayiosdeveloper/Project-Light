@@ -48,6 +48,8 @@ class PLAddProjectViewModel: NSObject {
                     
                    let qbCustomObject = QBCOCustomObject()
                    qbCustomObject.className = "PLProjectMember"
+                   qbCustomObject.fields?.setObject(name, forKey:"projectName")
+                   qbCustomObject.fields?.setObject(description, forKey:"subTitle")
                    qbCustomObject.fields?.setObject(each.fullName, forKey:"name")
                    qbCustomObject.fields?.setObject(each.memberUserId, forKey: "member_User_Id")
                    qbCustomObject.fields?.setObject(projectId, forKey:"_parent_id")

@@ -185,6 +185,7 @@ class PLQuickbloxHttpClient
         let customObject = QBCOCustomObject()
         customObject.className = "PLProjectCommitment"
         customObject.fields?.setValue(name, forKey: "name")
+        customObject.fields?.setValue(PLSharedManager.manager.projectName, forKey:"projectName")
         customObject.fields?.setValue(description, forKey: "description")
         customObject.fields?.setValue(date, forKey:"targetDate")
         customObject.fields?.setValue(id, forKey:"_parent_id")
@@ -206,6 +207,7 @@ class PLQuickbloxHttpClient
         
         let customObject = QBCOCustomObject()
         customObject.className = "PLProjectAssignment"
+        customObject.fields?.setObject(PLSharedManager.manager.projectName, forKey: "projectName")
         customObject.fields?.setValue(name, forKey: "name")
         customObject.fields?.setValue(description, forKey: "description")
         customObject.fields?.setValue(date, forKey:"targetDate")
@@ -270,6 +272,44 @@ class PLQuickbloxHttpClient
         }
         
     }
+    
+    
+    func uploadProfilePicture(image:UIImage,completion:(Bool,UInt?)->Void){
+        
+        let imageData = UIImagePNGRepresentation(image)
+        
+        let avatarUnique = QBSession.currentSession().currentUser?.ID
+        
+        QBRequest.TUploadFile(imageData!, fileName: "MYAVATAR\(avatarUnique!)", contentType: "image/png", isPublic: true, successBlock: { (_, blob) in
+            
+            completion(true,blob.ID)
+            
+            }, statusBlock: { (_, _) in
+                
+                
+            }) { (_) in
+                
+               completion(false,nil)
+        }
+    }
+    
+    func fetchUserAvatarWithBlobId(id:UInt,completion:(NSData?)->Void)
+    {
+        
+        QBRequest.downloadFileWithID(id, successBlock: { (_, data) in
+            
+            completion(data)
+            
+            }, statusBlock: { (_, _) in
+                
+            }) { (_) in
+                
+               completion(nil)
+        }
+    }
+    
+    
+    
     
     
 }

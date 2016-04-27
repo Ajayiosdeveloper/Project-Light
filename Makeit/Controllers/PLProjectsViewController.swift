@@ -9,7 +9,7 @@
 import UIKit
 
 
-class PLProjectsViewController: UITableViewController {
+class PLProjectsViewController: UITableViewController,UIImagePickerControllerDelegate,UINavigationControllerDelegate {
     
     @IBOutlet var projectTableView: UITableView!
     var selectedProjectId:String?
@@ -20,21 +20,36 @@ class PLProjectsViewController: UITableViewController {
     var activityIndicatorView:UIActivityIndicatorView!
     var animateCell:[Bool] = [Bool]()
     var observerContext = 0
-    override func viewDidLoad() {
+    var profilePicSettings:UIBarButtonItem!
+    var profilePicSettingsCustomView:UIButton!
+    var plPhotoPickerController:UIImagePickerController!
+
+  override func viewDidLoad() {
         super.viewDidLoad()
-                self.navigationItem.title = "Projects"
+        self.navigationItem.title = "Projects"
         addLogoutBarButtonItem()
         addNewProject()
+       projectViewModel = PLProjectsViewModel()
+       projectViewModel.fetchUserAvatar(){[weak self] avatar in
         
+        if avatar != nil{
+            self!.profilePicSettingsCustomView.setBackgroundImage(avatar!, forState: .Normal)
+        }
+        else{self!.profilePicSettingsCustomView.setBackgroundImage(UIImage(named:"UserImage.png"), forState: .Normal)}
     }
+
+      print(NSUserDefaults.standardUserDefaults().objectForKey("AVATAR_ID"))
+    
+}
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
        
-        projectViewModel = PLProjectsViewModel()
+        //projectViewModel = PLProjectsViewModel()
         projectViewModel.addObserver(self, forKeyPath:"projectList", options: NSKeyValueObservingOptions.New, context:&observerContext)
         projectViewModel.fetchProjectsFromRemote()
         addActivityIndicatorView()
+       
     }
     
     func  addActivityIndicatorView() {
@@ -49,17 +64,74 @@ class PLProjectsViewController: UITableViewController {
     }
     
     func addLogoutBarButtonItem(){
-        
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Logout", style: UIBarButtonItemStyle.Plain, target:self, action:#selector(PLProjectsViewController.performLogout))
-         }
+       
+       profilePicSettingsCustomView = UIButton(type: .Custom)
+       profilePicSettingsCustomView.frame = CGRectMake(0, 0, 30, 30)
+       profilePicSettingsCustomView.addTarget(self, action:#selector(PLProjectsViewController.showSettingsActionSheet), forControlEvents: UIControlEvents.TouchUpInside)
+       profilePicSettingsCustomView.setBackgroundImage(UIImage(named:"UserImage.png"), forState: UIControlState.Normal)
+       profilePicSettings = UIBarButtonItem(customView:profilePicSettingsCustomView)
+       self.navigationItem.leftBarButtonItem = profilePicSettings
+    }
     
-    func performLogout()
+    func showSettingsActionSheet()
     {
-        if observerContext == 0 {projectViewModel.removeObserver(self, forKeyPath:"projectList")}
-        projectViewModel.performLogout()
-        self.projectTableView.reloadData()
-        self.navigationController?.popToRootViewControllerAnimated(true)
-      
+        
+        if #available(iOS 8.0, *) {
+            let settingsActionSheet = UIAlertController(title:"Upload Profile", message:"", preferredStyle: UIAlertControllerStyle.ActionSheet)
+            settingsActionSheet.addAction(UIAlertAction(title:"Photo Library", style: UIAlertActionStyle.Default, handler: {[weak self] (action) in
+                
+                if self!.plPhotoPickerController == nil
+                {
+                    self!.plPhotoPickerController = UIImagePickerController()
+                    self!.plPhotoPickerController.delegate = self
+                }
+                self!.plPhotoPickerController.sourceType = UIImagePickerControllerSourceType.PhotoLibrary
+                self!.plPhotoPickerController.allowsEditing = true
+                
+                self?.navigationController?.presentViewController(self!.plPhotoPickerController, animated: true, completion:nil)
+                
+            }))
+            settingsActionSheet.addAction(UIAlertAction(title:"Camera", style: UIAlertActionStyle.Default, handler: {[weak self] (action) in
+                if self!.plPhotoPickerController == nil
+                {
+                    self!.plPhotoPickerController = UIImagePickerController()
+                    self!.plPhotoPickerController.delegate = self
+
+                }
+                 self!.plPhotoPickerController.sourceType = UIImagePickerControllerSourceType.Camera
+                 self!.plPhotoPickerController.allowsEditing = true
+                 //self?.navigationController?.presentViewController(self!.plPhotoPickerController, animated: true, completion:nil)
+            }))
+
+          
+            
+            settingsActionSheet.addAction(UIAlertAction(title:"Logout", style: UIAlertActionStyle.Default, handler: {[weak self] (action) in
+                
+                 if self!.observerContext == 0 {self!.projectViewModel.removeObserver(self!, forKeyPath:"projectList")}
+                 self!.projectViewModel.performLogout()
+                 self!.projectTableView.reloadData()
+                 self!.navigationController?.popToRootViewControllerAnimated(true)
+
+            }))
+            
+            settingsActionSheet.addAction(UIAlertAction(title:"Cancel", style: UIAlertActionStyle.Cancel, handler: { (action) in
+                
+                print("Cancel")
+            }))
+
+           if UIDevice.currentDevice().userInterfaceIdiom == .Pad
+           {
+             let alertPopoverPresentationController = settingsActionSheet.popoverPresentationController;
+             let source = profilePicSettings.valueForKey("view")
+             alertPopoverPresentationController!.sourceRect = (source?.frame)!
+             alertPopoverPresentationController!.sourceView = self.view;
+           }
+            
+            self.presentViewController(settingsActionSheet, animated: true, completion:nil)
+            
+        } else {
+            // Fallback on earlier versions
+        }
     }
     
     func addNewProject()
@@ -103,6 +175,7 @@ class PLProjectsViewController: UITableViewController {
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
         let selected = projectViewModel.didSelectRowAtIndex(indexPath.row) as PLProject
+        PLSharedManager.manager.projectName = selected.name
         selectedProjectId = selected.projectId
         selectedProjectName = selected.name
         selectedProjectDescription = selected.subTitle
@@ -182,5 +255,61 @@ class PLProjectsViewController: UITableViewController {
         detailViewController.projectDetailViewModel = projectDetailViewModel
     }
   
+    func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
+        
+        var capturedImage = info[UIImagePickerControllerEditedImage] as! UIImage
+        
+        capturedImage = resizeImage(capturedImage, width: 4.0, height: 4.0)
+        SVProgressHUD.showWithStatus("Uploading")
+        projectViewModel.uploadUserAvatar(capturedImage){[weak self] result in
+            if result{print("Succesfully uploaded"); SVProgressHUD.dismiss();
+                capturedImage = self!.resizeImage(capturedImage, width: 4.0, height: 4.0)
+                let buttonView = self?.profilePicSettings.valueForKey("view") as! UIView
+                buttonView.layer.cornerRadius = 10
+                self!.profilePicSettingsCustomView.setBackgroundImage(capturedImage, forState: UIControlState.Normal)
+            }
+            else{print("Error!");SVProgressHUD.dismiss()}
+        }
+        
+        picker.dismissViewControllerAnimated(true, completion:nil)
+    }
+    
+    
+    
+    func imagePickerControllerDidCancel(picker: UIImagePickerController) {
+        
+        print("Cancelled")
+        
+        picker.dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    func resizeImage(image:UIImage,width:CGFloat,height:CGFloat)->UIImage
+    {
+        let rect = CGRectMake(0, 0, image.size.width/width, image.size.height/height)
+        UIGraphicsBeginImageContext(rect.size)
+        image.drawInRect(rect)
+        let resizedImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        let compressedImageData = UIImageJPEGRepresentation(resizedImage, 0.1)
+        let image =  UIImage(data:compressedImageData!)!
+        
+        return maskRoundedImage(image, radius: 12)
+        
+    }
    
+    func maskRoundedImage(image: UIImage, radius: Float) -> UIImage {
+        let imageView: UIImageView = UIImageView(image: image)
+        var layer: CALayer = CALayer()
+        layer = imageView.layer
+        
+        layer.masksToBounds = true
+        layer.cornerRadius = CGFloat(radius)
+        
+        UIGraphicsBeginImageContext(imageView.bounds.size)
+        layer.renderInContext(UIGraphicsGetCurrentContext()!)
+        let roundedImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        
+        return roundedImage
+    }
 }
