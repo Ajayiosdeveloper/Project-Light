@@ -30,17 +30,9 @@ class PLProjectsViewController: UITableViewController,UIImagePickerControllerDel
         addLogoutBarButtonItem()
         addNewProject()
        projectViewModel = PLProjectsViewModel()
-       projectViewModel.fetchUserAvatar(){[weak self] avatar in
-        
-        if avatar != nil{
-            self!.profilePicSettingsCustomView.setBackgroundImage(avatar!, forState: .Normal)
-        }
-        else{self!.profilePicSettingsCustomView.setBackgroundImage(UIImage(named:"UserImage.png"), forState: .Normal)}
-    }
-
-      print(NSUserDefaults.standardUserDefaults().objectForKey("AVATAR_ID"))
+       print(QBSession.currentSession().currentUser?.customData)
     
-}
+    }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
@@ -49,7 +41,14 @@ class PLProjectsViewController: UITableViewController,UIImagePickerControllerDel
         projectViewModel.addObserver(self, forKeyPath:"projectList", options: NSKeyValueObservingOptions.New, context:&observerContext)
         projectViewModel.fetchProjectsFromRemote()
         addActivityIndicatorView()
-       
+        projectViewModel.fetchUserAvatar(){[weak self] avatar in
+            
+            if avatar != nil{
+                self!.profilePicSettingsCustomView.setBackgroundImage(avatar!, forState: .Normal)
+            }
+            else{self!.profilePicSettingsCustomView.setBackgroundImage(UIImage(named:"UserImage.png"), forState: .Normal)}
+        }
+
     }
     
     func  addActivityIndicatorView() {
@@ -131,6 +130,7 @@ class PLProjectsViewController: UITableViewController,UIImagePickerControllerDel
             
         } else {
             // Fallback on earlier versions
+            
         }
     }
     
@@ -153,38 +153,101 @@ class PLProjectsViewController: UITableViewController,UIImagePickerControllerDel
    //MARK: UITableView DataSource
     
    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return 1
+        return 3
     }
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        return projectViewModel.rowsCount()
+        if section == 0{
+             return projectViewModel.rowsCount()
+        }
+        else if section == 1{
+            
+            return 0
+        }
+        
+        else if section == 2{
+            
+            return 1
+        }
     
+        return 0
     }
     
    override  func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCellWithIdentifier("Cell")! as UITableViewCell
+            if indexPath.section == 0
+            {
             cell.textLabel?.text = projectViewModel.titleAtIndexPath(indexPath.row)
+             cell.textLabel?.textColor = UIColor.blackColor()
             cell.detailTextLabel?.text = projectViewModel.subTitleAtIndexPath(indexPath.row)
+            }
+          if indexPath.section == 1{
+        
+            }
+    
+         if indexPath.section == 2{
+        
+             cell.textLabel?.text = "Improve Profile"
+             cell.textLabel?.textColor = enableButtonColor
+             cell.detailTextLabel?.text = ""
+            }
         return cell
     }
     
+
     
+    override func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        
+        var titleForHeader:String = ""
+        
+        if section == 0{
+            titleForHeader = "  Created Projects"
+            return hedaerViewForTableView(titleForHeader)
+        }
+        else if section == 1
+        {
+            titleForHeader = "  Contributing Projects"
+             return hedaerViewForTableView(titleForHeader)
+        }
+        else if section == 2{
+             let name = QBSession.currentSession().currentUser?.fullName
+             titleForHeader = "  Hi \(name!) ! Love to improve profile"
+             return hedaerViewForTableView(titleForHeader)
+        }
+
+        return nil
+    }
+    
+    override func tableView(tableView: UITableView, titleForFooterInSection section: Int) -> String? {
+        
+        if section == 2{
+            
+            let titleForFooter = "By improving your profile, you will make yourself more closer to other Makeit users."
+
+            return titleForFooter
+        }
+        
+        return nil
+    }
+    
+    override func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 40
+    }
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
+        if indexPath.section == 2{
+            
+            print("Improve Profile ViewController")
+            
+        }else{
         let selected = projectViewModel.didSelectRowAtIndex(indexPath.row) as PLProject
         PLSharedManager.manager.projectName = selected.name
         selectedProjectId = selected.projectId
         selectedProjectName = selected.name
         selectedProjectDescription = selected.subTitle
-        print(selected.name)
-        print(selected.subTitle)
-        print(selected.createdBy)
-        print(selected.projectId)
-        print(selected.parentId)
-        
         projectViewModel.getProjectMembersList(selectedProjectId!){ resultedMembers in
             
             if let _ = resultedMembers{
@@ -192,7 +255,7 @@ class PLProjectsViewController: UITableViewController,UIImagePickerControllerDel
               self.performSegueWithIdentifier("toProjectDetails", sender: resultedMembers)
             }
         }
-       
+        }
         
     }
     override func tableView(tableView: UITableView, commitEditingStyle editingStyle:
@@ -218,6 +281,8 @@ class PLProjectsViewController: UITableViewController,UIImagePickerControllerDel
     }
     
     override func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+        if indexPath.section == 0
+        {
         if !animateCell[indexPath.row]
         {
             let transformRotate = CATransform3DTranslate(CATransform3DIdentity, -500, 10, 0)
@@ -228,6 +293,7 @@ class PLProjectsViewController: UITableViewController,UIImagePickerControllerDel
             }
         }
         animateCell[indexPath.row] = true
+        }
     }
     
     override func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutablePointer<Void>) {
@@ -242,6 +308,17 @@ class PLProjectsViewController: UITableViewController,UIImagePickerControllerDel
         } else{ activityIndicatorView.stopAnimating() }
         }
         
+    }
+    
+    func hedaerViewForTableView(title:String)->UILabel{
+        
+        let titleLabel = UILabel(frame:CGRectMake(0,0,self.view.frame.size.width,40))
+        titleLabel.text = title
+        titleLabel.backgroundColor = UIColor.lightTextColor()
+        titleLabel.textAlignment = .Left
+        titleLabel.font = UIFont.systemFontOfSize(15)
+    
+        return titleLabel
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
@@ -261,7 +338,7 @@ class PLProjectsViewController: UITableViewController,UIImagePickerControllerDel
         
         capturedImage = resizeImage(capturedImage, width: 4.0, height: 4.0)
         SVProgressHUD.showWithStatus("Uploading")
-        projectViewModel.uploadUserAvatar(capturedImage){[weak self] result in
+          projectViewModel.updateUserAvatar(capturedImage){[weak self] result in
             if result{print("Succesfully uploaded"); SVProgressHUD.dismiss();
                 capturedImage = self!.resizeImage(capturedImage, width: 4.0, height: 4.0)
                 let buttonView = self?.profilePicSettings.valueForKey("view") as! UIView

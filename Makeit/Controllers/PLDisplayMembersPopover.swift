@@ -26,9 +26,8 @@ class PLDisplayMembersPopover: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        
-    }
+        self.membersTableView.registerNib(UINib(nibName:"PLTableViewCell", bundle:NSBundle.mainBundle()), forCellReuseIdentifier: "Cell")
+        }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(true)
@@ -55,8 +54,20 @@ class PLDisplayMembersPopover: UITableViewController {
     
     override  func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
-        let cell = tableView.dequeueReusableCellWithIdentifier("Cell")! as UITableViewCell
-        cell.textLabel?.text = teamMemberModelView.titleOfRowAtIndexPath(indexPath.row)
+        let cell = tableView.dequeueReusableCellWithIdentifier("Cell") as! PLTableViewCell
+        cell.memberName.text = teamMemberModelView.titleOfRowAtIndexPath(indexPath.row)
+        cell.memberDetail.text = "some tags"
+        teamMemberModelView.contributorImageRowAtIndexPath(indexPath.row, completion: { (avatar) in
+            
+            if let _ = avatar{
+                
+                cell.teamMemberProfile.image = avatar!
+            }else{
+                
+                cell.teamMemberProfile.image = UIImage(named:"UserImage.png")
+            }
+            
+        })
         return cell
     }
 
@@ -90,6 +101,11 @@ class PLDisplayMembersPopover: UITableViewController {
     
    
    }
+    
+   override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        
+        return 55
+    }
     
     override func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
         

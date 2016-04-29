@@ -33,7 +33,8 @@ class PLAddProjectViewController: UIViewController,UISearchBarDelegate,UITextFie
         super.viewDidLoad()
         addDoneBarButtonItem()
         projectName.delegate = self
-        
+        self.contributorsTableView.registerNib(UINib(nibName:"PLTableViewCell", bundle:NSBundle.mainBundle()), forCellReuseIdentifier: "Cell")
+
         
         // Do any additional setup after loading the view.
     }
@@ -157,7 +158,7 @@ class PLAddProjectViewController: UIViewController,UISearchBarDelegate,UITextFie
         if searchText.characters.count == 0
         {
            
-            
+            close()
         
         }
     }
@@ -173,10 +174,28 @@ class PLAddProjectViewController: UIViewController,UISearchBarDelegate,UITextFie
     
       func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
-        let cell = tableView.dequeueReusableCellWithIdentifier("Cell")! as UITableViewCell
-        cell.textLabel?.text = addProjectViewModel.titleAtIndexPathOfRow(indexPath.row)
+        let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! PLTableViewCell
+        cell.memberName.text = addProjectViewModel.titleAtIndexPathOfRow(indexPath.row)
+        cell.memberDetail.text = "some tags"
+        addProjectViewModel.contributorImageRowAtIndexPath(indexPath.row, completion: { (avatar) in
+            
+            if let _ = avatar{
+                
+                cell.teamMemberProfile.image = avatar!
+            }else{
+                
+                cell.teamMemberProfile.image = UIImage(named:"UserImage.png")
+            }
+            
+        })
+        
         
         return cell
+    }
+    
+    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        
+        return 55.0
     }
     
      func tableView(tableView: UITableView, commitEditingStyle editingStyle:
@@ -198,11 +217,13 @@ class PLAddProjectViewController: UIViewController,UISearchBarDelegate,UITextFie
            if  addProjectViewModel.andOrRemoveContributor(member)
            {
                 //dismissPopover()
+                //close()
                 contributorsTableView.reloadData()
            }
            else{
             
                //dismissPopover()
+               close()
                showAlertWithMessage("Failed to add \(member.fullName)", message: "\(member.fullName) is already contributing to ")
           }
         
@@ -238,7 +259,7 @@ class PLAddProjectViewController: UIViewController,UISearchBarDelegate,UITextFie
          plPopOverController!.popoverLayoutMargins = UIEdgeInsetsMake(10, 10, 10, 10);
         plPopOverController?.popoverContentSize = CGSizeMake(300, 200)
         plPopOverController!.wantsDefaultContentAppearance = true;
-        plPopOverController?.presentPopoverFromRect(popoverbutton.bounds, inView: popoverbutton, permittedArrowDirections: WYPopoverArrowDirection.Down, animated: true)
+        plPopOverController?.presentPopoverFromRect(popoverbutton.bounds, inView: popoverbutton, permittedArrowDirections: WYPopoverArrowDirection.Up, animated: true)
     }
     
     func setUpNavigationBarForPopover()
@@ -253,6 +274,33 @@ class PLAddProjectViewController: UIViewController,UISearchBarDelegate,UITextFie
     func close(){
         
         plPopOverController?.dismissPopoverAnimated(true)
+        self.contributorsSearchField.text = ""
     }
 
+    @IBAction func appSharing(sender: AnyObject) {
+        
+        let textToShare = "Makeit is awesome! Get Ready to download the App!"
+        
+        if let myWebsite = NSURL(string: "http://makeitiscomingsoon/") {
+            let objectsToShare = [textToShare, myWebsite]
+            let activityVC = UIActivityViewController(activityItems: objectsToShare, applicationActivities: nil)
+            activityVC.excludedActivityTypes = [UIActivityTypeAirDrop, UIActivityTypeAddToReadingList,
+                                                UIActivityTypePrint,
+                                                UIActivityTypeAssignToContact,
+                                                UIActivityTypeSaveToCameraRoll,
+                                                UIActivityTypeAddToReadingList,
+                                                UIActivityTypePostToFlickr,
+                                                UIActivityTypePostToVimeo]
+            if UI_USER_INTERFACE_IDIOM() == .Phone
+            {
+                 self.presentViewController(activityVC, animated: true, completion: nil)
+            }else{
+                
+                let popup = UIPopoverController(contentViewController: activityVC)
+                popup.presentPopoverFromRect(CGRectMake(self.view.frame.size.width/2, self.view.frame.size.height/4, 0, 0), inView:self.view, permittedArrowDirections: UIPopoverArrowDirection.Any, animated: true)
+                
+            }
+           
+        }
+    }
 }

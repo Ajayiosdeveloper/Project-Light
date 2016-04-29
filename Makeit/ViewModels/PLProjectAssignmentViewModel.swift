@@ -144,6 +144,40 @@ class PLProjectAssignmentViewModel: NSObject {
     
   }
     
-    
+    func contributorImageRowAtIndexPath(row:Int,completion:(UIImage?)->Void) {
+        
+        if qbClient == nil{ qbClient = PLQuickbloxHttpClient()}
+        
+        let member:PLTeamMember!
+        
+        if selectedAssignment != nil
+        {
+            member = selectedAssigneeList[row]
+            
+        }else{
+            member = assigneeList[row]
+        }
+        
+        let avatar = member.avatar
+        if avatar == "Avatar"
+        {
+            completion(nil)
+        }
+        else{
+            
+            qbClient.downloadTeamMemberAvatar(avatar){result in
+                
+                if result != nil{
+                    
+                    completion(result)
+                }
+                else{
+                    
+                    completion(nil)
+                }
+            }
+        }
+    }
+
 
 }

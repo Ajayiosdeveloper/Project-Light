@@ -21,6 +21,7 @@ class PLQuickbloxHttpClient
             user.login = name
             user.fullName = name
             user.password = password
+            user.customData = "Avatar"
             SVProgressHUD.showWithStatus("Signing up")
             QBRequest.signUp(user, successBlock: { (response, retrievedUser) -> Void in
         
@@ -280,7 +281,9 @@ class PLQuickbloxHttpClient
         
         let avatarUnique = QBSession.currentSession().currentUser?.ID
         
-        QBRequest.TUploadFile(imageData!, fileName: "MYAVATAR\(avatarUnique!)", contentType: "image/png", isPublic: true, successBlock: { (_, blob) in
+        QBRequest.TUploadFile(imageData!, fileName: "MYAVATAR\(avatarUnique!)", contentType: "image/png", isPublic: true, successBlock: {[weak self] (_, blob) in
+            
+            self!.updateUserParamenterForAvatar(blob.ID)
             
             completion(true,blob.ID)
             
@@ -293,22 +296,173 @@ class PLQuickbloxHttpClient
         }
     }
     
-    func fetchUserAvatarWithBlobId(id:UInt,completion:(NSData?)->Void)
+    func fetchUserAvatarWithBlobId(completion:(NSData?)->Void)
     {
-        
-        QBRequest.downloadFileWithID(id, successBlock: { (_, data) in
+        QBRequest.blobsWithSuccessBlock({ (_, _, blobs) in
             
-            completion(data)
+            if let _ = blobs {
+                
+            let avatarUnique = QBSession.currentSession().currentUser?.ID
+              
+              for blob in blobs!
+              {
+                
+                if blob.name == "MYAVATAR\(avatarUnique!)"
+                {
+                    
+                    QBRequest.downloadFileWithID(blob.ID, successBlock: { (_, imageData) in
+                        
+                        completion(imageData)
+                        
+                        }, statusBlock: { (_, _) in
+                            
+                        }, errorBlock: { (_) in
+                            
+                         completion(nil)
+                    })
+                    
+                }
+            }
             
-            }, statusBlock: { (_, _) in
+            } else { completion(nil)}
+            
+        }) { (_) in
                 
-            }) { (_) in
-                
-               completion(nil)
+            
         }
+        
+    
     }
     
     
+    func updateUserAvatarWithBlobId(image:UIImage,completion:(Bool)->Void){
+        
+        QBRequest.blobsWithSuccessBlock({ (_, _, blobs) in
+        
+            if let _ = blobs {
+                
+                if blobs?.count == 0
+                {
+                    
+                    self.uploadProfilePicture(image, completion: { (res, _) in
+                        
+                        if res {
+                            
+                            completion(true)
+                        }
+                            
+                        else{ completion(false)}
+                        
+                    })
+                }
+                else{
+                
+                let avatarUnique = QBSession.currentSession().currentUser?.ID
+                
+                for blob in blobs!
+                {
+                    
+                    if blob.name == "MYAVATAR\(avatarUnique!)"
+                    {
+                        let imageData = UIImageJPEGRepresentation(image, 0.1)
+                        
+                       self.updateUserParamenterForAvatar(blob.ID)
+                        
+                       QBRequest.TUpdateFileWithData(imageData, file: blob, successBlock: { (res) in
+                        
+                        
+                        
+                           completion(true)
+                        
+                        }, statusBlock: { (_, _) in
+                            
+                        }, errorBlock: { (_) in
+                            
+                            completion(false)
+                       })
+                        
+                    }
+                  }
+                }
+            }
+            
+        }) { (_) in
+        
+        }
+    }
+    
+    func updateUserParamenterForAvatar(withBlobId:UInt)
+    {
+        let customString = String(withBlobId)
+        let updateUser = QBUpdateUserParameters()
+        updateUser.customData = customString
+        QBRequest.updateCurrentUser(updateUser, successBlock: { (_, _) in
+            
+            print(QBSession.currentSession().currentUser?.customData)
+            
+            }, errorBlock: nil)
+    }
+    
+    
+    func downloadTeamMemberAvatar(avatarFileId:String,completion:(UIImage?)->Void){
+        
+        let id = UInt(avatarFileId)
+        
+        if let _ = id{
+        
+        QBRequest.downloadFileWithID(id!, successBlock: { (_, imageData) in
+            
+            let image = UIImage(data:imageData)
+            
+             completion(image)
+            
+            }, statusBlock: { (_, _) in
+                
+            }, errorBlock: { (_) in
+                
+                completion(nil)
+        })
+            
+        }else{completion(nil)}
+        
+    }
+    
+    
+    func fetchUserAssignmentsForProject(userId:UInt,projectId:String,completion:([PLAssignment]?)->Void)
+    {
+        
+        let extended = NSMutableDictionary()
+        
+        extended.setObject(userId, forKey:"assigneeUserId[or]")
+        extended.setObject(projectId, forKey:"_parent_id")
+        
+        QBRequest.objectsWithClassName("PLProjectAssignment", extendedRequest:extended, successBlock: { (res,objects, _) in
+            print("PRAISE THE LORD")
+            
+            var assigmnents = [PLAssignment]()
+            
+            if let _ = objects{
+                
+                for assignment in objects!{
+                    
+                    let plAssignment = PLAssignment()
+                    plAssignment.name = assignment.fields?.objectForKey("name") as! String
+                    plAssignment.details = assignment.fields?.objectForKey("description") as! String
+                    plAssignment.targetDate = assignment.fields?.objectForKey("targetDate") as! String
+                    plAssignment.assineesUserIds = assignment.fields?.objectForKey("assigneeUserId") as! [UInt]
+                    assigmnents.append(plAssignment)
+                }
+                
+                completion(assigmnents)
+            }else {completion(nil)}
+            
+            }) { (err) in
+            
+            print("error")
+                
+                completion(nil)
+        }
+    }
     
     
     

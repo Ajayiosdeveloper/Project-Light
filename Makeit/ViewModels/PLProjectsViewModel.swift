@@ -109,10 +109,11 @@ class PLProjectsViewModel: NSObject {
                   let member = PLTeamMember(name:"", id:0)
                   member.fullName = (each.fields?.valueForKey("name"))! as! String
                   member.projectId = projectId
+                  member.avatar = each.fields?.valueForKey("avatar") as! String
                   member.memberId = each.ID!
                   member.memberUserId = (each.fields?.valueForKey("member_User_Id"))! as! UInt
                   teamMembers.append(member)
-                
+                 
                 }
                    completion(teamMembers)
                 }
@@ -123,42 +124,49 @@ class PLProjectsViewModel: NSObject {
     
     func uploadUserAvatar(image:UIImage,completion:(Bool)->Void) {
         
-        quickBloxClient.uploadProfilePicture(image){ res, blobId in
-            
-            if res
-            {
-                let avatarId = NSInteger(blobId!)
+       quickBloxClient.uploadProfilePicture(image){ res, blobId in
                 
-                NSUserDefaults.standardUserDefaults().setInteger(avatarId, forKey:"AVATAR_ID")
-                
-                completion(true)
+                if res
+                {
+                    completion(true)
+                }
+                else{
+                    completion(false)
+                }
             }
-            else{
-                completion(false)
-            }
-        }
-        
-       
     }
     
     
     
     func fetchUserAvatar(completion:(UIImage?)->Void) {
         
-        let blobId = NSUserDefaults.standardUserDefaults().objectForKey("AVATAR_ID") as! NSInteger
         
-        let blobInt = UInt(blobId)
+        quickBloxClient.fetchUserAvatarWithBlobId() { result in
         
-        quickBloxClient.fetchUserAvatarWithBlobId(blobInt) { result in
-            
-            if result != nil {
-            
-               let image = UIImage(data:result!)
-                
-                completion(image)
-            }
-            else{completion(nil)}
+        if result != nil {
+        
+        let image = UIImage(data:result!)
+        
+        completion(image)
         }
+        else{completion(nil)}
+     
+       }
         
     }
+    
+    
+    func updateUserAvatar(image:UIImage,completion:(Bool)->Void) {
+        
+     quickBloxClient.updateUserAvatarWithBlobId(image) { result in
+            
+            if result {
+                
+                completion(true)
+            }
+            else{completion(false)
+            
+            }
+        }
+     }
 }

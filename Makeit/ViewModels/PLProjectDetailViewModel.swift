@@ -47,6 +47,31 @@ class PLProjectDetailViewModel: NSObject {
         return member.fullName
     }
     
+    func contributorImageRowAtIndexPath(row:Int,completion:(UIImage?)->Void) {
+        
+        let member = contributors[row]
+        let avatar = member.avatar
+        if avatar == "Avatar"
+        {
+            completion(nil)
+        }
+        else{
+            
+            qbClient.downloadTeamMemberAvatar(avatar){result in
+                
+                if result != nil{
+                    
+                    completion(result)
+                }
+                else{
+                    
+                    completion(nil)
+                }
+            }
+        }
+    }
+    
+    
     func commitmentTitleForRowAtIndexPath(row:Int) -> String {
         
         let commitment = commitments[row]
@@ -148,6 +173,11 @@ class PLProjectDetailViewModel: NSObject {
             return assignments[row]
         }
         return nil
+    }
+    
+    func selectedContributor(row:Int)->PLTeamMember{
+        
+        return contributors[row]
     }
     
 }

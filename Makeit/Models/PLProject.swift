@@ -33,13 +33,14 @@ class PLTeamMember: NSObject {
     var memberId:String
     var projectId:String
     var memberUserId:UInt
+    var avatar:String
     
     init(name:String,id:UInt) {
         fullName = name
         memberId = ""
         projectId = ""
         memberUserId = 0
-        
+        avatar = ""
     }
     
 }

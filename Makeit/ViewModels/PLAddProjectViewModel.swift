@@ -17,6 +17,8 @@ class PLAddProjectViewModel: NSObject {
     override init() {
         
         selectedContributors = [PLTeamMember]()
+        
+    
     }
     
     func validateProjectDetails(name:String) -> Bool {
@@ -51,6 +53,7 @@ class PLAddProjectViewModel: NSObject {
                    qbCustomObject.fields?.setObject(name, forKey:"projectName")
                    qbCustomObject.fields?.setObject(description, forKey:"subTitle")
                    qbCustomObject.fields?.setObject(each.fullName, forKey:"name")
+                   qbCustomObject.fields?.setObject(each.avatar, forKey:"avatar")
                    qbCustomObject.fields?.setObject(each.memberUserId, forKey: "member_User_Id")
                    qbCustomObject.fields?.setObject(projectId, forKey:"_parent_id")
                    qbObjects.append(qbCustomObject)
@@ -79,6 +82,7 @@ class PLAddProjectViewModel: NSObject {
             qbCustomObject.className = "PLProjectMember"
             qbCustomObject.fields?.setObject(each.fullName, forKey:"name")
             qbCustomObject.fields?.setObject(each.memberUserId, forKey: "member_User_Id")
+            qbCustomObject.fields?.setObject(each.avatar, forKey:"avatar")
             qbCustomObject.fields?.setObject(id, forKey:"_parent_id")
             qbObjects.append(qbCustomObject)
         }
@@ -92,6 +96,7 @@ class PLAddProjectViewModel: NSObject {
                 let name = (each.fields?.objectForKey("name"))! as! String
                 let teamMember = PLTeamMember(name:name, id:0)
                 teamMember.memberUserId = (each.fields?.objectForKey("member_User_Id"))! as! UInt
+                teamMember.avatar = each.fields?.objectForKey("avatar") as! String
                 members.append(teamMember)
             }
             
@@ -114,10 +119,11 @@ class PLAddProjectViewModel: NSObject {
                 
               for qbMember in users!
               {
-                if qbMember.ID != QBSession.currentSession().currentUser?.ID{
+                if qbMember.ID != QBSession.currentSession().currentUser?.ID && qbMember.ID != 11626865{
                     
                     let teamMember = PLTeamMember(name:qbMember.fullName!, id: qbMember.ID)
                     teamMember.memberUserId = qbMember.ID
+                    teamMember.avatar = qbMember.customData!
                     teamMembers.append(teamMember)
                 }
             }
@@ -162,5 +168,30 @@ class PLAddProjectViewModel: NSObject {
         
         self.selectedContributors.removeAtIndex(index)
     }
+    
+    func contributorImageRowAtIndexPath(row:Int,completion:(UIImage?)->Void) {
+        
+        let member = selectedContributors[row]
+        let avatar = member.avatar
+        if avatar == "Avatar"
+        {
+            completion(nil)
+        }
+        else{
+            
+            quickBloxClient.downloadTeamMemberAvatar(avatar){result in
+                
+                if result != nil{
+                    
+                    completion(result)
+                }
+                else{
+                    
+                    completion(nil)
+                }
+            }
+        }
+    }
+
 
 }

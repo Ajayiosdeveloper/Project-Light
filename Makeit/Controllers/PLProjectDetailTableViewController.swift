@@ -21,12 +21,14 @@ class PLProjectDetailTableViewController: UITableViewController {
     var addProjectViewController:PLAddProjectViewController!
     var commitmentViewController:PLProjectCommentViewController!
     var assignmentViewController:PLProjectAssignmentViewController!
+    var teamMemberDetailViewController:PLTeamMemberDetailsTableViewController!
 
     @IBOutlet var projectDetailsTableView: UITableView!
    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        self.projectDetailsTableView.registerNib(UINib(nibName:"PLTableViewCell", bundle:NSBundle.mainBundle()), forCellReuseIdentifier: "Cell")
+        self.projectDetailsTableView.registerClass(UITableViewCell.self, forCellReuseIdentifier:"DefaultCell")
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -69,31 +71,51 @@ class PLProjectDetailTableViewController: UITableViewController {
 
    
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath)
+        
+       
         if indexPath.section == 0{
-        cell.textLabel?.text = projectDetailViewModel.contributorTitleForRowAtIndexPath(indexPath.row)
-        cell.textLabel?.textColor = UIColor.blackColor()
+        let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! PLTableViewCell
+        cell.memberName.text = projectDetailViewModel.contributorTitleForRowAtIndexPath(indexPath.row)
+        cell.memberDetail.text = "some tags"
+        projectDetailViewModel.contributorImageRowAtIndexPath(indexPath.row, completion: { (avatar) in
+            
+            if let _ = avatar{
+                
+                cell.teamMemberProfile.image = avatar!
+            }else{
+                
+                cell.teamMemberProfile.image = UIImage(named:"UserImage.png")
+            }
+            
+        })
+        
+            
+        return cell
         }
         else if indexPath.section == 1{
-            
+            let cell = tableView.dequeueReusableCellWithIdentifier("DefaultCell", forIndexPath: indexPath)  as UITableViewCell
             cell.textLabel?.text = projectDetailViewModel.commitmentTitleForRowAtIndexPath(indexPath.row)
             cell.detailTextLabel?.text = projectDetailViewModel.commitmentSubTitleForRowAtIndexPath(indexPath.row)
             cell.textLabel?.textColor = UIColor.blackColor()
+            return cell
         }
         else if indexPath.section == 2{
-            
+            let cell = tableView.dequeueReusableCellWithIdentifier("DefaultCell", forIndexPath: indexPath)  as UITableViewCell
+
             cell.textLabel?.text = projectDetailViewModel.assignmentTitleForRowAtIndexPath(indexPath.row)
             cell.detailTextLabel?.text = projectDetailViewModel.assignmentSubTitleForRowAtIndexPath(indexPath.row)
             cell.textLabel?.textColor = UIColor.blackColor()
+            return cell
         }
         else if indexPath.section == 3{
-            
+            let cell = tableView.dequeueReusableCellWithIdentifier("DefaultCell", forIndexPath: indexPath)  as UITableViewCell
             cell.textLabel?.text = projectDetailViewModel.communicationType(indexPath.row)
             cell.detailTextLabel?.text = ""
             cell.textLabel?.textColor = enableButtonColor
+            return cell
         }
        
-        return cell
+        return UITableViewCell()
     }
     
 //    override func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
@@ -149,6 +171,15 @@ class PLProjectDetailTableViewController: UITableViewController {
         
     }
     
+   override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        
+        if indexPath.section == 0
+        {
+            return 55.0
+        }
+         return 44.0
+    }
+    
     override   func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         return 40.0
     }
@@ -165,7 +196,9 @@ class PLProjectDetailTableViewController: UITableViewController {
         addMemberButton.titleLabel?.font = UIFont.systemFontOfSize(14)
         addMemberButton.setTitleColor(enableButtonColor, forState: UIControlState.Normal)
         addMemberButton.addTarget(self, action:#selector(PLProjectDetailTableViewController.addNewContributor), forControlEvents: UIControlEvents.TouchUpInside)
-        addMemberButton.frame = CGRectMake(-10, 0, self.view.frame.size.width/2, 40)
+        addMemberButton.frame = CGRectMake(0, 0, self.view.frame.size.width, 40)
+        addMemberButton.contentHorizontalAlignment = .Left
+        addMemberButton.contentEdgeInsets = UIEdgeInsetsMake(0, 20, 0, 0)
         addOnView.addSubview(addMemberButton)
     }
     
@@ -220,10 +253,14 @@ class PLProjectDetailTableViewController: UITableViewController {
         
         if indexPath.section == 0
         {
-            let x = projectDetailViewModel.contributors[indexPath.row]
-            print(x.fullName)
-            print(x.memberId)
-            print(x.memberUserId)
+            let selectedMember = projectDetailViewModel.selectedContributor(indexPath.row)
+            
+            if teamMemberDetailViewController == nil{
+                
+                teamMemberDetailViewController = self.storyboard?.instantiateViewControllerWithIdentifier("PLTeamMemberDetailsTableViewController") as! PLTeamMemberDetailsTableViewController
+            }
+            teamMemberDetailViewController.teamMemberDetailViewModel = PLTeamMemberDetailViewModel(withMemberName: selectedMember.fullName,userId: selectedMember.memberUserId,projectId: selectedMember.projectId)
+            self.navigationController?.pushViewController(teamMemberDetailViewController, animated:true)
         
         }
         else if indexPath.section  == 1

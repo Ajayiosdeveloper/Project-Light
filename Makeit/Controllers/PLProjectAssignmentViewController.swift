@@ -27,7 +27,7 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
         super.viewDidLoad()
         
         print(assignementViewModel.assigneeList)
-
+        self.assigneeListTableView.registerNib(UINib(nibName:"PLTableViewCell", bundle:NSBundle.mainBundle()), forCellReuseIdentifier: "Cell")
         addDoneBarButtonItem()
         commitmentDatePicker = UIDatePicker()
         commitmentDatePicker.datePickerMode = .Date
@@ -124,9 +124,26 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
     
       func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
-        let cell = tableView.dequeueReusableCellWithIdentifier("Cell")! as UITableViewCell
-        cell.textLabel?.text = assignementViewModel.titleOfRowAtIndexPath(indexPath.row)
+        let cell = tableView.dequeueReusableCellWithIdentifier("Cell") as! PLTableViewCell
+        cell.memberName.text = assignementViewModel.titleOfRowAtIndexPath(indexPath.row)
+        cell.memberDetail.text = "some tags"
+        assignementViewModel.contributorImageRowAtIndexPath(indexPath.row, completion: { (avatar) in
+            
+            if let _ = avatar{
+                
+                cell.teamMemberProfile.image = avatar!
+            }else{
+                
+                cell.teamMemberProfile.image = UIImage(named:"UserImage.png")
+            }
+            
+        })
         return cell
+     
+    }
+    
+    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        return 55.0
     }
     
     func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {

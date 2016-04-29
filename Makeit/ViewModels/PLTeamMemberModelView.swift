@@ -11,7 +11,8 @@ import UIKit
 class PLTeamMemberModelView: NSObject {
     
     var searchList:[PLTeamMember]!
- 
+    
+    var qbClient:PLQuickbloxHttpClient!
     
     init(searchMembers:[PLTeamMember]) {
         
@@ -43,6 +44,8 @@ class PLTeamMemberModelView: NSObject {
     func remove(index:Int)->PLTeamMember {
         
         let contributor = self.searchList[index]
+        
+     
 
         return contributor
     }
@@ -64,5 +67,33 @@ class PLTeamMemberModelView: NSObject {
         
        return false
     }
+    
+    
+    func contributorImageRowAtIndexPath(row:Int,completion:(UIImage?)->Void) {
+        
+        if qbClient == nil{ qbClient = PLQuickbloxHttpClient()}
+        
+        let member = searchList[row]
+        let avatar = member.avatar
+        if avatar == "Avatar"
+        {
+            completion(nil)
+        }
+        else{
+            
+            qbClient.downloadTeamMemberAvatar(avatar){result in
+                
+                if result != nil{
+                    
+                    completion(result)
+                }
+                else{
+                    
+                    completion(nil)
+                }
+            }
+        }
+    }
+
 
 }

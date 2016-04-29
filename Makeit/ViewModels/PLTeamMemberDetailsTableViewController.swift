@@ -9,10 +9,15 @@
 import UIKit
 
 class PLTeamMemberDetailsTableViewController: UITableViewController {
+    
+    var teamMemberDetailViewModel:PLTeamMemberDetailViewModel!
 
     override func viewDidLoad() {
+        
         super.viewDidLoad()
-
+        
+        self.title = teamMemberDetailViewModel.getTeamMemberName()
+       
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
