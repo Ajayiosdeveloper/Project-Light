@@ -20,6 +20,10 @@
 		803E04021CBCC95100C59233 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 803E04011CBCC95100C59233 /* CFNetwork.framework */; };
 		803E04041CBCC95800C59233 /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 803E04031CBCC95800C59233 /* GLKit.framework */; };
 		803E04061CBCC95D00C59233 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 803E04051CBCC95D00C59233 /* SystemConfiguration.framework */; };
+		80485F061CD4B14800F49209 /* PLTeamCommunicationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80485F051CD4B14800F49209 /* PLTeamCommunicationViewModel.swift */; };
+		80485F081CD4B19700F49209 /* PLTeamCommunicationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80485F071CD4B19700F49209 /* PLTeamCommunicationViewController.swift */; };
+		80485F0B1CD4BFAF00F49209 /* video.png in Resources */ = {isa = PBXBuildFile; fileRef = 80485F091CD4BFAF00F49209 /* video.png */; };
+		80485F0C1CD4BFAF00F49209 /* audio.png in Resources */ = {isa = PBXBuildFile; fileRef = 80485F0A1CD4BFAF00F49209 /* audio.png */; };
 		805EFB5F1CD239200066B4CB /* PLTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 805EFB5D1CD239200066B4CB /* PLTableViewCell.swift */; };
 		805EFB601CD239200066B4CB /* PLTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 805EFB5E1CD239200066B4CB /* PLTableViewCell.xib */; };
 		806CA5AF1CC4B27F00E401A1 /* PLAddProjectViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 806CA5AE1CC4B27F00E401A1 /* PLAddProjectViewController.swift */; };
@@ -95,6 +99,10 @@
 		803E04031CBCC95800C59233 /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = System/Library/Frameworks/GLKit.framework; sourceTree = SDKROOT; };
 		803E04051CBCC95D00C59233 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		803E04071CBCD90100C59233 /* Makeit-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Makeit-Bridging-Header.h"; sourceTree = "<group>"; };
+		80485F051CD4B14800F49209 /* PLTeamCommunicationViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLTeamCommunicationViewModel.swift; sourceTree = "<group>"; };
+		80485F071CD4B19700F49209 /* PLTeamCommunicationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLTeamCommunicationViewController.swift; sourceTree = "<group>"; };
+		80485F091CD4BFAF00F49209 /* video.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = video.png; sourceTree = "<group>"; };
+		80485F0A1CD4BFAF00F49209 /* audio.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = audio.png; sourceTree = "<group>"; };
 		805EFB5D1CD239200066B4CB /* PLTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLTableViewCell.swift; sourceTree = "<group>"; };
 		805EFB5E1CD239200066B4CB /* PLTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PLTableViewCell.xib; sourceTree = "<group>"; };
 		806CA5AE1CC4B27F00E401A1 /* PLAddProjectViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLAddProjectViewController.swift; sourceTree = "<group>"; };
@@ -276,6 +284,7 @@
 				80879D3A1CC8DC1C00B41D2D /* PLProjectCommentViewController.swift */,
 				80879D3E1CC8E70100B41D2D /* PLProjectAssignmentViewController.swift */,
 				807FC8791CCB47920094112E /* PLTeamMemberDetailsTableViewController.swift */,
+				80485F071CD4B19700F49209 /* PLTeamCommunicationViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -298,6 +307,7 @@
 				80879D3C1CC8DC5300B41D2D /* PLProjectCommentViewModel.swift */,
 				80879D401CC8E71D00B41D2D /* PLProjectAssignmentViewModel.swift */,
 				807FC87B1CCB47AF0094112E /* PLTeamMemberDetailViewModel.swift */,
+				80485F051CD4B14800F49209 /* PLTeamCommunicationViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -328,6 +338,8 @@
 				809F96C81CBCC35000DD1FE9 /* Products */,
 				80D3EB1E1CD08A1E00D425C6 /* UserImage.png */,
 				80DE422C1CCB8A19007C8DDB /* ex.jpg */,
+				80485F091CD4BFAF00F49209 /* video.png */,
+				80485F0A1CD4BFAF00F49209 /* audio.png */,
 				803E04071CBCD90100C59233 /* Makeit-Bridging-Header.h */,
 				803E03EE1CBCC85600C59233 /* Frameworks */,
 			);
@@ -498,6 +510,8 @@
 				80DE422D1CCB8A19007C8DDB /* ex.jpg in Resources */,
 				809F96D51CBCC35000DD1FE9 /* LaunchScreen.storyboard in Resources */,
 				80D3EB1F1CD08A1E00D425C6 /* UserImage.png in Resources */,
+				80485F0B1CD4BFAF00F49209 /* video.png in Resources */,
+				80485F0C1CD4BFAF00F49209 /* audio.png in Resources */,
 				809F96D21CBCC35000DD1FE9 /* Assets.xcassets in Resources */,
 				805EFB601CD239200066B4CB /* PLTableViewCell.xib in Resources */,
 				809F96D01CBCC35000DD1FE9 /* Main.storyboard in Resources */,
@@ -526,8 +540,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				80485F081CD4B19700F49209 /* PLTeamCommunicationViewController.swift in Sources */,
 				80879D3F1CC8E70100B41D2D /* PLProjectAssignmentViewController.swift in Sources */,
 				806CA5B11CC4B2A400E401A1 /* PLAddProjectViewModel.swift in Sources */,
+				80485F061CD4B14800F49209 /* PLTeamCommunicationViewModel.swift in Sources */,
 				806D4AD71CC1FF3C0054A9AF /* PLConstants.swift in Sources */,
 				809F96CD1CBCC35000DD1FE9 /* PLUserSignupAndLoginViewController.swift in Sources */,
 				806D4AF61CC2607C0054A9AF /* PLProjectsViewModel.swift in Sources */,

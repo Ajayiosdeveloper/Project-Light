@@ -38,7 +38,7 @@ class PLProjectsViewController: UITableViewController,UIImagePickerControllerDel
         super.viewWillAppear(animated)
        
         //projectViewModel = PLProjectsViewModel()
-        projectViewModel.addObserver(self, forKeyPath:"projectList", options: NSKeyValueObservingOptions.New, context:&observerContext)
+        projectViewModel.addObserver(self, forKeyPath:"createdProjectList", options: NSKeyValueObservingOptions.New, context:&observerContext)
         projectViewModel.fetchProjectsFromRemote()
         addActivityIndicatorView()
         projectViewModel.fetchUserAvatar(){[weak self] avatar in
@@ -66,9 +66,11 @@ class PLProjectsViewController: UITableViewController,UIImagePickerControllerDel
        
        profilePicSettingsCustomView = UIButton(type: .Custom)
        profilePicSettingsCustomView.frame = CGRectMake(0, 0, 30, 30)
+       profilePicSettingsCustomView.layer.cornerRadius = 15.0
        profilePicSettingsCustomView.addTarget(self, action:#selector(PLProjectsViewController.showSettingsActionSheet), forControlEvents: UIControlEvents.TouchUpInside)
        profilePicSettingsCustomView.setBackgroundImage(UIImage(named:"UserImage.png"), forState: UIControlState.Normal)
        profilePicSettings = UIBarButtonItem(customView:profilePicSettingsCustomView)
+ 
        self.navigationItem.leftBarButtonItem = profilePicSettings
     }
     
@@ -106,7 +108,7 @@ class PLProjectsViewController: UITableViewController,UIImagePickerControllerDel
             
             settingsActionSheet.addAction(UIAlertAction(title:"Logout", style: UIAlertActionStyle.Default, handler: {[weak self] (action) in
                 
-                 if self!.observerContext == 0 {self!.projectViewModel.removeObserver(self!, forKeyPath:"projectList")}
+                 if self!.observerContext == 0 {self!.projectViewModel.removeObserver(self!, forKeyPath:"createdProjectList")}
                  self!.projectViewModel.performLogout()
                  self!.projectTableView.reloadData()
                  self!.navigationController?.popToRootViewControllerAnimated(true)
@@ -147,7 +149,7 @@ class PLProjectsViewController: UITableViewController,UIImagePickerControllerDel
            addProjectViewController = self.storyboard?.instantiateViewControllerWithIdentifier("PLAddProjectViewController") as? PLAddProjectViewController
         }
         self.navigationController?.pushViewController(addProjectViewController!, animated: true)
-        if observerContext == 0 {projectViewModel.removeObserver(self, forKeyPath:"projectList")}
+        if observerContext == 0 {projectViewModel.removeObserver(self, forKeyPath:"createdProjectList")}
     }
     
    //MARK: UITableView DataSource
@@ -163,7 +165,7 @@ class PLProjectsViewController: UITableViewController,UIImagePickerControllerDel
         }
         else if section == 1{
             
-            return 0
+            return projectViewModel.contributingProjectsRowCount()
         }
         
         else if section == 2{
@@ -184,7 +186,9 @@ class PLProjectsViewController: UITableViewController,UIImagePickerControllerDel
             cell.detailTextLabel?.text = projectViewModel.subTitleAtIndexPath(indexPath.row)
             }
           if indexPath.section == 1{
-        
+              cell.textLabel?.text = projectViewModel.contributingProjectTitleAtIndexPath(indexPath.row)
+              cell.textLabel?.textColor = UIColor.blackColor()
+              cell.detailTextLabel?.text = projectViewModel.contributingProjectSubTitleAtIndexPath(indexPath.row)
             }
     
          if indexPath.section == 2{
@@ -242,8 +246,8 @@ class PLProjectsViewController: UITableViewController,UIImagePickerControllerDel
             
             print("Improve Profile ViewController")
             
-        }else{
-        let selected = projectViewModel.didSelectRowAtIndex(indexPath.row) as PLProject
+        }else if indexPath.section == 0 || indexPath.section == 1{
+            let selected = projectViewModel.didSelectRowAtIndex(indexPath.row,section:indexPath.section) as PLProject
         PLSharedManager.manager.projectName = selected.name
         selectedProjectId = selected.projectId
         selectedProjectName = selected.name
@@ -256,8 +260,7 @@ class PLProjectsViewController: UITableViewController,UIImagePickerControllerDel
             }
         }
         }
-        
-    }
+       }
     override func tableView(tableView: UITableView, commitEditingStyle editingStyle:
         UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
         if editingStyle == .Delete
@@ -267,7 +270,7 @@ class PLProjectsViewController: UITableViewController,UIImagePickerControllerDel
                 
                 if result{
                     self!.activityIndicatorView.stopAnimating()
-                    self!.projectViewModel.projectList.removeAtIndex(indexPath.row)
+                    self!.projectViewModel.createdProjectList.removeAtIndex(indexPath.row)
                     self!.projectTableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Bottom)
                 }
             
@@ -297,13 +300,13 @@ class PLProjectsViewController: UITableViewController,UIImagePickerControllerDel
     }
     
     override func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutablePointer<Void>) {
-        if keyPath == "projectList"
-        {    if projectViewModel.rowsCount() > 0
+        if keyPath == "createdProjectList"
+        {    if projectViewModel.rowsCount() > 0 || projectViewModel.contributingProjectsRowCount() > 0
           {
             for _ in 0...projectViewModel.rowsCount(){ animateCell.append(false)}
             activityIndicatorView.stopAnimating()
             projectTableView.reloadData()
-            projectViewModel.removeObserver(self, forKeyPath:"projectList")
+            projectViewModel.removeObserver(self, forKeyPath:"createdProjectList")
             observerContext = 1
         } else{ activityIndicatorView.stopAnimating() }
         }

@@ -10,25 +10,36 @@ import UIKit
 
 class PLProjectsViewModel: NSObject {
     
-     var projectList:[PLProject] = [PLProject]()
-    
-    var quickBloxClient:PLQuickbloxHttpClient = PLQuickbloxHttpClient()
+     var createdProjectList:[PLProject] = [PLProject]()
+     var contributingProjectList:[PLProject] = [PLProject]()
+     var quickBloxClient:PLQuickbloxHttpClient = PLQuickbloxHttpClient()
     
    override init() {
         
         super.init()
-}
+ }
    
     func fetchProjectsFromRemote() {
-        projectList.removeAll(keepCapacity: true)
-        quickBloxClient.fetchProjectsOfUserWith{(result) in
+        createdProjectList.removeAll(keepCapacity: true)
+        contributingProjectList.removeAll(keepCapacity: true)
+        quickBloxClient.fetchContributingProjectsOfUser{(res) in
             
-            if let _ = result{
+            if let _ = res{
+                self.fillContributionProjectsListArray(res!)
                 
-                let objects = result! as [AnyObject]
+                self.quickBloxClient.fetchProjectsOfUserWith{(result) in
+                    
+                    if let _ = result{
+                        
+                        let objects = result! as [AnyObject]
+                        
+                        self.fillProjectListArrayWithContents(objects)
+                    }
+                }
                 
-                self.fillProjectListArrayWithContents(objects)
             }
+            
+            
         }
     }
     
@@ -43,52 +54,92 @@ class PLProjectsViewModel: NSObject {
             project.projectId = remoteObject.ID
             project.createdBy = remoteObject.userID
             project.parentId = remoteObject.parentID
-            projectList.append(project)
+            createdProjectList.append(project)
         }
-        willChangeValueForKey("projectList")
-        didChangeValueForKey("projectList")
+       
+        willChangeValueForKey("createdProjectList")
+        didChangeValueForKey("createdProjectList")
+        
+    }
+    
+    func fillContributionProjectsListArray(container:[AnyObject]){
+        
+        for (i,_) in container.enumerate()
+        {
+            let remoteObject = container[i] as! QBCOCustomObject
+            let name = remoteObject.fields!["projectName"] as! String
+            let description = remoteObject.fields!["subTitle"] as? String
+            let project = PLProject(projectName:name, subTitle:description)
+            project.projectId = remoteObject.parentID
+            project.createdBy = remoteObject.userID
+            contributingProjectList.append(project)
+        }
     }
     
     
     func rowsCount() -> Int {
         
-        return self.projectList.count
+        return self.createdProjectList.count
+    }
+    
+    func contributingProjectsRowCount() -> Int {
+        
+        return contributingProjectList.count
     }
     
     func titleAtIndexPath(indexPath:NSInteger) -> String {
         
-        let project = projectList[indexPath]
+        let project = createdProjectList[indexPath]
         return project.name
     }
     
     func subTitleAtIndexPath(indexPath:NSInteger) -> String {
         
-        let project = projectList[indexPath]
+        let project = createdProjectList[indexPath]
         if let _ = project.subTitle{
             return project.subTitle!
         }
         return ""
     }
     
-    func didSelectRowAtIndex(index:Int) -> PLProject {
+    func contributingProjectTitleAtIndexPath(row:Int) -> String {
         
-        return projectList[index]
+        let project = contributingProjectList[row]
+        return project.name
+    }
+    
+    func contributingProjectSubTitleAtIndexPath(row:Int) -> String {
+        
+        let project = contributingProjectList[row]
+        if let _ = project.subTitle{
+            return project.subTitle!
+        }
+        return ""
+    }
+    
+    func didSelectRowAtIndex(index:Int,section:Int) -> PLProject {
+        
+        if section == 0{
+            return createdProjectList[index]
+        }
+         return contributingProjectList[index]
+        
     }
     
     func removeAllProjects() {
         
-        projectList.removeAll()
+        createdProjectList.removeAll()
     }
 
     func performLogout()  {
         
         quickBloxClient.userLogout()
-        projectList.removeAll()
+        createdProjectList.removeAll()
     }
     
     func deleteProjectAtIndexPathOfRow(row:Int,completion:(Bool)->Void) {
         
-        let project = self.projectList[row]
+        let project = self.createdProjectList[row]
         quickBloxClient.deleteProjectWithId(project.projectId!){result in
             
             if result { completion(true) }

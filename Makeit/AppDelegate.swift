@@ -1,10 +1,11 @@
-//
+//  That at the name of Jesus every knee should bow, of things in heaven, and things in earth and things under the earth; And that every tongue should confess that Jesus Christ is Lord, to the glory of God the Father.Amen. Philippians 2: 10,11.
 //  AppDelegate.swift
 //  Makeit
 //
 //  Created by ajaybabu singineedi on 12/04/16.
 //  Copyright © 2016 Exilant Technologies. All rights reserved.
 //  Project Light is the confidential initiation for Makeit Project.
+
 
 import UIKit
 

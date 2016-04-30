@@ -117,6 +117,24 @@ class PLQuickbloxHttpClient
         }
    }
     
+    func fetchContributingProjectsOfUser(completion:(result:[AnyObject]?)->Void){
+        
+        let extendedParameters = NSMutableDictionary()
+        
+        let userId = QBSession.currentSession().currentUser?.ID
+        
+        extendedParameters["member_User_Id"] = userId
+        
+        QBRequest.objectsWithClassName("PLProjectMember", extendedRequest:extendedParameters, successBlock: { (res,objects,page) in
+            
+            completion(result:objects)
+            
+        }) { (response) in
+            
+            
+        }
+    }
+    
     //Perform lagout
     
     func userLogout() {

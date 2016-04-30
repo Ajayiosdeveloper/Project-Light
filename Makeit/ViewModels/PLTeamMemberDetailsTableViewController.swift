@@ -12,12 +12,12 @@ class PLTeamMemberDetailsTableViewController: UITableViewController {
     
     var teamMemberDetailViewModel:PLTeamMemberDetailViewModel!
 
+    @IBOutlet var memberDetailsTableview: UITableView!
     override func viewDidLoad() {
         
         super.viewDidLoad()
         
-        self.title = teamMemberDetailViewModel.getTeamMemberName()
-       
+        
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
@@ -25,33 +25,69 @@ class PLTeamMemberDetailsTableViewController: UITableViewController {
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
     }
 
+    override func viewWillAppear(animated: Bool) {
+      super.viewWillAppear(animated)
+      self.title = teamMemberDetailViewModel.getTeamMemberName()
+        teamMemberDetailViewModel.getAssignmentsOfUserForProject(){[weak self] res in
+            
+            if res{self!.memberDetailsTableview.reloadData()}
+        }
+        
+      
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+        
     
     }
 
     // MARK: - Table view data source
 
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
-        return 0
+       
+        return 2
     }
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
+        
+        if section == 0{
+            return teamMemberDetailViewModel.getNumberOfAssignmentRows()
+        }
+        else if section == 1{
+            return teamMemberDetailViewModel.getNumberOfCommunicateRows()
+        }
+        
         return 0
     }
 
-    /*
+
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("reuseIdentifier", forIndexPath: indexPath)
-
-        // Configure the cell...
-
+        let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath)
+        if indexPath.section == 0{
+        cell.textLabel?.text = teamMemberDetailViewModel.getAssignmentTitle(indexPath.row)
+        cell.textLabel?.textColor = UIColor.blackColor()
+        cell.detailTextLabel?.hidden = false
+        cell.detailTextLabel?.text = teamMemberDetailViewModel.getAssignmentDetail(indexPath.row)
+        }else if indexPath.section == 1{
+          cell.textLabel?.text = teamMemberDetailViewModel.getCommunicateTitle(indexPath.row)
+          cell.detailTextLabel?.hidden = true
+          cell.textLabel?.textColor = enableButtonColor
+        }
         return cell
     }
-    */
+    
+   override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+    
+     if section == 0{
+        return "Assignments"
+      }
+     else if section == 1{
+        return "Communicate"
+    }
+        return ""
+    }
+  
 
     /*
     // Override to support conditional editing of the table view.
