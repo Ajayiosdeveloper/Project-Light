@@ -63,7 +63,6 @@
 		809F96EB1CBCC35000DD1FE9 /* MakeitUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 809F96EA1CBCC35000DD1FE9 /* MakeitUITests.swift */; };
 		80BB3EF61CC4F4BE009FAE11 /* PLProject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80BB3EF51CC4F4BE009FAE11 /* PLProject.swift */; };
 		80D3EB1F1CD08A1E00D425C6 /* UserImage.png in Resources */ = {isa = PBXBuildFile; fileRef = 80D3EB1E1CD08A1E00D425C6 /* UserImage.png */; };
-		80DE422D1CCB8A19007C8DDB /* ex.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 80DE422C1CCB8A19007C8DDB /* ex.jpg */; };
 		80DE821D1CC0D87700D5017A /* PLUserSignupAndLoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80DE821C1CC0D87700D5017A /* PLUserSignupAndLoginViewModel.swift */; };
 /* End PBXBuildFile section */
 
@@ -156,7 +155,6 @@
 		809F96EC1CBCC35000DD1FE9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		80BB3EF51CC4F4BE009FAE11 /* PLProject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLProject.swift; sourceTree = "<group>"; };
 		80D3EB1E1CD08A1E00D425C6 /* UserImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = UserImage.png; path = Makeit/UserImage.png; sourceTree = "<group>"; };
-		80DE422C1CCB8A19007C8DDB /* ex.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = ex.jpg; sourceTree = "<group>"; };
 		80DE821C1CC0D87700D5017A /* PLUserSignupAndLoginViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLUserSignupAndLoginViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -343,7 +341,6 @@
 				809F96E91CBCC35000DD1FE9 /* MakeitUITests */,
 				809F96C81CBCC35000DD1FE9 /* Products */,
 				80D3EB1E1CD08A1E00D425C6 /* UserImage.png */,
-				80DE422C1CCB8A19007C8DDB /* ex.jpg */,
 				80485F091CD4BFAF00F49209 /* video.png */,
 				80485F0A1CD4BFAF00F49209 /* audio.png */,
 				803E04071CBCD90100C59233 /* Makeit-Bridging-Header.h */,
@@ -513,7 +510,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				80DE422D1CCB8A19007C8DDB /* ex.jpg in Resources */,
 				809F96D51CBCC35000DD1FE9 /* LaunchScreen.storyboard in Resources */,
 				80D3EB1F1CD08A1E00D425C6 /* UserImage.png in Resources */,
 				80485F0B1CD4BFAF00F49209 /* video.png in Resources */,
