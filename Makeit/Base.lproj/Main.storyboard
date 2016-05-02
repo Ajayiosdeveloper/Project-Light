@@ -890,7 +890,25 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="D3R-tf-Tia" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2185" y="1174"/>
+            <point key="canvasLocation" x="1544" y="1164"/>
+        </scene>
+        <!--Project Team Chat View Controller-->
+        <scene sceneID="SoF-pb-MGL">
+            <objects>
+                <viewController storyboardIdentifier="PLProjectTeamChatViewController" id="cUX-CU-hgK" customClass="PLProjectTeamChatViewController" customModule="Makeit" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="QQw-1h-tG6"/>
+                        <viewControllerLayoutGuide type="bottom" id="Vs2-5V-Cjr"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="M80-0b-XrH">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="QWF-bk-znQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2191" y="1159"/>
         </scene>
     </scenes>
 </document>

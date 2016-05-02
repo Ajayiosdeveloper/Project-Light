@@ -23,6 +23,7 @@ class PLProjectDetailTableViewController: UITableViewController {
     var assignmentViewController:PLProjectAssignmentViewController!
     var teamMemberDetailViewController:PLTeamMemberDetailsTableViewController!
     var teamCommunicationViewController:PLTeamCommunicationViewController!
+    var projectTeamChatViewController:PLProjectTeamChatViewController!
 
     @IBOutlet var projectDetailsTableView: UITableView!
    
@@ -282,7 +283,7 @@ class PLProjectDetailTableViewController: UITableViewController {
             
             if indexPath.row == 0 {presentTeamCommunicationViewController(0)}
             else if indexPath.row == 1 {presentTeamCommunicationViewController(1)}
-            else {print("Show Text Chat of Team")}
+            else {presentProjectTeamChatViewController()}
             
         }
         
@@ -315,6 +316,17 @@ class PLProjectDetailTableViewController: UITableViewController {
         self.navigationController?.pushViewController(teamCommunicationViewController, animated: true)
     }
     
-  
+   func presentProjectTeamChatViewController()
+   {
+    
+    if projectTeamChatViewController == nil{
+        projectTeamChatViewController = self.storyboard?.instantiateViewControllerWithIdentifier("PLProjectTeamChatViewController") as! PLProjectTeamChatViewController
+    }
+    
+     projectTeamChatViewController.projectTeamChatViewModel = PLProjectTeamChatViewModel(teamMembers: projectDetailViewModel.contributors)
+    
+    
+     self.navigationController?.pushViewController(projectTeamChatViewController, animated: true)
+    }
 
 }

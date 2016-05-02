@@ -26,6 +26,10 @@ class PLTeamCommunicationViewController: UIViewController,UITableViewDelegate,UI
     }
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
+        if communicationType == 2{
+           
+            self.navigationItem.rightBarButtonItem = addCreateGroupBarButton()
+        }
         setNavigationBarTitle()
         clearAllSelectedCells()
         teamListTableView.reloadData()
@@ -43,6 +47,9 @@ class PLTeamCommunicationViewController: UIViewController,UITableViewDelegate,UI
             self.title = "Audio Conference"
         case 1:
             self.title = "Video Conference"
+        case 1:
+            self.title = "Create Group"
+    
         default:
             print("Never")
         }
@@ -64,15 +71,21 @@ class PLTeamCommunicationViewController: UIViewController,UITableViewDelegate,UI
     
     func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         
+        if communicationType == 2{
+            return "SELECT MEMBERS FOR GROUP"
+        }
+        
         return "SELECT MEMBERS FOR CONFERENCE"
     }
     
     func tableView(tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         
+        if communicationType == 2{
+            return nil
+        }
         
         return footerViewForTableView(communicationType)
-        
-    }
+      }
     
       func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
@@ -102,13 +115,13 @@ class PLTeamCommunicationViewController: UIViewController,UITableViewDelegate,UI
             if tableView.cellForRowAtIndexPath(indexPath)?.accessoryType == .Checkmark
             {
                 tableView.cellForRowAtIndexPath(indexPath)?.accessoryType = .None
-                
-                
+                communicationViewModel.removeTeamMemberAtRow(indexPath.row)
+
             }
             else{
                 tableView.cellForRowAtIndexPath(indexPath)?.accessoryType = .Checkmark
-               
-                
+                communicationViewModel.addTeamMemberAtRow(indexPath.row)
+
             }
     }
 
@@ -154,6 +167,20 @@ class PLTeamCommunicationViewController: UIViewController,UITableViewDelegate,UI
     func startConference(){
         
         print("PRAISE THE LORD")
+        
+    }
+    
+    func addCreateGroupBarButton()->UIBarButtonItem{
+        
+      let createGroup = UIBarButtonItem(title:"Create", style: UIBarButtonItemStyle.Bordered, target: self, action: #selector(PLTeamCommunicationViewController.createNewChatGroupForProject))
+            self.navigationItem.rightBarButtonItem = createGroup
+        return createGroup
+    }
+    
+    func createNewChatGroupForProject()  {
+        
+        
+        print("Create Chat Group Here")
         
     }
     

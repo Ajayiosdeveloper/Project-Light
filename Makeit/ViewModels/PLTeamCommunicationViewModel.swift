@@ -11,6 +11,7 @@ import UIKit
 class PLTeamCommunicationViewModel: NSObject {
     
     var teamMembersList:[PLTeamMember]!
+    var selectedTeamMembers:[PLTeamMember] = [PLTeamMember]()
     var qbClient = PLQuickbloxHttpClient()
     
     init(members:[PLTeamMember]) {
@@ -27,10 +28,25 @@ class PLTeamCommunicationViewModel: NSObject {
         return 0
     }
     
-    func contributorTitleForRowAtIndexPath(row:Int)->String{
+   func contributorTitleForRowAtIndexPath(row:Int)->String{
         
         let member = teamMembersList[row]
         return member.fullName
+    }
+    
+    
+    func addTeamMemberAtRow(row:Int){
+        
+        self.selectedTeamMembers.append(teamMembersList[row])
+        
+        print(self.selectedTeamMembers)
+    }
+    func removeTeamMemberAtRow(row:Int) {
+        
+        let object = self.teamMembersList[row]
+        let index = self.selectedTeamMembers.indexOf(object)
+        self.selectedTeamMembers.removeAtIndex(index!)
+        print(self.selectedTeamMembers)
     }
     
     func contributorImageRowAtIndexPath(row:Int,completion:(UIImage?)->Void) {
