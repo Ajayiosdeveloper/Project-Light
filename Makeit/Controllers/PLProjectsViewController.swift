@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Quickblox
 
 
 class PLProjectsViewController: UITableViewController,UIImagePickerControllerDelegate,UINavigationControllerDelegate {

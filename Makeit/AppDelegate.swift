@@ -10,6 +10,7 @@
 import UIKit
 import Fabric
 import DigitsKit
+import Quickblox
 
 
 @UIApplicationMain
