@@ -51,15 +51,41 @@ class PLUserSignupAndLoginViewModel : NSObject
             
             throw LocalValidations.PasswordMismatch
         }
-       
-        do{
-            try  startProcessingUserSignup(withUserName, password: password)
-          
-          }
-        catch RemoteValidations.Failed {return false}
-        catch RemoteValidations.Success {return true}
-        catch {}
+        
+        
         return true
+    }
+    
+    
+    func makeTwoFactorAuthentication(controller:PLUserSignupAndLoginViewController,userName:String,password:String){
+        
+        let digits = Digits.sharedInstance()
+        digits.logOut()
+        let configuration = DGTAuthenticationConfiguration(accountFields: .DefaultOptionMask)
+        configuration.appearance = setDigitsTheme()
+        digits.authenticateWithViewController(controller, configuration: configuration) {[weak self]session, error in
+            if (session != nil)
+            {
+                
+                self!.startProcessingUserSignup(userName,password: password)
+                
+            }
+            else {
+                print(error.localizedDescription)
+            }
+        }
+ 
+    }
+    
+    func setDigitsTheme()->DGTAppearance{
+        
+        
+        let theme = DGTAppearance()
+        theme.bodyFont = UIFont.systemFontOfSize(17)
+        theme.labelFont = UIFont.systemFontOfSize(17)
+        theme.accentColor = enableButtonColor
+        theme.backgroundColor = UIColor.whiteColor()
+        return theme;
     }
     
     private  func startProcessingUserLogin(withUserName:String,password:String) throws ->Void
@@ -72,14 +98,14 @@ class PLUserSignupAndLoginViewModel : NSObject
         }
     }
    
-    private   func startProcessingUserSignup(withUserName:String,password:String) throws
+       func startProcessingUserSignup(withUserName:String,password:String)
     {
         if quickBloxClient == nil{ quickBloxClient = PLQuickbloxHttpClient() }
         
            quickBloxClient.createNewUserWith(withUserName, password:password){[weak self]result in
          
             self!.signupResultNotifier = result
-        }
+     }
     
     }
     

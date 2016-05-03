@@ -13,3 +13,4 @@
 #import "SVProgressHUD.h"
 #import "WYPopoverController.h"
 #import "WYStoryboardPopoverSegue.h"
+#import<DigitsKit/DigitsKit.h>

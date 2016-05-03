@@ -39,6 +39,10 @@
 		806D4AF41CC260080054A9AF /* PLProjectsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 806D4AF31CC260080054A9AF /* PLProjectsViewController.swift */; };
 		806D4AF61CC2607C0054A9AF /* PLProjectsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 806D4AF51CC2607C0054A9AF /* PLProjectsViewModel.swift */; };
 		806D4AF91CC261280054A9AF /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 806D4AF81CC261280054A9AF /* Reachability.m */; };
+		8070248E1CD869A100DD8DE5 /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8070248A1CD869A100DD8DE5 /* Fabric.framework */; };
+		8070248F1CD869A200DD8DE5 /* DigitsKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8070248B1CD869A100DD8DE5 /* DigitsKit.framework */; };
+		807024901CD869A200DD8DE5 /* DigitsKitResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 8070248C1CD869A100DD8DE5 /* DigitsKitResources.bundle */; };
+		807024911CD869A200DD8DE5 /* TwitterCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8070248D1CD869A100DD8DE5 /* TwitterCore.framework */; };
 		8073C8CE1CC737F400AE4CB6 /* PLDisplayMembersPopover.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8073C8CD1CC737F400AE4CB6 /* PLDisplayMembersPopover.swift */; };
 		8073C8D01CC744DE00AE4CB6 /* PLTeamMemberModelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8073C8CF1CC744DE00AE4CB6 /* PLTeamMemberModelView.swift */; };
 		8078A46B1CC88BD1008AC4DD /* PLProjectDetailTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8078A46A1CC88BD1008AC4DD /* PLProjectDetailTableViewController.swift */; };
@@ -125,6 +129,10 @@
 		806D4AF51CC2607C0054A9AF /* PLProjectsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLProjectsViewModel.swift; sourceTree = "<group>"; };
 		806D4AF71CC261280054A9AF /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Reachability.h; path = Makeit/Libraries/AppleReachability/Reachability.h; sourceTree = SOURCE_ROOT; };
 		806D4AF81CC261280054A9AF /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Reachability.m; path = Makeit/Libraries/AppleReachability/Reachability.m; sourceTree = SOURCE_ROOT; };
+		8070248A1CD869A100DD8DE5 /* Fabric.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Fabric.framework; sourceTree = SOURCE_ROOT; };
+		8070248B1CD869A100DD8DE5 /* DigitsKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = DigitsKit.framework; sourceTree = SOURCE_ROOT; };
+		8070248C1CD869A100DD8DE5 /* DigitsKitResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = DigitsKitResources.bundle; path = DigitsKit.framework/Versions/A/Resources/DigitsKitResources.bundle; sourceTree = SOURCE_ROOT; };
+		8070248D1CD869A100DD8DE5 /* TwitterCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = TwitterCore.framework; sourceTree = SOURCE_ROOT; };
 		8073C8CD1CC737F400AE4CB6 /* PLDisplayMembersPopover.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLDisplayMembersPopover.swift; sourceTree = "<group>"; };
 		8073C8CF1CC744DE00AE4CB6 /* PLTeamMemberModelView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLTeamMemberModelView.swift; sourceTree = "<group>"; };
 		8078A46A1CC88BD1008AC4DD /* PLProjectDetailTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLProjectDetailTableViewController.swift; sourceTree = "<group>"; };
@@ -172,8 +180,11 @@
 				803E04001CBCC94A00C59233 /* MobileCoreServices.framework in Frameworks */,
 				803E03FC1CBCC93B00C59233 /* libxml2.2.tbd in Frameworks */,
 				803E03FA1CBCC8BF00C59233 /* libresolv.tbd in Frameworks */,
+				807024911CD869A200DD8DE5 /* TwitterCore.framework in Frameworks */,
 				803E03F81CBCC8B000C59233 /* CoreGraphics.framework in Frameworks */,
 				803E03F61CBCC8A800C59233 /* CoreMedia.framework in Frameworks */,
+				8070248F1CD869A200DD8DE5 /* DigitsKit.framework in Frameworks */,
+				8070248E1CD869A100DD8DE5 /* Fabric.framework in Frameworks */,
 				803E03F41CBCC89900C59233 /* Accelerate.framework in Frameworks */,
 				803E03F21CBCC87E00C59233 /* QuickbloxWebRTC.framework in Frameworks */,
 				803E03F11CBCC87E00C59233 /* Quickblox.framework in Frameworks */,
@@ -211,6 +222,10 @@
 		803E03EE1CBCC85600C59233 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				8070248A1CD869A100DD8DE5 /* Fabric.framework */,
+				8070248B1CD869A100DD8DE5 /* DigitsKit.framework */,
+				8070248C1CD869A100DD8DE5 /* DigitsKitResources.bundle */,
+				8070248D1CD869A100DD8DE5 /* TwitterCore.framework */,
 				807FC87F1CCB58430094112E /* VideoToolbox.framework */,
 				807FC87D1CCB55510094112E /* Foundation.framework */,
 				806D4AED1CC211160054A9AF /* QuartzCore.framework */,
@@ -415,6 +430,7 @@
 				809F96C31CBCC35000DD1FE9 /* Sources */,
 				809F96C41CBCC35000DD1FE9 /* Frameworks */,
 				809F96C51CBCC35000DD1FE9 /* Resources */,
+				807024891CD8669800DD8DE5 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -518,6 +534,7 @@
 				805EFB601CD239200066B4CB /* PLTableViewCell.xib in Resources */,
 				809F96D01CBCC35000DD1FE9 /* Main.storyboard in Resources */,
 				806D4AEA1CC210910054A9AF /* SVProgressHUD.bundle in Resources */,
+				807024901CD869A200DD8DE5 /* DigitsKitResources.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -536,6 +553,22 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		807024891CD8669800DD8DE5 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		809F96C31CBCC35000DD1FE9 /* Sources */ = {
@@ -724,9 +757,10 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Makeit",
+					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = Makeit/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = (
@@ -752,9 +786,10 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Makeit",
+					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = Makeit/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = (

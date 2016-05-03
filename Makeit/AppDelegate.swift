@@ -8,6 +8,9 @@
 
 
 import UIKit
+import Fabric
+import DigitsKit
+
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -29,6 +32,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         reachability = Reachability.reachabilityForInternetConnection()
         NSNotificationCenter.defaultCenter().addObserver(self, selector:#selector(AppDelegate.handleNewtorkChanges), name:kReachabilityChangedNotification, object:nil)
         reachability.startNotifier()
+        
+        Fabric.with([Digits.self])
+
         
         return true
     }

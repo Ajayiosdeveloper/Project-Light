@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import DigitsKit
+
 
 let enableButtonColor = UIColor(colorLiteralRed: 11/255, green: 97/255, blue: 254/255, alpha: 1.0)
 let kSignupTag = 0
@@ -90,16 +92,8 @@ class PLUserSignupAndLoginViewController: UITableViewController,UITextFieldDeleg
     }
     
     @IBAction func signupNewUser(sender: AnyObject) {
-       do {
-              userAccountViewModel.addObserver(self, forKeyPath: "signupResultNotifier", options: NSKeyValueObservingOptions.New, context:nil)
-              try userAccountViewModel.validateUserSignupCredentials(signupUserNameTextField.text!, password:signupUserPasswordTextField.text!, confirmPassword:signupUserConfirmPasswordTextField.text!)
-              self.view.endEditing(true)
-        }
-        catch LocalValidations.WeakUserName{showAlertWithMessage("Username invalid", message:"it must be atleast 3 characters long")}
-        catch LocalValidations.ImproperUserName{showAlertWithMessage("Username invalid", message:"it should not contain white spaces")}
-        catch LocalValidations.WeakPassword{showAlertWithMessage("Password invalid", message:"it must be atleast 8 characters long")}
-        catch LocalValidations.PasswordMismatch{showAlertWithMessage("Error!", message:"password is not matching")}
-        catch {}
+        
+        self.authenticateWithDigitsBeforeAccountCreation()
     }
     
     func showAlertWithMessage(title:String,message:String)
@@ -172,6 +166,21 @@ class PLUserSignupAndLoginViewController: UITableViewController,UITextFieldDeleg
       self.signupUserConfirmPasswordTextField.text = ""
     }
     
+    func authenticateWithDigitsBeforeAccountCreation()  {
+        
+        self.userAccountViewModel.addObserver(self, forKeyPath: "signupResultNotifier", options: NSKeyValueObservingOptions.New, context:nil)
+        do{
+            try self.userAccountViewModel.validateUserSignupCredentials(self.signupUserNameTextField.text!, password:self.signupUserPasswordTextField.text!, confirmPassword:self.signupUserConfirmPasswordTextField.text!)
+            self.view.endEditing(true)
+            
+            userAccountViewModel.makeTwoFactorAuthentication(self, userName: self.signupUserNameTextField.text!, password: self.signupUserPasswordTextField.text!)
+        } catch LocalValidations.WeakUserName{self.showAlertWithMessage("Username invalid", message:"it must be atleast 3 characters long")}
+        catch LocalValidations.ImproperUserName{self.showAlertWithMessage("Username invalid", message:"it should not contain white spaces")}
+        catch LocalValidations.WeakPassword{self.showAlertWithMessage("Password invalid", message:"it must be atleast 8 characters long")}
+        catch LocalValidations.PasswordMismatch{self.showAlertWithMessage("Error!", message:"password is not matching")}
+        catch {}
+        
+    }
 }
 
 
