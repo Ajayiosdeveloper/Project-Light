@@ -263,6 +263,8 @@ class PLProjectsViewController: UITableViewController,UIImagePickerControllerDel
        }
     override func tableView(tableView: UITableView, commitEditingStyle editingStyle:
         UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
+        
+        if indexPath.section == 0{
         if editingStyle == .Delete
         {
             activityIndicatorView.startAnimating()
@@ -276,11 +278,15 @@ class PLProjectsViewController: UITableViewController,UIImagePickerControllerDel
             
             }
         }
+      }
         
     }
     
     override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        return true
+        if indexPath.section == 0{
+            return true
+     }
+        return false
     }
     
     override func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
