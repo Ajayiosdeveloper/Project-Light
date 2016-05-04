@@ -907,7 +907,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="D3R-tf-Tia" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1544" y="1164"/>
+            <point key="canvasLocation" x="1233" y="1159"/>
         </scene>
         <!--Project Team Chat View Controller-->
         <scene sceneID="SoF-pb-MGL">
@@ -934,11 +934,30 @@
                     </view>
                     <connections>
                         <outlet property="chatGroupsListTableView" destination="bbE-eh-6dB" id="SLU-9G-4mg"/>
+                        <segue destination="uu9-Js-qOc" kind="show" identifier="showChatDetail" id="vEN-cP-nIJ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="QWF-bk-znQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2191" y="1159"/>
+            <point key="canvasLocation" x="1842" y="1159"/>
+        </scene>
+        <!--Chat Detail View Controller-->
+        <scene sceneID="gni-bQ-Tol">
+            <objects>
+                <viewController storyboardIdentifier="PLChatDetailViewController" id="uu9-Js-qOc" customClass="PLChatDetailViewController" customModule="Makeit" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="YF9-v6-vEl"/>
+                        <viewControllerLayoutGuide type="bottom" id="res-As-lXO"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="xph-iu-Baj">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="sBi-fO-FOr" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2552" y="1159"/>
         </scene>
     </scenes>
 </document>

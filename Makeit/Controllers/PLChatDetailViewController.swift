@@ -7,11 +7,17 @@
 //
 
 import UIKit
+import Quickblox
 
 class PLChatDetailViewController: QMChatViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+       
+        self.senderID = (QBSession.currentSession().currentUser?.ID)!
+        self.senderDisplayName = "Light"
+        self.title = "Truth"
+        self.view.backgroundColor = UIColor.whiteColor()
 
         // Do any additional setup after loading the view.
     }

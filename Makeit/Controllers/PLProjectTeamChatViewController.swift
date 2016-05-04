@@ -79,6 +79,20 @@ class PLProjectTeamChatViewController: UIViewController,UITableViewDelegate,UITa
         return cell
     }
     
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        
+       self.performSegueWithIdentifier("showChatDetail", sender: self)
+        
+    }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        
+     
+        
+        
+        
+    }
+    
     /*
      // MARK: - Navigation
      
