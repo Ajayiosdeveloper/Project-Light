@@ -580,7 +580,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
                         <sections>
-                            <tableViewSection headerTitle="DETAILS" id="n1g-t3-D2V">
+                            <tableViewSection headerTitle="DETAILS" footerTitle="Advanced options will integarte your commitments to device Calendar App." id="n1g-t3-D2V">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" id="aKZ-87-9lC">
                                         <rect key="frame" x="0.0" y="50" width="600" height="44"/>
@@ -684,6 +684,23 @@
                                                 <constraint firstItem="OMQ-YL-jew" firstAttribute="leading" secondItem="D4p-xe-eYL" secondAttribute="leadingMargin" constant="7" id="mXG-bT-sc8"/>
                                                 <constraint firstItem="Miu-3d-wa1" firstAttribute="top" secondItem="OMQ-YL-jew" secondAttribute="bottom" constant="8" id="zzd-BA-cNp"/>
                                             </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" rowHeight="44" id="qNk-OW-RIo">
+                                        <rect key="frame" x="0.0" y="281" width="600" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="qNk-OW-RIo" id="Mr9-Ua-onJ">
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RYi-sD-G7z">
+                                                    <rect key="frame" x="15" y="7" width="124" height="30"/>
+                                                    <state key="normal" title="Advanced options"/>
+                                                    <connections>
+                                                        <action selector="advancedCommitmentOptionsWithCalendar:" destination="8gO-Kg-Bho" eventType="touchUpInside" id="VRs-2p-VuP"/>
+                                                    </connections>
+                                                </button>
+                                            </subviews>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                 </cells>

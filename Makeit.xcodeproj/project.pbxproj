@@ -57,10 +57,10 @@
 		806D4AF41CC260080054A9AF /* PLProjectsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 806D4AF31CC260080054A9AF /* PLProjectsViewController.swift */; };
 		806D4AF61CC2607C0054A9AF /* PLProjectsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 806D4AF51CC2607C0054A9AF /* PLProjectsViewModel.swift */; };
 		806D4AF91CC261280054A9AF /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 806D4AF81CC261280054A9AF /* Reachability.m */; };
-		8070248E1CD869A100DD8DE5 /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8070248A1CD869A100DD8DE5 /* Fabric.framework */; };
-		8070248F1CD869A200DD8DE5 /* DigitsKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8070248B1CD869A100DD8DE5 /* DigitsKit.framework */; };
+		8070248E1CD869A100DD8DE5 /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8070248A1CD869A100DD8DE5 /* Fabric.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		8070248F1CD869A200DD8DE5 /* DigitsKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8070248B1CD869A100DD8DE5 /* DigitsKit.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		807024901CD869A200DD8DE5 /* DigitsKitResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 8070248C1CD869A100DD8DE5 /* DigitsKitResources.bundle */; };
-		807024911CD869A200DD8DE5 /* TwitterCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8070248D1CD869A100DD8DE5 /* TwitterCore.framework */; };
+		807024911CD869A200DD8DE5 /* TwitterCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8070248D1CD869A100DD8DE5 /* TwitterCore.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		8073C8CE1CC737F400AE4CB6 /* PLDisplayMembersPopover.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8073C8CD1CC737F400AE4CB6 /* PLDisplayMembersPopover.swift */; };
 		8073C8D01CC744DE00AE4CB6 /* PLTeamMemberModelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8073C8CF1CC744DE00AE4CB6 /* PLTeamMemberModelView.swift */; };
 		8078A46B1CC88BD1008AC4DD /* PLProjectDetailTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8078A46A1CC88BD1008AC4DD /* PLProjectDetailTableViewController.swift */; };
@@ -69,6 +69,9 @@
 		807FC87C1CCB47AF0094112E /* PLTeamMemberDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 807FC87B1CCB47AF0094112E /* PLTeamMemberDetailViewModel.swift */; };
 		807FC87E1CCB55510094112E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 807FC87D1CCB55510094112E /* Foundation.framework */; };
 		807FC8801CCB58430094112E /* VideoToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 807FC87F1CCB58430094112E /* VideoToolbox.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		80861A7D1CD9C52F00A2C56C /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 80861A7C1CD9C52F00A2C56C /* UIKit.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		80861A7F1CD9DE4000A2C56C /* EventKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 80861A7E1CD9DE4000A2C56C /* EventKit.framework */; };
+		80861A811CD9DE4700A2C56C /* EventKitUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 80861A801CD9DE4700A2C56C /* EventKitUI.framework */; };
 		80879D3B1CC8DC1C00B41D2D /* PLProjectCommentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80879D3A1CC8DC1C00B41D2D /* PLProjectCommentViewController.swift */; };
 		80879D3D1CC8DC5300B41D2D /* PLProjectCommentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80879D3C1CC8DC5300B41D2D /* PLProjectCommentViewModel.swift */; };
 		80879D3F1CC8E70100B41D2D /* PLProjectAssignmentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80879D3E1CC8E70100B41D2D /* PLProjectAssignmentViewController.swift */; };
@@ -193,6 +196,9 @@
 		807FC87B1CCB47AF0094112E /* PLTeamMemberDetailViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLTeamMemberDetailViewModel.swift; sourceTree = "<group>"; };
 		807FC87D1CCB55510094112E /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		807FC87F1CCB58430094112E /* VideoToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = VideoToolbox.framework; path = System/Library/Frameworks/VideoToolbox.framework; sourceTree = SDKROOT; };
+		80861A7C1CD9C52F00A2C56C /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		80861A7E1CD9DE4000A2C56C /* EventKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = EventKit.framework; path = System/Library/Frameworks/EventKit.framework; sourceTree = SDKROOT; };
+		80861A801CD9DE4700A2C56C /* EventKitUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = EventKitUI.framework; path = System/Library/Frameworks/EventKitUI.framework; sourceTree = SDKROOT; };
 		80879D3A1CC8DC1C00B41D2D /* PLProjectCommentViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLProjectCommentViewController.swift; sourceTree = "<group>"; };
 		80879D3C1CC8DC5300B41D2D /* PLProjectCommentViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLProjectCommentViewModel.swift; sourceTree = "<group>"; };
 		80879D3E1CC8E70100B41D2D /* PLProjectAssignmentViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLProjectAssignmentViewController.swift; sourceTree = "<group>"; };
@@ -224,6 +230,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				80861A811CD9DE4700A2C56C /* EventKitUI.framework in Frameworks */,
+				80861A7F1CD9DE4000A2C56C /* EventKit.framework in Frameworks */,
+				80861A7D1CD9C52F00A2C56C /* UIKit.framework in Frameworks */,
 				807FC8801CCB58430094112E /* VideoToolbox.framework in Frameworks */,
 				807FC87E1CCB55510094112E /* Foundation.framework in Frameworks */,
 				806D4AEE1CC211160054A9AF /* QuartzCore.framework in Frameworks */,
@@ -276,6 +285,9 @@
 		803E03EE1CBCC85600C59233 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				80861A801CD9DE4700A2C56C /* EventKitUI.framework */,
+				80861A7E1CD9DE4000A2C56C /* EventKit.framework */,
+				80861A7C1CD9C52F00A2C56C /* UIKit.framework */,
 				8070248A1CD869A100DD8DE5 /* Fabric.framework */,
 				8070248B1CD869A100DD8DE5 /* DigitsKit.framework */,
 				8070248C1CD869A100DD8DE5 /* DigitsKitResources.bundle */,

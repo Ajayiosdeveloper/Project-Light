@@ -72,6 +72,28 @@ class PLTeamCommunicationViewModel: NSObject {
             }
         }
     }
-
+    
+    
+    func isAnymemberSelected()->Bool{
+        
+        if selectedTeamMembers.count > 0{
+            
+            return true
+        }
+        
+        return false
+    }
+   
+    func selectedMembersUserIdsForConference()->[UInt]{
+        
+        var membersUserIds = [UInt]()
+        
+        for member in selectedTeamMembers{
+            
+            membersUserIds.append(member.memberUserId)
+        }
+      
+        return membersUserIds
+    }
 
 }

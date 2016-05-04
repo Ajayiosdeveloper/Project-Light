@@ -7,8 +7,9 @@
 //
 
 import UIKit
+import EventKitUI
 
-class PLProjectCommentViewController: UITableViewController {
+class PLProjectCommentViewController: UITableViewController,EKEventEditViewDelegate {
     
     @IBOutlet var commitmentNameTextField: UITextField!
     
@@ -115,5 +116,17 @@ class PLProjectCommentViewController: UITableViewController {
         // Dispose of any resources that can be recreated.
     }
 
+    @IBAction func advancedCommitmentOptionsWithCalendar(sender: AnyObject) {
+        
+        let editViewController = EKEventEditViewController()
+        editViewController.eventStore = EKEventStore()
+        editViewController.editViewDelegate = self
+        self.presentViewController(editViewController, animated: true, completion:nil)
+    }
+    
+    func eventEditViewController(controller: EKEventEditViewController, didCompleteWithAction action: EKEventEditViewAction){
+        print(controller.event)
+        self.dismissViewControllerAnimated(true, completion:nil)
+    }
    
 }

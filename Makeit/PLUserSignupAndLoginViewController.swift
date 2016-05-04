@@ -98,18 +98,12 @@ class PLUserSignupAndLoginViewController: UITableViewController,UITextFieldDeleg
     
     func showAlertWithMessage(title:String,message:String)
     {
-        if #available(iOS 9, *)
-        {
             let alertController = UIAlertController(title:title, message:message, preferredStyle: UIAlertControllerStyle.Alert)
             let action = UIAlertAction(title:"Ok", style: UIAlertActionStyle.Default, handler: { (action) -> Void in
             })
             alertController.addAction(action)
             self.presentViewController(alertController, animated:true, completion:nil)
-        }
-        else{
-            let alert = UIAlertView(title: title, message: message, delegate:nil, cancelButtonTitle:nil, otherButtonTitles:"Ok") as UIAlertView
-            alert.show()
-         }
+        
         
     }
     override func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutablePointer<Void>) {

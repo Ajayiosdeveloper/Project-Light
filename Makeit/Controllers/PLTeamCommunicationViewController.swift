@@ -8,10 +8,11 @@
 
 import UIKit
 
-class PLTeamCommunicationViewController: UIViewController,UITableViewDelegate,UITableViewDataSource {
+class PLTeamCommunicationViewController: UIViewController,UITableViewDelegate,UITableViewDataSource,QBRTCClientDelegate {
     
     var communicationType:Int!
     var communicationViewModel:PLTeamCommunicationViewModel!
+    var currentSession:QBRTCSession!
     @IBOutlet var teamListTableView: UITableView!
     
     
@@ -163,16 +164,9 @@ class PLTeamCommunicationViewController: UIViewController,UITableViewDelegate,UI
         footerView.addSubview(startConference)
         return footerView
     }
-    
-    func startConference(){
-        
-        print("PRAISE THE LORD")
-        
-    }
-    
     func addCreateGroupBarButton()->UIBarButtonItem{
         
-      let createGroup = UIBarButtonItem(title:"Create", style: UIBarButtonItemStyle.Bordered, target: self, action: #selector(PLTeamCommunicationViewController.createNewChatGroupForProject))
+      let createGroup = UIBarButtonItem(title:"Create", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(PLTeamCommunicationViewController.createNewChatGroupForProject))
             self.navigationItem.rightBarButtonItem = createGroup
         return createGroup
     }
@@ -184,6 +178,72 @@ class PLTeamCommunicationViewController: UIViewController,UITableViewDelegate,UI
         
     }
     
+    
+    func startConference(){
+        
+        print("PRAISE THE LORD")
+        
+        if communicationType == 0{
+            
+            self.callWithConferenceType(.Audio)
+        }
+        else if communicationType == 1{
+            
+            self.callWithConferenceType(.Video)
+        }
+        
+    }
+    
+    func callWithConferenceType(type:QBRTCConferenceType){
+        
+        if  communicationViewModel.isAnymemberSelected(){
+            
+        QBRTCClient.initializeRTC()
+        QBRTCClient.instance().addDelegate(self)
+        let opponentsIds =  communicationViewModel.selectedMembersUserIdsForConference()
+        let session = QBRTCClient.instance().createNewSessionWithOpponents(opponentsIds, withConferenceType: type)
+            if (session != nil){
+               currentSession = session
+               currentSession.startCall(nil)
+            }
+            else{
+                
+                print("Session Not Created Please login first")
+                
+            }
+            
+        }else{
+            
+            print("No Member Selected for Conference")
+        }
+        
+    }
+    
+    
+    func didReceiveNewSession(session: QBRTCSession!, userInfo: [NSObject : AnyObject]!) {
+        
+        if self.currentSession != nil{
+            
+           var info = Dictionary<String,String>()
+           info["Key"] = "Busy"
+           session.rejectCall(info)
+           return
+        }
+        self.currentSession = session
+    }
+    
+    func session(session: QBRTCSession!, acceptedByUser userID: NSNumber!, userInfo: [NSObject : AnyObject]!) {
+        
+        print("Accepted by User \(userID)")
+        self.currentSession.acceptCall(userInfo)
+    }
+    
+    func session(session: QBRTCSession!, rejectedByUser userID: NSNumber!, userInfo: [NSObject : AnyObject]!) {
+        
+        print("Rejected By User \(userID)")
+        self.currentSession.rejectCall(userInfo)
+    }
+    
     /*
     // MARK: - Navigation
 
@@ -193,5 +253,10 @@ class PLTeamCommunicationViewController: UIViewController,UITableViewDelegate,UI
         // Pass the selected object to the new view controller.
     }
     */
+    
+    
+    deinit{
+        QBRTCClient.deinitializeRTC()
+    }
 
 }
