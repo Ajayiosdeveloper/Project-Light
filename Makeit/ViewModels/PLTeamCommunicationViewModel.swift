@@ -28,7 +28,7 @@ class PLTeamCommunicationViewModel: NSObject {
         return 0
     }
     
-   func contributorTitleForRowAtIndexPath(row:Int)->String{
+    func contributorTitleForRowAtIndexPath(row:Int)->String{
         
         let member = teamMembersList[row]
         return member.fullName
@@ -73,27 +73,34 @@ class PLTeamCommunicationViewModel: NSObject {
         }
     }
     
+    func createProjectGroup(name:String,completion:(Bool,PLChatGroup?)->Void){
+        
+        var membersIds = [UInt]()
+        
+        
+        for member in selectedTeamMembers
+        {
+            membersIds.append(member.memberUserId)
+            
+        }
+        
+        
+        qbClient.createChatGroupWitTeamMembers(name,membersIds: membersIds, completion: { result,chatGroup in
+            
+            if result{
+                
+                completion(true,chatGroup)
+                
+            }
+            else{
+                
+                completion(false,nil)
+            }
+            
+            
+        })
+        
+    }
     
-    func isAnymemberSelected()->Bool{
-        
-        if selectedTeamMembers.count > 0{
-            
-            return true
-        }
-        
-        return false
-    }
-   
-    func selectedMembersUserIdsForConference()->[UInt]{
-        
-        var membersUserIds = [UInt]()
-        
-        for member in selectedTeamMembers{
-            
-            membersUserIds.append(member.memberUserId)
-        }
-      
-        return membersUserIds
-    }
-
+    
 }

@@ -10,11 +10,37 @@ import UIKit
 
 class PLProjectTeamChatViewModel: NSObject {
     
-    var projectTeamMembers:[PLTeamMember]!
+    var projectTeamMembers:[PLTeamMember]?
+    var projectChatGroupsList:[PLChatGroup] = [PLChatGroup]()
     
-    init(teamMembers:[PLTeamMember]) {
+    init(teamMembers:[PLTeamMember]?) {
         
         projectTeamMembers = teamMembers
     }
-
+    
+    func addChatGroup(group:PLChatGroup){
+        
+        projectChatGroupsList.append(group)
+    }
+    
+    
+    func numberOfRows()->Int{
+        
+        return projectChatGroupsList.count
+    }
+    
+    func titleForRow(row:Int)->String{
+        
+        let group = projectChatGroupsList[row]
+        return group.name
+        
+    }
+    
+    func detailTitleForRow(row:Int)->String{
+        
+        let group = projectChatGroupsList[row]
+        return group.lastMessage
+    }
+    
+    
 }

@@ -7,35 +7,39 @@
 //
 
 import UIKit
+import Quickblox
 
 class PLTeamCommunicationViewController: UIViewController,UITableViewDelegate,UITableViewDataSource,QBRTCClientDelegate {
     
     var communicationType:Int!
-    var communicationViewModel:PLTeamCommunicationViewModel!
     var currentSession:QBRTCSession!
+    var communicationViewModel:PLTeamCommunicationViewModel!
+    var teamChatViewController:PLProjectTeamChatViewController!
+    var textFld = UITextField()
+    
     @IBOutlet var teamListTableView: UITableView!
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         self.teamListTableView.registerNib(UINib(nibName:"PLTableViewCell", bundle:NSBundle.mainBundle()), forCellReuseIdentifier: "Cell")
         teamListTableView.dataSource = self
         teamListTableView.delegate = self
-       
-    
+        
+        
     }
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         if communicationType == 2{
-           
+            
             self.navigationItem.rightBarButtonItem = addCreateGroupBarButton()
         }
         setNavigationBarTitle()
         clearAllSelectedCells()
         teamListTableView.reloadData()
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -50,7 +54,7 @@ class PLTeamCommunicationViewController: UIViewController,UITableViewDelegate,UI
             self.title = "Video Conference"
         case 1:
             self.title = "Create Group"
-    
+            
         default:
             print("Never")
         }
@@ -86,26 +90,26 @@ class PLTeamCommunicationViewController: UIViewController,UITableViewDelegate,UI
         }
         
         return footerViewForTableView(communicationType)
-      }
+    }
     
-      func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! PLTableViewCell
-       
-            cell.memberName.text = communicationViewModel.contributorTitleForRowAtIndexPath(indexPath.row)
-            cell.memberDetail.text = "some tags"
-            communicationViewModel.contributorImageRowAtIndexPath(indexPath.row, completion: { (avatar) in
+        
+        cell.memberName.text = communicationViewModel.contributorTitleForRowAtIndexPath(indexPath.row)
+        cell.memberDetail.text = "some tags"
+        communicationViewModel.contributorImageRowAtIndexPath(indexPath.row, completion: { (avatar) in
+            
+            if let _ = avatar{
                 
-                if let _ = avatar{
-                    
-                    cell.teamMemberProfile.image = avatar!
-                }else{
-                    
-                    cell.teamMemberProfile.image = UIImage(named:"UserImage.png")
-                }
+                cell.teamMemberProfile.image = avatar!
+            }else{
                 
-            })
-       
+                cell.teamMemberProfile.image = UIImage(named:"UserImage.png")
+            }
+            
+        })
+        
         
         return cell
     }
@@ -113,20 +117,20 @@ class PLTeamCommunicationViewController: UIViewController,UITableViewDelegate,UI
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
         
-            if tableView.cellForRowAtIndexPath(indexPath)?.accessoryType == .Checkmark
-            {
-                tableView.cellForRowAtIndexPath(indexPath)?.accessoryType = .None
-                communicationViewModel.removeTeamMemberAtRow(indexPath.row)
-
-            }
-            else{
-                tableView.cellForRowAtIndexPath(indexPath)?.accessoryType = .Checkmark
-                communicationViewModel.addTeamMemberAtRow(indexPath.row)
-
-            }
+        if tableView.cellForRowAtIndexPath(indexPath)?.accessoryType == .Checkmark
+        {
+            tableView.cellForRowAtIndexPath(indexPath)?.accessoryType = .None
+            communicationViewModel.removeTeamMemberAtRow(indexPath.row)
+            
+        }
+        else{
+            tableView.cellForRowAtIndexPath(indexPath)?.accessoryType = .Checkmark
+            communicationViewModel.addTeamMemberAtRow(indexPath.row)
+            
+        }
     }
-
-
+    
+    
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         return 55.0
     }
@@ -151,7 +155,7 @@ class PLTeamCommunicationViewController: UIViewController,UITableViewDelegate,UI
         if type == 0{
             imageV.image = UIImage(named:"audio.png")
         }else{
-             imageV.image = UIImage(named:"video.png")
+            imageV.image = UIImage(named:"video.png")
         }
         footerView.addSubview(imageV)
         let startConference = UIButton(type: UIButtonType.System)
@@ -164,37 +168,65 @@ class PLTeamCommunicationViewController: UIViewController,UITableViewDelegate,UI
         footerView.addSubview(startConference)
         return footerView
     }
+    
     func addCreateGroupBarButton()->UIBarButtonItem{
         
-      let createGroup = UIBarButtonItem(title:"Create", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(PLTeamCommunicationViewController.createNewChatGroupForProject))
-            self.navigationItem.rightBarButtonItem = createGroup
+        let createGroup = UIBarButtonItem(title:"Create", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(PLTeamCommunicationViewController.createNewChatGroupForProject))
+        self.navigationItem.rightBarButtonItem = createGroup
         return createGroup
     }
     
     func createNewChatGroupForProject()  {
         
-        
         print("Create Chat Group Here")
+        
+        let alertViewController = UIAlertController.init(title: "Enter Group Name", message: nil, preferredStyle: .Alert)
+        let okAction = UIAlertAction.init(title: "Ok", style: .Default) {[weak self] (action) -> Void in
+            
+            self!.communicationViewModel.createProjectGroup(self!.textFld.text!){[weak self] resu, chatGroup in
+                if resu{
+                    
+                    self!.teamChatViewController.projectTeamChatViewModel.addChatGroup(chatGroup!)
+                    
+                    self?.navigationController?.popViewControllerAnimated(true)
+                }
+                else{
+                    print("Failed")
+                }
+                
+            }
+        }
+        
+        let cancelAction = UIAlertAction(title:"Cancel", style: UIAlertActionStyle.Cancel, handler:nil)
+        alertViewController.addAction(okAction)
+        alertViewController.addAction(cancelAction)
+        alertViewController.addTextFieldWithConfigurationHandler {[weak self] (textField) -> Void in
+            // self?.textFld.frame = CGRect(x: 0.0, y: 0.0, width: 100.0, height: 30.0)
+            self?.textFld = textField
+        }
+        self.presentViewController(alertViewController, animated: true, completion: nil)
+        
         
     }
     
-    
+
+
     func startConference(){
         
         print("PRAISE THE LORD")
         
         if communicationType == 0{
             
-            self.callWithConferenceType(.Audio)
+           // self.callWithConferenceType(.Audio)
         }
         else if communicationType == 1{
             
-            self.callWithConferenceType(.Video)
+            //self.callWithConferenceType(.Video)
         }
         
     }
     
-    func callWithConferenceType(type:QBRTCConferenceType){
+   /* func callWithConferenceType(type:QBRTCConferenceType){
         
         if  communicationViewModel.isAnymemberSelected(){
             
@@ -242,7 +274,7 @@ class PLTeamCommunicationViewController: UIViewController,UITableViewDelegate,UI
         
         print("Rejected By User \(userID)")
         self.currentSession.rejectCall(userInfo)
-    }
+    }*/
     
     /*
     // MARK: - Navigation

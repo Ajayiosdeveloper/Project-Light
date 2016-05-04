@@ -66,6 +66,22 @@ class PLAssignment: NSObject {
     var assineesUserIds:[UInt] = [UInt]()
 }
 
+class PLChatGroup:NSObject{
+    
+    var name:String = ""
+    var opponents:[NSNumber] = [NSNumber]()
+    var chatGroupId:String = ""
+    var lastMessage:String = ""
+    var lastMessageSenderId:UInt = 0
+    var lastMessageDate:String = ""
+    
+}
+
+
+
+
+
+
 class PLSharedManager:NSObject{
     
     static var manager:PLSharedManager = PLSharedManager()

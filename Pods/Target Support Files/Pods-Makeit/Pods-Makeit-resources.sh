@@ -58,16 +58,6 @@ install_resource()
   esac
 }
 if [[ "$CONFIGURATION" == "Debug" ]]; then
-  install_resource "QMChatViewController/QMChatViewController/en.lproj/QMChatViewController.xib"
-  install_resource "QMChatViewController/QMChatViewController/Views/Cells/QMChatAttachmentIncomingCell/QMChatAttachmentIncomingCell.xib"
-  install_resource "QMChatViewController/QMChatViewController/Views/Cells/QMChatAttachmentOutgoingCell/QMChatAttachmentOutgoingCell.xib"
-  install_resource "QMChatViewController/QMChatViewController/Views/Cells/QMChatContactRequestCell/QMChatContactRequestCell.xib"
-  install_resource "QMChatViewController/QMChatViewController/Views/Cells/QMChatIncomingCell/QMChatIncomingCell.xib"
-  install_resource "QMChatViewController/QMChatViewController/Views/Cells/QMChatNotificationCell/QMChatNotificationCell.xib"
-  install_resource "QMChatViewController/QMChatViewController/Views/Cells/QMChatOutgoingCell/QMChatOutgoingCell.xib"
-  install_resource "QMChatViewController/QMChatViewController/Views/CustomUI/InputToolBar/QMToolbarContentView.xib"
-  install_resource "QMChatViewController/QMChatViewController/Views/CustomUI/QMHeaderCollectionReusableView/QMHeaderCollectionReusableView.xib"
-  install_resource "QMChatViewController/QMChatViewController/ChatAssets.xcassets"
   install_resource "TWMessageBarManager/Classes/Icons/icon-error.png"
   install_resource "TWMessageBarManager/Classes/Icons/icon-error@2x.png"
   install_resource "TWMessageBarManager/Classes/Icons/icon-info.png"
@@ -79,16 +69,6 @@ if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_resource "${BUILT_PRODUCTS_DIR}/QMUsersCacheModel.bundle"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
-  install_resource "QMChatViewController/QMChatViewController/en.lproj/QMChatViewController.xib"
-  install_resource "QMChatViewController/QMChatViewController/Views/Cells/QMChatAttachmentIncomingCell/QMChatAttachmentIncomingCell.xib"
-  install_resource "QMChatViewController/QMChatViewController/Views/Cells/QMChatAttachmentOutgoingCell/QMChatAttachmentOutgoingCell.xib"
-  install_resource "QMChatViewController/QMChatViewController/Views/Cells/QMChatContactRequestCell/QMChatContactRequestCell.xib"
-  install_resource "QMChatViewController/QMChatViewController/Views/Cells/QMChatIncomingCell/QMChatIncomingCell.xib"
-  install_resource "QMChatViewController/QMChatViewController/Views/Cells/QMChatNotificationCell/QMChatNotificationCell.xib"
-  install_resource "QMChatViewController/QMChatViewController/Views/Cells/QMChatOutgoingCell/QMChatOutgoingCell.xib"
-  install_resource "QMChatViewController/QMChatViewController/Views/CustomUI/InputToolBar/QMToolbarContentView.xib"
-  install_resource "QMChatViewController/QMChatViewController/Views/CustomUI/QMHeaderCollectionReusableView/QMHeaderCollectionReusableView.xib"
-  install_resource "QMChatViewController/QMChatViewController/ChatAssets.xcassets"
   install_resource "TWMessageBarManager/Classes/Icons/icon-error.png"
   install_resource "TWMessageBarManager/Classes/Icons/icon-error@2x.png"
   install_resource "TWMessageBarManager/Classes/Icons/icon-info.png"

@@ -17,41 +17,41 @@ class PLQuickbloxHttpClient
     //Creating New User Service with Quickblox
     func createNewUserWith(name:String,password:String,completion:(Bool)->Void)
     {
-            let user = QBUUser()
-            user.login = name
-            user.fullName = name
-            user.password = password
-            user.customData = "Avatar"
-            SVProgressHUD.showWithStatus("Signing up")
-            QBRequest.signUp(user, successBlock: { (response, retrievedUser) -> Void in
-        
+        let user = QBUUser()
+        user.login = name
+        user.fullName = name
+        user.password = password
+        user.customData = "Avatar"
+        SVProgressHUD.showWithStatus("Signing up")
+        QBRequest.signUp(user, successBlock: { (response, retrievedUser) -> Void in
+            
             self.initiateUserLogin(name, password:password, completion: {[weak self] (com) -> Void in
                 completion(com)
                 self!.saveUserCredentialsInDefaults(name,password:password)
+                })
+            
             })
-                
-            })
-            { (errorResponse) -> Void in
-                    
-                  SVProgressHUD.dismiss()
-                  completion(false)
-            }
+        { (errorResponse) -> Void in
+            
+            SVProgressHUD.dismiss()
+            completion(false)
+        }
     }
     
     //User Login Service with Quickblok
     
     func initiateUserLogin(name:String,password:String,completion:(Bool)->Void){
         
-       SVProgressHUD.showWithStatus("Loging in")
-       QBRequest.logInWithUserLogin(name, password: password, successBlock: { (response, retrievedUser) -> Void in
-        NSUserDefaults.standardUserDefaults().setValue(retrievedUser?.ID, forKey:"USER_ID")
-        completion(true)
-        SVProgressHUD.dismiss()
-        
+        SVProgressHUD.showWithStatus("Loging in")
+        QBRequest.logInWithUserLogin(name, password: password, successBlock: { (response, retrievedUser) -> Void in
+            NSUserDefaults.standardUserDefaults().setValue(retrievedUser?.ID, forKey:"USER_ID")
+            completion(true)
+            SVProgressHUD.dismiss()
+            
         }) { (error) -> Void in
-          
-          completion(false)
-          SVProgressHUD.dismiss()
+            
+            completion(false)
+            SVProgressHUD.dismiss()
         }
     }
     
@@ -71,12 +71,12 @@ class PLQuickbloxHttpClient
         customObject.fields?.setValue(name, forKey: "name")
         customObject.fields?.setValue(description, forKey: "description")
         QBRequest.createObject(customObject, successBlock: { (response,object) in
-        
+            
             completion(true,object!.ID!)
             
-          }) { (response) in
-                
-                completion(false,"")
+        }) { (response) in
+            
+            completion(false,"")
         }
     }
     
@@ -85,13 +85,13 @@ class PLQuickbloxHttpClient
     
     func createNewProjectWithContributors(members:[QBCOCustomObject],completion:(Bool)->Void){
         
-          QBRequest.createObjects(members, className:"PLProjectMember", successBlock: { (response, contributors) in
+        QBRequest.createObjects(members, className:"PLProjectMember", successBlock: { (response, contributors) in
             
-                 completion(true)
+            completion(true)
             
-            }) { (response) in
-                
-                completion(false)
+        }) { (response) in
+            
+            completion(false)
         }
         
         
@@ -109,13 +109,13 @@ class PLQuickbloxHttpClient
         
         QBRequest.objectsWithClassName("PLProject", extendedRequest:extendedParameters, successBlock: { (res,objects,page) in
             
-               completion(result:objects)
+            completion(result:objects)
             
-            }) { (response) in
-                
-                
+        }) { (response) in
+            
+            
         }
-   }
+    }
     
     func fetchContributingProjectsOfUser(completion:(result:[AnyObject]?)->Void){
         
@@ -141,7 +141,7 @@ class PLQuickbloxHttpClient
         
         QBRequest.logOutWithSuccessBlock({ (response) in
             
-        }, errorBlock:nil)
+            }, errorBlock:nil)
     }
     
     //Deleting a Project in the QuickBlox Server
@@ -152,9 +152,9 @@ class PLQuickbloxHttpClient
             
             completion(true)
             
-            }) { (response) in
-                
-              completion(false)
+        }) { (response) in
+            
+            completion(false)
         }
     }
     
@@ -168,10 +168,10 @@ class PLQuickbloxHttpClient
             
             if qbUsers?.count > 0{ completion(qbUsers) } else { completion(nil)}
             
-            }) { (response) in
-                
-            }
+        }) { (response) in
+            
         }
+    }
     
     
     //Fetch Team Members of Project with ProjectId
@@ -191,8 +191,8 @@ class PLQuickbloxHttpClient
             
             completion(nil)
         }
-       
-
+        
+        
         
     }
     
@@ -213,12 +213,12 @@ class PLQuickbloxHttpClient
             print("PRAISE THE LORD")
             completion(true)
             
-            }) { (res) in
-                
-                completion(false)
-                print("Handle error")
+        }) { (res) in
+            
+            completion(false)
+            print("Handle error")
         }
-}
+    }
     
     //Create Assignment for Project in QuickBlox
     
@@ -240,9 +240,9 @@ class PLQuickbloxHttpClient
             
             completion(true)
             
-            }) { (res) in
-                
-                completion(false)
+        }) { (res) in
+            
+            completion(false)
         }
     }
     
@@ -261,15 +261,15 @@ class PLQuickbloxHttpClient
             
             completion(true,commitments)
             
-            }) { (res) in
-             
-                print("handle error")
-                
-                completion(false,nil)
+        }) { (res) in
+            
+            print("handle error")
+            
+            completion(false,nil)
         }
         
     }
-   //Fetching Assignments for Project
+    //Fetching Assignments for Project
     
     func fetchAssignmentsForProject(id:String,completion:(Bool,[QBCOCustomObject]?)->Void) {
         
@@ -284,7 +284,7 @@ class PLQuickbloxHttpClient
             completion(true,assignments)
             
         }) { (res) in
-        
+            
             print("handle error")
             
             completion(false,nil)
@@ -308,9 +308,9 @@ class PLQuickbloxHttpClient
             }, statusBlock: { (_, _) in
                 
                 
-            }) { (_) in
-                
-               completion(false,nil)
+        }) { (_) in
+            
+            completion(false,nil)
         }
     }
     
@@ -320,43 +320,43 @@ class PLQuickbloxHttpClient
             
             if let _ = blobs {
                 
-            let avatarUnique = QBSession.currentSession().currentUser?.ID
-              
-              for blob in blobs!
-              {
+                let avatarUnique = QBSession.currentSession().currentUser?.ID
                 
-                if blob.name == "MYAVATAR\(avatarUnique!)"
+                for blob in blobs!
                 {
                     
-                    QBRequest.downloadFileWithID(blob.ID, successBlock: { (_, imageData) in
+                    if blob.name == "MYAVATAR\(avatarUnique!)"
+                    {
                         
-                        completion(imageData)
+                        QBRequest.downloadFileWithID(blob.ID, successBlock: { (_, imageData) in
+                            
+                            completion(imageData)
+                            
+                            }, statusBlock: { (_, _) in
+                                
+                            }, errorBlock: { (_) in
+                                
+                                completion(nil)
+                        })
                         
-                        }, statusBlock: { (_, _) in
-                            
-                        }, errorBlock: { (_) in
-                            
-                         completion(nil)
-                    })
-                    
+                    }
                 }
-            }
-            
+                
             } else { completion(nil)}
             
         }) { (_) in
-                
+            
             
         }
         
-    
+        
     }
     
     
     func updateUserAvatarWithBlobId(image:UIImage,completion:(Bool)->Void){
         
         QBRequest.blobsWithSuccessBlock({ (_, _, blobs) in
-        
+            
             if let _ = blobs {
                 
                 if blobs?.count == 0
@@ -374,38 +374,38 @@ class PLQuickbloxHttpClient
                     })
                 }
                 else{
-                
-                let avatarUnique = QBSession.currentSession().currentUser?.ID
-                
-                for blob in blobs!
-                {
                     
-                    if blob.name == "MYAVATAR\(avatarUnique!)"
+                    let avatarUnique = QBSession.currentSession().currentUser?.ID
+                    
+                    for blob in blobs!
                     {
-                        let imageData = UIImageJPEGRepresentation(image, 0.1)
                         
-                       self.updateUserParamenterForAvatar(blob.ID)
-                        
-                       QBRequest.TUpdateFileWithData(imageData, file: blob, successBlock: { (res) in
-                        
-                        
-                        
-                           completion(true)
-                        
-                        }, statusBlock: { (_, _) in
+                        if blob.name == "MYAVATAR\(avatarUnique!)"
+                        {
+                            let imageData = UIImageJPEGRepresentation(image, 0.1)
                             
-                        }, errorBlock: { (_) in
+                            self.updateUserParamenterForAvatar(blob.ID)
                             
-                            completion(false)
-                       })
-                        
+                            QBRequest.TUpdateFileWithData(imageData, file: blob, successBlock: { (res) in
+                                
+                                
+                                
+                                completion(true)
+                                
+                                }, statusBlock: { (_, _) in
+                                    
+                                }, errorBlock: { (_) in
+                                    
+                                    completion(false)
+                            })
+                            
+                        }
                     }
-                  }
                 }
             }
             
         }) { (_) in
-        
+            
         }
     }
     
@@ -427,19 +427,19 @@ class PLQuickbloxHttpClient
         let id = UInt(avatarFileId)
         
         if let _ = id{
-        
-        QBRequest.downloadFileWithID(id!, successBlock: { (_, imageData) in
             
-            let image = UIImage(data:imageData)
-            
-             completion(image)
-            
-            }, statusBlock: { (_, _) in
+            QBRequest.downloadFileWithID(id!, successBlock: { (_, imageData) in
                 
-            }, errorBlock: { (_) in
+                let image = UIImage(data:imageData)
                 
-                completion(nil)
-        })
+                completion(image)
+                
+                }, statusBlock: { (_, _) in
+                    
+                }, errorBlock: { (_) in
+                    
+                    completion(nil)
+            })
             
         }else{completion(nil)}
         
@@ -474,14 +474,37 @@ class PLQuickbloxHttpClient
                 completion(assigmnents)
             }else {completion(nil)}
             
-            }) { (err) in
+        }) { (err) in
             
             print("error")
-                
-                completion(nil)
+            
+            completion(nil)
         }
+        
+        
     }
     
+    //Creating a Chat Group for a Project
+    
+    func createChatGroupWitTeamMembers(name :String,  membersIds:[UInt],completion:(Bool,PLChatGroup?)->Void)
+    {
+        
+        let chatDialog = QBChatDialog(dialogID: nil, type: QBChatDialogType.Group)
+        chatDialog.name = name
+        chatDialog.photo = NSUserDefaults.standardUserDefaults().valueForKey("PROJECT_ID") as? String
+        chatDialog.occupantIDs = membersIds
+        QBRequest.createDialog(chatDialog, successBlock: { (response: QBResponse?, createdDialog : QBChatDialog?) -> Void in
+            let chatGroup = PLChatGroup()
+            chatGroup.name = name
+            chatGroup.opponents = (createdDialog?.occupantIDs)!
+            chatGroup.chatGroupId = (createdDialog?.roomJID)!
+            completion(true,chatGroup)
+            
+        }) { (responce : QBResponse!) -> Void in
+            
+            print("The Response is \(responce)")
+        }
+    }
     
     
 }

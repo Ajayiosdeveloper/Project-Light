@@ -14,11 +14,6 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
-		<key>QMChatViewController.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
 		<key>QMServices-QMChatCacheModel.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -39,11 +34,6 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
-		<key>SDWebImage.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
 		<key>TTTAttributedLabel.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -57,52 +47,42 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>04AECDC651FE799E35EB54F4CBFC0A23</key>
+		<key>1A88091C92524A3A071BEE89C1110412</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>1960DC991E512B92C82C29B03308F1DF</key>
+		<key>22D99D36D504785B4B2E3365294FDA76</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>459297CB0DA58C30EE69591CBE516007</key>
+		<key>3B579E775BD84760942E808FE4A1DEBB</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>89EF4FC66F61CE6C8006C281A8964573</key>
+		<key>473F717DCDE2647462A20F6225C29FD7</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>B6D7EC376C5A008293B17E0863E9CD15</key>
+		<key>5EA9D906F1EC29B1BAB5711278A50EBD</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>BD4461CFCFAB7A8608F4241940BF632A</key>
+		<key>97223A076F2BCCC9571182470C24B300</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>BD85F1A7028487DAC691B7A5C2808895</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
 		<key>C43DEF8E5BFEC36D943258BA3F21834D</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>F042F9DCAB42871B9FCFE8A969CE1950</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>F09CEEE0DAD689B09A48D8FD67D2F83F</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>FBD26DDE010A069C94C4D9F4558FFAB3</key>
 		<dict>
 			<key>primary</key>
 			<true/>
