@@ -250,6 +250,7 @@ class PLProjectsViewController: UITableViewController,UIImagePickerControllerDel
         }else if indexPath.section == 0 || indexPath.section == 1{
             let selected = projectViewModel.didSelectRowAtIndex(indexPath.row,section:indexPath.section) as PLProject
         PLSharedManager.manager.projectName = selected.name
+        PLSharedManager.manager.projectId = selected.projectId!
         selectedProjectId = selected.projectId
         selectedProjectName = selected.name
         selectedProjectDescription = selected.subTitle

@@ -490,8 +490,7 @@ class PLQuickbloxHttpClient
     {
         
         let chatDialog = QBChatDialog(dialogID: nil, type: QBChatDialogType.Group)
-        chatDialog.name = name
-        chatDialog.photo = NSUserDefaults.standardUserDefaults().valueForKey("PROJECT_ID") as? String
+        chatDialog.name = "\(name) \(PLSharedManager.manager.projectId)"
         chatDialog.occupantIDs = membersIds
         QBRequest.createDialog(chatDialog, successBlock: { (response: QBResponse?, createdDialog : QBChatDialog?) -> Void in
             let chatGroup = PLChatGroup()
@@ -506,5 +505,54 @@ class PLQuickbloxHttpClient
         }
     }
     
+    
+    func fetchChatGroupsForProject(completion:(Bool,[PLChatGroup])->Void){
+        
+        let searchString = PLSharedManager.manager.projectId
+        
+        let extendedRequest = ["name[ctn]" : searchString]
+        
+        let page = QBResponsePage(limit: 20, skip: 0)
+        
+        QBRequest.dialogsForPage(page, extendedRequest:extendedRequest, successBlock: {[weak self] (response: QBResponse, dialogs: [QBChatDialog]?, dialogsUsersIDs: Set<NSNumber>?, page: QBResponsePage?) -> Void in
+            
+            var chatGroups:[PLChatGroup] = [PLChatGroup]()
+            
+            if let _ = dialogs{
+               
+                for eachGroup in dialogs!{
+                    
+                    let chatGroup =  PLChatGroup()
+                    chatGroup.name = self!.removeProjectIdFromChatGroupName((eachGroup.name)!)
+                    chatGroup.chatGroupId = (eachGroup.ID)!
+                    chatGroup.lastMessage = eachGroup.lastMessageText
+                    if let _ = eachGroup.lastMessageDate{
+                        chatGroup.lastMessageDate = NSDateFormatter.localizedStringFromDate(eachGroup.lastMessageDate!, dateStyle: NSDateFormatterStyle.MediumStyle, timeStyle: NSDateFormatterStyle.ShortStyle)
+                    }
+                     chatGroup.opponents = eachGroup.occupantIDs!
+                     chatGroups.append(chatGroup)
+                }
+            }
+            
+             completion(true,chatGroups)
+            
+        }) { (response: QBResponse) -> Void in
+            
+        }
+        
+    }
+    
+    func removeProjectIdFromChatGroupName(chatGroupName:String)->String{
+        
+        var namesInStrings = chatGroupName.componentsSeparatedByString(" ")
+        namesInStrings.removeLast()
+        var finalName = ""
+        for x in namesInStrings{
+            
+            finalName += x
+            finalName += " "
+        }
+        return finalName
+    }
     
 }

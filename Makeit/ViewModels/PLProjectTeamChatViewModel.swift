@@ -12,6 +12,7 @@ class PLProjectTeamChatViewModel: NSObject {
     
     var projectTeamMembers:[PLTeamMember]?
     var projectChatGroupsList:[PLChatGroup] = [PLChatGroup]()
+    var qbClient = PLQuickbloxHttpClient()
     
     init(teamMembers:[PLTeamMember]?) {
         
@@ -39,7 +40,29 @@ class PLProjectTeamChatViewModel: NSObject {
     func detailTitleForRow(row:Int)->String{
         
         let group = projectChatGroupsList[row]
-        return group.lastMessage
+        if let _ = group.lastMessage{
+            return group.lastMessage!
+        }
+        return ""
+    }
+    
+    func selectedGroupForRow(row:Int)->PLChatGroup{
+        
+        return projectChatGroupsList[row]
+    }
+    
+    func fetchChatGroups(completion:(Bool)->Void){
+        
+        qbClient.fetchChatGroupsForProject {[weak self] (result, chatGroups) in
+            
+            if result{
+                
+                self!.projectChatGroupsList.appendContentsOf(chatGroups)
+                
+                completion(true)
+            }
+            
+        }
     }
     
     

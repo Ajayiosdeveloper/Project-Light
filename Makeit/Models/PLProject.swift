@@ -71,9 +71,9 @@ class PLChatGroup:NSObject{
     var name:String = ""
     var opponents:[NSNumber] = [NSNumber]()
     var chatGroupId:String = ""
-    var lastMessage:String = ""
-    var lastMessageSenderId:UInt = 0
-    var lastMessageDate:String = ""
+    var lastMessage:String? = ""
+    var lastMessageSenderId:UInt? = 0
+    var lastMessageDate:String? = ""
     
 }
 
@@ -88,6 +88,7 @@ class PLSharedManager:NSObject{
     
     var existingContributorsList:[PLTeamMember] = [PLTeamMember]()
     var projectName:String = ""
+    var projectId:String = ""
     
 }
 

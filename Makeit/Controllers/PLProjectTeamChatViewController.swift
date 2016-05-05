@@ -15,18 +15,29 @@ class PLProjectTeamChatViewController: UIViewController,UITableViewDelegate,UITa
     
     var projectTeamChatViewModel:PLProjectTeamChatViewModel!
     var teamCommunicationViewController:PLTeamCommunicationViewController!
+    var selectedRow = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationItem.title = "Team Chat"
+        SVProgressHUD.showWithStatus("loading")
         self.chatGroupsListTableView.registerNib(UINib(nibName:"PLTableViewCell", bundle:NSBundle.mainBundle()), forCellReuseIdentifier:"Cell")
         addNewChatBarButton()
+        projectTeamChatViewModel.fetchChatGroups {[weak self] (res) in
+            
+            if res{
+                SVProgressHUD.dismiss()
+                self!.chatGroupsListTableView.reloadData()
+              }
+            
+        }
+        
     }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         print(projectTeamChatViewModel.projectChatGroupsList.count)
-        chatGroupsListTableView.reloadData()
+        self.chatGroupsListTableView.reloadData()
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -81,16 +92,15 @@ class PLProjectTeamChatViewController: UIViewController,UITableViewDelegate,UITa
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
+       selectedRow = indexPath.row
        self.performSegueWithIdentifier("showChatDetail", sender: self)
         
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         
-     
-        
-        
-        
+           let chatDetailViewController = segue.destinationViewController as! PLChatDetailViewController
+           chatDetailViewController.chatDetailViewModel = PLChatDetailViewModel(chatGroup: projectTeamChatViewModel.selectedGroupForRow(selectedRow))
     }
     
     /*

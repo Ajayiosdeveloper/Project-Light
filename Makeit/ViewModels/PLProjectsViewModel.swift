@@ -43,6 +43,7 @@ class PLProjectsViewModel: NSObject {
             
             
         }
+       
     }
     
     func fillProjectListArrayWithContents(container:[AnyObject]){

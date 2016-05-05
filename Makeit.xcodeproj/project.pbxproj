@@ -126,6 +126,7 @@
 		809F96E01CBCC35000DD1FE9 /* MakeitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 809F96DF1CBCC35000DD1FE9 /* MakeitTests.swift */; };
 		809F96EB1CBCC35000DD1FE9 /* MakeitUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 809F96EA1CBCC35000DD1FE9 /* MakeitUITests.swift */; };
 		80BB3EF61CC4F4BE009FAE11 /* PLProject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80BB3EF51CC4F4BE009FAE11 /* PLProject.swift */; };
+		80C61B9F1CDB64900022CAFA /* PLChatDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80C61B9E1CDB64900022CAFA /* PLChatDetailViewModel.swift */; };
 		80DE821D1CC0D87700D5017A /* PLUserSignupAndLoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80DE821C1CC0D87700D5017A /* PLUserSignupAndLoginViewModel.swift */; };
 /* End PBXBuildFile section */
 
@@ -329,6 +330,7 @@
 		809F96EA1CBCC35000DD1FE9 /* MakeitUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MakeitUITests.swift; sourceTree = "<group>"; };
 		809F96EC1CBCC35000DD1FE9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		80BB3EF51CC4F4BE009FAE11 /* PLProject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLProject.swift; sourceTree = "<group>"; };
+		80C61B9E1CDB64900022CAFA /* PLChatDetailViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLChatDetailViewModel.swift; sourceTree = "<group>"; };
 		80DE821C1CC0D87700D5017A /* PLUserSignupAndLoginViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLUserSignupAndLoginViewModel.swift; sourceTree = "<group>"; };
 		845C10BAD4397155B390B307 /* libPods-Makeit.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Makeit.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		AB4C5F8A0BCA9989B855A1CB /* Pods-Makeit.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Makeit.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Makeit/Pods-Makeit.debug.xcconfig"; sourceTree = "<group>"; };
@@ -816,6 +818,7 @@
 				807FC87B1CCB47AF0094112E /* PLTeamMemberDetailViewModel.swift */,
 				80485F051CD4B14800F49209 /* PLTeamCommunicationViewModel.swift */,
 				808A52461CD71CF20032ED0D /* PLProjectTeamChatViewModel.swift */,
+				80C61B9E1CDB64900022CAFA /* PLChatDetailViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -1138,6 +1141,7 @@
 				802468501CDA2DE700CAE735 /* QMInputToolbar.m in Sources */,
 				802468461CDA2DE700CAE735 /* QMChatIncomingCell.m in Sources */,
 				80485F081CD4B19700F49209 /* PLTeamCommunicationViewController.swift in Sources */,
+				80C61B9F1CDB64900022CAFA /* PLChatDetailViewModel.swift in Sources */,
 				80879D3F1CC8E70100B41D2D /* PLProjectAssignmentViewController.swift in Sources */,
 				806CA5B11CC4B2A400E401A1 /* PLAddProjectViewModel.swift in Sources */,
 				802468361CDA2DE700CAE735 /* UIImage+QM.m in Sources */,
