@@ -20,7 +20,25 @@ class PLChatDetailViewController: QMChatViewController {
         self.senderDisplayName = QBSession.currentSession().currentUser?.login
         self.title = "Truth"
         self.view.backgroundColor = UIColor.whiteColor()
-        // Do any additional setup after loading the view.
+        let user = QBUUser()
+        user.ID = (QBSession.currentSession().currentUser?.ID)!
+        user.password = "12121212"
+        QBChat.instance().connectWithUser(user) { (error: NSError?) -> Void in
+            if error == nil{
+                print("Success in connection")
+                
+                
+                self.chatGroup = QBChatDialog(dialogID:self.chatDetailViewModel.selectedChatGroup.chatGroupId, type: QBChatDialogType.Group)
+                self.chatGroup.occupantIDs = self.chatDetailViewModel.selectedChatGroup.opponents
+                self.chatGroup.joinWithCompletionBlock { (err) in
+                    if err == nil{
+                        print("Joined Succesfully")
+                    }
+                }
+            }
+        }
+
+      
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -34,6 +52,111 @@ class PLChatDetailViewController: QMChatViewController {
     
     override func didPressSendButton(button: UIButton!, withMessageText text: String!, senderId: UInt, senderDisplayName: String!, date: NSDate!) {
         
+        let chatMessage = QBChatMessage()
+        chatMessage.text = "PRAISE THE LORD"
+        chatMessage.senderID = (QBSession.currentSession().currentUser?.ID)!
+        chatMessage.attachments = []
+        self.chatSectionManager.addMessage(chatMessage)
+        self.finishSendingMessageAnimated(true)
+        
+        let params = NSMutableDictionary()
+        params["save_to_history"] = true
+        chatMessage.customParameters = params
+        chatMessage.deliveredIDs = [(QBSession.currentSession().currentUser?.ID)!]
+        chatMessage.readIDs = [(QBSession.currentSession().currentUser?.ID)!]
+        chatMessage.markable = true
+        
+        self.chatGroup.sendMessage(chatMessage, completionBlock: { (error: NSError?) -> Void in
+            
+            if error == nil{
+                print(chatMessage.text)
+            }
+        })
+        
+    }
+    
+    
+    override func viewClassForItem(item: QBChatMessage!) -> AnyClass! {
+        
+        if (item.senderID != self.senderID) {
+            
+            return QMChatIncomingCell.self;
+        } else {
+            
+            return QMChatOutgoingCell.self;
+        }
+    }
+    
+    
+    override func collectionView(collectionView: QMChatCollectionView!, dynamicSizeAtIndexPath indexPath: NSIndexPath!, maxWidth: CGFloat) -> CGSize {
+        
+        let chatMessage = QBChatMessage()
+        chatMessage.text = "PRAISE THE LORD"
+        chatMessage.senderID = (QBSession.currentSession().currentUser?.ID)!
+        chatMessage.attachments = []
+        
+        let attributedString = self.attributedStringForItem(chatMessage)
+        
+        let size = TTTAttributedLabel.sizeThatFitsAttributedString(attributedString, withConstraints: CGSizeMake(maxWidth, CGFloat(MAXFLOAT)), limitedToNumberOfLines: 0)
+        
+        return size
+    }
+    
+    override func collectionView(collectionView: QMChatCollectionView!, minWidthAtIndexPath indexPath: NSIndexPath!) -> CGFloat {
+        
+        let chatMessage = QBChatMessage()
+        chatMessage.text = "PRAISE THE LORD"
+        chatMessage.senderID = (QBSession.currentSession().currentUser?.ID)!
+        chatMessage.attachments = []
+        let attributedString = chatMessage.senderID == self.senderID ? self.bottomLabelAttributedStringForItem(chatMessage) : self.topLabelAttributedStringForItem(chatMessage)
+        
+        let size = TTTAttributedLabel.sizeThatFitsAttributedString(attributedString, withConstraints: CGSizeMake(1000, 10000), limitedToNumberOfLines: 1)
+        
+        return size.width
+
+        
+    }
+    
+    
+    override func attributedStringForItem(messageItem: QBChatMessage!) -> NSAttributedString! {
+        
+       let textColor = messageItem.senderID == self.senderID ? UIColor.whiteColor() : UIColor(white:0.29 , alpha:1.000)
+        let font = UIFont(name:"Helvetica", size:15)
+        let attributes = [
+            NSFontAttributeName: font!,
+            NSForegroundColorAttributeName: textColor
+        ]
+        let attrStr = NSMutableAttributedString(string: messageItem.text!, attributes:attributes)
+        return attrStr;
+    }
+    
+    override func topLabelAttributedStringForItem(messageItem: QBChatMessage!) -> NSAttributedString! {
+        
+          let font = UIFont(name:"Helvetica", size:14)
+        if (messageItem.senderID == self.senderID) {
+            return nil;
+        }
+        let attributes = [
+            NSFontAttributeName: font!,
+            NSForegroundColorAttributeName: UIColor.greenColor()
+        ]
+        let attrStr = NSMutableAttributedString(string:"Messaiah", attributes:attributes)
+        return attrStr;
+    }
+    
+    override func bottomLabelAttributedStringForItem(messageItem: QBChatMessage!) -> NSAttributedString! {
+        
+        let textColor = messageItem.senderID == self.senderID ? UIColor.greenColor() : UIColor.blackColor()
+        let font = UIFont(name:"Helvetica", size:12)
+
+        
+        let attributes = [
+            NSFontAttributeName: font!,
+            NSForegroundColorAttributeName: textColor
+        ]
+        let attrStr = NSMutableAttributedString(string:"PRAISE THE LORD", attributes:attributes)
+        
+        return attrStr;
     }
     
 /*let user = QBUUser()

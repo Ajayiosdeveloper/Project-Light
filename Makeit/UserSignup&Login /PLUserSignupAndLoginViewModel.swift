@@ -60,8 +60,6 @@ class PLUserSignupAndLoginViewModel : NSObject
     
     func makeTwoFactorAuthentication(controller:PLUserSignupAndLoginViewController,userName:String,password:String){
         
-         startProcessingUserSignup(userName,password: password)
-        
         let digits = Digits.sharedInstance()
         digits.logOut()
         let configuration = DGTAuthenticationConfiguration(accountFields: .DefaultOptionMask)
