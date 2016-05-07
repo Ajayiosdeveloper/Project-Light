@@ -29,8 +29,7 @@ class PLProjectTeamChatViewController: UIViewController,UITableViewDelegate,UITa
                 SVProgressHUD.dismiss()
                 self!.chatGroupsListTableView.reloadData()
               }
-            
-        }
+            }
         
     }
     
@@ -93,14 +92,29 @@ class PLProjectTeamChatViewController: UIViewController,UITableViewDelegate,UITa
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
        selectedRow = indexPath.row
-       self.performSegueWithIdentifier("showChatDetail", sender: self)
+        let user = QBUUser()
+        user.ID = (QBSession.currentSession().currentUser?.ID)!
+        user.password = PLSharedManager.manager.userPassword
         
+        if QBChat.instance().isConnected(){
+             self.performSegueWithIdentifier("showChatDetail", sender: self)
+        }else{
+
+        QBChat.instance().connectWithUser(user) { (error: NSError?) -> Void in
+            if error == nil{
+                print("Success in connection")
+                self.performSegueWithIdentifier("showChatDetail", sender: self)
+
+            }
+        }
+      }
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         
            let chatDetailViewController = segue.destinationViewController as! PLChatDetailViewController
            chatDetailViewController.chatDetailViewModel = PLChatDetailViewModel(chatGroup: projectTeamChatViewModel.selectedGroupForRow(selectedRow))
+      
     }
     
     /*

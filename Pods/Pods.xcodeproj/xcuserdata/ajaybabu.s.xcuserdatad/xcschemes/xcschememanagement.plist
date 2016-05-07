@@ -9,6 +9,11 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>JSQSystemSoundPlayer.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>Pods-Makeit.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -34,55 +39,40 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
-		<key>TTTAttributedLabel.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
-		<key>TWMessageBarManager.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>1A88091C92524A3A071BEE89C1110412</key>
+		<key>111A66265C4FB88A9F2CBDC08A80C8E9</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>22D99D36D504785B4B2E3365294FDA76</key>
+		<key>6E18CFA5AE794F365EA1E697A6844A68</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>3B579E775BD84760942E808FE4A1DEBB</key>
+		<key>B7E1C0BE50149BE51C1EDAF59A6D8F6A</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>473F717DCDE2647462A20F6225C29FD7</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>5EA9D906F1EC29B1BAB5711278A50EBD</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>97223A076F2BCCC9571182470C24B300</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>BD85F1A7028487DAC691B7A5C2808895</key>
+		<key>C0AF97C581A1F8FE4FE751BF6095E138</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
 		<key>C43DEF8E5BFEC36D943258BA3F21834D</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>E220EA215D043704024838DB1B8BD997</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>F872B53CBA8F10BED601DE1624415873</key>
 		<dict>
 			<key>primary</key>
 			<true/>

@@ -45,6 +45,7 @@ class PLQuickbloxHttpClient
         SVProgressHUD.showWithStatus("Loging in")
         QBRequest.logInWithUserLogin(name, password: password, successBlock: { (response, retrievedUser) -> Void in
             NSUserDefaults.standardUserDefaults().setValue(retrievedUser?.ID, forKey:"USER_ID")
+            PLSharedManager.manager.userPassword = password
             completion(true)
             SVProgressHUD.dismiss()
             
@@ -541,6 +542,96 @@ class PLQuickbloxHttpClient
         }
         
     }
+    
+    func getMessagesFromChatGroup(groupId:String,completion:(Bool,[JSQMessage]?)->Void){
+    
+    let page = QBResponsePage(limit: 20, skip: 0)
+    
+     QBRequest.messagesWithDialogID(groupId, extendedRequest:nil, forPage:page, successBlock: { (_, messages, _) in
+        
+        var chatMessages = [JSQMessage]()
+     
+        if let _ = messages{
+            
+            
+            for message in messages!{
+                
+               let eachMessage = JSQMessage(senderId:String(message.senderID), senderDisplayName:"Najareth", date:message.dateSent!, text: message.text!)
+                
+                chatMessages.append(eachMessage)
+                
+                }
+            completion(true,chatMessages)
+        }
+        
+        }, errorBlock:{(_)in
+           
+           completion(false,nil)
+     
+     })
+    
+    }
+    
+    func sendMessageWithoutAttachment(text:String,group:QBChatDialog,completion:(Bool)->Void){
+        
+        print("no attachment______________________________________________________________________________")
+        
+        let message: QBChatMessage = QBChatMessage()
+        message.text = text
+        let params = NSMutableDictionary()
+        params["save_to_history"] = true
+        message.customParameters = params
+        message.deliveredIDs = [(QBSession.currentSession().currentUser?.ID)!]
+        message.readIDs = [(QBSession.currentSession().currentUser?.ID)!]
+        message.markable = true
+        group.sendMessage(message, completionBlock: { (error: NSError?) -> Void in
+            
+            if error == nil{
+                print(message.text)
+                print("Message sent Succesfully")
+                completion(true)
+              }
+        })
+        
+    }
+    
+    
+    func sendMessageWithAttachment(imageData:NSData,text:String,group:QBChatDialog,completion:(Bool)->Void){
+        
+         print("attachment______________________________________________________________________________")
+        
+        QBRequest.TUploadFile(imageData, fileName: "image.png", contentType: "image/png", isPublic: false, successBlock: {(response: QBResponse!, uploadedBlob: QBCBlob!) in
+            // Create and configure message
+            let message: QBChatMessage = QBChatMessage()
+            message.text = text
+            let params = NSMutableDictionary()
+            params["save_to_history"] = true
+            message.customParameters = params
+            message.deliveredIDs = [(QBSession.currentSession().currentUser?.ID)!]
+            message.readIDs = [(QBSession.currentSession().currentUser?.ID)!]
+            message.markable = true
+            let uploadedFileID: UInt = uploadedBlob.ID
+            let attachment: QBChatAttachment = QBChatAttachment()
+            attachment.type = "image"
+            attachment.ID = String(uploadedFileID)
+            message.attachments = [attachment]
+            // Send message
+            
+            group.sendMessage(message, completionBlock: { (error: NSError?) -> Void in
+                
+                if error == nil{
+                    print(message.text)
+                    print("Message sent Succesfully")
+                    completion(true)
+                }
+            })
+            
+           }, statusBlock: {(request: QBRequest?, status: QBRequestStatus?) in
+                
+            }, errorBlock: {(response: QBResponse!) in
+        })
+    }
+    
     
     func removeProjectIdFromChatGroupName(chatGroupName:String)->String{
         

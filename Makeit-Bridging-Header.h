@@ -15,5 +15,7 @@
 #import "WYStoryboardPopoverSegue.h"
 #import <DigitsKit/DigitsKit.h>
 #import <QMServices/QMServices.h>
-#import "QMChatViewController.h"
+#import <JSQSystemSoundPlayer/JSQSystemSoundPlayer.h>
+#import "NSUserDefaults+DemoSettings.h"
+
 

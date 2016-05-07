@@ -89,6 +89,8 @@ class PLSharedManager:NSObject{
     var existingContributorsList:[PLTeamMember] = [PLTeamMember]()
     var projectName:String = ""
     var projectId:String = ""
+    var groupName:String = ""
+    var userPassword:String = ""
     
 }
 

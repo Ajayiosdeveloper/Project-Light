@@ -48,6 +48,8 @@ class PLProjectTeamChatViewModel: NSObject {
     
     func selectedGroupForRow(row:Int)->PLChatGroup{
         
+       PLSharedManager.manager.groupName = projectChatGroupsList[row].name
+        
         return projectChatGroupsList[row]
     }
     

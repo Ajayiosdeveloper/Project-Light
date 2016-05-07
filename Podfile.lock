@@ -5,24 +5,21 @@ PODS:
   - Bolts/AppLinks (1.7.0):
     - Bolts/Tasks
   - Bolts/Tasks (1.7.0)
+  - JSQSystemSoundPlayer (4.4.0)
   - QMServices (0.4):
     - Bolts (>= 1.5.0)
     - QuickBlox (>= 2.6.5)
   - QuickBlox (2.7.2)
-  - TTTAttributedLabel (1.13.4)
-  - TWMessageBarManager (1.8.1)
 
 DEPENDENCIES:
   - Bolts (~> 1.7)
+  - JSQSystemSoundPlayer (~> 4.4)
   - QMServices (~> 0.4)
-  - TTTAttributedLabel (~> 1.13)
-  - TWMessageBarManager (~> 1.8)
 
 SPEC CHECKSUMS:
   Bolts: a0058fa3b331c5a1e4402d534f2dae36dbff31e4
+  JSQSystemSoundPlayer: 126ccc4a08db8fc3036bd07d33b0f8eda1559476
   QMServices: d394e72f3202206088fd18d2b6a507c597143e22
   QuickBlox: 99d8b2db8df393e6b38e601a9d3ed2d0dd4b4db3
-  TTTAttributedLabel: 0a2ac7b2dd726d32a070dafb01446026b11e624f
-  TWMessageBarManager: fd84e7948ba7968a2b5d9454859135761214ec56
 
 COCOAPODS: 0.39.0

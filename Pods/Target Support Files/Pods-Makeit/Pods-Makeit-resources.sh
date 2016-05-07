@@ -58,23 +58,11 @@ install_resource()
   esac
 }
 if [[ "$CONFIGURATION" == "Debug" ]]; then
-  install_resource "TWMessageBarManager/Classes/Icons/icon-error.png"
-  install_resource "TWMessageBarManager/Classes/Icons/icon-error@2x.png"
-  install_resource "TWMessageBarManager/Classes/Icons/icon-info.png"
-  install_resource "TWMessageBarManager/Classes/Icons/icon-info@2x.png"
-  install_resource "TWMessageBarManager/Classes/Icons/icon-success.png"
-  install_resource "TWMessageBarManager/Classes/Icons/icon-success@2x.png"
   install_resource "${BUILT_PRODUCTS_DIR}/QMChatCacheModel.bundle"
   install_resource "${BUILT_PRODUCTS_DIR}/QMContactListCacheModel.bundle"
   install_resource "${BUILT_PRODUCTS_DIR}/QMUsersCacheModel.bundle"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
-  install_resource "TWMessageBarManager/Classes/Icons/icon-error.png"
-  install_resource "TWMessageBarManager/Classes/Icons/icon-error@2x.png"
-  install_resource "TWMessageBarManager/Classes/Icons/icon-info.png"
-  install_resource "TWMessageBarManager/Classes/Icons/icon-info@2x.png"
-  install_resource "TWMessageBarManager/Classes/Icons/icon-success.png"
-  install_resource "TWMessageBarManager/Classes/Icons/icon-success@2x.png"
   install_resource "${BUILT_PRODUCTS_DIR}/QMChatCacheModel.bundle"
   install_resource "${BUILT_PRODUCTS_DIR}/QMContactListCacheModel.bundle"
   install_resource "${BUILT_PRODUCTS_DIR}/QMUsersCacheModel.bundle"

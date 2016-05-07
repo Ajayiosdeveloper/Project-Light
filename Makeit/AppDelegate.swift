@@ -13,6 +13,7 @@ import DigitsKit
 import Quickblox
 
 
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
@@ -35,7 +36,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         reachability.startNotifier()
         
         Fabric.with([Digits.self])
-        
         
 
         
