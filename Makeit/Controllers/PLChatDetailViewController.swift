@@ -9,6 +9,11 @@
 import UIKit
 import Quickblox
 
+enum AttachmentType{
+    
+    case Image,Audio,Video
+}
+
 class PLChatDetailViewController: JSQMessagesViewController, UIActionSheetDelegate,QBChatDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate {
     
    
@@ -71,20 +76,36 @@ class PLChatDetailViewController: JSQMessagesViewController, UIActionSheetDelega
                     if self!.attachment == nil{
                     let localMessage = JSQMessage(senderId: senderId, senderDisplayName: senderDisplayName, date: date, text: text)
                     self!.chatDetailViewModel.groupChatMessages.append(localMessage)
-                    }else{
-                        
-                        let photoItem = JSQPhotoMediaItem(image: UIImage(data:self!.attachment))
-                        let photoMessage = JSQMessage.message(senderId:senderId, senderDisplayName:senderDisplayName, media: photoItem)
-                        
-                        self!.chatDetailViewModel.groupChatMessages.append(photoMessage)
                     }
-                    
                     self!.finishSendingMessage()
                     self!.attachment = nil
                 }
                 
             }
     }
+    
+    func sendMessageWithImageAttachment(type:AttachmentType){
+        
+        chatDetailViewModel.sendMessage(chatGroup, text: "PRAISE THE LORD Forever and Evermore!", attachment: attachment) {[weak self] (res) in
+            
+            if res{
+                
+                print("PRAISE THE LORD!")
+                if type == .Image{
+                let photoItem = JSQPhotoMediaItem(image: UIImage(data:self!.attachment))
+                let photoMessage = JSQMessage.message(senderId:self!.senderID, senderDisplayName:self!.senderDisplayName, media: photoItem)
+                self!.chatDetailViewModel.groupChatMessages.append(photoMessage)
+                }
+                else if type == .Video{
+                  
+                }
+                self!.finishSendingMessage()
+                self!.attachment = nil
+            }
+          }
+        }
+    
+   
     
     override func didPressAccessoryButton(sender: UIButton) {
         
@@ -138,6 +159,7 @@ class PLChatDetailViewController: JSQMessagesViewController, UIActionSheetDelega
         
         return incomingBubbleImageData
     }
+    
     
     override func collectionView(collectionView: JSQMessagesCollectionView, avatarImageDataForItemAtIndexPath indexPath: NSIndexPath) -> JSQMessageAvatarImageDataSource? {
         
@@ -280,31 +302,52 @@ class PLChatDetailViewController: JSQMessagesViewController, UIActionSheetDelega
     
     func chatRoomDidReceiveMessage(message: QBChatMessage, fromDialogID dialogID: String) {
         
-       /* print("PRAISE THE LORD!")
-        print("Received Message")
-        print(message)
-        JSQSystemSoundPlayer.jsq_playMessageSentSound()
-        let localMessage = JSQMessage(senderId:String(message.senderID), senderDisplayName:"Immanual", date:message.dateSent!, text:message.text!)
-        self.chatDetailViewModel.groupChatMessages.append(localMessage)
-        self.finishSendingMessage()*/
-
-        
-    }
+        if dialogID == self.chatDetailViewModel.selectedChatGroup.chatGroupId{
+            
+            if self.senderID == String(message.senderID){
+                
+                print("Do not show message")
+            }
+            else{
+                
+                print("Show Message")
+                JSQSystemSoundPlayer.jsq_playMessageSentSound()
+                let localMessage = JSQMessage(senderId:String(message.senderID), senderDisplayName:"Immanual", date:message.dateSent!, text:message.text!)
+                self.chatDetailViewModel.groupChatMessages.append(localMessage)
+                self.finishSendingMessage()
+            }
+        }
+        else{
+            
+            print("Message came from other Chat Group")
+            
+        }
+ }
     
     func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
         
         let type = info[UIImagePickerControllerMediaType] as! String
+        print(type)
         if type == "public.image"{
             attachment = nil
             let image = info[UIImagePickerControllerEditedImage] as! UIImage
             attachment = UIImagePNGRepresentation(image)
+            sendMessageWithImageAttachment(.Image)
         }
-        else{
+        else if type == "public.audio"{
             
             let url = info[UIImagePickerControllerMediaURL] as! NSURL
             attachment = nil
             attachment = NSData(contentsOfURL:url)
+            sendMessageWithImageAttachment(.Audio)
             
+        }
+        else if type == "public.video"{
+            
+            let url = info[UIImagePickerControllerMediaURL] as! NSURL
+            attachment = nil
+            attachment = NSData(contentsOfURL:url)
+            sendMessageWithImageAttachment(.Video)
         }
        self.imagePickerController.dismissViewControllerAnimated(true, completion: nil)
        
@@ -320,10 +363,11 @@ class PLChatDetailViewController: JSQMessagesViewController, UIActionSheetDelega
         if value == 0{
             self.imagePickerController.sourceType = UIImagePickerControllerSourceType.PhotoLibrary
             self.imagePickerController.allowsEditing = true
+           
         }else if value == 1{
             
             self.imagePickerController.mediaTypes = [kUTTypeMP3 as String,kUTTypeMovie as String]
-        
+            
             
         }
        

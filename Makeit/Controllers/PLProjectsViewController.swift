@@ -33,6 +33,17 @@ class PLProjectsViewController: UITableViewController,UIImagePickerControllerDel
        projectViewModel = PLProjectsViewModel()
        print(QBSession.currentSession().currentUser?.customData)
     
+     let user = QBUUser()
+     user.ID = (QBSession.currentSession().currentUser?.ID)!
+     user.password = PLSharedManager.manager.userPassword
+    
+      QBChat.instance().connectWithUser(user) { (error: NSError?) -> Void in
+        if error == nil{
+            print("Success in connection")
+         }
+      }
+
+    
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -400,4 +411,74 @@ class PLProjectsViewController: UITableViewController,UIImagePickerControllerDel
         
         return roundedImage
     }
+    
 }
+
+
+extension UIViewController{
+    
+    class func currentViewController()->UIViewController{
+        
+        let controller = UIApplication.sharedApplication().keyWindow?.rootViewController
+        return UIViewController.findCurrentViewController(controller!)
+    }
+    
+    
+    class func findCurrentViewController(controller:UIViewController)->UIViewController{
+        
+        if (controller.presentedViewController != nil){
+            
+            return UIViewController.findCurrentViewController(controller.presentedViewController!)
+        }
+        else if controller is UISplitViewController{
+            
+           let split = controller as! UISplitViewController
+            
+            if split.viewControllers.count > 0{
+                
+                return UIViewController.findCurrentViewController(split.viewControllers.last!)
+            }
+            else{
+                
+                return controller
+            }
+            
+        }
+        
+        else if controller is UINavigationController{
+            
+            let nav = controller as! UINavigationController
+            
+            if nav.viewControllers.count > 0{
+                
+                
+                return UIViewController.findCurrentViewController(nav.topViewController!)
+            }
+            else{
+                return controller
+            }
+        }
+        
+        else if controller is UITabBarController{
+           
+            let tab = controller as! UITabBarController
+            
+            if tab.viewControllers?.count > 0{
+                
+                return UIViewController.findCurrentViewController(tab.selectedViewController!)
+            }
+            else{
+                return controller
+            }
+            
+            
+        }
+        else{
+            
+            return controller
+        }
+    }
+    
+}
+
+

@@ -145,6 +145,7 @@
 		80C4A0221CDCBB500073B6E2 /* JSQMessagesTypingIndicatorFooterView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 80C49FF01CDCBB500073B6E2 /* JSQMessagesTypingIndicatorFooterView.xib */; };
 		80C61B9F1CDB64900022CAFA /* PLChatDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80C61B9E1CDB64900022CAFA /* PLChatDetailViewModel.swift */; };
 		80DE821D1CC0D87700D5017A /* PLUserSignupAndLoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80DE821C1CC0D87700D5017A /* PLUserSignupAndLoginViewModel.swift */; };
+		80ED65A41CE09F4600C61090 /* AFDropdownNotification.m in Sources */ = {isa = PBXBuildFile; fileRef = 80ED65A31CE09F4600C61090 /* AFDropdownNotification.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -337,6 +338,8 @@
 		80C49FF01CDCBB500073B6E2 /* JSQMessagesTypingIndicatorFooterView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JSQMessagesTypingIndicatorFooterView.xib; sourceTree = "<group>"; };
 		80C61B9E1CDB64900022CAFA /* PLChatDetailViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLChatDetailViewModel.swift; sourceTree = "<group>"; };
 		80DE821C1CC0D87700D5017A /* PLUserSignupAndLoginViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLUserSignupAndLoginViewModel.swift; sourceTree = "<group>"; };
+		80ED65A21CE09F4600C61090 /* AFDropdownNotification.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFDropdownNotification.h; sourceTree = "<group>"; };
+		80ED65A31CE09F4600C61090 /* AFDropdownNotification.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFDropdownNotification.m; sourceTree = "<group>"; };
 		845C10BAD4397155B390B307 /* libPods-Makeit.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Makeit.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		AB4C5F8A0BCA9989B855A1CB /* Pods-Makeit.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Makeit.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Makeit/Pods-Makeit.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -504,6 +507,7 @@
 		806D4ADC1CC20FCD0054A9AF /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				80ED65A11CE09F4600C61090 /* AFDropdownNotification */,
 				80C49FB41CDCBB500073B6E2 /* JSQMessagesViewController */,
 				806B1E121CD8AA080018B026 /* SDWebImage */,
 				8003180E1CCF7D180084514A /* WYpopoverController */,
@@ -777,6 +781,15 @@
 			path = "UserSignup&Login ";
 			sourceTree = "<group>";
 		};
+		80ED65A11CE09F4600C61090 /* AFDropdownNotification */ = {
+			isa = PBXGroup;
+			children = (
+				80ED65A21CE09F4600C61090 /* AFDropdownNotification.h */,
+				80ED65A31CE09F4600C61090 /* AFDropdownNotification.m */,
+			);
+			path = AFDropdownNotification;
+			sourceTree = "<group>";
+		};
 		E4BCDC231E1ED4C93F8221EF /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -1045,6 +1058,7 @@
 				808AA2ED1CC6060800685226 /* PLDynamicEngine.swift in Sources */,
 				80C49FF31CDCBB500073B6E2 /* NSBundle.swift in Sources */,
 				80C4A0041CDCBB500073B6E2 /* JSQMessagesCollectionViewLayoutAttributes.swift in Sources */,
+				80ED65A41CE09F4600C61090 /* AFDropdownNotification.m in Sources */,
 				80C4A0021CDCBB500073B6E2 /* JSQMessagesCollectionViewFlowLayout.swift in Sources */,
 				80879D3B1CC8DC1C00B41D2D /* PLProjectCommentViewController.swift in Sources */,
 				80C49FFA1CDCBB500073B6E2 /* JSQMessagesViewController.swift in Sources */,

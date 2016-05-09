@@ -554,15 +554,38 @@ class PLQuickbloxHttpClient
         if let _ = messages{
             
             
+            
             for message in messages!{
                 
+                if message.attachments?.count > 0{
+                    let attachmentDict = message.attachments?.first
+                    let fileId = attachmentDict?.ID
+                    QBRequest.downloadFileWithID(UInt(fileId!)!, successBlock: { (_, imageData) in
+                    let imageUI = UIImage(data:imageData)
+                    let attachedImage = JSQPhotoMediaItem(image:imageUI)
+                        let eachMessage = JSQMessage(senderId:String(message.senderID), senderDisplayName: "Najareth", date: message.dateSent!, media:attachedImage)
+                        chatMessages.append(eachMessage)
+                        completion(true,chatMessages)
+                        
+                        }, statusBlock: { (_, _) in
+                            
+                        }, errorBlock: { (_) in
+                            
+                    })
+                }
+                else{
                let eachMessage = JSQMessage(senderId:String(message.senderID), senderDisplayName:"Najareth", date:message.dateSent!, text: message.text!)
-                
-                chatMessages.append(eachMessage)
+                   chatMessages.append(eachMessage)
+                }
                 
                 }
-            completion(true,chatMessages)
+            
+            print(chatMessages.count)
+            
+            
         }
+        
+          completion(true,chatMessages)
         
         }, errorBlock:{(_)in
            

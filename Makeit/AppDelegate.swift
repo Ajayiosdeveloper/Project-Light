@@ -12,10 +12,8 @@ import Fabric
 import DigitsKit
 import Quickblox
 
-
-
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate,QBChatDelegate {
 
     var window: UIWindow?
     var reachability:Reachability!
@@ -28,6 +26,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         QBSettings.setAuthKey(kAuthorizationKey)
         QBSettings.setAuthSecret(kAuthorizationSecret)
         QBSettings.setAccountKey(kAccountKey)
+        
+        QBChat.instance().addDelegate(self)
+        
         
         //Checking Newtwork Reachability and observing Newtork changes with observer
         
@@ -50,7 +51,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationDidEnterBackground(application: UIApplication) {
         // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
         // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
-       
+        
+        print(UIViewController.currentViewController())
+               
     }
 
     func applicationWillEnterForeground(application: UIApplication) {
@@ -82,6 +85,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
            //Handle when newtwok gets connected
         }
     }
+    
+    func chatRoomDidReceiveMessage(message: QBChatMessage, fromDialogID dialogID: String) {
+        
+        print("Received a Chat MEssage")
+        print(message)
+    }
+    
+   
+
 
 }
 
