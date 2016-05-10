@@ -669,4 +669,96 @@ class PLQuickbloxHttpClient
         return finalName
     }
     
+    
+    func updateProfileOfAnUser(dateOfBirth:String?, companyName:String?, technology:String?, experience:String?, designation: String?,emailId : String?, completion:(Bool)->Void)
+    {
+        
+        let userId = QBSession.currentSession().currentUser?.ID
+        
+        let customObject = QBCOCustomObject()
+        customObject.className = "UserInfo"
+        customObject.fields?.setValue(dateOfBirth, forKey: "dateOfBirth")
+        customObject.fields?.setValue(companyName, forKey: "companyName")
+        customObject.fields?.setValue(technology, forKey: "technology")
+        customObject.fields?.setValue(experience, forKey: "experience")
+        customObject.fields?.setValue(designation, forKey: "designation")
+        customObject.fields?.setValue(emailId, forKey: "emailId")
+        customObject.fields?.setValue(userId, forKey: "_parent_id")
+        let params = NSMutableDictionary()
+        params.setValue(userId!, forKey:"_parent_id")
+        QBRequest.objectsWithClassName("UserInfo", extendedRequest: params, successBlock: { (_,objects, _) in
+            
+            if objects?.count == 0
+            {
+                QBRequest.createObject(customObject, successBlock: { (response, object) in
+                    print(object?.fields?.objectForKey("companyName"))
+                    completion(true)
+                    })
+                { (respons) in
+                    completion(false)
+                    print("Error in Profile Creation")
+                }
+            }
+            else
+            {
+                let objectToUpdate = objects!.first
+                
+                objectToUpdate!.fields?.setValue(dateOfBirth, forKey: "dateOfBirth")
+                objectToUpdate!.fields?.setValue(companyName, forKey: "companyName")
+                objectToUpdate!.fields?.setValue(technology, forKey: "technology")
+                objectToUpdate!.fields?.setValue(experience, forKey: "experience")
+                objectToUpdate!.fields?.setValue(designation, forKey: "designation")
+                objectToUpdate!.fields?.setValue(emailId, forKey: "emailId")
+                QBRequest.updateObject(objectToUpdate!, successBlock: { (response, objc) in
+                    completion(true)
+                    
+                }) { (res) in
+                    completion(false)
+                    print("Error in Profile Updation")
+                }
+                
+            }
+            
+        }) { (_) in
+            
+            print("Error")
+        }
+    }
+    
+    
+    func getUserProfileDetails(completion:([String:AnyObject]?)->Void)
+    {
+        let userId = QBSession.currentSession().currentUser?.ID
+        
+        let params = NSMutableDictionary()
+        params.setValue(userId!, forKey:"_parent_id")
+        QBRequest.objectsWithClassName("UserInfo", extendedRequest: params, successBlock: { (_,objects, _) in
+            
+            if objects?.count == 0
+            {
+                completion(nil)
+            }
+            else
+            {
+                let objectToUpdate = objects!.first
+                
+                var infoDict = [String:AnyObject]()
+                infoDict["dateOfBirth"] = objectToUpdate?.fields?.valueForKey("dateOfBirth")
+                infoDict["experience"] = objectToUpdate?.fields?.valueForKey("experience")
+                infoDict["companyName"] = objectToUpdate?.fields?.valueForKey("companyName")
+                infoDict["technology"] = objectToUpdate?.fields?.valueForKey("technology")
+                infoDict["designation"] = objectToUpdate?.fields?.valueForKey("designation")
+                infoDict["emailId"] = objectToUpdate?.fields?.valueForKey("emailId")
+                completion(infoDict)
+            }
+            
+        }) { (_) in
+            
+            print("Error")
+        }
+    }
+    
+
+
+    
 }

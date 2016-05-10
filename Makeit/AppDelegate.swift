@@ -17,6 +17,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate,QBChatDelegate {
 
     var window: UIWindow?
     var reachability:Reachability!
+    var notificationBanner:AFDropdownNotification!
    
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
@@ -88,12 +89,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate,QBChatDelegate {
     
     func chatRoomDidReceiveMessage(message: QBChatMessage, fromDialogID dialogID: String) {
         
-        print("Received a Chat MEssage")
-        print(message)
-    }
-    
-   
-
-
+        let currentViewController = UIViewController.currentViewController()
+        
+        if notificationBanner == nil{
+            notificationBanner = AFDropdownNotification()
+        }
+        notificationBanner.titleText = message.text
+        notificationBanner.subtitleText = ""
+        notificationBanner.image = UIImage(named: "chatUser.png")
+        notificationBanner.topButtonText = "Open"
+        notificationBanner.bottomButtonText = "Cancel"
+        notificationBanner.dismissOnTap = true
+        notificationBanner.presentInView(currentViewController.view, withGravityAnimation: true)
+        }
 }
 

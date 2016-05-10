@@ -21,6 +21,7 @@ class PLChatDetailViewController: JSQMessagesViewController, UIActionSheetDelega
     var chatGroup:QBChatDialog!
     var imagePickerController:UIImagePickerController!
     var attachment:NSData!
+    var notificationBanner:AFDropdownNotification!
  
     
     override func viewDidLoad() {
@@ -283,6 +284,16 @@ class PLChatDetailViewController: JSQMessagesViewController, UIActionSheetDelega
     func collectionView(collectionView: JSQMessagesCollectionView, header: JSQMessagesLoadEarlierHeaderView, didTapLoadEarlierMessagesButton button: UIButton?) {
         
         print("Load earlier messages!")
+        
+        if notificationBanner == nil{
+            notificationBanner = AFDropdownNotification()
+        }
+        notificationBanner.titleText = "Message box is empty"
+        notificationBanner.subtitleText = "No more messages in \(self.chatDetailViewModel.selectedChatGroup.name)"
+        notificationBanner.image = UIImage(named: "emptyMessages.png")
+        notificationBanner.dismissOnTap = true
+        notificationBanner.presentInView(self.view, withGravityAnimation: false)
+        
     }
     
     override func collectionView(collectionView: JSQMessagesCollectionView, didTapAvatarImageView imageView: UIImageView, atIndexPath indexPath: NSIndexPath) {
@@ -374,5 +385,9 @@ class PLChatDetailViewController: JSQMessagesViewController, UIActionSheetDelega
         self.navigationController?.presentViewController(self.imagePickerController, animated: true, completion:nil)
 
         }
+    
+    
+    
+ 
 }
 

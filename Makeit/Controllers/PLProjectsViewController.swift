@@ -24,6 +24,7 @@ class PLProjectsViewController: UITableViewController,UIImagePickerControllerDel
     var profilePicSettings:UIBarButtonItem!
     var profilePicSettingsCustomView:UIButton!
     var plPhotoPickerController:UIImagePickerController!
+    var userProfileController : PLUserProfileInfoTableViewController?
 
   override func viewDidLoad() {
         super.viewDidLoad()
@@ -157,12 +158,13 @@ class PLProjectsViewController: UITableViewController,UIImagePickerControllerDel
     func addNewProjectToList()
     {
         
-        if addProjectViewController == nil{
+       if addProjectViewController == nil{
            addProjectViewController = self.storyboard?.instantiateViewControllerWithIdentifier("PLAddProjectViewController") as? PLAddProjectViewController
         }
         self.navigationController?.pushViewController(addProjectViewController!, animated: true)
         if observerContext == 0 {projectViewModel.removeObserver(self, forKeyPath:"createdProjectList")}
     }
+   
     
    //MARK: UITableView DataSource
     
@@ -257,6 +259,9 @@ class PLProjectsViewController: UITableViewController,UIImagePickerControllerDel
         if indexPath.section == 2{
             
             print("Improve Profile ViewController")
+            
+            self.userProfileController = self.storyboard?.instantiateViewControllerWithIdentifier("PLUserProfileInfoTableViewController") as? PLUserProfileInfoTableViewController
+            self.navigationController?.pushViewController(self.userProfileController!, animated: true)
             
         }else if indexPath.section == 0 || indexPath.section == 1{
             let selected = projectViewModel.didSelectRowAtIndex(indexPath.row,section:indexPath.section) as PLProject

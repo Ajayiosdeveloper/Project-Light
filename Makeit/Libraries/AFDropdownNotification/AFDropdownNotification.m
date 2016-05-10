@@ -54,7 +54,7 @@
         _imageView = [UIImageView new];
         _imageView.image = nil;
         
-        _topButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        /*_topButton = [UIButton buttonWithType:UIButtonTypeCustom];
         _topButton.titleLabel.font = [UIFont fontWithName:@"HelveticaNeue-Medium" size:13];
         [_topButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         _topButton.adjustsImageWhenHighlighted = YES;
@@ -71,7 +71,7 @@
         [_bottomButton.layer setCornerRadius:10];
         [_bottomButton.layer setBorderWidth:1];
         [_bottomButton.layer setBorderColor:[[UIColor grayColor] CGColor]];
-        [_bottomButton.layer setMasksToBounds:YES];
+        [_bottomButton.layer setMasksToBounds:YES];*/
         
         _screenSize = [[UIScreen mainScreen] bounds].size;
         
@@ -88,8 +88,8 @@
         _imageView.image = _image;
         _titleLabel.text = _titleText;
         _subtitleLabel.text = _subtitleText;
-        [_topButton setTitle:_topButtonText forState:UIControlStateNormal];
-        [_bottomButton setTitle:_bottomButtonText forState:UIControlStateNormal];
+        //[_topButton setTitle:_topButtonText forState:UIControlStateNormal];
+        //[_bottomButton setTitle:_bottomButtonText forState:UIControlStateNormal];
         
         NSInteger textWidth = ([[UIScreen mainScreen] bounds].size.width - kDropdownPadding - kDropdownImageSize - kDropdownPadding - kDropdownPadding - kDropdownButtonWidth - kDropdownPadding);
         NSInteger titleHeight = [_titleLabel.text boundingRectWithSize:CGSizeMake(textWidth, 999) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName: [UIFont fontWithName:@"HelveticaNeue-Medium" size:kDropdownTitleFontSize]} context:nil].size.height;

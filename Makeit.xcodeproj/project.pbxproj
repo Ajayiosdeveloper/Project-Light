@@ -30,6 +30,8 @@
 		80485F081CD4B19700F49209 /* PLTeamCommunicationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80485F071CD4B19700F49209 /* PLTeamCommunicationViewController.swift */; };
 		805EFB5F1CD239200066B4CB /* PLTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 805EFB5D1CD239200066B4CB /* PLTableViewCell.swift */; };
 		805EFB601CD239200066B4CB /* PLTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 805EFB5E1CD239200066B4CB /* PLTableViewCell.xib */; };
+		8066356D1CE0BAD900D21103 /* PLUserProfileInfoTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8066356C1CE0BAD900D21103 /* PLUserProfileInfoTableViewController.swift */; };
+		8066356F1CE0BB0400D21103 /* PLUserProfileInfoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8066356E1CE0BB0400D21103 /* PLUserProfileInfoViewModel.swift */; };
 		806B1E0F1CD8A7D60018B026 /* audio.png in Resources */ = {isa = PBXBuildFile; fileRef = 806B1E0C1CD8A7D60018B026 /* audio.png */; };
 		806B1E101CD8A7D60018B026 /* UserImage.png in Resources */ = {isa = PBXBuildFile; fileRef = 806B1E0D1CD8A7D60018B026 /* UserImage.png */; };
 		806B1E111CD8A7D60018B026 /* video.png in Resources */ = {isa = PBXBuildFile; fileRef = 806B1E0E1CD8A7D60018B026 /* video.png */; };
@@ -146,6 +148,7 @@
 		80C61B9F1CDB64900022CAFA /* PLChatDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80C61B9E1CDB64900022CAFA /* PLChatDetailViewModel.swift */; };
 		80DE821D1CC0D87700D5017A /* PLUserSignupAndLoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80DE821C1CC0D87700D5017A /* PLUserSignupAndLoginViewModel.swift */; };
 		80ED65A41CE09F4600C61090 /* AFDropdownNotification.m in Sources */ = {isa = PBXBuildFile; fileRef = 80ED65A31CE09F4600C61090 /* AFDropdownNotification.m */; };
+		80ED65A61CE0B36900C61090 /* emptyMessages.png in Resources */ = {isa = PBXBuildFile; fileRef = 80ED65A51CE0B36900C61090 /* emptyMessages.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -193,6 +196,8 @@
 		80485F071CD4B19700F49209 /* PLTeamCommunicationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLTeamCommunicationViewController.swift; sourceTree = "<group>"; };
 		805EFB5D1CD239200066B4CB /* PLTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLTableViewCell.swift; sourceTree = "<group>"; };
 		805EFB5E1CD239200066B4CB /* PLTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PLTableViewCell.xib; sourceTree = "<group>"; };
+		8066356C1CE0BAD900D21103 /* PLUserProfileInfoTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLUserProfileInfoTableViewController.swift; sourceTree = "<group>"; };
+		8066356E1CE0BB0400D21103 /* PLUserProfileInfoViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLUserProfileInfoViewModel.swift; sourceTree = "<group>"; };
 		806B1E0C1CD8A7D60018B026 /* audio.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = audio.png; sourceTree = "<group>"; };
 		806B1E0D1CD8A7D60018B026 /* UserImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = UserImage.png; sourceTree = "<group>"; };
 		806B1E0E1CD8A7D60018B026 /* video.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = video.png; sourceTree = "<group>"; };
@@ -340,6 +345,7 @@
 		80DE821C1CC0D87700D5017A /* PLUserSignupAndLoginViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLUserSignupAndLoginViewModel.swift; sourceTree = "<group>"; };
 		80ED65A21CE09F4600C61090 /* AFDropdownNotification.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFDropdownNotification.h; sourceTree = "<group>"; };
 		80ED65A31CE09F4600C61090 /* AFDropdownNotification.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFDropdownNotification.m; sourceTree = "<group>"; };
+		80ED65A51CE0B36900C61090 /* emptyMessages.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = emptyMessages.png; sourceTree = "<group>"; };
 		845C10BAD4397155B390B307 /* libPods-Makeit.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Makeit.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		AB4C5F8A0BCA9989B855A1CB /* Pods-Makeit.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Makeit.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Makeit/Pods-Makeit.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -436,6 +442,7 @@
 		806B1E0B1CD8A7070018B026 /* SupportingFiles */ = {
 			isa = PBXGroup;
 			children = (
+				80ED65A51CE0B36900C61090 /* emptyMessages.png */,
 				802E595D1CDE11AF00A1D0B3 /* chatUser.png */,
 				8024685A1CDA2FB900CAE735 /* chatGroup.png */,
 				806B1E0C1CD8A7D60018B026 /* audio.png */,
@@ -537,6 +544,7 @@
 		806D4AEF1CC25DB50054A9AF /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				8066356C1CE0BAD900D21103 /* PLUserProfileInfoTableViewController.swift */,
 				806D4AF31CC260080054A9AF /* PLProjectsViewController.swift */,
 				806CA5AE1CC4B27F00E401A1 /* PLAddProjectViewController.swift */,
 				8073C8CD1CC737F400AE4CB6 /* PLDisplayMembersPopover.swift */,
@@ -565,6 +573,7 @@
 		806D4AF11CC25DB50054A9AF /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
+				8066356E1CE0BB0400D21103 /* PLUserProfileInfoViewModel.swift */,
 				806D4AF51CC2607C0054A9AF /* PLProjectsViewModel.swift */,
 				806CA5B01CC4B2A400E401A1 /* PLAddProjectViewModel.swift */,
 				8073C8CF1CC744DE00AE4CB6 /* PLTeamMemberModelView.swift */,
@@ -919,6 +928,7 @@
 				809F96D21CBCC35000DD1FE9 /* Assets.xcassets in Resources */,
 				806B1E111CD8A7D60018B026 /* video.png in Resources */,
 				8024685B1CDA2FB900CAE735 /* chatGroup.png in Resources */,
+				80ED65A61CE0B36900C61090 /* emptyMessages.png in Resources */,
 				805EFB601CD239200066B4CB /* PLTableViewCell.xib in Resources */,
 				809F96D01CBCC35000DD1FE9 /* Main.storyboard in Resources */,
 				80C4A0181CDCBB500073B6E2 /* JSQMessagesCollectionViewCellOutgoing.xib in Resources */,
@@ -1076,7 +1086,9 @@
 				806D4AE81CC210910054A9AF /* SVIndefiniteAnimatedView.m in Sources */,
 				80C49FFE1CDCBB500073B6E2 /* JSQMessagesMediaViewBubbleImageMasker.swift in Sources */,
 				80C49FFC1CDCBB500073B6E2 /* JSQMessagesAvatarImageFactory.swift in Sources */,
+				8066356D1CE0BAD900D21103 /* PLUserProfileInfoTableViewController.swift in Sources */,
 				8078A46D1CC88C11008AC4DD /* PLProjectDetailViewModel.swift in Sources */,
+				8066356F1CE0BB0400D21103 /* PLUserProfileInfoViewModel.swift in Sources */,
 				806D4AD51CC1FF110054A9AF /* PLQuickbloxHttpClient.swift in Sources */,
 				802468591CDA2F3F00CAE735 /* PLChatDetailViewController.swift in Sources */,
 				807FC87A1CCB47920094112E /* PLTeamMemberDetailsTableViewController.swift in Sources */,
