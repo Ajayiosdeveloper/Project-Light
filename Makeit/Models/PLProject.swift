@@ -91,6 +91,7 @@ class PLSharedManager:NSObject{
     var projectId:String = ""
     var groupName:String = ""
     var userPassword:String = ""
+    var userName:String = ""
     
 }
 

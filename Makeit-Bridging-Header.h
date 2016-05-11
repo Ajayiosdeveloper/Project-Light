@@ -16,6 +16,5 @@
 #import <DigitsKit/DigitsKit.h>
 #import <QMServices/QMServices.h>
 #import <JSQSystemSoundPlayer/JSQSystemSoundPlayer.h>
-#import "NSUserDefaults+DemoSettings.h"
 #import "AFDropdownNotification.h"
 

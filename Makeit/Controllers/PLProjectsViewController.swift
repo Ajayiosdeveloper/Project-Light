@@ -22,9 +22,10 @@ class PLProjectsViewController: UITableViewController,UIImagePickerControllerDel
     var animateCell:[Bool] = [Bool]()
     var observerContext = 0
     var profilePicSettings:UIBarButtonItem!
-    var profilePicSettingsCustomView:UIButton!
+    //var profilePicSettingsCustomView:UIButton!
     var plPhotoPickerController:UIImagePickerController!
     var userProfileController : PLUserProfileInfoTableViewController?
+    var editProjectButton:UIBarButtonItem!
 
   override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,9 +35,9 @@ class PLProjectsViewController: UITableViewController,UIImagePickerControllerDel
        projectViewModel = PLProjectsViewModel()
        print(QBSession.currentSession().currentUser?.customData)
     
-     let user = QBUUser()
-     user.ID = (QBSession.currentSession().currentUser?.ID)!
-     user.password = PLSharedManager.manager.userPassword
+       let user = QBUUser()
+       user.ID = (QBSession.currentSession().currentUser?.ID)!
+       user.password = PLSharedManager.manager.userPassword
     
       QBChat.instance().connectWithUser(user) { (error: NSError?) -> Void in
         if error == nil{
@@ -54,15 +55,7 @@ class PLProjectsViewController: UITableViewController,UIImagePickerControllerDel
         projectViewModel.addObserver(self, forKeyPath:"createdProjectList", options: NSKeyValueObservingOptions.New, context:&observerContext)
         projectViewModel.fetchProjectsFromRemote()
         addActivityIndicatorView()
-        projectViewModel.fetchUserAvatar(){[weak self] avatar in
-            
-            if avatar != nil{
-                self!.profilePicSettingsCustomView.setBackgroundImage(avatar!, forState: .Normal)
-            }
-            else{self!.profilePicSettingsCustomView.setBackgroundImage(UIImage(named:"UserImage.png"), forState: .Normal)}
-        }
-
-    }
+      }
     
     func  addActivityIndicatorView() {
         if activityIndicatorView == nil{
@@ -77,20 +70,24 @@ class PLProjectsViewController: UITableViewController,UIImagePickerControllerDel
     
     func addLogoutBarButtonItem(){
        
-       profilePicSettingsCustomView = UIButton(type: .Custom)
-       profilePicSettingsCustomView.frame = CGRectMake(0, 0, 30, 30)
-       profilePicSettingsCustomView.layer.cornerRadius = 15.0
-       profilePicSettingsCustomView.addTarget(self, action:#selector(PLProjectsViewController.showSettingsActionSheet), forControlEvents: UIControlEvents.TouchUpInside)
-       profilePicSettingsCustomView.setBackgroundImage(UIImage(named:"UserImage.png"), forState: UIControlState.Normal)
-       profilePicSettings = UIBarButtonItem(customView:profilePicSettingsCustomView)
- 
+      // profilePicSettingsCustomView = UIButton(type: .Custom)
+       //profilePicSettingsCustomView.frame = CGRectMake(0, 0, 30, 30)
+      // profilePicSettingsCustomView.layer.cornerRadius = 15.0
+      // profilePicSettingsCustomView.addTarget(self, action:#selector(PLProjectsViewController.showSettingsActionSheet), forControlEvents: UIControlEvents.TouchUpInside)
+      // profilePicSettingsCustomView.setBackgroundImage(UIImage(named:"UserImage.png"), forState: UIControlState.Normal)
+        let sidebarImage = UIImage(named: "sideBar.png")!.imageWithRenderingMode(UIImageRenderingMode.AlwaysOriginal)
+        profilePicSettings = UIBarButtonItem(image:sidebarImage, style: UIBarButtonItemStyle.Plain, target:self , action: #selector(PLProjectsViewController.showSettingsActionSheet))
        self.navigationItem.leftBarButtonItem = profilePicSettings
     }
     
     func showSettingsActionSheet()
     {
+        print("PRAISE THE LORD")
         
-        if #available(iOS 8.0, *) {
+        self.findHamburguerViewController()?.showMenuViewController()
+
+        
+       /* if #available(iOS 8.0, *) {
             let settingsActionSheet = UIAlertController(title:"Upload Profile", message:"", preferredStyle: UIAlertControllerStyle.ActionSheet)
             settingsActionSheet.addAction(UIAlertAction(title:"Photo Library", style: UIAlertActionStyle.Default, handler: {[weak self] (action) in
                 
@@ -146,13 +143,15 @@ class PLProjectsViewController: UITableViewController,UIImagePickerControllerDel
         } else {
             // Fallback on earlier versions
             
-        }
+        }*/
     }
     
     func addNewProject()
     {
-        
-         self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Add, target: self, action: #selector(PLProjectsViewController.addNewProjectToList))
+        let addProjectButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Add, target: self, action: #selector(PLProjectsViewController.addNewProjectToList))
+         editProjectButton = UIBarButtonItem(title: "Edit", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(PLProjectsViewController.deleteProjectInList))
+        self.navigationItem.rightBarButtonItems = [addProjectButton,editProjectButton]
+         //self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Add, target: self, action: #selector(PLProjectsViewController.addNewProjectToList))
     }
     
     func addNewProjectToList()
@@ -163,6 +162,17 @@ class PLProjectsViewController: UITableViewController,UIImagePickerControllerDel
         }
         self.navigationController?.pushViewController(addProjectViewController!, animated: true)
         if observerContext == 0 {projectViewModel.removeObserver(self, forKeyPath:"createdProjectList")}
+    }
+    
+    func deleteProjectInList(){
+        if editProjectButton.title == "Edit"{
+            editProjectButton.title = "Done"
+            self.projectTableView.setEditing(true, animated: true)
+        }else{
+            
+            editProjectButton.title = "Edit"
+            self.projectTableView.setEditing(false, animated: true)
+        }
     }
    
     
@@ -365,15 +375,15 @@ class PLProjectsViewController: UITableViewController,UIImagePickerControllerDel
         
         capturedImage = resizeImage(capturedImage, width: 4.0, height: 4.0)
         SVProgressHUD.showWithStatus("Uploading")
-          projectViewModel.updateUserAvatar(capturedImage){[weak self] result in
+          /*projectViewModel.updateUserAvatar(capturedImage){[weak self] result in
             if result{print("Succesfully uploaded"); SVProgressHUD.dismiss();
                 capturedImage = self!.resizeImage(capturedImage, width: 4.0, height: 4.0)
-                let buttonView = self?.profilePicSettings.valueForKey("view") as! UIView
-                buttonView.layer.cornerRadius = 10
-                self!.profilePicSettingsCustomView.setBackgroundImage(capturedImage, forState: UIControlState.Normal)
+                //let buttonView = self?.profilePicSettings.valueForKey("view") as! UIView
+                //buttonView.layer.cornerRadius = 10
+               // self!.profilePicSettingsCustomView.setBackgroundImage(capturedImage, forState: UIControlState.Normal)
             }
             else{print("Error!");SVProgressHUD.dismiss()}
-        }
+        }*/
         
         picker.dismissViewControllerAnimated(true, completion:nil)
     }

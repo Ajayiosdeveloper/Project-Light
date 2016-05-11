@@ -29,6 +29,7 @@ class PLUserSignupAndLoginViewController: UITableViewController,UITextFieldDeleg
     }()
     @IBOutlet var getStartedTableView: UITableView!
     var projectsViewController:PLProjectsViewController!
+    var sideBarRootViewController:PLSidebarRootViewController!
     //MARK: View Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -125,6 +126,7 @@ class PLUserSignupAndLoginViewController: UITableViewController,UITextFieldDeleg
             if value as! NSNumber == 1 { // Handling Alert Messages for Sign in
                 if tag == 0{ clearTextfields()}
                 
+                PLSharedManager.manager.userName = self.loginUserNameTextField.text!
                 presentProjectsViewController()
            }
             else{ // Handling Alert Messages for Login
@@ -143,14 +145,23 @@ class PLUserSignupAndLoginViewController: UITableViewController,UITextFieldDeleg
         
         if (projectsViewController == nil){
         
-            projectsViewController = self.storyboard?.instantiateViewControllerWithIdentifier("projectsViewController") as! PLProjectsViewController
+            //projectsViewController = self.storyboard?.instantiateViewControllerWithIdentifier("projectsViewController") as! PLProjectsViewController
+            
+            sideBarRootViewController = self.storyboard?.instantiateViewControllerWithIdentifier("PLSidebarRootViewController") as! PLSidebarRootViewController
         }
-        if !(self.navigationController?.topViewController?.isKindOfClass(PLAddProjectViewController))!
+        
+         //self.navigationController?.pushViewController(sideBarRootViewController, animated: false)
+        
+        
+         self.navigationController!.presentViewController(sideBarRootViewController, animated: true, completion:nil)
+        
+        
+       /* if !(self.navigationController?.topViewController?.isKindOfClass(PLAddProjectViewController))!
         {
         
             self.navigationController?.pushViewController(projectsViewController, animated: false)
 
-        }
+        }*/
         
     }
     

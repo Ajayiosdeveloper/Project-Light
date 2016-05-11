@@ -557,13 +557,16 @@ class PLQuickbloxHttpClient
             
             for message in messages!{
                 
+                 let senderName = message.customParameters!["senderName"] as! String
+                
                 if message.attachments?.count > 0{
                     let attachmentDict = message.attachments?.first
                     let fileId = attachmentDict?.ID
                     QBRequest.downloadFileWithID(UInt(fileId!)!, successBlock: { (_, imageData) in
                     let imageUI = UIImage(data:imageData)
                     let attachedImage = JSQPhotoMediaItem(image:imageUI)
-                        let eachMessage = JSQMessage(senderId:String(message.senderID), senderDisplayName: "Najareth", date: message.dateSent!, media:attachedImage)
+                   
+                        let eachMessage = JSQMessage(senderId:String(message.senderID), senderDisplayName: senderName, date: message.dateSent!, media:attachedImage)
                         chatMessages.append(eachMessage)
                         completion(true,chatMessages)
                         
@@ -574,7 +577,7 @@ class PLQuickbloxHttpClient
                     })
                 }
                 else{
-               let eachMessage = JSQMessage(senderId:String(message.senderID), senderDisplayName:"Najareth", date:message.dateSent!, text: message.text!)
+               let eachMessage = JSQMessage(senderId:String(message.senderID), senderDisplayName:senderName, date:message.dateSent!, text: message.text!)
                    chatMessages.append(eachMessage)
                 }
                 
@@ -603,6 +606,7 @@ class PLQuickbloxHttpClient
         message.text = text
         let params = NSMutableDictionary()
         params["save_to_history"] = true
+        params["senderName"] = PLSharedManager.manager.userName
         message.customParameters = params
         message.deliveredIDs = [(QBSession.currentSession().currentUser?.ID)!]
         message.readIDs = [(QBSession.currentSession().currentUser?.ID)!]
@@ -629,6 +633,7 @@ class PLQuickbloxHttpClient
             message.text = text
             let params = NSMutableDictionary()
             params["save_to_history"] = true
+            params["senderName"] = PLSharedManager.manager.userName
             message.customParameters = params
             message.deliveredIDs = [(QBSession.currentSession().currentUser?.ID)!]
             message.readIDs = [(QBSession.currentSession().currentUser?.ID)!]

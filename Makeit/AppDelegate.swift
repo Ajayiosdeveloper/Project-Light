@@ -94,6 +94,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate,QBChatDelegate {
         if notificationBanner == nil{
             notificationBanner = AFDropdownNotification()
         }
+        
+       if  !QBChat.instance().isConnected(){
+        
         notificationBanner.titleText = message.text
         notificationBanner.subtitleText = ""
         notificationBanner.image = UIImage(named: "chatUser.png")
@@ -101,6 +104,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate,QBChatDelegate {
         notificationBanner.bottomButtonText = "Cancel"
         notificationBanner.dismissOnTap = true
         notificationBanner.presentInView(currentViewController.view, withGravityAnimation: true)
+
+    
         }
+        
+    }
 }
 
