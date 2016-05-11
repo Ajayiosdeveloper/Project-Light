@@ -85,12 +85,17 @@ class PLUserSignUpViewController: UIViewController,UITextFieldDelegate
     
     func showAlertWithMessage(title:String,message:String)
     {
-        let alertController = UIAlertController(title:title, message:message, preferredStyle: UIAlertControllerStyle.Alert)
-        let action = UIAlertAction(title:"Ok", style: UIAlertActionStyle.Default, handler: { (action) -> Void in
-        })
-        alertController.addAction(action)
-        self.presentViewController(alertController, animated:true, completion:nil)
-    }
+        if #available(iOS 8.0, *) {
+            let alertController = UIAlertController(title:title, message:message, preferredStyle: UIAlertControllerStyle.Alert)
+            let action = UIAlertAction(title:"Ok", style: UIAlertActionStyle.Default, handler: { (action) -> Void in
+            })
+            alertController.addAction(action)
+            self.presentViewController(alertController, animated:true, completion:nil)
+
+        } else {
+            // Fallback on earlier versions
+        }
+            }
 
 //    func handleStatus(change:[String:AnyObject]?,tag:Int){
 //        
@@ -146,8 +151,8 @@ class PLUserSignUpViewController: UIViewController,UITextFieldDelegate
             try self.userAccountViewModel.validateUserSignupCredentials(self.signupUserNameTextField.text!, password:self.signupUserPasswordTextField.text!, confirmPassword:self.signupUserConfirmPasswordTextField.text!)
             self.view.endEditing(true)
             
-            userAccountViewModel.makeTwoFactorAuthentication(self, userName: self.signupUserNameTextField.text!, password: self.signupUserPasswordTextField.text!,email: self.emailIdField.text!
-            )
+//            userAccountViewModel.makeTwoFactorAuthentication(self, userName: self.signupUserNameTextField.text!, password: self.signupUserPasswordTextField.text!,email: self.emailIdField.text!
+//            )
         } catch LocalValidations.WeakUserName{self.showAlertWithMessage("Username invalid", message:"it must be atleast 3 characters long")}
         catch LocalValidations.ImproperUserName{self.showAlertWithMessage("Username invalid", message:"it should not contain white spaces")}
         catch LocalValidations.WeakPassword{self.showAlertWithMessage("Password invalid", message:"it must be atleast 8 characters long")}

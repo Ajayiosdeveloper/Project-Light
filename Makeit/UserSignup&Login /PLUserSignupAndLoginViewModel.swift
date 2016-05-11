@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import DigitsKit
+//import DigitsKit
 
 enum LocalValidations:ErrorType // Client side validations
 {
@@ -57,36 +57,36 @@ class PLUserSignupAndLoginViewModel : NSObject
     }
     
     
-    func makeTwoFactorAuthentication(controller:PLUserSignUpViewController,userName:String,password:String,email:String){
-        
-        let digits = Digits.sharedInstance()
-        digits.logOut()
-        let configuration = DGTAuthenticationConfiguration(accountFields: .DefaultOptionMask)
-        configuration.appearance = setDigitsTheme()
-        digits.authenticateWithViewController(controller, configuration: configuration) {[weak self]session, error in
-            if (session != nil)
-            {
-                
-                self!.startProcessingUserSignup(userName,password: password,email: email)
-                
-            }
-            else {
-                print(error.localizedDescription)
-            }
-        }
-        
-    }
-    
-    func setDigitsTheme()->DGTAppearance{
-        
-        
-        let theme = DGTAppearance()
-        theme.bodyFont = UIFont.systemFontOfSize(17)
-        theme.labelFont = UIFont.systemFontOfSize(17)
-        theme.accentColor = enableButtonColor
-        theme.backgroundColor = UIColor.whiteColor()
-        return theme;
-    }
+//    func makeTwoFactorAuthentication(controller:PLUserSignUpViewController,userName:String,password:String,email:String){
+//        
+//        let digits = Digits.sharedInstance()
+//        digits.logOut()
+//        let configuration = DGTAuthenticationConfiguration(accountFields: .DefaultOptionMask)
+//        configuration.appearance = setDigitsTheme()
+//        digits.authenticateWithViewController(controller, configuration: configuration) {[weak self]session, error in
+//            if (session != nil)
+//            {
+//                
+//                self!.startProcessingUserSignup(userName,password: password,email: email)
+//                
+//            }
+//            else {
+//                print(error.localizedDescription)
+//            }
+//        }
+//        
+//    }
+//    
+//    func setDigitsTheme()->DGTAppearance{
+//        
+//        
+//        let theme = DGTAppearance()
+//        theme.bodyFont = UIFont.systemFontOfSize(17)
+//        theme.labelFont = UIFont.systemFontOfSize(17)
+//        theme.accentColor = enableButtonColor
+//        theme.backgroundColor = UIColor.whiteColor()
+//        return theme;
+//    }
     
     private  func startProcessingUserLogin(withUserName:String,password:String) throws ->Void
     {

@@ -44,11 +44,18 @@ class PLResetPasswordViewController: UIViewController {
     }
     func showAlertWithMessage(title:String,message:String)
     {
-        let alertController = UIAlertController(title:title, message:message, preferredStyle: UIAlertControllerStyle.Alert)
-        let action = UIAlertAction(title:"Ok", style: UIAlertActionStyle.Default, handler: { (action) -> Void in
-        })
-        alertController.addAction(action)
-        self.presentViewController(alertController, animated:true, completion:nil)
+        
+        if #available(iOS 8.0, *) {
+            let alertController = UIAlertController(title:title, message:message, preferredStyle: UIAlertControllerStyle.Alert)
+            let action = UIAlertAction(title:"Ok", style: UIAlertActionStyle.Default, handler: { (action) -> Void in
+            })
+            
+            alertController.addAction(action)
+            self.presentViewController(alertController, animated:true, completion:nil)
+        } else {
+            // Fallback on earlier versions
+        }
+     
         
         
     }
