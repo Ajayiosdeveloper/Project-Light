@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import DigitsKit
+//import DigitsKit
 
 enum LocalValidations:ErrorType // Client side validations
 {
@@ -58,7 +58,7 @@ class PLUserSignupAndLoginViewModel : NSObject
     }
     
     
-    func makeTwoFactorAuthentication(controller:PLUserSignupAndLoginViewController,userName:String,password:String){
+    /*func makeTwoFactorAuthentication(controller:PLUserSignupAndLoginViewController,userName:String,password:String){
         
         let digits = Digits.sharedInstance()
         digits.logOut()
@@ -87,7 +87,7 @@ class PLUserSignupAndLoginViewModel : NSObject
         theme.accentColor = enableButtonColor
         theme.backgroundColor = UIColor.whiteColor()
         return theme;
-    }
+    }*/
     
     private  func startProcessingUserLogin(withUserName:String,password:String) throws ->Void
     {
@@ -96,7 +96,8 @@ class PLUserSignupAndLoginViewModel : NSObject
             quickBloxClient.initiateUserLogin(withUserName, password: password) {[weak self] (result) -> Void in
                 
                self!.loginResultNotifier = result
-        }
+                
+            }
     }
    
        func startProcessingUserSignup(withUserName:String,password:String)

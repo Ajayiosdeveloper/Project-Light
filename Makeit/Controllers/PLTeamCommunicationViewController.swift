@@ -180,33 +180,42 @@ class PLTeamCommunicationViewController: UIViewController,UITableViewDelegate,UI
         
         print("Create Chat Group Here")
         
-        let alertViewController = UIAlertController.init(title: "Enter Group Name", message: nil, preferredStyle: .Alert)
-        let okAction = UIAlertAction.init(title: "Ok", style: .Default) {[weak self] (action) -> Void in
-            
-            self!.communicationViewModel.createProjectGroup(self!.textFld.text!){[weak self] resu, chatGroup in
-                if resu{
+        if #available(iOS 8.0, *) {
+            let alertViewController = UIAlertController.init(title: "Enter Group Name", message: nil, preferredStyle: .Alert)
+            let okAction = UIAlertAction.init(title: "Ok", style: .Default) {[weak self] (action) -> Void in
+                
+                self!.communicationViewModel.createProjectGroup(self!.textFld.text!){[weak self] resu, chatGroup in
+                    if resu{
+                        
+                        self!.teamChatViewController.projectTeamChatViewModel.addChatGroup(chatGroup!)
+                        
+                        self?.navigationController?.popViewControllerAnimated(true)
+                    }
+                    else{
+                        print("Failed")
+                    }
                     
-                    self!.teamChatViewController.projectTeamChatViewModel.addChatGroup(chatGroup!)
-                    
-                    self?.navigationController?.popViewControllerAnimated(true)
-                }
-                else{
-                    print("Failed")
                 }
                 
+               
+               
+
             }
+            
+            let cancelAction = UIAlertAction(title:"Cancel", style: UIAlertActionStyle.Cancel, handler:nil)
+            alertViewController.addAction(okAction)
+            alertViewController.addAction(cancelAction)
+            alertViewController.addTextFieldWithConfigurationHandler {[weak self] (textField) -> Void in
+                // self?.textFld.frame = CGRect(x: 0.0, y: 0.0, width: 100.0, height: 30.0)
+                self?.textFld = textField
+            }
+            
+             self.presentViewController(alertViewController, animated: true, completion: nil)
+
+            
+        } else {
+            // Fallback on earlier versions
         }
-        
-        let cancelAction = UIAlertAction(title:"Cancel", style: UIAlertActionStyle.Cancel, handler:nil)
-        alertViewController.addAction(okAction)
-        alertViewController.addAction(cancelAction)
-        alertViewController.addTextFieldWithConfigurationHandler {[weak self] (textField) -> Void in
-            // self?.textFld.frame = CGRect(x: 0.0, y: 0.0, width: 100.0, height: 30.0)
-            self?.textFld = textField
-        }
-        self.presentViewController(alertViewController, animated: true, completion: nil)
-        
-        
     }
     
 

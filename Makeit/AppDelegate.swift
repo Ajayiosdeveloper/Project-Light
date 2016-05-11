@@ -8,8 +8,8 @@
 
 
 import UIKit
-import Fabric
-import DigitsKit
+//import Fabric
+//import DigitsKit
 import Quickblox
 
 @UIApplicationMain
@@ -37,7 +37,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate,QBChatDelegate {
         NSNotificationCenter.defaultCenter().addObserver(self, selector:#selector(AppDelegate.handleNewtorkChanges), name:kReachabilityChangedNotification, object:nil)
         reachability.startNotifier()
         
-        Fabric.with([Digits.self])
+      //  Fabric.with([Digits.self])
         
 
         
@@ -85,6 +85,29 @@ class AppDelegate: UIResponder, UIApplicationDelegate,QBChatDelegate {
         {
            //Handle when newtwok gets connected
         }
+    }
+    
+    func application(application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: NSData) {
+        
+        let deviceIdentifier = UIDevice.currentDevice().identifierForVendor?.UUIDString
+        let subscription = QBMSubscription()
+        subscription.deviceUDID = deviceIdentifier;
+        subscription.deviceToken = deviceToken;
+        QBRequest.createSubscription(subscription, successBlock: { (_, _) in
+            print("Registerde for subscription")
+            
+        }) { (_) in
+        }
+        
+        
+    }
+    
+    func application(
+        application: UIApplication,
+        didFailToRegisterForRemoteNotificationsWithError error: NSError
+        ) {
+        //Log an error for debugging purposes, user doesn't need to know
+        NSLog("Failed to get token; error: %@", error)
     }
     
     func chatRoomDidReceiveMessage(message: QBChatMessage, fromDialogID dialogID: String) {

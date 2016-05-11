@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import DigitsKit
+//import DigitsKit
 
 
 let enableButtonColor = UIColor(colorLiteralRed: 11/255, green: 97/255, blue: 254/255, alpha: 1.0)
@@ -99,11 +99,16 @@ class PLUserSignupAndLoginViewController: UITableViewController,UITextFieldDeleg
     
     func showAlertWithMessage(title:String,message:String)
     {
+        if #available(iOS 8.0, *) {
             let alertController = UIAlertController(title:title, message:message, preferredStyle: UIAlertControllerStyle.Alert)
             let action = UIAlertAction(title:"Ok", style: UIAlertActionStyle.Default, handler: { (action) -> Void in
             })
             alertController.addAction(action)
             self.presentViewController(alertController, animated:true, completion:nil)
+
+        } else {
+            // Fallback on earlier versions
+        }
         
         
     }
@@ -150,6 +155,8 @@ class PLUserSignupAndLoginViewController: UITableViewController,UITextFieldDeleg
             sideBarRootViewController = self.storyboard?.instantiateViewControllerWithIdentifier("PLSidebarRootViewController") as! PLSidebarRootViewController
         }
         
+        
+        
          //self.navigationController?.pushViewController(sideBarRootViewController, animated: false)
         
         
@@ -165,6 +172,8 @@ class PLUserSignupAndLoginViewController: UITableViewController,UITextFieldDeleg
         
     }
     
+   
+    
     func clearTextfields(){
       self.loginUserNameTextField.text = self.signupUserNameTextField.text
       self.signupUserNameTextField.text = ""; self.signupUserPasswordTextField.text = ""
@@ -178,7 +187,7 @@ class PLUserSignupAndLoginViewController: UITableViewController,UITextFieldDeleg
             try self.userAccountViewModel.validateUserSignupCredentials(self.signupUserNameTextField.text!, password:self.signupUserPasswordTextField.text!, confirmPassword:self.signupUserConfirmPasswordTextField.text!)
             self.view.endEditing(true)
             
-            userAccountViewModel.makeTwoFactorAuthentication(self, userName: self.signupUserNameTextField.text!, password: self.signupUserPasswordTextField.text!)
+            //userAccountViewModel.makeTwoFactorAuthentication(self, userName: self.signupUserNameTextField.text!, password: self.signupUserPasswordTextField.text!)
         } catch LocalValidations.WeakUserName{self.showAlertWithMessage("Username invalid", message:"it must be atleast 3 characters long")}
         catch LocalValidations.ImproperUserName{self.showAlertWithMessage("Username invalid", message:"it should not contain white spaces")}
         catch LocalValidations.WeakPassword{self.showAlertWithMessage("Password invalid", message:"it must be atleast 8 characters long")}

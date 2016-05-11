@@ -43,7 +43,10 @@ class PLQuickbloxHttpClient
     func initiateUserLogin(name:String,password:String,completion:(Bool)->Void){
         
         SVProgressHUD.showWithStatus("Loging in")
-        QBRequest.logInWithUserLogin(name, password: password, successBlock: { (response, retrievedUser) -> Void in
+        QBRequest.logInWithUserLogin(name, password: password, successBlock: {[weak self] (response, retrievedUser) -> Void in
+            
+            self!.registerForRemoteNotifications()
+            
             NSUserDefaults.standardUserDefaults().setValue(retrievedUser?.ID, forKey:"USER_ID")
             PLSharedManager.manager.userPassword = password
             completion(true)
@@ -53,6 +56,21 @@ class PLQuickbloxHttpClient
             
             completion(false)
             SVProgressHUD.dismiss()
+        }
+    }
+    
+    func registerForRemoteNotifications(){
+        
+        
+        if #available(iOS 8.0, *) {
+            let settings = UIUserNotificationSettings(forTypes: [.Alert, .Badge, .Sound], categories: nil)
+            UIApplication.sharedApplication().registerUserNotificationSettings(settings)
+            UIApplication.sharedApplication().registerForRemoteNotifications()
+        } else {
+            print("iOS 7 notifications")
+            let settings = UIRemoteNotificationType.Alert.union(UIRemoteNotificationType.Badge).union(UIRemoteNotificationType.Sound)
+            UIApplication.sharedApplication().registerForRemoteNotificationTypes(settings)
+           
         }
     }
     
@@ -499,11 +517,41 @@ class PLQuickbloxHttpClient
             chatGroup.opponents = (createdDialog?.occupantIDs)!
             chatGroup.chatGroupId = (createdDialog?.roomJID)!
             completion(true,chatGroup)
+            for occupantID in createdDialog!.occupantIDs! {
+                let inviteMessage: QBChatMessage = self.createChatNotificationForGroupChatCreation(createdDialog!)
+                let timestamp: NSTimeInterval = NSDate().timeIntervalSince1970
+                inviteMessage.customParameters!["date_sent"] = timestamp
+                inviteMessage.recipientID = occupantID.unsignedLongValue
+                
+                QBChat.instance().sendSystemMessage(inviteMessage) { (error: NSError?) -> Void in
+                    
+                    if (error != nil){
+                        print(error?.localizedDescription)
+                    }
+                    else{
+                        print("Notificatioon went succesfully")
+                    }
+                }
+            }
             
         }) { (responce : QBResponse!) -> Void in
             
             print("The Response is \(responce)")
         }
+    }
+    
+    
+    func createChatNotificationForGroupChatCreation(dialog: QBChatDialog) -> QBChatMessage {
+        let inviteMessage: QBChatMessage = QBChatMessage()
+        let customParams: NSMutableDictionary = NSMutableDictionary()
+        customParams["xmpp_room_jid"] = dialog.roomJID
+        customParams["name"] = dialog.name
+        customParams["_id"] = dialog.ID
+        customParams["type"] = dialog.type.rawValue
+        //customParams["occupants_ids"] = ", ".join(dialog.occupantIDs as! [String])
+        customParams["notification_type"] = "1"
+        inviteMessage.customParameters = customParams
+        return inviteMessage
     }
     
     
