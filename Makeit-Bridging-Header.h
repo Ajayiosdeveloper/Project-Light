@@ -15,6 +15,6 @@
 #import "WYStoryboardPopoverSegue.h"
 //#import <DigitsKit/DigitsKit.h>
 #import <QMServices/QMServices.h>
-#import <JSQSystemSoundPlayer/JSQSystemSoundPlayer.h>
+#import "JSQSystemSoundPlayer.h"
 #import "AFDropdownNotification.h"
 
