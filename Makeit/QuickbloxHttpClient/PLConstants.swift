@@ -20,3 +20,6 @@ let kAccountKey = "ayk6ykv9T2Wx2BxWaNAm"
 
 let kSignupResultNotifier = "signupResultNotifier"
 let kLoginResultNotifier  = "loginResultNotifier"
+
+
+

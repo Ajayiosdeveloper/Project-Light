@@ -91,10 +91,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate,QBChatDelegate {
         
         let deviceIdentifier = UIDevice.currentDevice().identifierForVendor?.UUIDString
         let subscription = QBMSubscription()
-        subscription.deviceUDID = deviceIdentifier;
-        subscription.deviceToken = deviceToken;
+        subscription.deviceUDID = deviceIdentifier
+        subscription.deviceToken = deviceToken
+        subscription.notificationChannel = QBMNotificationChannel.init(1)
         QBRequest.createSubscription(subscription, successBlock: { (_, _) in
-            print("Registerde for subscription")
+            print("Registration for subscription is succesfull")
             
         }) { (_) in
         }

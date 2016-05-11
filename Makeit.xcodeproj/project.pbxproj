@@ -26,9 +26,6 @@
 		803E04061CBCC95D00C59233 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 803E04051CBCC95D00C59233 /* SystemConfiguration.framework */; };
 		80485F061CD4B14800F49209 /* PLTeamCommunicationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80485F051CD4B14800F49209 /* PLTeamCommunicationViewModel.swift */; };
 		80485F081CD4B19700F49209 /* PLTeamCommunicationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80485F071CD4B19700F49209 /* PLTeamCommunicationViewController.swift */; };
-		8051443C1CE19BDF0000B1AF /* DLHamburguerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 805144381CE19BDF0000B1AF /* DLHamburguerViewController.swift */; };
-		8051443D1CE19BDF0000B1AF /* DLHamburguerContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 805144391CE19BDF0000B1AF /* DLHamburguerContainerViewController.swift */; };
-		8051443E1CE19BDF0000B1AF /* DLHamburguerNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8051443A1CE19BDF0000B1AF /* DLHamburguerNavigationController.swift */; };
 		805144401CE19E410000B1AF /* PLSidebarRootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8051443F1CE19E410000B1AF /* PLSidebarRootViewController.swift */; };
 		805144421CE19F640000B1AF /* PLSidebarMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 805144411CE19F640000B1AF /* PLSidebarMenuViewController.swift */; };
 		805144441CE1AB060000B1AF /* sideBar.png in Resources */ = {isa = PBXBuildFile; fileRef = 805144431CE1AB060000B1AF /* sideBar.png */; };
@@ -72,6 +69,9 @@
 		8070248F1CD869A200DD8DE5 /* DigitsKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8070248B1CD869A100DD8DE5 /* DigitsKit.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		807024901CD869A200DD8DE5 /* DigitsKitResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 8070248C1CD869A100DD8DE5 /* DigitsKitResources.bundle */; };
 		807024911CD869A200DD8DE5 /* TwitterCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8070248D1CD869A100DD8DE5 /* TwitterCore.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		80711A7D1CE323A700473856 /* DLHamburguerContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80711A7A1CE323A700473856 /* DLHamburguerContainerViewController.swift */; };
+		80711A7E1CE323A700473856 /* DLHamburguerNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80711A7B1CE323A700473856 /* DLHamburguerNavigationController.swift */; };
+		80711A7F1CE323A700473856 /* DLHamburguerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80711A7C1CE323A700473856 /* DLHamburguerViewController.swift */; };
 		8073C8CE1CC737F400AE4CB6 /* PLDisplayMembersPopover.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8073C8CD1CC737F400AE4CB6 /* PLDisplayMembersPopover.swift */; };
 		8073C8D01CC744DE00AE4CB6 /* PLTeamMemberModelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8073C8CF1CC744DE00AE4CB6 /* PLTeamMemberModelView.swift */; };
 		8078A46B1CC88BD1008AC4DD /* PLProjectDetailTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8078A46A1CC88BD1008AC4DD /* PLProjectDetailTableViewController.swift */; };
@@ -195,9 +195,6 @@
 		803E04071CBCD90100C59233 /* Makeit-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Makeit-Bridging-Header.h"; sourceTree = "<group>"; };
 		80485F051CD4B14800F49209 /* PLTeamCommunicationViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLTeamCommunicationViewModel.swift; sourceTree = "<group>"; };
 		80485F071CD4B19700F49209 /* PLTeamCommunicationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLTeamCommunicationViewController.swift; sourceTree = "<group>"; };
-		805144381CE19BDF0000B1AF /* DLHamburguerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DLHamburguerViewController.swift; sourceTree = "<group>"; };
-		805144391CE19BDF0000B1AF /* DLHamburguerContainerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DLHamburguerContainerViewController.swift; sourceTree = "<group>"; };
-		8051443A1CE19BDF0000B1AF /* DLHamburguerNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DLHamburguerNavigationController.swift; sourceTree = "<group>"; };
 		8051443F1CE19E410000B1AF /* PLSidebarRootViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLSidebarRootViewController.swift; sourceTree = "<group>"; };
 		805144411CE19F640000B1AF /* PLSidebarMenuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLSidebarMenuViewController.swift; sourceTree = "<group>"; };
 		805144431CE1AB060000B1AF /* sideBar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sideBar.png; sourceTree = "<group>"; };
@@ -264,6 +261,9 @@
 		8070248B1CD869A100DD8DE5 /* DigitsKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = DigitsKit.framework; sourceTree = SOURCE_ROOT; };
 		8070248C1CD869A100DD8DE5 /* DigitsKitResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = DigitsKitResources.bundle; path = DigitsKit.framework/Versions/A/Resources/DigitsKitResources.bundle; sourceTree = SOURCE_ROOT; };
 		8070248D1CD869A100DD8DE5 /* TwitterCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = TwitterCore.framework; sourceTree = SOURCE_ROOT; };
+		80711A7A1CE323A700473856 /* DLHamburguerContainerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DLHamburguerContainerViewController.swift; sourceTree = "<group>"; };
+		80711A7B1CE323A700473856 /* DLHamburguerNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DLHamburguerNavigationController.swift; sourceTree = "<group>"; };
+		80711A7C1CE323A700473856 /* DLHamburguerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DLHamburguerViewController.swift; sourceTree = "<group>"; };
 		8073C8CD1CC737F400AE4CB6 /* PLDisplayMembersPopover.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLDisplayMembersPopover.swift; sourceTree = "<group>"; };
 		8073C8CF1CC744DE00AE4CB6 /* PLTeamMemberModelView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLTeamMemberModelView.swift; sourceTree = "<group>"; };
 		8078A46A1CC88BD1008AC4DD /* PLProjectDetailTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLProjectDetailTableViewController.swift; sourceTree = "<group>"; };
@@ -446,17 +446,6 @@
 			path = Makeit;
 			sourceTree = "<group>";
 		};
-		8051443B1CE19BDF0000B1AF /* DLHamburguerMenu */ = {
-			isa = PBXGroup;
-			children = (
-				805144381CE19BDF0000B1AF /* DLHamburguerViewController.swift */,
-				805144391CE19BDF0000B1AF /* DLHamburguerContainerViewController.swift */,
-				8051443A1CE19BDF0000B1AF /* DLHamburguerNavigationController.swift */,
-			);
-			name = DLHamburguerMenu;
-			path = "../../../../Downloads/DLHamburguerMenu-master/DLHamburguerMenu";
-			sourceTree = "<group>";
-		};
 		806B1E0B1CD8A7070018B026 /* SupportingFiles */ = {
 			isa = PBXGroup;
 			children = (
@@ -533,7 +522,7 @@
 		806D4ADC1CC20FCD0054A9AF /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
-				8051443B1CE19BDF0000B1AF /* DLHamburguerMenu */,
+				80711A791CE323A700473856 /* DLHamburguerMenu */,
 				80ED65A11CE09F4600C61090 /* AFDropdownNotification */,
 				80C49FB41CDCBB500073B6E2 /* JSQMessagesViewController */,
 				806B1E121CD8AA080018B026 /* SDWebImage */,
@@ -614,6 +603,16 @@
 				805EFB5E1CD239200066B4CB /* PLTableViewCell.xib */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		80711A791CE323A700473856 /* DLHamburguerMenu */ = {
+			isa = PBXGroup;
+			children = (
+				80711A7A1CE323A700473856 /* DLHamburguerContainerViewController.swift */,
+				80711A7B1CE323A700473856 /* DLHamburguerNavigationController.swift */,
+				80711A7C1CE323A700473856 /* DLHamburguerViewController.swift */,
+			);
+			path = DLHamburguerMenu;
 			sourceTree = "<group>";
 		};
 		808AA2EB1CC605DE00685226 /* Dynamics&Animations */ = {
@@ -1052,7 +1051,6 @@
 				80C4A01B1CDCBB500073B6E2 /* JSQMessagesLabel.swift in Sources */,
 				806B1E3B1CD8AA080018B026 /* SDWebImageManager.m in Sources */,
 				80485F061CD4B14800F49209 /* PLTeamCommunicationViewModel.swift in Sources */,
-				8051443C1CE19BDF0000B1AF /* DLHamburguerViewController.swift in Sources */,
 				80C4A0101CDCBB500073B6E2 /* JSQPhotoMediaItem.swift in Sources */,
 				80C4A0121CDCBB500073B6E2 /* JSQMessagesCellTextView.swift in Sources */,
 				806D4AD71CC1FF3C0054A9AF /* PLConstants.swift in Sources */,
@@ -1082,6 +1080,7 @@
 				80C49FFD1CDCBB500073B6E2 /* JSQMessagesBubbleImageFactory.swift in Sources */,
 				80C4A0061CDCBB500073B6E2 /* JSQMediaItem.swift in Sources */,
 				805144421CE19F640000B1AF /* PLSidebarMenuViewController.swift in Sources */,
+				80711A7F1CE323A700473856 /* DLHamburguerViewController.swift in Sources */,
 				806B1E3C1CD8AA080018B026 /* SDWebImagePrefetcher.m in Sources */,
 				80879D411CC8E71D00B41D2D /* PLProjectAssignmentViewModel.swift in Sources */,
 				800318141CCF7D180084514A /* WYStoryboardPopoverSegue.m in Sources */,
@@ -1105,7 +1104,6 @@
 				806B1E361CD8AA080018B026 /* SDImageCache.m in Sources */,
 				806D4AE81CC210910054A9AF /* SVIndefiniteAnimatedView.m in Sources */,
 				80C49FFE1CDCBB500073B6E2 /* JSQMessagesMediaViewBubbleImageMasker.swift in Sources */,
-				8051443E1CE19BDF0000B1AF /* DLHamburguerNavigationController.swift in Sources */,
 				80C49FFC1CDCBB500073B6E2 /* JSQMessagesAvatarImageFactory.swift in Sources */,
 				8066356D1CE0BAD900D21103 /* PLUserProfileInfoTableViewController.swift in Sources */,
 				8078A46D1CC88C11008AC4DD /* PLProjectDetailViewModel.swift in Sources */,
@@ -1115,6 +1113,7 @@
 				807FC87A1CCB47920094112E /* PLTeamMemberDetailsTableViewController.swift in Sources */,
 				80C49FFF1CDCBB500073B6E2 /* JSQMessagesTimestampFormatter.swift in Sources */,
 				806B1E3A1CD8AA080018B026 /* SDWebImageDownloaderOperation.m in Sources */,
+				80711A7E1CE323A700473856 /* DLHamburguerNavigationController.swift in Sources */,
 				80C4A0151CDCBB500073B6E2 /* JSQMessagesCollectionViewCellIncoming.swift in Sources */,
 				80C4A00F1CDCBB500073B6E2 /* JSQMessagesCollectionViewDelegateFlowLayout.swift in Sources */,
 				800318131CCF7D180084514A /* WYPopoverController.m in Sources */,
@@ -1135,7 +1134,7 @@
 				80C4A0141CDCBB500073B6E2 /* JSQMessagesCollectionViewCell.swift in Sources */,
 				806B1E431CD8AA080018B026 /* UIView+WebCacheOperation.m in Sources */,
 				80C4A0071CDCBB500073B6E2 /* JSQMessage.swift in Sources */,
-				8051443D1CE19BDF0000B1AF /* DLHamburguerContainerViewController.swift in Sources */,
+				80711A7D1CE323A700473856 /* DLHamburguerContainerViewController.swift in Sources */,
 				80C4A01A1CDCBB500073B6E2 /* JSQMessagesInputToolbar.swift in Sources */,
 				806B1E341CD8AA080018B026 /* MKAnnotationView+WebCache.m in Sources */,
 				806D4AEC1CC210910054A9AF /* SVRadialGradientLayer.m in Sources */,
