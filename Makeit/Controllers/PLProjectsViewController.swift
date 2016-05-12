@@ -10,7 +10,7 @@ import UIKit
 import Quickblox
 
 
-class PLProjectsViewController: UITableViewController,UIImagePickerControllerDelegate,UINavigationControllerDelegate {
+class PLProjectsViewController: UITableViewController,UIImagePickerControllerDelegate,UINavigationControllerDelegate,PopupDelegate {
     
     @IBOutlet var projectTableView: UITableView!
     var selectedProjectId:String?
@@ -292,10 +292,10 @@ class PLProjectsViewController: UITableViewController,UIImagePickerControllerDel
     override func tableView(tableView: UITableView, commitEditingStyle editingStyle:
         UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
         
-        if indexPath.section == 0{
-        if editingStyle == .Delete
-        {
+        func deleteProject(){
+            
             activityIndicatorView.startAnimating()
+            self.projectTableView.backgroundColor = UIColor(red:235/255, green: 235/255, blue: 241/255, alpha: 1)
             projectViewModel.deleteProjectAtIndexPathOfRow(indexPath.row){[weak self] result in
                 
                 if result{
@@ -303,10 +303,17 @@ class PLProjectsViewController: UITableViewController,UIImagePickerControllerDel
                     self!.projectViewModel.createdProjectList.removeAtIndex(indexPath.row)
                     self!.projectTableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Bottom)
                 }
-            
+                
             }
         }
-      }
+
+        
+        if indexPath.section == 0{
+            if editingStyle == .Delete
+                 {
+                    presentPopup(deleteProject)
+                }
+        }
         
     }
     
@@ -425,6 +432,27 @@ class PLProjectsViewController: UITableViewController,UIImagePickerControllerDel
         UIGraphicsEndImageContext()
         
         return roundedImage
+    }
+    
+    func presentPopup(delete:()->Void){
+        
+        let projectDeletePopup = Popup(title:"Are you sure delete this Project?", subTitle: "This action will erase all the relevant data", textFieldPlaceholders:[], cancelTitle:"Cancel", successTitle: "Delete", cancelBlock: {
+            
+             self.projectTableView.backgroundColor = UIColor(red:235/255, green: 235/255, blue: 241/255, alpha: 1)
+            
+            }, successBlock: {
+                
+                delete()
+        })
+        self.projectTableView.backgroundColor = UIColor.lightGrayColor()
+        projectDeletePopup.delegate = self
+        projectDeletePopup.roundedCorners = true
+        projectDeletePopup.tapBackgroundToDismiss = true
+        projectDeletePopup.swipeToDismiss = true
+        projectDeletePopup.successBtnColor = UIColor.redColor()
+        projectDeletePopup.cancelBtnColor = UIColor(red:86/255, green: 102/255, blue: 159/255, alpha: 1)
+        projectDeletePopup.showPopup()
+
     }
     
 }
