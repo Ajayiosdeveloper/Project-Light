@@ -17,25 +17,37 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Makeit" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8be-Qc-nuL">
-                                <rect key="frame" x="241" y="276" width="118" height="48"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="40"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Its never been easier before." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="18p-Ni-MyR">
-                                <rect key="frame" x="192" y="332" width="217" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Cgm-8p-eTx">
+                                <rect key="frame" x="165" y="127" width="270" height="346"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Its never been easier before." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ayu-fV-bU9">
+                                        <rect key="frame" x="27" y="212" width="217" height="21"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Makeit" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Mor-Af-jQV">
+                                        <rect key="frame" x="76" y="149" width="118" height="48"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="40"/>
+                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.59999999999999998" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstItem="Mor-Af-jQV" firstAttribute="centerY" secondItem="Cgm-8p-eTx" secondAttribute="centerY" id="1aR-Pz-xWC"/>
+                                    <constraint firstAttribute="width" constant="270" id="4WY-hj-ZGb"/>
+                                    <constraint firstAttribute="height" constant="346" id="AcC-IN-2aH"/>
+                                    <constraint firstItem="Ayu-fV-bU9" firstAttribute="centerX" secondItem="Mor-Af-jQV" secondAttribute="centerX" id="PVF-SU-ZZn"/>
+                                    <constraint firstItem="Mor-Af-jQV" firstAttribute="centerX" secondItem="Cgm-8p-eTx" secondAttribute="centerX" id="Q31-Zr-mvu"/>
+                                    <constraint firstItem="Ayu-fV-bU9" firstAttribute="top" secondItem="Mor-Af-jQV" secondAttribute="bottom" constant="15" id="nnz-zl-c9s"/>
+                                </constraints>
+                            </view>
                         </subviews>
-                        <color key="backgroundColor" red="0.4549019608" green="0.66274509800000003" blue="0.3411764706" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" red="0.31384235780000003" green="0.81444310900000005" blue="0.58439629270000004" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstItem="8be-Qc-nuL" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="1QC-6H-xyT"/>
-                            <constraint firstItem="18p-Ni-MyR" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="9tS-qa-XpL"/>
-                            <constraint firstItem="8be-Qc-nuL" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" constant="-0.5" id="B6j-S1-P3c"/>
-                            <constraint firstItem="18p-Ni-MyR" firstAttribute="top" secondItem="8be-Qc-nuL" secondAttribute="bottom" constant="8" id="v2L-Cr-G0W"/>
+                            <constraint firstItem="Cgm-8p-eTx" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="R1c-2h-AvL"/>
+                            <constraint firstItem="Cgm-8p-eTx" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="aIT-ct-Gog"/>
                         </constraints>
                     </view>
                 </viewController>

@@ -15,12 +15,13 @@ import Quickblox
 class PLQuickbloxHttpClient
 {
     //Creating New User Service with Quickblox
-    func createNewUserWith(name:String,password:String,completion:(Bool)->Void)
+    func createNewUserWith(name:String,password:String,email:String,completion:(Bool)->Void)
     {
         let user = QBUUser()
         user.login = name
         user.fullName = name
         user.password = password
+        user.email = email
         user.customData = "Avatar"
         SVProgressHUD.showWithStatus("Signing up")
         QBRequest.signUp(user, successBlock: { (response, retrievedUser) -> Void in
@@ -43,12 +44,11 @@ class PLQuickbloxHttpClient
     func initiateUserLogin(name:String,password:String,completion:(Bool)->Void){
         
         SVProgressHUD.showWithStatus("Loging in")
-        QBRequest.logInWithUserLogin(name, password: password, successBlock: {[weak self] (response, retrievedUser) -> Void in
-            
-            self!.registerForRemoteNotifications()
-            
+        QBRequest.logInWithUserLogin(name, password: password, successBlock: { (response, retrievedUser) -> Void in
             NSUserDefaults.standardUserDefaults().setValue(retrievedUser?.ID, forKey:"USER_ID")
+            PLSharedManager.manager.userName = name
             PLSharedManager.manager.userPassword = password
+            
             completion(true)
             SVProgressHUD.dismiss()
             
@@ -56,21 +56,6 @@ class PLQuickbloxHttpClient
             
             completion(false)
             SVProgressHUD.dismiss()
-        }
-    }
-    
-    func registerForRemoteNotifications(){
-        
-        
-        if #available(iOS 8.0, *) {
-            let settings = UIUserNotificationSettings(forTypes: [.Alert, .Badge, .Sound], categories: nil)
-            UIApplication.sharedApplication().registerUserNotificationSettings(settings)
-            UIApplication.sharedApplication().registerForRemoteNotifications()
-        } else {
-            print("iOS 7 notifications")
-            let settings = UIRemoteNotificationType.Alert.union(UIRemoteNotificationType.Badge).union(UIRemoteNotificationType.Sound)
-            UIApplication.sharedApplication().registerForRemoteNotificationTypes(settings)
-           
         }
     }
     
@@ -517,22 +502,6 @@ class PLQuickbloxHttpClient
             chatGroup.opponents = (createdDialog?.occupantIDs)!
             chatGroup.chatGroupId = (createdDialog?.roomJID)!
             completion(true,chatGroup)
-            for occupantID in createdDialog!.occupantIDs! {
-                let inviteMessage: QBChatMessage = self.createChatNotificationForGroupChatCreation(createdDialog!)
-                let timestamp: NSTimeInterval = NSDate().timeIntervalSince1970
-                inviteMessage.customParameters!["date_sent"] = timestamp
-                inviteMessage.recipientID = occupantID.unsignedLongValue
-                
-                QBChat.instance().sendSystemMessage(inviteMessage) { (error: NSError?) -> Void in
-                    
-                    if (error != nil){
-                        print(error?.localizedDescription)
-                    }
-                    else{
-                        print("Notificatioon went succesfully")
-                    }
-                }
-            }
             
         }) { (responce : QBResponse!) -> Void in
             
@@ -548,7 +517,13 @@ class PLQuickbloxHttpClient
         customParams["name"] = dialog.name
         customParams["_id"] = dialog.ID
         customParams["type"] = dialog.type.rawValue
-        //customParams["occupants_ids"] = ", ".join(dialog.occupantIDs as! [String])
+        var recipientsString = ""
+        for each in dialog.occupantIDs!{
+           
+            recipientsString = String(each)
+            recipientsString += ","
+        }
+        customParams["occupants_ids"] = recipientsString//", ".join(dialog.occupantIDs as! [String])
         customParams["notification_type"] = "1"
         inviteMessage.customParameters = customParams
         return inviteMessage
@@ -568,7 +543,7 @@ class PLQuickbloxHttpClient
             var chatGroups:[PLChatGroup] = [PLChatGroup]()
             
             if let _ = dialogs{
-               
+                
                 for eachGroup in dialogs!{
                     
                     let chatGroup =  PLChatGroup()
@@ -578,12 +553,12 @@ class PLQuickbloxHttpClient
                     if let _ = eachGroup.lastMessageDate{
                         chatGroup.lastMessageDate = NSDateFormatter.localizedStringFromDate(eachGroup.lastMessageDate!, dateStyle: NSDateFormatterStyle.MediumStyle, timeStyle: NSDateFormatterStyle.ShortStyle)
                     }
-                     chatGroup.opponents = eachGroup.occupantIDs!
-                     chatGroups.append(chatGroup)
+                    chatGroup.opponents = eachGroup.occupantIDs!
+                    chatGroups.append(chatGroup)
                 }
             }
             
-             completion(true,chatGroups)
+            completion(true,chatGroups)
             
         }) { (response: QBResponse) -> Void in
             
@@ -592,58 +567,55 @@ class PLQuickbloxHttpClient
     }
     
     func getMessagesFromChatGroup(groupId:String,completion:(Bool,[JSQMessage]?)->Void){
-    
-    let page = QBResponsePage(limit: 20, skip: 0)
-    
-     QBRequest.messagesWithDialogID(groupId, extendedRequest:nil, forPage:page, successBlock: { (_, messages, _) in
         
-        var chatMessages = [JSQMessage]()
-     
-        if let _ = messages{
+        let page = QBResponsePage(limit: 20, skip: 0)
+        
+        QBRequest.messagesWithDialogID(groupId, extendedRequest:nil, forPage:page, successBlock: { (_, messages, _) in
             
+            var chatMessages = [JSQMessage]()
             
-            
-            for message in messages!{
+            if let _ = messages{
                 
-                 let senderName = message.customParameters!["senderName"] as! String
                 
-                if message.attachments?.count > 0{
-                    let attachmentDict = message.attachments?.first
-                    let fileId = attachmentDict?.ID
-                    QBRequest.downloadFileWithID(UInt(fileId!)!, successBlock: { (_, imageData) in
-                    let imageUI = UIImage(data:imageData)
-                    let attachedImage = JSQPhotoMediaItem(image:imageUI)
-                   
-                        let eachMessage = JSQMessage(senderId:String(message.senderID), senderDisplayName: senderName, date: message.dateSent!, media:attachedImage)
+                
+                for message in messages!{
+                    
+                    if message.attachments?.count > 0{
+                        let attachmentDict = message.attachments?.first
+                        let fileId = attachmentDict?.ID
+                        QBRequest.downloadFileWithID(UInt(fileId!)!, successBlock: { (_, imageData) in
+                            let imageUI = UIImage(data:imageData)
+                            let attachedImage = JSQPhotoMediaItem(image:imageUI)
+                            let eachMessage = JSQMessage(senderId:String(message.senderID), senderDisplayName: "Najareth", date: message.dateSent!, media:attachedImage)
+                            chatMessages.append(eachMessage)
+                            completion(true,chatMessages)
+                            
+                            }, statusBlock: { (_, _) in
+                                
+                            }, errorBlock: { (_) in
+                                
+                        })
+                    }
+                    else{
+                        let eachMessage = JSQMessage(senderId:String(message.senderID), senderDisplayName:"Najareth", date:message.dateSent!, text: message.text!)
                         chatMessages.append(eachMessage)
-                        completion(true,chatMessages)
-                        
-                        }, statusBlock: { (_, _) in
-                            
-                        }, errorBlock: { (_) in
-                            
-                    })
-                }
-                else{
-               let eachMessage = JSQMessage(senderId:String(message.senderID), senderDisplayName:senderName, date:message.dateSent!, text: message.text!)
-                   chatMessages.append(eachMessage)
+                    }
+                    
                 }
                 
-                }
+                print(chatMessages.count)
+                
+                
+            }
             
-            print(chatMessages.count)
+            completion(true,chatMessages)
             
-            
-        }
+            }, errorBlock:{(_)in
+                
+                completion(false,nil)
+                
+        })
         
-          completion(true,chatMessages)
-        
-        }, errorBlock:{(_)in
-           
-           completion(false,nil)
-     
-     })
-    
     }
     
     func sendMessageWithoutAttachment(text:String,group:QBChatDialog,completion:(Bool)->Void){
@@ -654,7 +626,6 @@ class PLQuickbloxHttpClient
         message.text = text
         let params = NSMutableDictionary()
         params["save_to_history"] = true
-        params["senderName"] = PLSharedManager.manager.userName
         message.customParameters = params
         message.deliveredIDs = [(QBSession.currentSession().currentUser?.ID)!]
         message.readIDs = [(QBSession.currentSession().currentUser?.ID)!]
@@ -665,7 +636,7 @@ class PLQuickbloxHttpClient
                 print(message.text)
                 print("Message sent Succesfully")
                 completion(true)
-              }
+            }
         })
         
     }
@@ -673,7 +644,7 @@ class PLQuickbloxHttpClient
     
     func sendMessageWithAttachment(imageData:NSData,text:String,group:QBChatDialog,completion:(Bool)->Void){
         
-         print("attachment______________________________________________________________________________")
+        print("attachment______________________________________________________________________________")
         
         QBRequest.TUploadFile(imageData, fileName: "image.png", contentType: "image/png", isPublic: false, successBlock: {(response: QBResponse!, uploadedBlob: QBCBlob!) in
             // Create and configure message
@@ -681,7 +652,6 @@ class PLQuickbloxHttpClient
             message.text = text
             let params = NSMutableDictionary()
             params["save_to_history"] = true
-            params["senderName"] = PLSharedManager.manager.userName
             message.customParameters = params
             message.deliveredIDs = [(QBSession.currentSession().currentUser?.ID)!]
             message.readIDs = [(QBSession.currentSession().currentUser?.ID)!]
@@ -702,7 +672,7 @@ class PLQuickbloxHttpClient
                 }
             })
             
-           }, statusBlock: {(request: QBRequest?, status: QBRequestStatus?) in
+            }, statusBlock: {(request: QBRequest?, status: QBRequestStatus?) in
                 
             }, errorBlock: {(response: QBResponse!) in
         })
@@ -811,7 +781,15 @@ class PLQuickbloxHttpClient
         }
     }
     
-
-
+    func sendforgotPasswordLinkToEmail(email : String)
+    {
+        QBRequest.resetUserPasswordWithEmail(email, successBlock: { (response) in
+            print("Suceesfully Sent")
+        }) { (err) in
+            print(err.description)
+        }
+        
+    }
+    
     
 }

@@ -35,6 +35,7 @@ class PLUserProfileInfoViewModel: NSObject {
         completion(res)
            
     }
+  
     }
     
 }
