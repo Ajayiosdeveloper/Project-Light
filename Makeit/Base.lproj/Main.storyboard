@@ -365,14 +365,14 @@
                                 </constraints>
                             </view>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="QXX-1X-9B9">
-                                <rect key="frame" x="0.0" y="147" width="600" height="453"/>
+                                <rect key="frame" x="0.0" y="148" width="580" height="452"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Cell" id="3kF-Be-cyt">
-                                        <rect key="frame" x="0.0" y="28" width="600" height="44"/>
+                                        <rect key="frame" x="0.0" y="28" width="580" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="3kF-Be-cyt" id="G1B-dz-nab">
-                                            <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="580" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -385,12 +385,12 @@
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstItem="nJW-Aq-zq0" firstAttribute="top" secondItem="QXX-1X-9B9" secondAttribute="bottom" id="0QD-zG-8DJ"/>
                             <constraint firstItem="nks-QB-E7q" firstAttribute="leading" secondItem="q6u-Nq-8F0" secondAttribute="leadingMargin" constant="-20" id="4Dk-GS-5eP"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="QXX-1X-9B9" secondAttribute="trailing" constant="-20" id="JyN-D8-dt8"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="QXX-1X-9B9" secondAttribute="trailing" id="KdR-zU-ghZ"/>
                             <constraint firstAttribute="trailingMargin" secondItem="nks-QB-E7q" secondAttribute="trailing" constant="-20" id="LcP-oa-VGA"/>
-                            <constraint firstItem="QXX-1X-9B9" firstAttribute="leading" secondItem="q6u-Nq-8F0" secondAttribute="leadingMargin" constant="-20" id="iBf-2Y-gtR"/>
-                            <constraint firstItem="QXX-1X-9B9" firstAttribute="top" secondItem="B2Z-4p-GEX" secondAttribute="bottom" constant="127" id="vgu-xk-rpk"/>
+                            <constraint firstItem="QXX-1X-9B9" firstAttribute="leading" secondItem="q6u-Nq-8F0" secondAttribute="leadingMargin" constant="-20" id="Sq7-3L-ubZ"/>
+                            <constraint firstItem="nJW-Aq-zq0" firstAttribute="top" secondItem="QXX-1X-9B9" secondAttribute="bottom" id="Ve5-Ro-QLr"/>
+                            <constraint firstItem="QXX-1X-9B9" firstAttribute="top" secondItem="nks-QB-E7q" secondAttribute="bottom" id="yOg-Vh-v5w"/>
                             <constraint firstItem="nks-QB-E7q" firstAttribute="top" secondItem="B2Z-4p-GEX" secondAttribute="bottom" id="yYZ-XW-cqZ"/>
                         </constraints>
                     </view>

@@ -9,12 +9,10 @@
 import UIKit
 import Social
 
-class PLSidebarMenuViewController: UIViewController,UIImagePickerControllerDelegate,UINavigationControllerDelegate,UITableViewDataSource,UITableViewDelegate {
-    
+class PLSidebarMenuViewController: UIViewController,UIImagePickerControllerDelegate,UINavigationControllerDelegate,UITableViewDataSource,UITableViewDelegate
+{
     @IBOutlet var userProfilePic: UIImageView!
-    
     @IBOutlet var userNameTextfield: UILabel!
-    
     @IBOutlet weak var sideBarTableView: UITableView!
     
     var projectViewModel:PLProjectsViewModel = PLProjectsViewModel()
@@ -23,10 +21,11 @@ class PLSidebarMenuViewController: UIViewController,UIImagePickerControllerDeleg
     var taskList = [String]()
     var settingsList = [String]()
     
-    override func viewDidLoad() {
+    override func viewDidLoad()
+    {
         super.viewDidLoad()
         taskList.append("Todays Tasks")
-        taskList.append("UpComing Tasks")
+        taskList.append("Upcoming Tasks")
         taskList.append("Pending Tasks")
         settingsList.append("Logout")
         imagePicker.delegate = self
