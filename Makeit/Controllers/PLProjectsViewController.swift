@@ -369,64 +369,8 @@ class PLProjectsViewController: UITableViewController,UIImagePickerControllerDel
         detailViewController.projectDetailViewModel = projectDetailViewModel
     }
   
-    func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
-        
-        var capturedImage = info[UIImagePickerControllerEditedImage] as! UIImage
-        
-        capturedImage = resizeImage(capturedImage, width: 4.0, height: 4.0)
-        SVProgressHUD.showWithStatus("Uploading")
-          /*projectViewModel.updateUserAvatar(capturedImage){[weak self] result in
-            if result{print("Succesfully uploaded"); SVProgressHUD.dismiss();
-                capturedImage = self!.resizeImage(capturedImage, width: 4.0, height: 4.0)
-                //let buttonView = self?.profilePicSettings.valueForKey("view") as! UIView
-                //buttonView.layer.cornerRadius = 10
-               // self!.profilePicSettingsCustomView.setBackgroundImage(capturedImage, forState: UIControlState.Normal)
-            }
-            else{print("Error!");SVProgressHUD.dismiss()}
-        }*/
-        
-        picker.dismissViewControllerAnimated(true, completion:nil)
-    }
     
-    
-    
-    func imagePickerControllerDidCancel(picker: UIImagePickerController) {
-        
-        print("Cancelled")
-        
-        picker.dismissViewControllerAnimated(true, completion: nil)
-    }
-    
-    func resizeImage(image:UIImage,width:CGFloat,height:CGFloat)->UIImage
-    {
-        let rect = CGRectMake(0, 0, image.size.width/width, image.size.height/height)
-        UIGraphicsBeginImageContext(rect.size)
-        image.drawInRect(rect)
-        let resizedImage = UIGraphicsGetImageFromCurrentImageContext()
-        UIGraphicsEndImageContext()
-        let compressedImageData = UIImageJPEGRepresentation(resizedImage, 0.1)
-        let image =  UIImage(data:compressedImageData!)!
-        
-        return maskRoundedImage(image, radius: 12)
-        
-    }
-   
-    func maskRoundedImage(image: UIImage, radius: Float) -> UIImage {
-        let imageView: UIImageView = UIImageView(image: image)
-        var layer: CALayer = CALayer()
-        layer = imageView.layer
-        
-        layer.masksToBounds = true
-        layer.cornerRadius = CGFloat(radius)
-        
-        UIGraphicsBeginImageContext(imageView.bounds.size)
-        layer.renderInContext(UIGraphicsGetCurrentContext()!)
-        let roundedImage = UIGraphicsGetImageFromCurrentImageContext()
-        UIGraphicsEndImageContext()
-        
-        return roundedImage
-    }
-    
+       
 }
 
 
