@@ -17,7 +17,8 @@ class PLProjectCommentViewController: UITableViewController,EKEventEditViewDeleg
 
     @IBOutlet var commitmentDescriptionTextView: UITextView!
     
-    
+    @IBOutlet weak var calendarSwitch: UISwitch!
+    var isSwitchOn = false
     
     var projectId:String!
    
@@ -79,6 +80,10 @@ class PLProjectCommentViewController: UITableViewController,EKEventEditViewDeleg
         do{
             
             try commitmentViewModel.commitmentValidations(commitmentNameTextField.text!, targetDate:commitmentDatePicker.date, description: commitmentDescriptionTextView.text)
+            if isSwitchOn{
+                commitmentViewModel.addCommitmentToCalendar(commitmentNameTextField.text!, date: commitmentDatePicker.date)
+            }
+            
             commitmentViewModel.createCommitmentWith(commitmentNameTextField.text!,targetDate: commitmentDatePicker.date,description: commitmentDescriptionTextView.text,projectId: projectId){ result in
                 
                 if result{
@@ -129,4 +134,14 @@ class PLProjectCommentViewController: UITableViewController,EKEventEditViewDeleg
         self.dismissViewControllerAnimated(true, completion:nil)
     }
    
+    @IBAction func addCommitmentToCalendar(sender: UISwitch) {
+       
+        if sender.on{
+            isSwitchOn = true
+        }else{
+            isSwitchOn = false
+        }
+      }
+    
+    
 }
