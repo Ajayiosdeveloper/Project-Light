@@ -548,7 +548,13 @@ class PLQuickbloxHttpClient
         customParams["name"] = dialog.name
         customParams["_id"] = dialog.ID
         customParams["type"] = dialog.type.rawValue
-        //customParams["occupants_ids"] = ", ".join(dialog.occupantIDs as! [String])
+        var recipientsString = ""
+        for each in dialog.occupantIDs!{
+           
+            recipientsString = String(each)
+            recipientsString += ","
+        }
+        customParams["occupants_ids"] = recipientsString//", ".join(dialog.occupantIDs as! [String])
         customParams["notification_type"] = "1"
         inviteMessage.customParameters = customParams
         return inviteMessage
