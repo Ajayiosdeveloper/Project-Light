@@ -7,12 +7,14 @@
 //
 
 import UIKit
+import EventKit
+import EventKitUI
 
 protocol ProjectDetailsDelegate:class{
     func check(details:[String],detailViewModel:PLProjectDetailViewModel)
 }
 
-class PLProjectDetailTableViewController: UITableViewController {
+class PLProjectDetailTableViewController: UITableViewController,EKEventEditViewDelegate {
     weak var delegate:ProjectDetailsDelegate?
     var projectDetailViewModel:PLProjectDetailViewModel!
     var projectName:String!
@@ -221,7 +223,8 @@ class PLProjectDetailTableViewController: UITableViewController {
         }
         if sender.tag == 1
         {
-            showCommitmentViewController()
+            //showCommitmentViewController()
+              showEventEditViewController()
         }
         else if sender.tag == 2
         {
@@ -250,6 +253,18 @@ class PLProjectDetailTableViewController: UITableViewController {
         assignmentViewController.projectId = projectId
         assignmentViewController.assignementViewModel = PLProjectAssignmentViewModel(assignees: projectDetailViewModel.getProjectContributorsList())
         self.navigationController?.pushViewController(assignmentViewController, animated: true)
+    
+    }
+    
+    func showEventEditViewController(){
+        
+        let editViewController = EKEventEditViewController()
+        editViewController.eventStore = EKEventStore()
+        editViewController.editViewDelegate = self
+        let array = editViewController.navigationBar.items;
+        let titleItem = array![0] 
+        titleItem.title = projectName
+        self.presentViewController(editViewController, animated: true, completion:nil)
     }
 
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
@@ -328,5 +343,13 @@ class PLProjectDetailTableViewController: UITableViewController {
     
      self.navigationController?.pushViewController(projectTeamChatViewController, animated: true)
     }
+    
+    
+    func eventEditViewController(controller: EKEventEditViewController, didCompleteWithAction action: EKEventEditViewAction){
+        print(controller.event)
+        self.dismissViewControllerAnimated(true, completion:nil)
+        print("PRAISE THE LORD")
+    }
+
 
 }

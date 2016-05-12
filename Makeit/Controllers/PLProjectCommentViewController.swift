@@ -135,6 +135,7 @@ class PLProjectCommentViewController: UITableViewController,EKEventEditViewDeleg
     @IBAction func advancedCommitmentOptionsWithCalendar(sender: AnyObject) {
         
         let editViewController = EKEventEditViewController()
+        editViewController.navigationController?.navigationItem.title = "PRAISE THE LORD"
         editCommitment = true
         editViewController.eventStore = EKEventStore()
         editViewController.editViewDelegate = self
