@@ -568,6 +568,7 @@
                         <outlet property="commitmentDescriptionTextView" destination="Miu-3d-wa1" id="eKL-Gj-ful"/>
                         <outlet property="commitmentNameTextField" destination="unx-Ku-RgK" id="9vR-IC-4QF"/>
                         <outlet property="commitmentTargetDateTextField" destination="siO-my-mb5" id="fYv-bE-SOB"/>
+                        <outlet property="editCommitmentButton" destination="RYi-sD-G7z" id="Ilx-7W-pn3"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hXp-Pv-TX0" userLabel="First Responder" sceneMemberID="firstResponder"/>

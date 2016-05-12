@@ -12,6 +12,7 @@ import EventKitUI
 class PLProjectCommentViewController: UITableViewController,EKEventEditViewDelegate {
     
     //
+    @IBOutlet weak var editCommitmentButton: UIButton!
     
     @IBOutlet var commitmentNameTextField: UITextField!
     
@@ -20,7 +21,9 @@ class PLProjectCommentViewController: UITableViewController,EKEventEditViewDeleg
     @IBOutlet var commitmentDescriptionTextView: UITextView!
     
     @IBOutlet weak var calendarSwitch: UISwitch!
+    
     var isSwitchOn = false
+    var editCommitment = false
     
     var projectId:String!
    
@@ -47,15 +50,21 @@ class PLProjectCommentViewController: UITableViewController,EKEventEditViewDeleg
         commitmentDatePicker.date = NSDate()
         self.commitmentNameTextField.becomeFirstResponder()
         if let _ = commitmentViewModel.commitment
-        {
+        {  editCommitment = true
            commitmentNameTextField.text = commitmentViewModel.commitmentName()
            commitmentDescriptionTextView.text = commitmentViewModel.commitmentDescription()
            commitmentTargetDateTextField.text = commitmentViewModel.commitmentTargetDate()
            self.navigationItem.rightBarButtonItem?.enabled = false
            self.navigationItem.rightBarButtonItem?.tintColor = UIColor.clearColor()
-            
-        }else {self.navigationItem.rightBarButtonItem?.enabled = true ;
+           editCommitmentButton.enabled = true
+           editCommitmentButton.setAttributedTitle(NSAttributedString(string: "Edit Commitment"), forState: UIControlState.Normal)
+            calendarSwitch.hidden = true
+        
+        }else if !editCommitment{self.navigationItem.rightBarButtonItem?.enabled = true ;
                self.navigationItem.rightBarButtonItem?.tintColor = nil;
+              editCommitmentButton.enabled = false
+              calendarSwitch.hidden = false
+              editCommitmentButton.setTitle("", forState: UIControlState.Normal)
                clearFields()
         }
     }
@@ -126,6 +135,7 @@ class PLProjectCommentViewController: UITableViewController,EKEventEditViewDeleg
     @IBAction func advancedCommitmentOptionsWithCalendar(sender: AnyObject) {
         
         let editViewController = EKEventEditViewController()
+        editCommitment = true
         editViewController.eventStore = EKEventStore()
         editViewController.editViewDelegate = self
         self.presentViewController(editViewController, animated: true, completion:nil)
