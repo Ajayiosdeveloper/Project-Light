@@ -542,7 +542,7 @@
                                                     </connections>
                                                 </button>
                                                 <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="Que-sJ-ASj">
-                                                    <rect key="frame" x="537" y="6" width="51" height="31"/>
+                                                    <rect key="frame" x="536" y="6" width="51" height="31"/>
                                                     <connections>
                                                         <action selector="addCommitmentToCalendar:" destination="8gO-Kg-Bho" eventType="valueChanged" id="0An-9L-bGA"/>
                                                     </connections>
@@ -550,7 +550,7 @@
                                             </subviews>
                                             <constraints>
                                                 <constraint firstAttribute="bottomMargin" secondItem="Que-sJ-ASj" secondAttribute="bottom" constant="-2" id="4XR-2W-mJv"/>
-                                                <constraint firstAttribute="trailingMargin" secondItem="Que-sJ-ASj" secondAttribute="trailing" constant="6" id="A9P-Yd-mov"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="Que-sJ-ASj" secondAttribute="trailing" constant="7" id="A9P-Yd-mov"/>
                                                 <constraint firstItem="Que-sJ-ASj" firstAttribute="top" secondItem="Mr9-Ua-onJ" secondAttribute="topMargin" constant="-2" id="U4p-Tc-v1i"/>
                                             </constraints>
                                         </tableViewCellContentView>
