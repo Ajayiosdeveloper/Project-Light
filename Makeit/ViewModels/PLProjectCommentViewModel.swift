@@ -13,6 +13,8 @@ enum CommitValidation:ErrorType {
     case NameEmpty,InvalidDate,DescriptionEmpty
 }
 
+//
+
 class PLProjectCommentViewModel: NSObject {
     var eventStore:EKEventStore? = nil
 

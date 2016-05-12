@@ -11,6 +11,8 @@ import Quickblox
 
 class PLTeamCommunicationViewController: UIViewController,UITableViewDelegate,UITableViewDataSource,QBRTCClientDelegate {
     
+    //
+    
     var communicationType:Int!
     var currentSession:QBRTCSession!
     var communicationViewModel:PLTeamCommunicationViewModel!
