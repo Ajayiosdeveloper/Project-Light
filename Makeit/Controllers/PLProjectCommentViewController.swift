@@ -143,7 +143,7 @@ class PLProjectCommentViewController: UITableViewController,EKEventEditViewDeleg
     }
     
     func eventEditViewController(controller: EKEventEditViewController, didCompleteWithAction action: EKEventEditViewAction){
-        print(controller.event)
+
         self.dismissViewControllerAnimated(true, completion:nil)
     }
    
