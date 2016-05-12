@@ -11,7 +11,7 @@ import Foundation
 
 enum LocalValidations:ErrorType // Client side validations
 {
-   case EmptyConformPassword, PasswordMismatch,WeakPassword,WeakUserName,ImproperUserName
+    case EmptyConformPassword, PasswordMismatch,WeakPassword,WeakUserName,ImproperUserName
 }
 
 enum RemoteValidations:ErrorType // Server side Validations
@@ -21,21 +21,21 @@ enum RemoteValidations:ErrorType // Server side Validations
 
 class PLUserSignupAndLoginViewModel : NSObject
 {
-     var quickBloxClient:PLQuickbloxHttpClient!
+    var quickBloxClient:PLQuickbloxHttpClient = PLQuickbloxHttpClient()
     
-     dynamic var signupResultNotifier:Bool = false
-     dynamic var loginResultNotifier:Bool = false
+    dynamic var signupResultNotifier:Bool = false
+    dynamic var loginResultNotifier:Bool = false
     
-     func validateUserLoginCredentials(withUserName:String,password:String)  -> Bool
+    func validateUserLoginCredentials(withUserName:String,password:String)  -> Bool
     {
         do { try startProcessingUserLogin(withUserName, password: password) }
         catch RemoteValidations.Failed{ return false}
         catch RemoteValidations.Success {return true}
         catch {print("Other")}
         return true
-   }
+    }
     
-     func validateUserSignupCredentials(withUserName:String,password:String,confirmPassword:String) throws -> Bool
+    func validateUserSignupCredentials(withUserName:String,password:String,confirmPassword:String) throws -> Bool
     {
         guard isUserNameWeak(withUserName) else{
             throw LocalValidations.WeakUserName
@@ -53,73 +53,71 @@ class PLUserSignupAndLoginViewModel : NSObject
             throw LocalValidations.PasswordMismatch
         }
         
-        
         return true
     }
     
     
-    /*func makeTwoFactorAuthentication(controller:PLUserSignupAndLoginViewController,userName:String,password:String){
-        
-        let digits = Digits.sharedInstance()
-        digits.logOut()
-        let configuration = DGTAuthenticationConfiguration(accountFields: .DefaultOptionMask)
-        configuration.appearance = setDigitsTheme()
-        digits.authenticateWithViewController(controller, configuration: configuration) {[weak self]session, error in
-            if (session != nil)
-            {
-                
-                self!.startProcessingUserSignup(userName,password: password)
-                
-            }
-            else {
-                print(error.localizedDescription)
-            }
-        }
- 
-    }
-    
-    func setDigitsTheme()->DGTAppearance{
-        
-        
-        let theme = DGTAppearance()
-        theme.bodyFont = UIFont.systemFontOfSize(17)
-        theme.labelFont = UIFont.systemFontOfSize(17)
-        theme.accentColor = enableButtonColor
-        theme.backgroundColor = UIColor.whiteColor()
-        return theme;
-    }*/
+//    func makeTwoFactorAuthentication(controller:PLUserSignUpViewController,userName:String,password:String,email:String){
+//        
+//        let digits = Digits.sharedInstance()
+//        digits.logOut()
+//        let configuration = DGTAuthenticationConfiguration(accountFields: .DefaultOptionMask)
+//        configuration.appearance = setDigitsTheme()
+//        digits.authenticateWithViewController(controller, configuration: configuration) {[weak self]session, error in
+//            if (session != nil)
+//            {
+//                
+//                self!.startProcessingUserSignup(userName,password: password,email: email)
+//                
+//            }
+//            else {
+//                print(error.localizedDescription)
+//            }
+//        }
+//        
+//    }
+//    
+//    func setDigitsTheme()->DGTAppearance{
+//        
+//        
+//        let theme = DGTAppearance()
+//        theme.bodyFont = UIFont.systemFontOfSize(17)
+//        theme.labelFont = UIFont.systemFontOfSize(17)
+//        theme.accentColor = enableButtonColor
+//        theme.backgroundColor = UIColor.whiteColor()
+//        return theme;
+//    }
     
     private  func startProcessingUserLogin(withUserName:String,password:String) throws ->Void
     {
-        if quickBloxClient == nil{ quickBloxClient = PLQuickbloxHttpClient() }
+        //if quickBloxClient == nil{ quickBloxClient = PLQuickbloxHttpClient() }
         
-            quickBloxClient.initiateUserLogin(withUserName, password: password) {[weak self] (result) -> Void in
-                
-               self!.loginResultNotifier = result
-                
-            }
+        quickBloxClient.initiateUserLogin(withUserName, password: password) {[weak self] (result) -> Void in
+            
+            self!.loginResultNotifier = result
+        }
     }
-   
-       func startProcessingUserSignup(withUserName:String,password:String)
-    {
-        if quickBloxClient == nil{ quickBloxClient = PLQuickbloxHttpClient() }
-        
-           quickBloxClient.createNewUserWith(withUserName, password:password){[weak self]result in
-         
-            self!.signupResultNotifier = result
-     }
     
+    func startProcessingUserSignup(withUserName:String,password:String,email:String)
+    {
+        //if quickBloxClient == nil{ quickBloxClient = PLQuickbloxHttpClient() }
+        
+        quickBloxClient.createNewUserWith(withUserName, password:password,email: email){[weak self]result in
+            
+            self!.signupResultNotifier = result
+        }
+        
     }
     
     func isPasswordWeak(password:String)->Bool{
-      
+        
         if password.characters.count <= 7 {
             
             return false
         }
         
         return true
-      
+        
     }
     
     func isUserNameWeak(userName:String)->Bool
@@ -134,12 +132,26 @@ class PLUserSignupAndLoginViewModel : NSObject
     
     func isPasswordMismatched(passOne:String,passTwo:String)->Bool
     {
-            if passOne == passTwo
-            {
-                return true
-            }
-       
+        if passOne == passTwo
+        {
+            return true
+        }
+        
         return false
     }
     
+    func sendForgotPasswordLinkToeMail(mailId : String)
+    {
+        quickBloxClient.sendforgotPasswordLinkToEmail(mailId)
+    }
+    func isValidEmail(email : String) -> Bool
+    {
+        let emailRegEx = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}"
+        let emailTest = NSPredicate(format:"SELF MATCHES %@", emailRegEx)
+        if emailTest.evaluateWithObject(email)
+        {
+            return true
+        }
+        return false
+    }
 }
