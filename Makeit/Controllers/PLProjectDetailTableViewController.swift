@@ -352,7 +352,7 @@ class PLProjectDetailTableViewController: UITableViewController,EKEventEditViewD
         commitmentViewModel.isAccessGranted {[weak self] (res) in
             if res{
                 
-               
+               //
                 var subTitle = ""
                 if let _ = controller.event?.notes{
                     subTitle = (controller.event?.notes!)!
