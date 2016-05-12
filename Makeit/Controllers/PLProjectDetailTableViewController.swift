@@ -26,6 +26,7 @@ class PLProjectDetailTableViewController: UITableViewController,EKEventEditViewD
     var teamMemberDetailViewController:PLTeamMemberDetailsTableViewController!
     var teamCommunicationViewController:PLTeamCommunicationViewController!
     var projectTeamChatViewController:PLProjectTeamChatViewController!
+    var commitmentViewModel:PLProjectCommentViewModel!
 
     @IBOutlet var projectDetailsTableView: UITableView!
    
@@ -347,8 +348,40 @@ class PLProjectDetailTableViewController: UITableViewController,EKEventEditViewD
     
     func eventEditViewController(controller: EKEventEditViewController, didCompleteWithAction action: EKEventEditViewAction){
         print(controller.event)
-        self.dismissViewControllerAnimated(true, completion:nil)
+        let formatter = NSDateFormatter()
+        formatter.dateFormat  = "dd-MM-yyyy hh:mm a"
+        formatter.timeZone = NSTimeZone.systemTimeZone()
+        print(formatter.stringFromDate((controller.event?.startDate)!))
+        print(formatter.stringFromDate((controller.event?.endDate)!))
+        
+
         print("PRAISE THE LORD")
+    }
+    
+    func performDone()
+    {
+        print("JESUS LOVES you")
+        
+        if commitmentViewModel == nil {commitmentViewModel = PLProjectCommentViewModel()}
+        
+       /* do{
+            
+            try commitmentViewModel.commitmentValidations(commitmentNameTextField.text!, targetDate:commitmentDatePicker.date, description: commitmentDescriptionTextView.text)
+            if isSwitchOn{
+                commitmentViewModel.addCommitmentToCalendar(commitmentNameTextField.text!, date: commitmentDatePicker.date)
+            }
+            
+            commitmentViewModel.createCommitmentWith(commitmentNameTextField.text!,targetDate: commitmentDatePicker.date,description: commitmentDescriptionTextView.text,projectId: projectId){ result in
+                
+                if result{
+                    self.navigationController?.popViewControllerAnimated(true)
+                }else {print("Handle Error")}
+            }
+        }
+        catch CommitValidation.NameEmpty{print("Empty Name")}
+        catch CommitValidation.InvalidDate{print("Earlier date")}
+        catch CommitValidation.DescriptionEmpty{print("Empty Description")}
+        catch {}*/
     }
 
 
