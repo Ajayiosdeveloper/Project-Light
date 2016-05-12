@@ -348,30 +348,39 @@ class PLProjectDetailTableViewController: UITableViewController,EKEventEditViewD
     
     func eventEditViewController(controller: EKEventEditViewController, didCompleteWithAction action: EKEventEditViewAction){
         print(controller.event)
-        let formatter = NSDateFormatter()
-        formatter.dateFormat  = "dd-MM-yyyy hh:mm a"
-        formatter.timeZone = NSTimeZone.systemTimeZone()
-        print(formatter.stringFromDate((controller.event?.startDate)!))
-        print(formatter.stringFromDate((controller.event?.endDate)!))
-        
+        if commitmentViewModel == nil {commitmentViewModel = PLProjectCommentViewModel()}
+        commitmentViewModel.isAccessGranted {[weak self] (res) in
+            if res{
+                
+               
+                var subTitle = ""
+                if let _ = controller.event?.notes{
+                    subTitle = (controller.event?.notes!)!
+                }
+                self!.performDone((controller.event?.title)!, description: subTitle, startDate:(controller.event?.startDate)!, targetDate:(controller.event?.endDate)!)
+                
+                print("PRAISE THE LORD")
 
-        print("PRAISE THE LORD")
+                
+            }
+        }
+        
     }
     
-    func performDone()
+    func performDone(title:String,description:String,startDate:NSDate,targetDate:NSDate)
     {
         print("JESUS LOVES you")
         
-        if commitmentViewModel == nil {commitmentViewModel = PLProjectCommentViewModel()}
+       
         
-       /* do{
+        do{
             
-            try commitmentViewModel.commitmentValidations(commitmentNameTextField.text!, targetDate:commitmentDatePicker.date, description: commitmentDescriptionTextView.text)
-            if isSwitchOn{
-                commitmentViewModel.addCommitmentToCalendar(commitmentNameTextField.text!, date: commitmentDatePicker.date)
-            }
+            try commitmentViewModel.commitmentValidations(title, targetDate:targetDate, description:description)
             
-            commitmentViewModel.createCommitmentWith(commitmentNameTextField.text!,targetDate: commitmentDatePicker.date,description: commitmentDescriptionTextView.text,projectId: projectId){ result in
+                //commitmentViewModel.addCommitmentToCalendar(title, date:targetDate)
+           
+            
+            commitmentViewModel.createCommitmentWith(title,targetDate:targetDate,description:description ,projectId: projectId){ result in
                 
                 if result{
                     self.navigationController?.popViewControllerAnimated(true)
@@ -381,7 +390,7 @@ class PLProjectDetailTableViewController: UITableViewController,EKEventEditViewD
         catch CommitValidation.NameEmpty{print("Empty Name")}
         catch CommitValidation.InvalidDate{print("Earlier date")}
         catch CommitValidation.DescriptionEmpty{print("Empty Description")}
-        catch {}*/
+        catch {}
     }
 
 
