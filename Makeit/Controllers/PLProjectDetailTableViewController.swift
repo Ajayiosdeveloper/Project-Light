@@ -345,8 +345,16 @@ class PLProjectDetailTableViewController: UITableViewController,EKEventEditViewD
      self.navigationController?.pushViewController(projectTeamChatViewController, animated: true)
     }
     
+
     
     func eventEditViewController(controller: EKEventEditViewController, didCompleteWithAction action: EKEventEditViewAction){
+        
+        if  controller.event == nil{
+            
+            self.dismissViewControllerAnimated(true, completion:nil)
+            return
+        }
+        
         print(controller.event)
         if commitmentViewModel == nil {commitmentViewModel = PLProjectCommentViewModel()}
         commitmentViewModel.isAccessGranted {[weak self] (res) in
@@ -360,7 +368,7 @@ class PLProjectDetailTableViewController: UITableViewController,EKEventEditViewD
                 
                 print("PRAISE THE LORD")
                 
-                
+            self!.dismissViewControllerAnimated(true, completion: nil)
             }
         }
         
@@ -377,7 +385,7 @@ class PLProjectDetailTableViewController: UITableViewController,EKEventEditViewD
               commitmentViewModel.createCommitmentWith(title,targetDate:targetDate,description:description ,projectId: projectId){ result in
                 
                 if result{
-                    self.dismissViewControllerAnimated(true, completion: nil)
+                    
                 }else {print("Handle Error")}
             }
         }
