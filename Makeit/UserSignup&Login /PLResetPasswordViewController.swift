@@ -30,21 +30,24 @@ class PLResetPasswordViewController: UIViewController {
     @IBAction func resetPassword(sender: AnyObject) {
       if userAccountViewModel.isValidEmail(emailIdField.text!)
       {
-         let email = self.emailIdField.text
-         let finalEmail = email!.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
-         userAccountViewModel.sendForgotPasswordLinkToeMail(finalEmail)
-        // self.navigationController?.popViewControllerAnimated(true)
-        let loginViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("PLUserSignupAndLoginViewController")
-        self.presentViewController(loginViewController, animated: true, completion: nil)
+        let alert = UIAlertController(title: "Reset Password link will be sent to the registered email", message: "", preferredStyle: UIAlertControllerStyle.Alert)
+        alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default) { (action : UIAlertAction) in
+            let email = self.emailIdField.text
+            let finalEmail = email!.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
+            self.userAccountViewModel.sendForgotPasswordLinkToeMail(finalEmail)
+            let loginViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("PLUserSignupAndLoginViewController")
+            self.presentViewController(loginViewController, animated: true, completion: nil)
+        })
+        self.presentViewController(alert, animated: true, completion: nil)
+     }
+      else
+      {
+        self.showAlertWithMessage("Invalid Email", message: "Please enter valid email")
       }
-      else{
-        self.showAlertWithMessage("Invalid Email", message: "Please enter valid emailId")
-        }
-      
     }
+    
     func showAlertWithMessage(title:String,message:String)
     {
-        
         if #available(iOS 8.0, *) {
             let alertController = UIAlertController(title:title, message:message, preferredStyle: UIAlertControllerStyle.Alert)
             let action = UIAlertAction(title:"Ok", style: UIAlertActionStyle.Default, handler: { (action) -> Void in
@@ -55,9 +58,6 @@ class PLResetPasswordViewController: UIViewController {
         } else {
             // Fallback on earlier versions
         }
-     
-        
-        
     }
     
   }
