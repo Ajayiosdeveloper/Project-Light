@@ -7,17 +7,21 @@
 //
 
 import UIKit
+import EventKit
 
 enum CommitValidation:ErrorType {
     case NameEmpty,InvalidDate,DescriptionEmpty
 }
 
+///
+
 class PLProjectCommentViewModel: NSObject {
-    
+    var eventStore:EKEventStore? = nil
+
     var qbClient:PLQuickbloxHttpClient = PLQuickbloxHttpClient()
     var commitment:PLCommitment?
-        
-    func createCommitmentWith(name:String,targetDate:NSDate,description:String,projectId:String,completion:(Bool)->Void){
+    
+   func createCommitmentWith(name:String,targetDate:NSDate,description:String,projectId:String,completion:(Bool)->Void){
         
         print(name)
         print(targetDate)
@@ -60,5 +64,38 @@ class PLProjectCommentViewModel: NSObject {
         
         return commitment!.details
     }
+    
+    func addCommitmentToCalendar(name:String,date:NSDate){
+        
+         self.isAccessGranted(){[weak self] result in
+            
+            if result{
+                let event = EKEvent(eventStore: self!.eventStore!)
+                 event.title = name
+                 event.startDate = date
+                 event.endDate = event.startDate.dateByAddingTimeInterval(60*60)
+                 event.calendar = self!.eventStore!.defaultCalendarForNewEvents
+                 let alarm = EKAlarm(absoluteDate: date)
+                            event.addAlarm(alarm)
+                try!  self!.eventStore!.saveEvent(event, span: EKSpan.FutureEvents)
+            }
+            else{
+                
+                print("Not having permission")
+            }
+        }
+        
+    }
+    
+    func isAccessGranted(completion:(Bool)->Void){
+    
+        
+         eventStore = EKEventStore()
+         eventStore!.requestAccessToEntityType(
+            EKEntityType.Event , completion: {(granted, error) in
+                
+                completion(granted)
+          })
+        }
 
 }
