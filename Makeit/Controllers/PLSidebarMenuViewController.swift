@@ -18,7 +18,7 @@ class PLSidebarMenuViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        userProfilePic.layer.cornerRadius = 25.0
+        userProfilePic.layer.cornerRadius = 35.0
         userProfilePic.layer.masksToBounds = true
         projectViewModel.fetchUserAvatar(){[weak self] avatar in
          
@@ -29,7 +29,7 @@ class PLSidebarMenuViewController: UIViewController {
                self!.userProfilePic.image = UIImage(named:"chatUser.png")
             }
          }
-        self.userNameTextfield.text = "Hi! \(PLSharedManager.manager.userName)"
+        self.userNameTextfield.text = "\(PLSharedManager.manager.userName.uppercaseString)"
       }
     
     override func viewWillAppear(animated: Bool) {

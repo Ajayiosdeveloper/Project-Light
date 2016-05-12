@@ -74,6 +74,7 @@
 		80711A7F1CE323A700473856 /* DLHamburguerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80711A7C1CE323A700473856 /* DLHamburguerViewController.swift */; };
 		8073C8CE1CC737F400AE4CB6 /* PLDisplayMembersPopover.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8073C8CD1CC737F400AE4CB6 /* PLDisplayMembersPopover.swift */; };
 		8073C8D01CC744DE00AE4CB6 /* PLTeamMemberModelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8073C8CF1CC744DE00AE4CB6 /* PLTeamMemberModelView.swift */; };
+		8074F7371CE4423D00CAADB9 /* Popup.m in Sources */ = {isa = PBXBuildFile; fileRef = 8074F7361CE4423D00CAADB9 /* Popup.m */; };
 		8078A46B1CC88BD1008AC4DD /* PLProjectDetailTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8078A46A1CC88BD1008AC4DD /* PLProjectDetailTableViewController.swift */; };
 		8078A46D1CC88C11008AC4DD /* PLProjectDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8078A46C1CC88C11008AC4DD /* PLProjectDetailViewModel.swift */; };
 		807FC87A1CCB47920094112E /* PLTeamMemberDetailsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 807FC8791CCB47920094112E /* PLTeamMemberDetailsTableViewController.swift */; };
@@ -271,6 +272,8 @@
 		80711A7C1CE323A700473856 /* DLHamburguerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DLHamburguerViewController.swift; sourceTree = "<group>"; };
 		8073C8CD1CC737F400AE4CB6 /* PLDisplayMembersPopover.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLDisplayMembersPopover.swift; sourceTree = "<group>"; };
 		8073C8CF1CC744DE00AE4CB6 /* PLTeamMemberModelView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLTeamMemberModelView.swift; sourceTree = "<group>"; };
+		8074F7351CE4423D00CAADB9 /* Popup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Popup.h; sourceTree = "<group>"; };
+		8074F7361CE4423D00CAADB9 /* Popup.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Popup.m; sourceTree = "<group>"; };
 		8078A46A1CC88BD1008AC4DD /* PLProjectDetailTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLProjectDetailTableViewController.swift; sourceTree = "<group>"; };
 		8078A46C1CC88C11008AC4DD /* PLProjectDetailViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLProjectDetailViewModel.swift; sourceTree = "<group>"; };
 		807FC8791CCB47920094112E /* PLTeamMemberDetailsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PLTeamMemberDetailsTableViewController.swift; path = ../ViewModels/PLTeamMemberDetailsTableViewController.swift; sourceTree = "<group>"; };
@@ -535,6 +538,7 @@
 		806D4ADC1CC20FCD0054A9AF /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				8074F7341CE4423D00CAADB9 /* PopupView */,
 				80711A791CE323A700473856 /* DLHamburguerMenu */,
 				80ED65A11CE09F4600C61090 /* AFDropdownNotification */,
 				80C49FB41CDCBB500073B6E2 /* JSQMessagesViewController */,
@@ -626,6 +630,15 @@
 				80711A7C1CE323A700473856 /* DLHamburguerViewController.swift */,
 			);
 			path = DLHamburguerMenu;
+			sourceTree = "<group>";
+		};
+		8074F7341CE4423D00CAADB9 /* PopupView */ = {
+			isa = PBXGroup;
+			children = (
+				8074F7351CE4423D00CAADB9 /* Popup.h */,
+				8074F7361CE4423D00CAADB9 /* Popup.m */,
+			);
+			path = PopupView;
 			sourceTree = "<group>";
 		};
 		808AA2EB1CC605DE00685226 /* Dynamics&Animations */ = {
@@ -1088,6 +1101,7 @@
 				80C4A01C1CDCBB500073B6E2 /* JSQMessagesLoadEarlierHeaderView.swift in Sources */,
 				80C4A0191CDCBB500073B6E2 /* JSQMessagesComposerTextView.swift in Sources */,
 				80C4A00D1CDCBB500073B6E2 /* JSQMessagesBubbleImage.swift in Sources */,
+				8074F7371CE4423D00CAADB9 /* Popup.m in Sources */,
 				80C4A0091CDCBB500073B6E2 /* JSQMessageBubbleImageDataSource.swift in Sources */,
 				80C4A0111CDCBB500073B6E2 /* JSQVideoMediaItem.swift in Sources */,
 				80C4A0031CDCBB500073B6E2 /* JSQMessagesCollectionViewFlowLayoutInvalidationContext.swift in Sources */,
