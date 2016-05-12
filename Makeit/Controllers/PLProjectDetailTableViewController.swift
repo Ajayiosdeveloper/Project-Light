@@ -352,7 +352,6 @@ class PLProjectDetailTableViewController: UITableViewController,EKEventEditViewD
         commitmentViewModel.isAccessGranted {[weak self] (res) in
             if res{
                 
-               //
                 var subTitle = ""
                 if let _ = controller.event?.notes{
                     subTitle = (controller.event?.notes!)!
@@ -360,7 +359,7 @@ class PLProjectDetailTableViewController: UITableViewController,EKEventEditViewD
                 self!.performDone((controller.event?.title)!, description: subTitle, startDate:(controller.event?.startDate)!, targetDate:(controller.event?.endDate)!)
                 
                 print("PRAISE THE LORD")
-
+                
                 
             }
         }
@@ -370,20 +369,15 @@ class PLProjectDetailTableViewController: UITableViewController,EKEventEditViewD
     func performDone(title:String,description:String,startDate:NSDate,targetDate:NSDate)
     {
         print("JESUS LOVES you")
-        
-       
-        
         do{
             
             try commitmentViewModel.commitmentValidations(title, targetDate:targetDate, description:description)
             
-                //commitmentViewModel.addCommitmentToCalendar(title, date:targetDate)
-           
-            
-            commitmentViewModel.createCommitmentWith(title,targetDate:targetDate,description:description ,projectId: projectId){ result in
+              commitmentViewModel.addCommitmentToCalendar(title, date:targetDate)
+              commitmentViewModel.createCommitmentWith(title,targetDate:targetDate,description:description ,projectId: projectId){ result in
                 
                 if result{
-                    self.navigationController?.popViewControllerAnimated(true)
+                    self.dismissViewControllerAnimated(true, completion: nil)
                 }else {print("Handle Error")}
             }
         }
