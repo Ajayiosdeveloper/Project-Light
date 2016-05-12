@@ -376,7 +376,7 @@ class PLProjectsViewController: UITableViewController,UIImagePickerControllerDel
         detailViewController.projectDetailViewModel = projectDetailViewModel
     }
   
-    
+    //Show Alert Popup
     func presentPopup(delete:()->Void){
         
         let projectDeletePopup = Popup(title:"Are you sure delete this Project?", subTitle: "This action will erase all the relevant data", textFieldPlaceholders:[], cancelTitle:"Cancel", successTitle: "Delete", cancelBlock: {
