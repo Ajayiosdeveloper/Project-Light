@@ -36,11 +36,19 @@ class PLProjectCommentViewModel: NSObject {
     
     func commitmentValidations(name:String,targetDate:NSDate,description:String) throws->Bool {
         
-        if name.characters.count == 0 { throw CommitValidation.NameEmpty}
-        let today = NSDate()
-        if (targetDate.earlierDate(today).isEqualToDate(targetDate)){
+        if name.characters.count == 0
+        {
+            throw CommitValidation.NameEmpty
+        }
+        if NSCalendar.currentCalendar().isDateInToday(targetDate){
+            print("Today Date")
+        }else{
             
-            throw CommitValidation.InvalidDate
+            let today = NSDate()
+            if (targetDate.earlierDate(today).isEqualToDate(targetDate)){
+                
+                throw CommitValidation.InvalidDate
+            }
         }
         if description.characters.count == 0
         {
@@ -59,11 +67,6 @@ class PLProjectCommentViewModel: NSObject {
         
         return commitment!.targetDate
     }
-    
-//    func commitmentEndDate() -> String {
-//        
-//        return commitment!.targetDate
-//    }
     
     func commitmentDescription() -> String {
         
@@ -92,9 +95,7 @@ class PLProjectCommentViewModel: NSObject {
                  event.startDate = date
                  event.endDate = event.startDate.dateByAddingTimeInterval(60*60)
                  event.calendar = self!.eventStore!.defaultCalendarForNewEvents
-//                 let alarm = EKAlarm(absoluteDate: date)
-//                            event.addAlarm(alarm)
-                try!  self!.eventStore!.saveEvent(event, span: EKSpan.FutureEvents)
+                 try!  self!.eventStore!.saveEvent(event, span: EKSpan.FutureEvents)
             }
             else{
                 
@@ -113,6 +114,6 @@ class PLProjectCommentViewModel: NSObject {
                 
                 completion(granted)
           })
-        }
+    }
 
 }
