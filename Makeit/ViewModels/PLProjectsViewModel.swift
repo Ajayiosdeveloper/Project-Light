@@ -72,6 +72,8 @@ class PLProjectsViewModel: NSObject {
             let remoteObject = container[i] as! QBCOCustomObject
             let name = remoteObject.fields!["projectName"] as! String
             let description = remoteObject.fields!["subTitle"] as? String
+            let creatorInfo = remoteObject.fields!["creatorDetails"] as? [String]
+            print("Creator info is \(creatorInfo)")
             let project = PLProject(projectName:name, subTitle:description)
             project.projectId = remoteObject.parentID
             project.createdBy = remoteObject.userID
@@ -158,19 +160,53 @@ class PLProjectsViewModel: NSObject {
             
             if let _ = members{
                 
+                if members?.count > 0{
+                    
+                    let first = members![0]
+                    let creatorDetails = first.fields?.objectForKey("creatorDetails") as! [String]
+                    PLTeamMember.creatorDetails = [String:String]()
+                    PLTeamMember.creatorDetails!["creatorName"] = creatorDetails[0] as String
+                    PLTeamMember.creatorDetails!["creatorUserId"] = UInt(creatorDetails[1])
+                    PLTeamMember.creatorDetails!["creatorAvatarFileId"] = creatorDetails[2] as String
+                    PLTeamMember.creatorDetails!["creatorEmail"] = creatorDetails[3] as String
+                }
+
+                 let loggedInId = QBSession.currentSession().currentUser?.ID
+               
                 for each in members! {
                     
-                  let member = PLTeamMember(name:"", id:0)
-                  member.fullName = (each.fields?.valueForKey("name"))! as! String
-                  member.projectId = projectId
-                  member.avatar = each.fields?.valueForKey("avatar") as! String
-                  member.memberId = each.ID!
-                  member.memberUserId = (each.fields?.valueForKey("member_User_Id"))! as! UInt
-                  teamMembers.append(member)
-                 
+                    let member_user_id = each.fields?.objectForKey("member_User_Id") as! UInt
+                    if member_user_id ==  loggedInId{
+                        
+                        print("Remove logged in user")
+                    }else{
+                        
+                        let member = PLTeamMember(name:"", id:0)
+                        member.fullName = (each.fields?.valueForKey("name"))! as! String
+                        member.projectId = projectId
+                        member.avatar = each.fields?.valueForKey("avatar") as! String
+                        member.memberId = each.ID!
+                        member.memberUserId = (each.fields?.valueForKey("member_User_Id"))! as! UInt
+                        teamMembers.append(member)
+                    }
                 }
-                   completion(teamMembers)
+                
+                let creatorId = PLTeamMember.creatorDetails!["creatorUserId"] as! UInt
+                
+                if  creatorId != loggedInId{
+                  
+                    let creator = PLTeamMember(name:"", id: 0)
+                    creator.fullName = PLTeamMember.creatorDetails!["creatorName"] as! String
+                    creator.projectId = ""
+                    creator.avatar = PLTeamMember.creatorDetails!["creatorAvatarFileId"] as! String
+                    creator.memberUserId = PLTeamMember.creatorDetails!["creatorUserId"] as! UInt
+                    
+                    teamMembers.insert(creator, atIndex: 0)
                 }
+                
+                  completion(teamMembers)
+                
+            }
             
             else { completion(nil) }
         }

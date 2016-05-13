@@ -33,6 +33,7 @@ class PLProjectDetailTableViewController: UITableViewController,EKEventEditViewD
    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         self.projectDetailsTableView.registerNib(UINib(nibName:"PLTableViewCell", bundle:NSBundle.mainBundle()), forCellReuseIdentifier: "Cell")
         self.projectDetailsTableView.registerClass(UITableViewCell.self, forCellReuseIdentifier:"DefaultCell")
         commitmentViewModel.isAccessGranted(){res in
@@ -48,6 +49,9 @@ class PLProjectDetailTableViewController: UITableViewController,EKEventEditViewD
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         fetchDataFromRemote()
+        
+        print("____________________________________________\(PLTeamMember.creatorDetails)")
+        
         self.navigationItem.title = projectName
         projectDetailsTableView.reloadData()
         taskPriority = ""

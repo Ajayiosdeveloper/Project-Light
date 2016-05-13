@@ -57,6 +57,8 @@ class PLAddProjectViewModel: NSObject {
                    qbCustomObject.fields?.setObject(each.avatar, forKey:"avatar")
                    qbCustomObject.fields?.setObject(each.memberUserId, forKey: "member_User_Id")
                    qbCustomObject.fields?.setObject(projectId, forKey:"_parent_id")
+                   let creatorDetails:[AnyObject] = [(QBSession.currentSession().currentUser?.fullName)!, (QBSession.currentSession().currentUser?.ID)!,(QBSession.currentSession().currentUser?.customData)!,(QBSession.currentSession().currentUser?.email)!]
+                   qbCustomObject.fields?.setObject(creatorDetails, forKey:"creatorDetails")
                    qbObjects.append(qbCustomObject)
                 }
                 
@@ -71,7 +73,7 @@ class PLAddProjectViewModel: NSObject {
        
     }
     
-    func addContributorsToExistingProject(id:String,completion:([PLTeamMember])->Void)
+    func addContributorsToExistingProject(id:String,des:String,completion:([PLTeamMember])->Void)
     {
         
         
@@ -81,12 +83,16 @@ class PLAddProjectViewModel: NSObject {
             
             let qbCustomObject = QBCOCustomObject()
             qbCustomObject.className = "PLProjectMember"
+            qbCustomObject.fields?.setObject(PLSharedManager.manager.projectName, forKey:"projectName")
+            qbCustomObject.fields?.setObject(des, forKey:"subTitle")
             qbCustomObject.fields?.setObject(each.fullName, forKey:"name")
             qbCustomObject.fields?.setObject(each.memberUserId, forKey: "member_User_Id")
             qbCustomObject.fields?.setObject(each.avatar, forKey:"avatar")
             qbCustomObject.fields?.setObject(id, forKey:"_parent_id")
+            let creatorDetails:[AnyObject] = [(QBSession.currentSession().currentUser?.fullName)!, (QBSession.currentSession().currentUser?.ID)!,(QBSession.currentSession().currentUser?.customData)!,(QBSession.currentSession().currentUser?.email)!]
+            qbCustomObject.fields?.setObject(creatorDetails, forKey:"creatorDetails")
             qbObjects.append(qbCustomObject)
-        }
+            }
         
         self.quickBloxClient.createNewProjectWithContributors(qbObjects){result in
             

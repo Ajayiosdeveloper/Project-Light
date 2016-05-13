@@ -17,8 +17,6 @@ class PLProject: NSObject {
     var createdBy:UInt
     var projectId:String?
     var parentId:String?
-    
-    
     init(projectName:String,subTitle:String? = nil) {
         
         name = projectName
@@ -36,6 +34,7 @@ class PLTeamMember: NSObject {
     var projectId:String
     var memberUserId:UInt
     var avatar:String
+    static var creatorDetails:[String:AnyObject]?
     
     init(name:String,id:UInt) {
         fullName = name
