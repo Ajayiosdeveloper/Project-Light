@@ -413,7 +413,7 @@ class PLProjectDetailTableViewController: UITableViewController,EKEventEditViewD
             }
         }
         
-    
+    }
     
     func performDone(title:String,description:String,startDate:NSDate,targetDate:NSDate,completion:(Bool)->Void)
     {

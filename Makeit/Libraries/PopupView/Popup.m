@@ -1350,7 +1350,7 @@ BOOL isBlurSet = YES;
     }
 
 -(void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component{
-    
+    //
       NSLog(@"%@",[pickerData objectAtIndex:row]);
       UITextField*text = [pTextFieldArray objectAtIndex:0];
       text.text = [pickerData objectAtIndex:row];

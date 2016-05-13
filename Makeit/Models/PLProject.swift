@@ -95,6 +95,7 @@ class PLSharedManager:NSObject{
     var userPassword:String = ""
     var userName:String = ""
     var priorityType:String = ""
+    var isCalendarAccess = false
     
 }
 

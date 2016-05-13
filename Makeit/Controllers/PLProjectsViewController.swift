@@ -381,8 +381,6 @@ class PLProjectsViewController: UITableViewController,UIImagePickerControllerDel
         
         let projectDeletePopup = Popup(title:"Are you sure delete this Project?", subTitle: "Deleting Project will erase all of its data.This data can not be recovered.", textFieldPlaceholders:[], cancelTitle:"Cancel", successTitle: "Delete", cancelBlock: {
             
-            // self.projectTableView.backgroundColor = UIColor(red:235/255, green: 235/255, blue: 241/255, alpha: 1)
-            
             }, successBlock: {
                 
                 delete()
