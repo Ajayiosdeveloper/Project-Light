@@ -26,7 +26,7 @@ class PLProjectDetailTableViewController: UITableViewController,EKEventEditViewD
     var teamMemberDetailViewController:PLTeamMemberDetailsTableViewController!
     var teamCommunicationViewController:PLTeamCommunicationViewController!
     var projectTeamChatViewController:PLProjectTeamChatViewController!
-    var commitmentViewModel:PLProjectCommentViewModel!
+    var commitmentViewModel:PLProjectCommentViewModel = PLProjectCommentViewModel()
     var taskPriority:String = ""
 
     @IBOutlet var projectDetailsTableView: UITableView!
@@ -50,6 +50,7 @@ class PLProjectDetailTableViewController: UITableViewController,EKEventEditViewD
         fetchDataFromRemote()
         self.navigationItem.title = projectName
         projectDetailsTableView.reloadData()
+        taskPriority = ""
        
     }
 
@@ -375,50 +376,42 @@ class PLProjectDetailTableViewController: UITableViewController,EKEventEditViewD
     
     func eventEditViewController(controller: EKEventEditViewController, didCompleteWithAction action: EKEventEditViewAction){
         
-        if  controller.event?.title.characters.count == 0{
+        if action == EKEventEditViewAction.Canceled{
             
             self.dismissViewControllerAnimated(true, completion:nil)
-            return
-        }
-        if taskPriority == ""{
-            
-            let pop:Popup = Popup(title: "Set Task Priority", subTitle: "Assigning priority will help categorising your tasks easily", textFieldPlaceholders: ["PRIORITY"], cancelTitle: nil, successTitle: "OK", cancelBlock: {
-                
-            }) {
-                self.taskPriority = NSUserDefaults.standardUserDefaults().valueForKey("PRIORITY") as! String
-                print("____________________________________________\(self.taskPriority)")
-            }
-            pop.backgroundBlurType = .Dark
-            pop.showPopup()
             
             return
         }
         
-        commitmentViewModel = PLProjectCommentViewModel()
-
-        commitmentViewModel.isAccessGranted {[weak self] (res) in
-            if res{
+        if action == EKEventEditViewAction.Saved{
+            
+            if taskPriority == ""{
                 
-                var subTitle = ""
-                if let _ = controller.event?.notes{
-                    subTitle = (controller.event?.notes!)!
+                let pop:Popup = Popup(title: "Set Task Priority", subTitle: "Assigning priority will help categorising your tasks easily", textFieldPlaceholders: ["PRIORITY"], cancelTitle: nil, successTitle: "Add Task", cancelBlock: {
+                    
+                }) {
+                    self.taskPriority = NSUserDefaults.standardUserDefaults().valueForKey("PRIORITY") as! String
+                    
+                    var subTitle = ""
+                    if let _ = controller.event?.notes{
+                        subTitle = (controller.event?.notes!)!
+                    }
+                    self.performDone((controller.event?.title)!, description: subTitle, startDate:(controller.event?.startDate)!, targetDate:(controller.event?.endDate)!){ res in
+                        SVProgressHUD.dismiss()
+                        self.dismissViewControllerAnimated(true, completion: nil)
+                    }
                 }
-                
-                self!.performDone((controller.event?.title)!, description: subTitle, startDate:(controller.event?.startDate)!, targetDate:(controller.event?.endDate)!){ res in
-                     SVProgressHUD.dismiss()
-                     self!.dismissViewControllerAnimated(true, completion: nil)
-                }
-                
-                print("PRAISE THE LORD")
+                pop.backgroundBlurType = .Dark
+                pop.showPopup()
+                return
             }
-        }
         
+        }
     }
     
     func performDone(title:String,description:String,startDate:NSDate,targetDate:NSDate,completion:(Bool)->Void)
     {
         SVProgressHUD.showWithStatus("Saving")
-        print("JESUS LOVES you")
         do{
             
             try commitmentViewModel.commitmentValidations(title, targetDate:targetDate, description:description)
