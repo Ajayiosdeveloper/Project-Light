@@ -92,6 +92,7 @@ class PLSharedManager:NSObject{
     var groupName:String = ""
     var userPassword:String = ""
     var userName:String = ""
+    var isCalendarAccess:Bool = false
     
 }
 

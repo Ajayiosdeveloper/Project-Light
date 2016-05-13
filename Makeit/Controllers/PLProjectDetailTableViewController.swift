@@ -26,7 +26,8 @@ class PLProjectDetailTableViewController: UITableViewController,EKEventEditViewD
     var teamMemberDetailViewController:PLTeamMemberDetailsTableViewController!
     var teamCommunicationViewController:PLTeamCommunicationViewController!
     var projectTeamChatViewController:PLProjectTeamChatViewController!
-    var commitmentViewModel:PLProjectCommentViewModel!
+    var commitmentViewModel:PLProjectCommentViewModel! = PLProjectCommentViewModel()
+    
 
     @IBOutlet var projectDetailsTableView: UITableView!
    
@@ -34,6 +35,14 @@ class PLProjectDetailTableViewController: UITableViewController,EKEventEditViewD
         super.viewDidLoad()
         self.projectDetailsTableView.registerNib(UINib(nibName:"PLTableViewCell", bundle:NSBundle.mainBundle()), forCellReuseIdentifier: "Cell")
         self.projectDetailsTableView.registerClass(UITableViewCell.self, forCellReuseIdentifier:"DefaultCell")
+        commitmentViewModel.isAccessGranted(){res in
+            if res{
+                PLSharedManager.manager.isCalendarAccess = true
+            }else{
+                PLSharedManager.manager.isCalendarAccess = false
+            }
+        }
+
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -41,6 +50,7 @@ class PLProjectDetailTableViewController: UITableViewController,EKEventEditViewD
         fetchDataFromRemote()
         self.navigationItem.title = projectName
         projectDetailsTableView.reloadData()
+       
     }
 
     override func didReceiveMemoryWarning() {
@@ -186,11 +196,13 @@ class PLProjectDetailTableViewController: UITableViewController,EKEventEditViewD
          return 44.0
     }
     
-    override   func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+    override   func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat
+    {
         return 40.0
     }
     
-    override func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+    override func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat
+    {
         return 40
     }
     
@@ -224,8 +236,15 @@ class PLProjectDetailTableViewController: UITableViewController,EKEventEditViewD
         }
         if sender.tag == 1
         {
-            //showCommitmentViewController()
-              showEventEditViewController()
+            if PLSharedManager.manager.isCalendarAccess{
+                
+               showEventEditViewController()
+                
+            }else{
+                
+                showCommitmentViewController()
+            }
+            
         }
         else if sender.tag == 2
         {
@@ -284,10 +303,16 @@ class PLProjectDetailTableViewController: UITableViewController,EKEventEditViewD
         }
         else if indexPath.section  == 1
         {
+            if PLSharedManager.manager.isCalendarAccess{
+                
+                showEventEditViewController()
+                
+            }else{
             showCommitmentViewController()
              commitmentViewController.commitmentViewModel.commitment = projectDetailViewModel.selectedCommitmentFor(indexPath.row)
             print(commitmentViewController.commitmentViewModel.commitment)
-            
+           
+            }
         }
         else if indexPath.section == 2
         {
@@ -343,40 +368,43 @@ class PLProjectDetailTableViewController: UITableViewController,EKEventEditViewD
     
     
      self.navigationController?.pushViewController(projectTeamChatViewController, animated: true)
+   
     }
     
 
     
     func eventEditViewController(controller: EKEventEditViewController, didCompleteWithAction action: EKEventEditViewAction){
         
-        if  controller.event == nil{
+        if  controller.event?.title.characters.count == 0{
             
             self.dismissViewControllerAnimated(true, completion:nil)
             return
         }
         
         print(controller.event)
-        if commitmentViewModel == nil {commitmentViewModel = PLProjectCommentViewModel()}
-        commitmentViewModel.isAccessGranted {[weak self] (res) in
-            if res{
+          if PLSharedManager.manager.isCalendarAccess{
                 
                 var subTitle = ""
                 if let _ = controller.event?.notes{
                     subTitle = (controller.event?.notes!)!
                 }
-                self!.performDone((controller.event?.title)!, description: subTitle, startDate:(controller.event?.startDate)!, targetDate:(controller.event?.endDate)!)
+                self.performDone((controller.event?.title)!, description: subTitle, startDate:(controller.event?.startDate)!, targetDate:(controller.event?.endDate)!)
                 
-                print("PRAISE THE LORD")
                 
-            self!.dismissViewControllerAnimated(true, completion: nil)
+            self.dismissViewControllerAnimated(true, completion: nil)
+            }
+            
+            else{
+                
+                self.showCommitmentViewController()
             }
         }
         
-    }
+    
     
     func performDone(title:String,description:String,startDate:NSDate,targetDate:NSDate)
     {
-        print("JESUS LOVES you")
+        
         do{
             
             try commitmentViewModel.commitmentValidations(title, targetDate:targetDate, description:description)
@@ -386,8 +414,10 @@ class PLProjectDetailTableViewController: UITableViewController,EKEventEditViewD
                 
                 if result{
                     
-                }else {print("Handle Error")}
-            }
+                }else
+                {
+                    print("Handle Error")}
+                }
         }
         catch CommitValidation.NameEmpty{print("Empty Name")}
         catch CommitValidation.InvalidDate{print("Earlier date")}
