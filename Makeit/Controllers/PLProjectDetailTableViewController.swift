@@ -35,6 +35,14 @@ class PLProjectDetailTableViewController: UITableViewController,EKEventEditViewD
         super.viewDidLoad()
         self.projectDetailsTableView.registerNib(UINib(nibName:"PLTableViewCell", bundle:NSBundle.mainBundle()), forCellReuseIdentifier: "Cell")
         self.projectDetailsTableView.registerClass(UITableViewCell.self, forCellReuseIdentifier:"DefaultCell")
+        commitmentViewModel.isAccessGranted(){res in
+            if res{
+                PLSharedManager.manager.isCalendarAccess = true
+            }else{
+                PLSharedManager.manager.isCalendarAccess = false
+            }
+        }
+
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -42,6 +50,7 @@ class PLProjectDetailTableViewController: UITableViewController,EKEventEditViewD
         fetchDataFromRemote()
         self.navigationItem.title = projectName
         projectDetailsTableView.reloadData()
+       
     }
 
     override func didReceiveMemoryWarning() {
@@ -187,11 +196,13 @@ class PLProjectDetailTableViewController: UITableViewController,EKEventEditViewD
          return 44.0
     }
     
-    override   func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+    override   func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat
+    {
         return 40.0
     }
     
-    override func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+    override func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat
+    {
         return 40
     }
     
@@ -225,8 +236,15 @@ class PLProjectDetailTableViewController: UITableViewController,EKEventEditViewD
         }
         if sender.tag == 1
         {
-            //showCommitmentViewController()
-              showEventEditViewController()
+            if PLSharedManager.manager.isCalendarAccess{
+                
+               showEventEditViewController()
+                
+            }else{
+                
+                showCommitmentViewController()
+            }
+            
         }
         else if sender.tag == 2
         {
@@ -285,10 +303,16 @@ class PLProjectDetailTableViewController: UITableViewController,EKEventEditViewD
         }
         else if indexPath.section  == 1
         {
+            if PLSharedManager.manager.isCalendarAccess{
+                
+                showEventEditViewController()
+                
+            }else{
             showCommitmentViewController()
              commitmentViewController.commitmentViewModel.commitment = projectDetailViewModel.selectedCommitmentFor(indexPath.row)
             print(commitmentViewController.commitmentViewModel.commitment)
-            
+           
+            }
         }
         else if indexPath.section == 2
         {
@@ -344,6 +368,7 @@ class PLProjectDetailTableViewController: UITableViewController,EKEventEditViewD
     
     
      self.navigationController?.pushViewController(projectTeamChatViewController, animated: true)
+   
     }
     
 
@@ -388,7 +413,7 @@ class PLProjectDetailTableViewController: UITableViewController,EKEventEditViewD
             }
         }
         
-    }
+    
     
     func performDone(title:String,description:String,startDate:NSDate,targetDate:NSDate,completion:(Bool)->Void)
     {
