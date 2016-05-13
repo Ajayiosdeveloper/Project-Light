@@ -9,24 +9,19 @@
 import UIKit
 import EventKitUI
 
-class PLProjectCommentViewController: UITableViewController,EKEventEditViewDelegate {
-    
-    
-    @IBOutlet weak var editCommitmentButton: UIButton!
+class PLProjectCommentViewController: UITableViewController,EKEventEditViewDelegate,UIPickerViewDelegate,UIPickerViewDataSource {
     
     @IBOutlet var commitmentNameTextField: UITextField!
     
     @IBOutlet var commitmentTargetDateTextField: UITextField!
-
+    
+    @IBOutlet weak var commitmentEndDateTextField: UITextField!
+    
+    @IBOutlet weak var commitmentPriorityTextField: UITextField!
+    
     @IBOutlet var commitmentDescriptionTextView: UITextView!
-    
-    @IBOutlet weak var calendarSwitch: UISwitch!
-    
-    var isSwitchOn = false
-    var editCommitment = false
-    
+    var pickerView:UIPickerView? = UIPickerView()
     var projectId:String!
-   
     lazy  var commitmentViewModel:PLProjectCommentViewModel = {
         
         return PLProjectCommentViewModel()
@@ -36,35 +31,38 @@ class PLProjectCommentViewController: UITableViewController,EKEventEditViewDeleg
     
     override func viewDidLoad() {
         super.viewDidLoad()
-       
+        self.pickerView?.delegate = self
+        self.pickerView?.dataSource = self
+        commitmentPriorityTextField.inputView = pickerView
+        
         addDoneBarButtonItem()
         commitmentDatePicker = UIDatePicker()
         commitmentDatePicker.datePickerMode = .Date
         self.commitmentTargetDateTextField.inputView = commitmentDatePicker
+        self.commitmentEndDateTextField.inputView = commitmentDatePicker
         addDoneButtonToDatePicker()
-    
-    }
+        }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
+        commitmentPriorityTextField.text = "Critical"
         commitmentDatePicker.date = NSDate()
         self.commitmentNameTextField.becomeFirstResponder()
         if let _ = commitmentViewModel.commitment
-        {  editCommitment = true
+        {  //editCommitment = true
            commitmentNameTextField.text = commitmentViewModel.commitmentName()
            commitmentDescriptionTextView.text = commitmentViewModel.commitmentDescription()
            commitmentTargetDateTextField.text = commitmentViewModel.commitmentTargetDate()
+           // commitmentEndDateTextField.text = commitmentViewModel
            self.navigationItem.rightBarButtonItem?.enabled = false
            self.navigationItem.rightBarButtonItem?.tintColor = UIColor.clearColor()
-           editCommitmentButton.enabled = true
-           editCommitmentButton.setAttributedTitle(NSAttributedString(string: "Edit Commitment"), forState: UIControlState.Normal)
-            calendarSwitch.hidden = true
+          // editCommitmentButton.enabled = true
+           //editCommitmentButton.setAttributedTitle(NSAttributedString(string: "Edit Commitment"), forState: UIControlState.Normal)
+           // calendarSwitch.hidden = true
         
-        }else if !editCommitment{self.navigationItem.rightBarButtonItem?.enabled = true ;
+       }
+        else{
                self.navigationItem.rightBarButtonItem?.tintColor = nil;
-              editCommitmentButton.enabled = false
-              calendarSwitch.hidden = false
-              editCommitmentButton.setTitle("", forState: UIControlState.Normal)
                clearFields()
         }
     }
@@ -82,6 +80,8 @@ class PLProjectCommentViewController: UITableViewController,EKEventEditViewDeleg
        let  doneButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Done, target:self, action: #selector(PLProjectCommentViewController.peformDateSelection))
         toolBar.items = [doneButton]
         commitmentTargetDateTextField.inputAccessoryView = toolBar
+        commitmentEndDateTextField.inputAccessoryView = toolBar
+        commitmentPriorityTextField.inputAccessoryView = toolBar
     }
     
     func performDone()
@@ -91,9 +91,9 @@ class PLProjectCommentViewController: UITableViewController,EKEventEditViewDeleg
         do{
             
             try commitmentViewModel.commitmentValidations(commitmentNameTextField.text!, targetDate:commitmentDatePicker.date, description: commitmentDescriptionTextView.text)
-            if isSwitchOn{
-                commitmentViewModel.addCommitmentToCalendar(commitmentNameTextField.text!, date: commitmentDatePicker.date)
-            }
+//            if isSwitchOn{
+//                commitmentViewModel.addCommitmentToCalendar(commitmentNameTextField.text!, date: commitmentDatePicker.date)
+//            }
             
             commitmentViewModel.createCommitmentWith(commitmentNameTextField.text!,targetDate: commitmentDatePicker.date,description: commitmentDescriptionTextView.text,projectId: projectId){ result in
                 
@@ -110,9 +110,21 @@ class PLProjectCommentViewController: UITableViewController,EKEventEditViewDeleg
 
     func peformDateSelection()
     {
+        if self.commitmentEndDateTextField.isFirstResponder(){
+            
+            self.commitmentEndDateTextField.resignFirstResponder()
+            commitmentEndDateTextField.text = NSDateFormatter.localizedStringFromDate(commitmentDatePicker.date, dateStyle: NSDateFormatterStyle.MediumStyle, timeStyle: NSDateFormatterStyle.NoStyle)
+            commitmentPriorityTextField.becomeFirstResponder()
+        }else if self.commitmentTargetDateTextField.isFirstResponder(){
         self.commitmentTargetDateTextField.resignFirstResponder()
          commitmentTargetDateTextField.text = NSDateFormatter.localizedStringFromDate(commitmentDatePicker.date, dateStyle: NSDateFormatterStyle.MediumStyle, timeStyle: NSDateFormatterStyle.NoStyle)
-        commitmentDescriptionTextView.becomeFirstResponder()
+           commitmentEndDateTextField.becomeFirstResponder()
+        }
+        else{
+            
+            self.commitmentPriorityTextField.resignFirstResponder()
+            self.commitmentDescriptionTextView.becomeFirstResponder()
+        }
     }
     
     func clearFields(){
@@ -120,6 +132,8 @@ class PLProjectCommentViewController: UITableViewController,EKEventEditViewDeleg
         commitmentNameTextField.text = ""
         commitmentDescriptionTextView.text = ""
         commitmentTargetDateTextField.text = ""
+        commitmentPriorityTextField.text = ""
+        commitmentEndDateTextField.text = ""
     }
     
     override func viewWillDisappear(animated: Bool) {
@@ -136,7 +150,7 @@ class PLProjectCommentViewController: UITableViewController,EKEventEditViewDeleg
         
         let editViewController = EKEventEditViewController()
         editViewController.navigationController?.navigationItem.title = "PRAISE THE LORD"
-        editCommitment = true
+        //editCommitment = true
         editViewController.eventStore = EKEventStore()
         editViewController.editViewDelegate = self
         self.presentViewController(editViewController, animated: true, completion:nil)
@@ -147,14 +161,19 @@ class PLProjectCommentViewController: UITableViewController,EKEventEditViewDeleg
         self.dismissViewControllerAnimated(true, completion:nil)
     }
    
-    @IBAction func addCommitmentToCalendar(sender: UISwitch) {
-       
-        if sender.on{
-            isSwitchOn = true
-        }else{
-            isSwitchOn = false
-        }
-      }
+    func numberOfComponentsInPickerView(pickerView: UIPickerView) -> Int {
+        return 1
+    }
+    func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        return commitmentViewModel.priorityDataCount()
+    }
     
+    func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        return commitmentViewModel.priorityTypeForRow(row)
+    }
     
+    func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int)
+    {
+         commitmentPriorityTextField.text = commitmentViewModel.priorityTypeForRow(row)
+    }
 }

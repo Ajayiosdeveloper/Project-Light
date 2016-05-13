@@ -60,10 +60,27 @@ class PLProjectCommentViewModel: NSObject {
         return commitment!.targetDate
     }
     
+//    func commitmentEndDate() -> String {
+//        
+//        return commitment!.targetDate
+//    }
+    
     func commitmentDescription() -> String {
         
         return commitment!.details
     }
+    
+    func priorityDataCount()->Int{
+        
+        return 5
+    }
+    
+    func priorityTypeForRow(row:Int)->String{
+        
+      let priorityType = ["Critical","Very Important","Important","Medium","Low"]
+   
+        return priorityType[row]
+      }
     
     func addCommitmentToCalendar(name:String,date:NSDate){
         
@@ -75,8 +92,8 @@ class PLProjectCommentViewModel: NSObject {
                  event.startDate = date
                  event.endDate = event.startDate.dateByAddingTimeInterval(60*60)
                  event.calendar = self!.eventStore!.defaultCalendarForNewEvents
-                 let alarm = EKAlarm(absoluteDate: date)
-                            event.addAlarm(alarm)
+//                 let alarm = EKAlarm(absoluteDate: date)
+//                            event.addAlarm(alarm)
                 try!  self!.eventStore!.saveEvent(event, span: EKSpan.FutureEvents)
             }
             else{
