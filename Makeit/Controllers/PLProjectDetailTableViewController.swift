@@ -27,6 +27,7 @@ class PLProjectDetailTableViewController: UITableViewController,EKEventEditViewD
     var teamCommunicationViewController:PLTeamCommunicationViewController!
     var projectTeamChatViewController:PLProjectTeamChatViewController!
     var commitmentViewModel:PLProjectCommentViewModel!
+    var taskPriority:String = ""
 
     @IBOutlet var projectDetailsTableView: UITableView!
    
@@ -349,14 +350,27 @@ class PLProjectDetailTableViewController: UITableViewController,EKEventEditViewD
     
     func eventEditViewController(controller: EKEventEditViewController, didCompleteWithAction action: EKEventEditViewAction){
         
-        if  controller.event == nil{
+        if  controller.event?.title.characters.count == 0{
             
             self.dismissViewControllerAnimated(true, completion:nil)
             return
         }
+        if taskPriority == ""{
+            
+            let pop:Popup = Popup(title: "Set Task Priority", subTitle: "Assigning priority will help categorising your tasks easily", textFieldPlaceholders: ["PRIORITY"], cancelTitle: nil, successTitle: "OK", cancelBlock: {
+                
+            }) {
+                self.taskPriority = NSUserDefaults.standardUserDefaults().valueForKey("PRIORITY") as! String
+                print("____________________________________________\(self.taskPriority)")
+            }
+            pop.backgroundBlurType = .Dark
+            pop.showPopup()
+            
+            return
+        }
         
-        print(controller.event)
-        if commitmentViewModel == nil {commitmentViewModel = PLProjectCommentViewModel()}
+        commitmentViewModel = PLProjectCommentViewModel()
+
         commitmentViewModel.isAccessGranted {[weak self] (res) in
             if res{
                 
@@ -364,18 +378,21 @@ class PLProjectDetailTableViewController: UITableViewController,EKEventEditViewD
                 if let _ = controller.event?.notes{
                     subTitle = (controller.event?.notes!)!
                 }
-                self!.performDone((controller.event?.title)!, description: subTitle, startDate:(controller.event?.startDate)!, targetDate:(controller.event?.endDate)!)
+                
+                self!.performDone((controller.event?.title)!, description: subTitle, startDate:(controller.event?.startDate)!, targetDate:(controller.event?.endDate)!){ res in
+                     SVProgressHUD.dismiss()
+                     self!.dismissViewControllerAnimated(true, completion: nil)
+                }
                 
                 print("PRAISE THE LORD")
-                
-            self!.dismissViewControllerAnimated(true, completion: nil)
             }
         }
         
     }
     
-    func performDone(title:String,description:String,startDate:NSDate,targetDate:NSDate)
+    func performDone(title:String,description:String,startDate:NSDate,targetDate:NSDate,completion:(Bool)->Void)
     {
+        SVProgressHUD.showWithStatus("Saving")
         print("JESUS LOVES you")
         do{
             
@@ -386,6 +403,8 @@ class PLProjectDetailTableViewController: UITableViewController,EKEventEditViewD
                 
                 if result{
                     
+                    completion(true)
+                    
                 }else {print("Handle Error")}
             }
         }
@@ -395,5 +414,6 @@ class PLProjectDetailTableViewController: UITableViewController,EKEventEditViewD
         catch {}
     }
 
+   
 
 }

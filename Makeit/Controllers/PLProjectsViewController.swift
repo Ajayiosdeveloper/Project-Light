@@ -379,16 +379,18 @@ class PLProjectsViewController: UITableViewController,UIImagePickerControllerDel
     //Show Alert Popup
     func presentPopup(delete:()->Void){
         
-        let projectDeletePopup = Popup(title:"Are you sure delete this Project?", subTitle: "This action will erase all the relevant data", textFieldPlaceholders:[], cancelTitle:"Cancel", successTitle: "Delete", cancelBlock: {
+        let projectDeletePopup = Popup(title:"Are you sure delete this Project?", subTitle: "Deleting Project will erase all of its data.This data can not be recovered.", textFieldPlaceholders:[], cancelTitle:"Cancel", successTitle: "Delete", cancelBlock: {
             
-             self.projectTableView.backgroundColor = UIColor(red:235/255, green: 235/255, blue: 241/255, alpha: 1)
+            // self.projectTableView.backgroundColor = UIColor(red:235/255, green: 235/255, blue: 241/255, alpha: 1)
             
             }, successBlock: {
                 
                 delete()
         })
-        self.projectTableView.backgroundColor = UIColor.lightGrayColor()
+       
         projectDeletePopup.delegate = self
+        projectDeletePopup.titleColor = UIColor.redColor()
+        projectDeletePopup.backgroundBlurType = .Dark
         projectDeletePopup.roundedCorners = true
         projectDeletePopup.tapBackgroundToDismiss = true
         projectDeletePopup.swipeToDismiss = true

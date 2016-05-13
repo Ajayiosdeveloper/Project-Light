@@ -62,6 +62,7 @@ typedef void (^blocky)(void);
 
 @class Popup;
 
+
 @protocol PopupDelegate;
 
 @interface Popup : UIView

@@ -8,6 +8,8 @@
 
 import UIKit
 
+
+
 class PLProject: NSObject {
     
     var name:String
@@ -92,6 +94,7 @@ class PLSharedManager:NSObject{
     var groupName:String = ""
     var userPassword:String = ""
     var userName:String = ""
+    var priorityType:String = ""
     
 }
 

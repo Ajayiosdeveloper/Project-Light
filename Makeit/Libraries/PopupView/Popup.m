@@ -23,7 +23,7 @@ CGFloat popupDimensionHeight = 300.0f;
 
 BOOL isBlurSet = YES;
 
-@interface Popup () <UITextFieldDelegate, UIGestureRecognizerDelegate, UIScrollViewDelegate /*For swiping to dimiss*/> {
+@interface Popup () <UITextFieldDelegate, UIGestureRecognizerDelegate, UIScrollViewDelegate,UIPickerViewDelegate,UIPickerViewDataSource /*For swiping to dimiss*/> {
     
     UIView *backgroundView;
     UIView *popupView;
@@ -54,7 +54,9 @@ BOOL isBlurSet = YES;
     UILabel *subTitleLabel;
     
     NSMutableArray *panHolder;
-
+    
+    UIPickerView*picker;
+    NSArray*pickerData;
 }
 
 @end
@@ -88,6 +90,7 @@ BOOL isBlurSet = YES;
                  successBlock:(blocky)successBlock {
     
     if ([super init]) {
+        picker = [[UIPickerView alloc]init];
         pTitle = title;
         pSubTitle = subTitle;
         pTextFieldPlaceholderArray = textFieldPlaceholderArray;
@@ -359,7 +362,15 @@ BOOL isBlurSet = YES;
         
         for (int i = 0; i < [pTextFieldPlaceholderArray count]; i++) {
             if (i == 0) {
+               
+                picker.dataSource = self;
+                picker.delegate = self;
+                pickerData = @[@"Critical",@"Very Important",@"Important",@"Medium",@"Low"];
                 textField1 = [self textFieldWithPlaceholder:pTextFieldPlaceholderArray[i] numberOfField:1];
+                textField1.inputAccessoryView = picker;
+                textField1.text = @"Critical";
+                 [[NSUserDefaults standardUserDefaults] setValue:@"Critical" forKey:@"PRIORITY"];
+                
             }
             else if (i == 1) {
                 textField2 = [self textFieldWithPlaceholder:pTextFieldPlaceholderArray[i] numberOfField:2];
@@ -1320,6 +1331,31 @@ BOOL isBlurSet = YES;
     else if (self.delegate && [self.delegate respondsToSelector:@selector(popupDidDisappear:buttonType:)]) {
         [self.delegate popupDidDisappear:self buttonType:buttonType];
     }
+}
+
+-(NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView{
+    
+    return  1;
+}
+
+-(NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component{
+    
+    return  pickerData.count;
+}
+
+-(NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component{
+    
+      return [pickerData objectAtIndex:row];
+    
+    }
+
+-(void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component{
+    
+      NSLog(@"%@",[pickerData objectAtIndex:row]);
+      UITextField*text = [pTextFieldArray objectAtIndex:0];
+      text.text = [pickerData objectAtIndex:row];
+      [[NSUserDefaults standardUserDefaults] setValue:text.text forKey:@"PRIORITY"];
+
 }
 
 @end
