@@ -49,18 +49,14 @@ class PLProjectCommentViewController: UITableViewController,EKEventEditViewDeleg
         commitmentDatePicker.date = NSDate()
         self.commitmentNameTextField.becomeFirstResponder()
         if let _ = commitmentViewModel.commitment
-        {  //editCommitment = true
+        {
            commitmentNameTextField.text = commitmentViewModel.commitmentName()
            commitmentDescriptionTextView.text = commitmentViewModel.commitmentDescription()
            commitmentTargetDateTextField.text = commitmentViewModel.commitmentTargetDate()
-           // commitmentEndDateTextField.text = commitmentViewModel
            self.navigationItem.rightBarButtonItem?.enabled = false
            self.navigationItem.rightBarButtonItem?.tintColor = UIColor.clearColor()
-          // editCommitmentButton.enabled = true
-           //editCommitmentButton.setAttributedTitle(NSAttributedString(string: "Edit Commitment"), forState: UIControlState.Normal)
-           // calendarSwitch.hidden = true
-        
-       }
+          
+        }
         else{
                self.navigationItem.rightBarButtonItem?.tintColor = nil;
                clearFields()
@@ -91,10 +87,7 @@ class PLProjectCommentViewController: UITableViewController,EKEventEditViewDeleg
         do{
             
             try commitmentViewModel.commitmentValidations(commitmentNameTextField.text!, targetDate:commitmentDatePicker.date, description: commitmentDescriptionTextView.text)
-//            if isSwitchOn{
-//                commitmentViewModel.addCommitmentToCalendar(commitmentNameTextField.text!, date: commitmentDatePicker.date)
-//            }
-            
+
             commitmentViewModel.createCommitmentWith(commitmentNameTextField.text!,targetDate: commitmentDatePicker.date,description: commitmentDescriptionTextView.text,projectId: projectId){ result in
                 
                 if result{
@@ -149,8 +142,7 @@ class PLProjectCommentViewController: UITableViewController,EKEventEditViewDeleg
     @IBAction func advancedCommitmentOptionsWithCalendar(sender: AnyObject) {
         
         let editViewController = EKEventEditViewController()
-        editViewController.navigationController?.navigationItem.title = "PRAISE THE LORD"
-        //editCommitment = true
+        editViewController.navigationController?.navigationItem.title = "Welcome"
         editViewController.eventStore = EKEventStore()
         editViewController.editViewDelegate = self
         self.presentViewController(editViewController, animated: true, completion:nil)
