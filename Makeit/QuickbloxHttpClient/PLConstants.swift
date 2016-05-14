@@ -23,3 +23,8 @@ let kLoginResultNotifier  = "loginResultNotifier"
 
 
 
+//Colors
+
+let backGroundColor = UIColor(red: 63/255, green: 203/255, blue: 129/255, alpha: 1)
+
+let layerColor = UIColor(red: 172/255, green: 234/255, blue: 203/255, alpha: 1)

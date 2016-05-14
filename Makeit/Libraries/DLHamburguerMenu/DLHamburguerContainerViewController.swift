@@ -212,8 +212,11 @@ class DLHamburguerContainerViewController: UIViewController {
     
     // PAN: animate menu appearance/dissapearace with the menu.
     func panGestureRecognized(recognizer: UIPanGestureRecognizer) {
+        
+        print("Pan is executing")
+        
         // inform the delegate
-        self.hamburguerViewController.delegate?.hamburguerViewController?(self.hamburguerViewController, didPerformPanGesture: recognizer)
+       self.hamburguerViewController.delegate?.hamburguerViewController?(self.hamburguerViewController, didPerformPanGesture: recognizer)
         // is the gesture recognizer enabled?
         if !self.hamburguerViewController.gestureEnabled { return }
         

@@ -8,13 +8,13 @@
 
 import UIKit
 
-
-
 class PLProject: NSObject {
     
     var name:String
     var subTitle: String?
     var createdBy:UInt
+    var createdByName:String
+    var createdAt:NSDate
     var projectId:String?
     var parentId:String?
     init(projectName:String,subTitle:String? = nil) {
@@ -22,8 +22,10 @@ class PLProject: NSObject {
         name = projectName
         self.subTitle = subTitle
         createdBy = 0
+        createdByName = ""
         projectId = nil
         parentId = nil
+        createdAt = NSDate()
     }
 }
 
@@ -45,8 +47,6 @@ class PLTeamMember: NSObject {
     }
     
 }
-
-
 class PLCommitment: NSObject {
     
     var name:String = ""
@@ -77,12 +77,6 @@ class PLChatGroup:NSObject{
     var lastMessageDate:String? = ""
     
 }
-
-
-
-
-
-
 class PLSharedManager:NSObject{
     
     static var manager:PLSharedManager = PLSharedManager()

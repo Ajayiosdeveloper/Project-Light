@@ -30,15 +30,22 @@ class PLResetPasswordViewController: UIViewController {
     @IBAction func resetPassword(sender: AnyObject) {
       if userAccountViewModel.isValidEmail(emailIdField.text!)
       {
-        let alert = UIAlertController(title: "Reset Password link will be sent to the registered email", message: "", preferredStyle: UIAlertControllerStyle.Alert)
-        alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default) { (action : UIAlertAction) in
-            let email = self.emailIdField.text
-            let finalEmail = email!.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
-            self.userAccountViewModel.sendForgotPasswordLinkToeMail(finalEmail)
-            let loginViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("PLUserSignupAndLoginViewController")
-            self.presentViewController(loginViewController, animated: true, completion: nil)
-        })
-        self.presentViewController(alert, animated: true, completion: nil)
+        if #available(iOS 8.0, *) {
+            let alert = UIAlertController(title: "Reset Password link will be sent to the registered email", message: "", preferredStyle: UIAlertControllerStyle.Alert)
+            alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default) { (action : UIAlertAction) in
+                let email = self.emailIdField.text
+                let finalEmail = email!.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
+                self.userAccountViewModel.sendForgotPasswordLinkToeMail(finalEmail)
+                let loginViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("PLUserSignupAndLoginViewController")
+                self.presentViewController(loginViewController, animated: true, completion: nil)
+                })
+            self.presentViewController(alert, animated: true, completion: nil)
+
+        } else {
+            // Fallback on earlier versions
+        
+        }
+            
      }
       else
       {

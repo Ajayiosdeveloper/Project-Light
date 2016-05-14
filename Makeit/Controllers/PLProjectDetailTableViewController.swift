@@ -9,6 +9,7 @@
 import UIKit
 import EventKit
 import EventKitUI
+import Quickblox
 
 protocol ProjectDetailsDelegate:class{
     func check(details:[String],detailViewModel:PLProjectDetailViewModel)
@@ -20,6 +21,7 @@ class PLProjectDetailTableViewController: UITableViewController,EKEventEditViewD
     var projectName:String!
     var projectId:String!
     var projectDescription:String!
+    var projectCreatedBy:UInt!
     var addProjectViewController:PLAddProjectViewController!
     var commitmentViewController:PLProjectCommentViewController!
     var assignmentViewController:PLProjectAssignmentViewController!
@@ -50,8 +52,6 @@ class PLProjectDetailTableViewController: UITableViewController,EKEventEditViewD
         super.viewWillAppear(animated)
         fetchDataFromRemote()
         
-        print("____________________________________________\(PLTeamMember.creatorDetails)")
-        
         self.navigationItem.title = projectName
         projectDetailsTableView.reloadData()
         taskPriority = ""
@@ -66,8 +66,9 @@ class PLProjectDetailTableViewController: UITableViewController,EKEventEditViewD
     // MARK: - Table view data source
 
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        
+            return 4
       
-        return 4
     }
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -76,7 +77,8 @@ class PLProjectDetailTableViewController: UITableViewController,EKEventEditViewD
            total = projectDetailViewModel.numbersOfContributorsRows()
         }
         else if section == 1{
-            total = projectDetailViewModel.numberOfCommitmentRows()
+           
+                total = projectDetailViewModel.numberOfCommitmentRows()
         }
         else if section == 2
         {
@@ -150,16 +152,22 @@ class PLProjectDetailTableViewController: UITableViewController,EKEventEditViewD
         footerView.backgroundColor = UIColor.whiteColor()
         if section == 0
         {
-            self.addButtonForTableViewFooterOnView(footerView, title:"Add Contributor", tag:section)
+            if projectCreatedBy == QBSession.currentSession().currentUser?.ID{
+                
+                 self.addButtonForTableViewFooterOnView(footerView, title:"Add Contributor", tag:section)
+            }else{footerView = nil}
+            
+            
         }
         else if section == 1{
-            
+            if projectCreatedBy == QBSession.currentSession().currentUser?.ID{
             self.addButtonForTableViewFooterOnView(footerView, title:"Add Commitment", tag:section)
-
+            }else{footerView = nil}
         }
         else if section == 2{
-            
+            if projectCreatedBy == QBSession.currentSession().currentUser?.ID{
             self.addButtonForTableViewFooterOnView(footerView, title:"Add Assigniment", tag:section)
+            }else{footerView = nil}
         }
         else if section == 3
         {

@@ -16,6 +16,7 @@ class PLProjectsViewController: UITableViewController,UIImagePickerControllerDel
     var selectedProjectId:String?
     var selectedProjectName:String!
     var selectedProjectDescription:String!
+    var selectedProejctCreatorId:UInt!
     var addProjectViewController:PLAddProjectViewController?
     var projectViewModel:PLProjectsViewModel!
     var activityIndicatorView:UIActivityIndicatorView!
@@ -29,7 +30,10 @@ class PLProjectsViewController: UITableViewController,UIImagePickerControllerDel
 
   override func viewDidLoad() {
         super.viewDidLoad()
-        self.navigationItem.title = "Projects"
+    
+         self.projectTableView.registerNib(UINib(nibName:"PLProjectViewCell", bundle:NSBundle.mainBundle()), forCellReuseIdentifier: "ProjectCell")
+         self.projectTableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "Cell")
+         self.navigationItem.title = "Projects"
         addLogoutBarButtonItem()
         addNewProject()
        projectViewModel = PLProjectsViewModel()
@@ -44,8 +48,6 @@ class PLProjectsViewController: UITableViewController,UIImagePickerControllerDel
             print("Success in connection")
          }
       }
-
-    
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -69,12 +71,7 @@ class PLProjectsViewController: UITableViewController,UIImagePickerControllerDel
     }
     
     func addLogoutBarButtonItem(){
-       
-      // profilePicSettingsCustomView = UIButton(type: .Custom)
-       //profilePicSettingsCustomView.frame = CGRectMake(0, 0, 30, 30)
-      // profilePicSettingsCustomView.layer.cornerRadius = 15.0
-      // profilePicSettingsCustomView.addTarget(self, action:#selector(PLProjectsViewController.showSettingsActionSheet), forControlEvents: UIControlEvents.TouchUpInside)
-      // profilePicSettingsCustomView.setBackgroundImage(UIImage(named:"UserImage.png"), forState: UIControlState.Normal)
+      
         let sidebarImage = UIImage(named: "sideBar.png")!.imageWithRenderingMode(UIImageRenderingMode.AlwaysOriginal)
         profilePicSettings = UIBarButtonItem(image:sidebarImage, style: UIBarButtonItemStyle.Plain, target:self , action: #selector(PLProjectsViewController.showSettingsActionSheet))
        self.navigationItem.leftBarButtonItem = profilePicSettings
@@ -85,65 +82,6 @@ class PLProjectsViewController: UITableViewController,UIImagePickerControllerDel
         print("PRAISE THE LORD")
         
         self.findHamburguerViewController()?.showMenuViewController()
-
-        
-       /* if #available(iOS 8.0, *) {
-            let settingsActionSheet = UIAlertController(title:"Upload Profile", message:"", preferredStyle: UIAlertControllerStyle.ActionSheet)
-            settingsActionSheet.addAction(UIAlertAction(title:"Photo Library", style: UIAlertActionStyle.Default, handler: {[weak self] (action) in
-                
-                if self!.plPhotoPickerController == nil
-                {
-                    self!.plPhotoPickerController = UIImagePickerController()
-                    self!.plPhotoPickerController.delegate = self
-                }
-                self!.plPhotoPickerController.sourceType = UIImagePickerControllerSourceType.PhotoLibrary
-                self!.plPhotoPickerController.allowsEditing = true
-                
-                self?.navigationController?.presentViewController(self!.plPhotoPickerController, animated: true, completion:nil)
-                
-            }))
-            settingsActionSheet.addAction(UIAlertAction(title:"Camera", style: UIAlertActionStyle.Default, handler: {[weak self] (action) in
-                if self!.plPhotoPickerController == nil
-                {
-                    self!.plPhotoPickerController = UIImagePickerController()
-                    self!.plPhotoPickerController.delegate = self
-
-                }
-                 self!.plPhotoPickerController.sourceType = UIImagePickerControllerSourceType.Camera
-                 self!.plPhotoPickerController.allowsEditing = true
-                 //self?.navigationController?.presentViewController(self!.plPhotoPickerController, animated: true, completion:nil)
-            }))
-
-          
-            
-            settingsActionSheet.addAction(UIAlertAction(title:"Logout", style: UIAlertActionStyle.Default, handler: {[weak self] (action) in
-                
-                 if self!.observerContext == 0 {self!.projectViewModel.removeObserver(self!, forKeyPath:"createdProjectList")}
-                 self!.projectViewModel.performLogout()
-                 self!.projectTableView.reloadData()
-                 self!.navigationController?.popToRootViewControllerAnimated(true)
-
-            }))
-            
-            settingsActionSheet.addAction(UIAlertAction(title:"Cancel", style: UIAlertActionStyle.Cancel, handler: { (action) in
-                
-                print("Cancel")
-            }))
-
-           if UIDevice.currentDevice().userInterfaceIdiom == .Pad
-           {
-             let alertPopoverPresentationController = settingsActionSheet.popoverPresentationController;
-             let source = profilePicSettings.valueForKey("view")
-             alertPopoverPresentationController!.sourceRect = (source?.frame)!
-             alertPopoverPresentationController!.sourceView = self.view;
-           }
-            
-            self.presentViewController(settingsActionSheet, animated: true, completion:nil)
-            
-        } else {
-            // Fallback on earlier versions
-            
-        }*/
     }
     
     func addNewProject()
@@ -151,7 +89,7 @@ class PLProjectsViewController: UITableViewController,UIImagePickerControllerDel
         let addProjectButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Add, target: self, action: #selector(PLProjectsViewController.addNewProjectToList))
          editProjectButton = UIBarButtonItem(title: "Edit", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(PLProjectsViewController.deleteProjectInList))
         self.navigationItem.rightBarButtonItems = [addProjectButton,editProjectButton]
-         //self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Add, target: self, action: #selector(PLProjectsViewController.addNewProjectToList))
+        
     }
     
     func addNewProjectToList()
@@ -202,29 +140,50 @@ class PLProjectsViewController: UITableViewController,UIImagePickerControllerDel
     
    override  func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
-        let cell = tableView.dequeueReusableCellWithIdentifier("Cell")! as UITableViewCell
+    
             if indexPath.section == 0
             {
-            cell.textLabel?.text = projectViewModel.titleAtIndexPath(indexPath.row)
-             cell.textLabel?.textColor = UIColor.blackColor()
-            cell.detailTextLabel?.text = projectViewModel.subTitleAtIndexPath(indexPath.row)
+            let cell = tableView.dequeueReusableCellWithIdentifier("ProjectCell")! as! PLProjectViewCell
+            cell.projectName?.text = projectViewModel.titleAtIndexPath(indexPath.row)
+            cell.projectName?.textColor = UIColor.blackColor()
+            cell.projectDescription?.text = projectViewModel.subTitleAtIndexPath(indexPath.row)
+            cell.circularView.backgroundColor = projectViewModel.getViewColor()
+            cell.projectLetterLabel.text = String(projectViewModel.projectNameStartLetter(indexPath.row, section: indexPath.section))
+            cell.projectLetterLabel.textColor = UIColor.whiteColor()
+            cell.createdAt.text = projectViewModel.projectCreatedAtIndexPath(indexPath.row,section: indexPath.section)
+            cell.createdBy.text = "Created by : You"
+            return cell
             }
           if indexPath.section == 1{
-              cell.textLabel?.text = projectViewModel.contributingProjectTitleAtIndexPath(indexPath.row)
-              cell.textLabel?.textColor = UIColor.blackColor()
-              cell.detailTextLabel?.text = projectViewModel.contributingProjectSubTitleAtIndexPath(indexPath.row)
+            let cell = tableView.dequeueReusableCellWithIdentifier("ProjectCell")! as! PLProjectViewCell
+              cell.projectName?.text = projectViewModel.contributingProjectTitleAtIndexPath(indexPath.row)
+              cell.projectName?.textColor = UIColor.blackColor()
+              cell.projectDescription?.text = projectViewModel.contributingProjectSubTitleAtIndexPath(indexPath.row)
+              cell.circularView.backgroundColor = projectViewModel.getViewColor()
+              cell.createdAt.text = projectViewModel.projectCreatedAtIndexPath(indexPath.row,section: indexPath.section)
+              cell.projectLetterLabel.text =  String(projectViewModel.projectNameStartLetter(indexPath.row, section: indexPath.section))
+              cell.projectLetterLabel.textColor = UIColor.whiteColor()
+              cell.createdBy.text = projectViewModel.projectCreatedBy(indexPath.row)
+              return cell
             }
     
          if indexPath.section == 2{
-        
+             let cell = tableView.dequeueReusableCellWithIdentifier("Cell")! as UITableViewCell
              cell.textLabel?.text = "Improve Profile"
              cell.textLabel?.textColor = enableButtonColor
              cell.detailTextLabel?.text = ""
+            return cell
             }
-        return cell
+        return UITableViewCell()
     }
     
-
+   override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    if indexPath.section == 2{
+        return 40
+    }
+    return 100
+    
+    }
     
     override func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         
@@ -280,6 +239,7 @@ class PLProjectsViewController: UITableViewController,UIImagePickerControllerDel
         selectedProjectId = selected.projectId
         selectedProjectName = selected.name
         selectedProjectDescription = selected.subTitle
+        selectedProejctCreatorId = selected.createdBy
         projectViewModel.getProjectMembersList(selectedProjectId!){ resultedMembers in
             
             if let _ = resultedMembers{
@@ -371,6 +331,7 @@ class PLProjectsViewController: UITableViewController,UIImagePickerControllerDel
         let detailViewController = segue.destinationViewController as! PLProjectDetailTableViewController
         detailViewController.projectName = selectedProjectName
         detailViewController.projectId = selectedProjectId
+        detailViewController.projectCreatedBy = selectedProejctCreatorId
         detailViewController.projectDescription = selectedProjectDescription
         let projectDetailViewModel = PLProjectDetailViewModel(members:resulted)
         detailViewController.projectDetailViewModel = projectDetailViewModel

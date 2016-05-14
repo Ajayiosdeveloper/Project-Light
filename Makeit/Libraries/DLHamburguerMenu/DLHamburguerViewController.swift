@@ -219,11 +219,11 @@ class DLHamburguerViewController: UIViewController {
     // MARK: - Gesture recognizer
     
     func panGestureRecognized (recognizer: UIPanGestureRecognizer) {
-        self.delegate?.hamburguerViewController?(self, didPerformPanGesture: recognizer)
+       /* self.delegate?.hamburguerViewController?(self, didPerformPanGesture: recognizer)
         if self.gestureEnabled {
             if recognizer.state == .Began { self.showMenuViewControllerAnimated(true, completion: nil) }
             self.containerViewController.panGestureRecognized(recognizer)
-        }
+        }*/
     }
     
     // MARK: - Rotation legacy support (iOS 7)

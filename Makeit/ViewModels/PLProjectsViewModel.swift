@@ -47,6 +47,8 @@ class PLProjectsViewModel: NSObject {
     }
     
     func fillProjectListArrayWithContents(container:[AnyObject]){
+        
+       
     
         for (i,_) in container.enumerate()
         {
@@ -55,6 +57,7 @@ class PLProjectsViewModel: NSObject {
             let description = remoteObject.fields!["description"] as? String
             let project = PLProject(projectName:name, subTitle:description)
             project.projectId = remoteObject.ID
+            project.createdByName = "You"
             project.createdBy = remoteObject.userID
             project.parentId = remoteObject.parentID
             createdProjectList.append(project)
@@ -67,17 +70,22 @@ class PLProjectsViewModel: NSObject {
     
     func fillContributionProjectsListArray(container:[AnyObject]){
         
+      
+        
         for (i,_) in container.enumerate()
         {
             let remoteObject = container[i] as! QBCOCustomObject
             let name = remoteObject.fields!["projectName"] as! String
             let description = remoteObject.fields!["subTitle"] as? String
-            let creatorInfo = remoteObject.fields!["creatorDetails"] as? [String]
-            print("Creator info is \(creatorInfo)")
+            let creatorDetails  = remoteObject.fields!["creatorDetails"] as! [String]
             let project = PLProject(projectName:name, subTitle:description)
             project.projectId = remoteObject.parentID
             project.createdBy = remoteObject.userID
+            project.createdAt = remoteObject.createdAt!
+            project.createdByName = creatorDetails[0]
             contributingProjectList.append(project)
+            
+           
         }
     }
     
@@ -106,6 +114,46 @@ class PLProjectsViewModel: NSObject {
         }
         return ""
     }
+    
+    func projectCreatedAtIndexPath(index:Int,section:Int)->String{
+        
+        if section == 0{
+            let project = createdProjectList[index]
+            return NSDateFormatter.localizedStringFromDate(project.createdAt, dateStyle: NSDateFormatterStyle.MediumStyle, timeStyle: NSDateFormatterStyle.NoStyle)
+        }else{
+            let project = contributingProjectList[index]
+            return NSDateFormatter.localizedStringFromDate(project.createdAt, dateStyle: NSDateFormatterStyle.MediumStyle, timeStyle: NSDateFormatterStyle.NoStyle)
+        }
+    }
+    
+    func projectNameStartLetter(index:Int,section:Int)->Character{
+        if section == 0{
+            let project = createdProjectList[index]
+            return  project.name.characters.first!
+        }
+        else{
+            let project = contributingProjectList[index]
+            return project.name.characters.first!
+        }
+    
+    
+    }
+    
+    func projectCreatedBy(index:Int) -> String{
+        
+        let project = contributingProjectList[index]
+        return "Created by : \(project.createdByName)"
+    }
+    
+    func getViewColor()->UIColor{
+        
+        let arrayOfColors = [UIColor.redColor(),UIColor.blueColor(),UIColor.orangeColor(),UIColor.purpleColor(),UIColor.cyanColor(),UIColor.greenColor(),UIColor.blackColor(),UIColor.brownColor()]
+        
+        let i = Int(arc4random_uniform(8))
+        
+        return arrayOfColors[i]
+    }
+    
     
     func contributingProjectTitleAtIndexPath(row:Int) -> String {
         

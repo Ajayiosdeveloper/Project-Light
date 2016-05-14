@@ -74,6 +74,7 @@ class PLQuickbloxHttpClient
         customObject.className = "PLProject"
         customObject.fields?.setValue(name, forKey: "name")
         customObject.fields?.setValue(description, forKey: "description")
+        customObject.fields?.setValue(PLSharedManager.manager.userName, forKey: "projectCreatorName")
         QBRequest.createObject(customObject, successBlock: { (response,object) in
             
             completion(true,object!.ID!)

@@ -91,6 +91,8 @@
 		808A52451CD71CCB0032ED0D /* PLProjectTeamChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 808A52441CD71CCB0032ED0D /* PLProjectTeamChatViewController.swift */; };
 		808A52471CD71CF20032ED0D /* PLProjectTeamChatViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 808A52461CD71CF20032ED0D /* PLProjectTeamChatViewModel.swift */; };
 		808AA2ED1CC6060800685226 /* PLDynamicEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 808AA2EC1CC6060800685226 /* PLDynamicEngine.swift */; };
+		808B04141CE709BA00A8B2CB /* PLProjectViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 808B04121CE709BA00A8B2CB /* PLProjectViewCell.swift */; };
+		808B04151CE709BA00A8B2CB /* PLProjectViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 808B04131CE709BA00A8B2CB /* PLProjectViewCell.xib */; };
 		809F96CB1CBCC35000DD1FE9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 809F96CA1CBCC35000DD1FE9 /* AppDelegate.swift */; };
 		809F96D01CBCC35000DD1FE9 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 809F96CE1CBCC35000DD1FE9 /* Main.storyboard */; };
 		809F96D21CBCC35000DD1FE9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 809F96D11CBCC35000DD1FE9 /* Assets.xcassets */; };
@@ -291,6 +293,8 @@
 		808A52441CD71CCB0032ED0D /* PLProjectTeamChatViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLProjectTeamChatViewController.swift; sourceTree = "<group>"; };
 		808A52461CD71CF20032ED0D /* PLProjectTeamChatViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLProjectTeamChatViewModel.swift; sourceTree = "<group>"; };
 		808AA2EC1CC6060800685226 /* PLDynamicEngine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLDynamicEngine.swift; sourceTree = "<group>"; };
+		808B04121CE709BA00A8B2CB /* PLProjectViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLProjectViewCell.swift; sourceTree = "<group>"; };
+		808B04131CE709BA00A8B2CB /* PLProjectViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PLProjectViewCell.xib; sourceTree = "<group>"; };
 		809F96C71CBCC35000DD1FE9 /* Makeit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Makeit.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		809F96CA1CBCC35000DD1FE9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		809F96CF1CBCC35000DD1FE9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -622,6 +626,8 @@
 			children = (
 				805EFB5D1CD239200066B4CB /* PLTableViewCell.swift */,
 				805EFB5E1CD239200066B4CB /* PLTableViewCell.xib */,
+				808B04121CE709BA00A8B2CB /* PLProjectViewCell.swift */,
+				808B04131CE709BA00A8B2CB /* PLProjectViewCell.xib */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -979,6 +985,7 @@
 				809F96D21CBCC35000DD1FE9 /* Assets.xcassets in Resources */,
 				946DA8331CE3474100FF7AB9 /* close.png in Resources */,
 				806B1E111CD8A7D60018B026 /* video.png in Resources */,
+				808B04151CE709BA00A8B2CB /* PLProjectViewCell.xib in Resources */,
 				8024685B1CDA2FB900CAE735 /* chatGroup.png in Resources */,
 				80ED65A61CE0B36900C61090 /* emptyMessages.png in Resources */,
 				946DA8341CE3474100FF7AB9 /* close@2x.png in Resources */,
@@ -1159,6 +1166,7 @@
 				806B1E351CD8AA080018B026 /* NSData+ImageContentType.m in Sources */,
 				8073C8D01CC744DE00AE4CB6 /* PLTeamMemberModelView.swift in Sources */,
 				80C4A0081CDCBB500073B6E2 /* JSQMessageAvatarImageDataSource.swift in Sources */,
+				808B04141CE709BA00A8B2CB /* PLProjectViewCell.swift in Sources */,
 				808A52451CD71CCB0032ED0D /* PLProjectTeamChatViewController.swift in Sources */,
 				80C49FF91CDCBB500073B6E2 /* JSQMessagesKeyboardController.swift in Sources */,
 				806D4AF41CC260080054A9AF /* PLProjectsViewController.swift in Sources */,
@@ -1333,7 +1341,7 @@
 					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = Makeit/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = (
@@ -1365,7 +1373,7 @@
 					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = Makeit/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = (

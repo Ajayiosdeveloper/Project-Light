@@ -40,15 +40,25 @@ class PLProjectCommentViewModel: NSObject {
         {
             throw CommitValidation.NameEmpty
         }
-        if NSCalendar.currentCalendar().isDateInToday(targetDate){
-            print("Today Date")
-        }else{
+        if #available(iOS 8.0, *) {
+            if NSCalendar.currentCalendar().isDateInToday(targetDate){
+                print("Today Date")
+            }else{
+                
+                let today = NSDate()
+                if (targetDate.earlierDate(today).isEqualToDate(targetDate)){
+                    
+                    throw CommitValidation.InvalidDate
+                }
+            }
+        } else {
             
             let today = NSDate()
             if (targetDate.earlierDate(today).isEqualToDate(targetDate)){
                 
                 throw CommitValidation.InvalidDate
             }
+
         }
         if description.characters.count == 0
         {
