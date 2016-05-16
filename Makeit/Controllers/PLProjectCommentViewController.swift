@@ -88,7 +88,7 @@ class PLProjectCommentViewController: UITableViewController,EKEventEditViewDeleg
             
             try commitmentViewModel.commitmentValidations(commitmentNameTextField.text!, startDate:commitmentDatePicker.date ,targetDate:commitmentDatePicker.date, description: commitmentDescriptionTextView.text)
 
-            commitmentViewModel.createCommitmentWith(commitmentNameTextField.text!,startDate:commitmentDatePicker.date,targetDate: commitmentDatePicker.date,description: commitmentDescriptionTextView.text,projectId: projectId){ result in
+            commitmentViewModel.createCommitmentWith(commitmentNameTextField.text!,startDate:commitmentDatePicker.date,targetDate: commitmentDatePicker.date, description: commitmentDescriptionTextView.text,projectId: projectId){ result in
                 
                 if result{
                     self.navigationController?.popViewControllerAnimated(true)
@@ -97,7 +97,7 @@ class PLProjectCommentViewController: UITableViewController,EKEventEditViewDeleg
         }
         catch CommitValidation.NameEmpty{print("Empty Name")}
         catch CommitValidation.InvalidDate{print("Earlier date")}
-        catch CommitValidation.DescriptionEmpty{print("Empty Description")}
+       // catch CommitValidation.DescriptionEmpty{print("Empty Description")}
         catch {}
     }
 

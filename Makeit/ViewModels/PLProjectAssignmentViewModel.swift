@@ -25,11 +25,15 @@ class PLProjectAssignmentViewModel: NSObject {
         selectedAssigneeList = [PLTeamMember]()
     }
     
-    func assignmentValidations(name:String,targetDate:NSDate,description:String,projectId:String,assignees:[PLTeamMember]) throws->Bool {
+    func assignmentValidations(name:String,startDate:NSDate, targetDate:NSDate,description:String,projectId:String,assignees:[PLTeamMember]) throws->Bool {
         
         if name.characters.count == 0 { throw AssignmentValidation.NameEmpty}
         let today = NSDate()
         if (targetDate.earlierDate(today).isEqualToDate(targetDate)){
+            
+            throw AssignmentValidation.InvalidDate
+        }
+        if (startDate.earlierDate(today).isEqualToDate(startDate)){
             
             throw AssignmentValidation.InvalidDate
         }
@@ -44,7 +48,7 @@ class PLProjectAssignmentViewModel: NSObject {
         return true
     }
     
-    func createAssignmentForProject(id:String,name:String,targetDate:NSDate,description:String,assignees:[PLTeamMember],completion:(Bool)->Void)
+    func createAssignmentForProject(id:String,name:String,startDate : NSDate?, targetDate:NSDate?,description:String,assignees:[PLTeamMember],completion:(Bool)->Void)
     {
         
         var asigneeIds:[String] = [String]()
@@ -57,14 +61,20 @@ class PLProjectAssignmentViewModel: NSObject {
         }
         
         qbClient = PLQuickbloxHttpClient()
-        let targetDateString = NSDateFormatter.localizedStringFromDate(targetDate, dateStyle: NSDateFormatterStyle.MediumStyle, timeStyle: NSDateFormatterStyle.NoStyle)
-        qbClient.createAssignmentForProject(id, date:targetDateString , name:name, description: description, assignees:asigneeIds,assigneeUserIds:assigneeUserIds) { (res) in
+        let targetDateString = NSDateFormatter.localizedStringFromDate(startDate!, dateStyle: NSDateFormatterStyle.MediumStyle, timeStyle: NSDateFormatterStyle.ShortStyle)
+        let startDateString = NSDateFormatter.localizedStringFromDate(targetDate!, dateStyle: NSDateFormatterStyle.MediumStyle, timeStyle: NSDateFormatterStyle.ShortStyle)
+
+        let dateFormatter = NSDateFormatter()
+        dateFormatter.dateFormat = "MMM dd, yyyy, hh:mm aa"
+        dateFormatter.timeZone = NSTimeZone(forSecondsFromGMT: 0)
+        dateFormatter.locale = NSLocale.currentLocale()
+        let startDateFormat = dateFormatter.dateFromString(startDateString)
+        let targetDateFormat = dateFormatter.dateFromString(targetDateString)
+        
+        qbClient.createAssignmentForProject(id,startDate: startDateFormat!, targetDate: targetDateFormat! , name:name, description: description, assignees:asigneeIds,assigneeUserIds:assigneeUserIds) { (res) in
             
             completion(res)
         }
-        
-        
-        
     }
     
     func numbersOfRows()->Int
@@ -113,6 +123,12 @@ class PLProjectAssignmentViewModel: NSObject {
         
         return selectedAssignment!.targetDate
     }
+    
+    func assignmentStartDate() -> String {
+        
+        return selectedAssignment!.startDate
+    }
+
     
     func assignmentDescription() -> String {
         

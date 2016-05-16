@@ -145,6 +145,7 @@ class PLProjectDetailViewModel: NSObject {
                 assignment.name = each.fields?.objectForKey("name") as! String
                 assignment.details = (each.fields?.objectForKey("description"))! as! String
                 assignment.targetDate = (each.fields?.objectForKey("targetDate"))! as! String
+                assignment.startDate = (each.fields?.objectForKey("startDate"))! as! String
                // assignment.assignees = (each.fields?.objectForKey("assignees"))! as! [String]
                 assignment.assineesUserIds = (each.fields?.objectForKey("assigneeUserId"))! as! [UInt]
                 self.assignments.append(assignment)
