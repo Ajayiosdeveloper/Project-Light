@@ -176,7 +176,7 @@ class PLAddProjectViewController: UIViewController,UISearchBarDelegate,UITextFie
         
         let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! PLTableViewCell
         cell.memberName.text = addProjectViewModel.titleAtIndexPathOfRow(indexPath.row)
-        cell.memberDetail.text = "some tags"
+        cell.memberDetail.text = addProjectViewModel.emailAtIndexPathOfRow(indexPath.row)
         addProjectViewModel.contributorImageRowAtIndexPath(indexPath.row, completion: { (avatar) in
             
             if let _ = avatar{

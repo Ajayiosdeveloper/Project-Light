@@ -87,6 +87,17 @@ class PLProjectAssignmentViewModel: NSObject {
         return member.fullName
     }
     
+    func  emailOfRowAtIndexPath(row:Int)->String{
+        
+        if selectedAssignment != nil
+        {
+            let member = selectedAssigneeList[row]
+            return member.memberEmail
+        }
+        let member = assigneeList[row]
+        return member.memberEmail
+   }
+    
     func addAssignee(row:Int) {
         
         self.selectedAssigneeList.append(self.assigneeList[row])

@@ -239,6 +239,7 @@ class PLProjectsViewModel: NSObject {
                         member.avatar = each.fields?.valueForKey("avatar") as! String
                         member.memberId = each.ID!
                         member.memberUserId = (each.fields?.valueForKey("member_User_Id"))! as! UInt
+                        member.memberEmail = each.fields?.valueForKey("memberEmail") as! String
                         teamMembers.append(member)
                     }
                 }
@@ -252,7 +253,8 @@ class PLProjectsViewModel: NSObject {
                     creator.projectId = ""
                     creator.avatar = PLTeamMember.creatorDetails!["creatorAvatarFileId"] as! String
                     creator.memberUserId = PLTeamMember.creatorDetails!["creatorUserId"] as! UInt
-                    
+                    creator.memberEmail = PLTeamMember.creatorDetails!["creatorEmail"] as! String
+
                     teamMembers.insert(creator, atIndex: 0)
                 }
                 

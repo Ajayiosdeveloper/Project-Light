@@ -126,7 +126,7 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
         
         let cell = tableView.dequeueReusableCellWithIdentifier("Cell") as! PLTableViewCell
         cell.memberName.text = assignementViewModel.titleOfRowAtIndexPath(indexPath.row)
-        cell.memberDetail.text = "some tags"
+        cell.memberDetail.text = assignementViewModel.emailOfRowAtIndexPath(indexPath.row)
         assignementViewModel.contributorImageRowAtIndexPath(indexPath.row, completion: { (avatar) in
             
             if let _ = avatar{
