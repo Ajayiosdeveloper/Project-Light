@@ -23,36 +23,34 @@ class PLProjectCommentViewModel: NSObject {
     
     func createCommitmentWith(name:String,startDate:NSDate,targetDate:NSDate, description:String,projectId:String,completion:(Bool)->Void)
     {
-    
-    //let stringStartDate = NSDateFormatter.localizedStringFromDate(startDate, dateStyle: .MediumStyle, timeStyle: .ShortStyle)
-    //let stringTargetDate = NSDateFormatter.localizedStringFromDate(targetDate, dateStyle: .MediumStyle, timeStyle: .ShortStyle)
-    
-//    let dateFormatter = NSDateFormatter()
-//    dateFormatter.dateFormat = "MMM dd, yyyy, hh:mm aa"
-//    dateFormatter.timeZone = NSTimeZone(forSecondsFromGMT: 0)
-//    dateFormatter.locale = NSLocale.currentLocale()
-//    let startDateFormat = dateFormatter.dateFromString(stringStartDate)
-//    let targetDateFormat = dateFormatter.dateFromString(stringTargetDate)
-    
-        let startDateOfCommitment = startDate.timeIntervalSince1970
-        let targetDateOfCommitment = targetDate.timeIntervalSince1970
-        let startTimeInterval = stringFromTimeInterval(startDateOfCommitment)
-        let targetTimeInterval = stringFromTimeInterval(targetDateOfCommitment)
-        print("startTimeInterval")
-        print(startTimeInterval)
-        print(targetTimeInterval)
-    qbClient.createCommitmentForProject(projectId,startDate: Int(startDateOfCommitment), targetDate:Int(targetDateOfCommitment),name: name, description:description, startTime: "", endTime: ""){ result in
+        let startDateOfCommitment = dateFormat(startDate)
+        let targetDateOfCommitment = dateFormat(targetDate)
+        let startTimeOfCommitment = timeFormat(startDate)
+        let targetTimeOfCommitment = timeFormat(targetDate)
+        
+        qbClient.createCommitmentForProject(projectId,startDate:Int(startDateOfCommitment) , targetDate:Int(targetDateOfCommitment),name: name, description:description, startTime: startTimeOfCommitment, endTime:targetTimeOfCommitment ){ result in
            
             completion(result)
         }
     }
+ 
+    func dateFormat(date : NSDate) -> NSTimeInterval
+    {
+        let dateFormatter = NSDateFormatter()
+        dateFormatter.dateFormat = "dd-MM-yyyy"
+        dateFormatter.timeZone = NSTimeZone(forSecondsFromGMT: NSTimeZone.localTimeZone().secondsFromGMT)
+ 
+        let stringDate = dateFormatter.stringFromDate(date)
+        dateFormatter.timeZone = NSTimeZone(forSecondsFromGMT: 0)
+        let stringToDate = dateFormatter.dateFromString(stringDate)?.timeIntervalSince1970        
+        return stringToDate!
+    }
     
-    func stringFromTimeInterval(interval: NSTimeInterval) -> String {
-        let interval = Int(interval)
-        let seconds = interval % 60
-        let minutes = (interval / 60) % 60
-        let hours = (interval / 3600)
-        return String(format: "%02d:%02d:%02d", hours, minutes, seconds)
+    func timeFormat(date: NSDate) -> String
+    {
+        let formatter = NSDateFormatter()
+        formatter.dateFormat = "HH:mm"
+        return formatter.stringFromDate(date)
     }
     
     func commitmentValidations(name:String,startDate:NSDate,targetDate:NSDate,description:String) throws->Bool {
@@ -94,9 +92,14 @@ class PLProjectCommentViewModel: NSObject {
         return commitment!.name
     }
     
-    func commitmentTargetDate() -> String {
+    func commitmentEndDate() -> String {
         
         return commitment!.targetDate
+    }
+    
+    func commitmentStartDate() -> String {
+        
+        return commitment!.startDate
     }
     
     func commitmentDescription() -> String {

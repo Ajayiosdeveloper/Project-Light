@@ -230,7 +230,7 @@ class PLQuickbloxHttpClient
     
     //Create Assignment for Project in QuickBlox
     
-    func createAssignmentForProject(id:String,startDate: NSDate, targetDate:NSDate, name:String,description:String,assignees:[String],assigneeUserIds:[UInt],completion:(Bool)->Void) {
+    func createAssignmentForProject(id:String,startDate: Int, targetDate:Int, name:String,description:String,assignees:[String],assigneeUserIds:[UInt],startTime : String, endTime: String, completion:(Bool)->Void) {
         
         let customObject = QBCOCustomObject()
         customObject.className = "PLProjectAssignment"
@@ -239,6 +239,8 @@ class PLQuickbloxHttpClient
         customObject.fields?.setValue(description, forKey: "description")
         customObject.fields?.setValue(targetDate, forKey:"targetDate")
         customObject.fields?.setValue(startDate, forKey:"startDate")
+        customObject.fields?.setValue(startTime, forKey: "startTime")
+        customObject.fields?.setValue(endTime, forKey: "endTime")
         customObject.fields?.setValue(assignees, forKey: "assignees")
         customObject.fields?.setValue(assigneeUserIds, forKey: "assigneeUserId")
         customObject.fields?.setValue(id, forKey:"_parent_id")
@@ -475,7 +477,8 @@ class PLQuickbloxHttpClient
                     let plAssignment = PLAssignment()
                     plAssignment.name = assignment.fields?.objectForKey("name") as! String
                     plAssignment.details = assignment.fields?.objectForKey("description") as! String
-                    plAssignment.targetDate = assignment.fields?.objectForKey("targetDate") as! String
+                 //   plAssignment.targetDate = assignment.fields?.objectForKey("targetDate") as! String
+                  //  plAssignment.startDate = assignment.fields?.objectForKey("startDate") as! String
                     plAssignment.assineesUserIds = assignment.fields?.objectForKey("assigneeUserId") as! [UInt]
                     assigmnents.append(plAssignment)
                 }

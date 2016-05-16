@@ -60,22 +60,47 @@ class PLProjectAssignmentViewModel: NSObject {
             assigneeUserIds.append(each.memberUserId)
         }
         
-        qbClient = PLQuickbloxHttpClient()
-        let targetDateString = NSDateFormatter.localizedStringFromDate(startDate!, dateStyle: NSDateFormatterStyle.MediumStyle, timeStyle: NSDateFormatterStyle.ShortStyle)
-        let startDateString = NSDateFormatter.localizedStringFromDate(targetDate!, dateStyle: NSDateFormatterStyle.MediumStyle, timeStyle: NSDateFormatterStyle.ShortStyle)
-
-        let dateFormatter = NSDateFormatter()
-        dateFormatter.dateFormat = "MMM dd, yyyy, hh:mm aa"
-        dateFormatter.timeZone = NSTimeZone(forSecondsFromGMT: 0)
-        dateFormatter.locale = NSLocale.currentLocale()
-        let startDateFormat = dateFormatter.dateFromString(startDateString)
-        let targetDateFormat = dateFormatter.dateFromString(targetDateString)
+        let startDateOfCommitment = dateFormat(startDate!)
+        let targetDateOfCommitment = dateFormat(targetDate!)
+        let startTimeOfCommitment = timeFormat(startDate!)
+        let targetTimeOfCommitment = timeFormat(targetDate!)
         
-        qbClient.createAssignmentForProject(id,startDate: startDateFormat!, targetDate: targetDateFormat! , name:name, description: description, assignees:asigneeIds,assigneeUserIds:assigneeUserIds) { (res) in
+        qbClient = PLQuickbloxHttpClient()
+//        let targetDateString = NSDateFormatter.localizedStringFromDate(startDate!, dateStyle: NSDateFormatterStyle.MediumStyle, timeStyle: NSDateFormatterStyle.ShortStyle)
+//        let startDateString = NSDateFormatter.localizedStringFromDate(targetDate!, dateStyle: NSDateFormatterStyle.MediumStyle, timeStyle: NSDateFormatterStyle.ShortStyle)
+//
+//        let dateFormatter = NSDateFormatter()
+//        dateFormatter.dateFormat = "MMM dd, yyyy, hh:mm aa"
+//        dateFormatter.timeZone = NSTimeZone(forSecondsFromGMT: 0)
+//        dateFormatter.locale = NSLocale.currentLocale()
+//        let startDateFormat = dateFormatter.dateFromString(startDateString)
+//        let targetDateFormat = dateFormatter.dateFromString(targetDateString)
+        
+        qbClient.createAssignmentForProject(id,startDate: Int(startDateOfCommitment), targetDate: Int(targetDateOfCommitment), name:name, description: description, assignees:asigneeIds,assigneeUserIds:assigneeUserIds,startTime: startTimeOfCommitment, endTime: targetTimeOfCommitment) { (res) in
             
             completion(res)
         }
     }
+    
+    func dateFormat(date : NSDate) -> NSTimeInterval
+    {
+        let dateFormatter = NSDateFormatter()
+        dateFormatter.dateFormat = "dd-MM-yyyy"
+        dateFormatter.timeZone = NSTimeZone(forSecondsFromGMT: NSTimeZone.localTimeZone().secondsFromGMT)
+        
+        let stringDate = dateFormatter.stringFromDate(date)
+        dateFormatter.timeZone = NSTimeZone(forSecondsFromGMT: 0)
+        let stringToDate = dateFormatter.dateFromString(stringDate)?.timeIntervalSince1970
+        return stringToDate!
+    }
+    
+    func timeFormat(date: NSDate) -> String
+    {
+        let formatter = NSDateFormatter()
+        formatter.dateFormat = "HH:mm"
+        return formatter.stringFromDate(date)
+    }
+
     
     func numbersOfRows()->Int
     {
