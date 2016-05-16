@@ -22,6 +22,10 @@ class PLProjectsViewModel: NSObject {
  }
    
     func fetchProjectsFromRemote() {
+        
+        
+        quickBloxClient.countOfTodayCommitments()
+        
         createdProjectList.removeAll(keepCapacity: true)
         contributingProjectList.removeAll(keepCapacity: true)
         quickBloxClient.fetchContributingProjectsOfUser{(res) in

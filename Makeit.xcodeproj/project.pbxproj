@@ -26,6 +26,7 @@
 		803E04061CBCC95D00C59233 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 803E04051CBCC95D00C59233 /* SystemConfiguration.framework */; };
 		80485F061CD4B14800F49209 /* PLTeamCommunicationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80485F051CD4B14800F49209 /* PLTeamCommunicationViewModel.swift */; };
 		80485F081CD4B19700F49209 /* PLTeamCommunicationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80485F071CD4B19700F49209 /* PLTeamCommunicationViewController.swift */; };
+		8049FF591CE9D25400FF24C5 /* PLSideBarTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8049FF581CE9D25400FF24C5 /* PLSideBarTableViewCell.swift */; };
 		805144401CE19E410000B1AF /* PLSidebarRootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8051443F1CE19E410000B1AF /* PLSidebarRootViewController.swift */; };
 		805144421CE19F640000B1AF /* PLSidebarMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 805144411CE19F640000B1AF /* PLSidebarMenuViewController.swift */; };
 		805144441CE1AB060000B1AF /* sideBar.png in Resources */ = {isa = PBXBuildFile; fileRef = 805144431CE1AB060000B1AF /* sideBar.png */; };
@@ -209,6 +210,7 @@
 		803E04071CBCD90100C59233 /* Makeit-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Makeit-Bridging-Header.h"; sourceTree = "<group>"; };
 		80485F051CD4B14800F49209 /* PLTeamCommunicationViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLTeamCommunicationViewModel.swift; sourceTree = "<group>"; };
 		80485F071CD4B19700F49209 /* PLTeamCommunicationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLTeamCommunicationViewController.swift; sourceTree = "<group>"; };
+		8049FF581CE9D25400FF24C5 /* PLSideBarTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLSideBarTableViewCell.swift; sourceTree = "<group>"; };
 		8051443F1CE19E410000B1AF /* PLSidebarRootViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLSidebarRootViewController.swift; sourceTree = "<group>"; };
 		805144411CE19F640000B1AF /* PLSidebarMenuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLSidebarMenuViewController.swift; sourceTree = "<group>"; };
 		805144431CE1AB060000B1AF /* sideBar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sideBar.png; sourceTree = "<group>"; };
@@ -643,6 +645,7 @@
 				805EFB5E1CD239200066B4CB /* PLTableViewCell.xib */,
 				808B04121CE709BA00A8B2CB /* PLProjectViewCell.swift */,
 				808B04131CE709BA00A8B2CB /* PLProjectViewCell.xib */,
+				8049FF581CE9D25400FF24C5 /* PLSideBarTableViewCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -1194,6 +1197,7 @@
 				806D4AE91CC210910054A9AF /* SVProgressAnimatedView.m in Sources */,
 				8073C8CE1CC737F400AE4CB6 /* PLDisplayMembersPopover.swift in Sources */,
 				806D4AF91CC261280054A9AF /* Reachability.m in Sources */,
+				8049FF591CE9D25400FF24C5 /* PLSideBarTableViewCell.swift in Sources */,
 				805144401CE19E410000B1AF /* PLSidebarRootViewController.swift in Sources */,
 				80C4A01F1CDCBB500073B6E2 /* JSQMessagesToolbarContentView.swift in Sources */,
 				80C4A0141CDCBB500073B6E2 /* JSQMessagesCollectionViewCell.swift in Sources */,
