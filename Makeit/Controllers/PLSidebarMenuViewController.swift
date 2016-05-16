@@ -99,25 +99,35 @@ class PLSidebarMenuViewController: UIViewController,UIImagePickerControllerDeleg
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell
     {
-        let cell = tableView.dequeueReusableCellWithIdentifier("Cell")
-        cell?.accessoryType = .DisclosureIndicator
+        let cell = tableView.dequeueReusableCellWithIdentifier("Cell") as! PLSideBarTableViewCell
+        
+        
+        
+        cell.accessoryType = .DisclosureIndicator
         if indexPath.section == 0
         {
-        cell?.textLabel?.text = taskList[indexPath.row]
-        cell?.imageView?.image = UIImage(named: taskListImage[indexPath.row])
+        cell.nameLabel?.text = taskList[indexPath.row]
+        cell.imageIcon?.image = UIImage(named: taskListImage[indexPath.row])
         }
         else if indexPath.section == 1
         {
-          cell?.textLabel?.text = "Birthdays"
-          cell?.imageView?.image = UIImage(named:"Birthday.png")
+          cell.nameLabel?.text = "Birthdays"
+          cell.imageIcon?.image = UIImage(named:"Birthday.png")
             
         }else if indexPath.section == 2{
             
-            cell?.textLabel?.text = settingsList[indexPath.row]
-            cell?.imageView?.image = UIImage(named:"logout.png")
+            cell.nameLabel?.text = settingsList[indexPath.row]
+            
+            cell.imageIcon?.image = UIImage(named:"logout.png")
+            
+            cell.countHostView.hidden = true
         }
        
-        return cell!
+        return cell
+    }
+    
+    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        return 60
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
