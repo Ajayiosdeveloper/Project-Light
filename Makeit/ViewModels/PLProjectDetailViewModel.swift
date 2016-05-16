@@ -47,6 +47,14 @@ class PLProjectDetailViewModel: NSObject {
         return member.fullName
     }
     
+    func contributorEmailForRowAtIndexPath(row:Int)->String
+    {
+        let member = contributors[row]
+        
+        return member.memberEmail
+    }
+
+    
     func contributorImageRowAtIndexPath(row:Int,completion:(UIImage?)->Void) {
         
         let member = contributors[row]

@@ -56,7 +56,7 @@ class PLDisplayMembersPopover: UITableViewController {
         
         let cell = tableView.dequeueReusableCellWithIdentifier("Cell") as! PLTableViewCell
         cell.memberName.text = teamMemberModelView.titleOfRowAtIndexPath(indexPath.row)
-        cell.memberDetail.text = "some tags"
+        cell.memberDetail.text = teamMemberModelView.emailOfRowAtIndexPath(indexPath.row)
         teamMemberModelView.contributorImageRowAtIndexPath(indexPath.row, completion: { (avatar) in
             
             if let _ = avatar{

@@ -32,6 +32,11 @@ class PLTeamMemberModelView: NSObject {
         return member.fullName
     }
 
+    func emailOfRowAtIndexPath(row:Int)->String{
+        let member = searchList[row]
+        
+        return member.memberEmail
+    }
     
     func add(index:Int)->PLTeamMember {
         

@@ -55,6 +55,7 @@ class PLAddProjectViewModel: NSObject {
                    qbCustomObject.fields?.setObject(description, forKey:"subTitle")
                    qbCustomObject.fields?.setObject(each.fullName, forKey:"name")
                    qbCustomObject.fields?.setObject(each.avatar, forKey:"avatar")
+                    qbCustomObject.fields?.setObject(each.memberEmail, forKey:"memberEmail")
                    qbCustomObject.fields?.setObject(each.memberUserId, forKey: "member_User_Id")
                    qbCustomObject.fields?.setObject(projectId, forKey:"_parent_id")
                    let creatorDetails:[AnyObject] = [(QBSession.currentSession().currentUser?.fullName)!, (QBSession.currentSession().currentUser?.ID)!,(QBSession.currentSession().currentUser?.customData)!,(QBSession.currentSession().currentUser?.email)!]
@@ -88,6 +89,7 @@ class PLAddProjectViewModel: NSObject {
             qbCustomObject.fields?.setObject(each.fullName, forKey:"name")
             qbCustomObject.fields?.setObject(each.memberUserId, forKey: "member_User_Id")
             qbCustomObject.fields?.setObject(each.avatar, forKey:"avatar")
+            qbCustomObject.fields?.setObject(each.memberEmail, forKey:"memberEmail")
             qbCustomObject.fields?.setObject(id, forKey:"_parent_id")
             let creatorDetails:[AnyObject] = [(QBSession.currentSession().currentUser?.fullName)!, (QBSession.currentSession().currentUser?.ID)!,(QBSession.currentSession().currentUser?.customData)!,(QBSession.currentSession().currentUser?.email)!]
             qbCustomObject.fields?.setObject(creatorDetails, forKey:"creatorDetails")
@@ -104,6 +106,7 @@ class PLAddProjectViewModel: NSObject {
                 let teamMember = PLTeamMember(name:name, id:0)
                 teamMember.memberUserId = (each.fields?.objectForKey("member_User_Id"))! as! UInt
                 teamMember.avatar = each.fields?.objectForKey("avatar") as! String
+                teamMember.memberEmail = each.fields?.objectForKey("memberEmail") as! String
                 members.append(teamMember)
             }
             
@@ -131,6 +134,7 @@ class PLAddProjectViewModel: NSObject {
                     let teamMember = PLTeamMember(name:qbMember.fullName!, id: qbMember.ID)
                     teamMember.memberUserId = qbMember.ID
                     teamMember.avatar = qbMember.customData!
+                    teamMember.memberEmail = qbMember.email!
                     teamMembers.append(teamMember)
                 }
             }
@@ -151,6 +155,13 @@ class PLAddProjectViewModel: NSObject {
         let member = selectedContributors[row]
         
         return member.fullName
+    }
+    
+    func emailAtIndexPathOfRow(row:Int)->String
+    {
+        let member = selectedContributors[row]
+        
+        return member.memberEmail
     }
     
     func andOrRemoveContributor(member:PLTeamMember)->Bool{

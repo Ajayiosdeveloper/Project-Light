@@ -98,7 +98,7 @@ class PLProjectDetailTableViewController: UITableViewController,EKEventEditViewD
         if indexPath.section == 0{
         let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! PLTableViewCell
         cell.memberName.text = projectDetailViewModel.contributorTitleForRowAtIndexPath(indexPath.row)
-        cell.memberDetail.text = "some tags"
+       cell.memberDetail.text = projectDetailViewModel.contributorEmailForRowAtIndexPath(indexPath.row)
         cell.accessoryType = .DisclosureIndicator
         projectDetailViewModel.contributorImageRowAtIndexPath(indexPath.row, completion: { (avatar) in
             
