@@ -23,10 +23,20 @@ class PLProjectCommentViewModel: NSObject {
     
  func createCommitmentWith(name:String,startDate:NSDate,targetDate:NSDate,description:String,projectId:String,completion:(Bool)->Void){
     
-    let targetDateString = NSDateFormatter.localizedStringFromDate(targetDate, dateStyle: NSDateFormatterStyle.MediumStyle, timeStyle: NSDateFormatterStyle.LongStyle)
+    let stringStartDate = NSDateFormatter.localizedStringFromDate(startDate, dateStyle: .MediumStyle, timeStyle: .ShortStyle)
+    let stringTargetDate = NSDateFormatter.localizedStringFromDate(targetDate, dateStyle: .MediumStyle, timeStyle: .ShortStyle)
+    print("Dates")
+    print(stringTargetDate)
+    print(stringStartDate)
     
+    let dateFormatter = NSDateFormatter()
+    dateFormatter.dateFormat = "MMM dd, yyyy, hh:mm aa"
+    dateFormatter.timeZone = NSTimeZone(forSecondsFromGMT: 0)
+    dateFormatter.locale = NSLocale.currentLocale()
+    let startDateFormat = dateFormatter.dateFromString(stringStartDate)
+    let targetDateFormat = dateFormatter.dateFromString(stringTargetDate)
     
-        qbClient.createCommitmentForProject(projectId, date:targetDateString, name: name, description:description){ result in
+    qbClient.createCommitmentForProject(projectId,startDate: startDateFormat!, targetDate:targetDateFormat!, name: name, description:description){ result in
            
             completion(result)
         }

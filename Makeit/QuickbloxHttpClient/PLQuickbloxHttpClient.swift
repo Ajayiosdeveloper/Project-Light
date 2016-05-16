@@ -204,14 +204,15 @@ class PLQuickbloxHttpClient
     
     //Create a Commitment for Project in QuickBlox
     
-    func createCommitmentForProject(id:String,date:String,name:String,description:String,completion:(Bool)->Void) {
+    func createCommitmentForProject(id:String,startDate : NSDate, targetDate:NSDate, name:String, description:String, completion:(Bool)->Void) {
         
         let customObject = QBCOCustomObject()
         customObject.className = "PLProjectCommitment"
         customObject.fields?.setValue(name, forKey: "name")
         customObject.fields?.setValue(PLSharedManager.manager.projectName, forKey:"projectName")
         customObject.fields?.setValue(description, forKey: "description")
-        customObject.fields?.setValue(date, forKey:"targetDate")
+        customObject.fields?.setValue(startDate, forKey:"startDate")
+        customObject.fields?.setValue(targetDate, forKey:"targetDate")
         customObject.fields?.setValue(id, forKey:"_parent_id")
         QBRequest.createObject(customObject, successBlock: { (response,object) in
             
