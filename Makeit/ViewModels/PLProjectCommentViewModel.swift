@@ -21,20 +21,18 @@ class PLProjectCommentViewModel: NSObject {
     var qbClient:PLQuickbloxHttpClient = PLQuickbloxHttpClient()
     var commitment:PLCommitment?
     
-   func createCommitmentWith(name:String,targetDate:NSDate,description:String,projectId:String,completion:(Bool)->Void){
-        
-        print(name)
-        print(targetDate)
-        print(description)
-        print(projectId)
-        let targetDateString = NSDateFormatter.localizedStringFromDate(targetDate, dateStyle: NSDateFormatterStyle.MediumStyle, timeStyle: NSDateFormatterStyle.NoStyle)
+ func createCommitmentWith(name:String,startDate:NSDate,targetDate:NSDate,description:String,projectId:String,completion:(Bool)->Void){
+    
+    let targetDateString = NSDateFormatter.localizedStringFromDate(targetDate, dateStyle: NSDateFormatterStyle.MediumStyle, timeStyle: NSDateFormatterStyle.LongStyle)
+    
+    
         qbClient.createCommitmentForProject(projectId, date:targetDateString, name: name, description:description){ result in
            
             completion(result)
         }
     }
     
-    func commitmentValidations(name:String,targetDate:NSDate,description:String) throws->Bool {
+    func commitmentValidations(name:String,startDate:NSDate,targetDate:NSDate,description:String) throws->Bool {
         
         if name.characters.count == 0
         {

@@ -150,8 +150,9 @@ class PLProjectsViewController: UITableViewController,UIImagePickerControllerDel
             cell.circularView.backgroundColor = projectViewModel.getViewColor()
             cell.projectLetterLabel.text = String(projectViewModel.projectNameStartLetter(indexPath.row, section: indexPath.section))
             cell.projectLetterLabel.textColor = UIColor.whiteColor()
-            cell.createdAt.text = projectViewModel.projectCreatedAtIndexPath(indexPath.row,section: indexPath.section)
+            cell.createdAt.text = "Created At :" + " " + projectViewModel.projectCreatedAtIndexPath(indexPath.row,section: indexPath.section)
             cell.createdBy.text = "Created by : You"
+            cell.accessoryType = .DisclosureIndicator
             return cell
             }
           if indexPath.section == 1{
@@ -160,10 +161,11 @@ class PLProjectsViewController: UITableViewController,UIImagePickerControllerDel
               cell.projectName?.textColor = UIColor.blackColor()
               cell.projectDescription?.text = projectViewModel.contributingProjectSubTitleAtIndexPath(indexPath.row)
               cell.circularView.backgroundColor = projectViewModel.getViewColor()
-              cell.createdAt.text = projectViewModel.projectCreatedAtIndexPath(indexPath.row,section: indexPath.section)
+              cell.createdAt.text  = "Created At :" + " " + projectViewModel.projectCreatedAtIndexPath(indexPath.row,section: indexPath.section)
               cell.projectLetterLabel.text =  String(projectViewModel.projectNameStartLetter(indexPath.row, section: indexPath.section))
               cell.projectLetterLabel.textColor = UIColor.whiteColor()
               cell.createdBy.text = projectViewModel.projectCreatedBy(indexPath.row)
+              cell.accessoryType = .DisclosureIndicator
               return cell
             }
     

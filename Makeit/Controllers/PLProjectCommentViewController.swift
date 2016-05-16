@@ -86,9 +86,9 @@ class PLProjectCommentViewController: UITableViewController,EKEventEditViewDeleg
         
         do{
             
-            try commitmentViewModel.commitmentValidations(commitmentNameTextField.text!, targetDate:commitmentDatePicker.date, description: commitmentDescriptionTextView.text)
+            try commitmentViewModel.commitmentValidations(commitmentNameTextField.text!, startDate:commitmentDatePicker.date ,targetDate:commitmentDatePicker.date, description: commitmentDescriptionTextView.text)
 
-            commitmentViewModel.createCommitmentWith(commitmentNameTextField.text!,targetDate: commitmentDatePicker.date,description: commitmentDescriptionTextView.text,projectId: projectId){ result in
+            commitmentViewModel.createCommitmentWith(commitmentNameTextField.text!,startDate:commitmentDatePicker.date,targetDate: commitmentDatePicker.date,description: commitmentDescriptionTextView.text,projectId: projectId){ result in
                 
                 if result{
                     self.navigationController?.popViewControllerAnimated(true)

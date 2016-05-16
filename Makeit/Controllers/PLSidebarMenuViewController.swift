@@ -19,14 +19,18 @@ class PLSidebarMenuViewController: UIViewController,UIImagePickerControllerDeleg
     var tapGestureRecognizer : UITapGestureRecognizer?
     var imagePicker = UIImagePickerController()
     var taskList = [String]()
+    var taskListImage = [String]()
     var settingsList = [String]()
     
     override func viewDidLoad()
     {
         super.viewDidLoad()
-        taskList.append("Todays Tasks")
-        taskList.append("Upcoming Tasks")
-        taskList.append("Pending Tasks")
+        taskList.append("Today")
+        taskList.append("Upcoming")
+        taskList.append("Pending")
+        taskListImage.append("todayTask.png")
+        taskListImage.append("upcomingTask.png")
+        taskListImage.append("pendingTask.png")
         settingsList.append("Logout")
         imagePicker.delegate = self
         tapGestureRecognizer = UITapGestureRecognizer.init(target: self, action: #selector(PLSidebarMenuViewController.editUserProfilePicture))
@@ -60,7 +64,7 @@ class PLSidebarMenuViewController: UIViewController,UIImagePickerControllerDeleg
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int
     {
-        return 2
+        return 3
     }
     
     func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
@@ -70,11 +74,11 @@ class PLSidebarMenuViewController: UIViewController,UIImagePickerControllerDeleg
         }
         else if section == 1
         {
-            return "Settings"
+            return "Notifications"
         }
         else
         {
-            return ""
+            return "Settings"
         }
     }
     
@@ -85,11 +89,11 @@ class PLSidebarMenuViewController: UIViewController,UIImagePickerControllerDeleg
         }
         else if section == 1
         {
-            return settingsList.count
+            return 1
         }
         else
         {
-            return 0
+            return settingsList.count
         }
     }
     
@@ -100,17 +104,24 @@ class PLSidebarMenuViewController: UIViewController,UIImagePickerControllerDeleg
         if indexPath.section == 0
         {
         cell?.textLabel?.text = taskList[indexPath.row]
+        cell?.imageView?.image = UIImage(named: taskListImage[indexPath.row])
         }
         else if indexPath.section == 1
         {
+          cell?.textLabel?.text = "Birthdays"
+          cell?.imageView?.image = UIImage(named:"Birthday.png")
+            
+        }else if indexPath.section == 2{
+            
             cell?.textLabel?.text = settingsList[indexPath.row]
+            cell?.imageView?.image = UIImage(named:"logout.png")
         }
        
         return cell!
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        if indexPath.section == 1
+        if indexPath.section == 2
         {
             //self.projectViewModel.performLogout()
             print("Logout Action")

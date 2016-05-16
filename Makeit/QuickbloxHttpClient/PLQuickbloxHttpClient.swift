@@ -793,4 +793,52 @@ class PLQuickbloxHttpClient
     }
     
     
+    
+    func countOfTodayCommitments(){
+        
+    let extendedReq = NSMutableDictionary()
+        
+        extendedReq.setValue(NSDate(), forKey: "startDate")
+        QBRequest.countObjectsWithClassName("PLProjectCommitment", extendedRequest: extendedReq, successBlock: { (_, count) in
+            
+            print(count)
+            
+            }, errorBlock: nil)
+        
+        
+    }
+    func countOfUpComingCommitments(){
+        
+        let extendedReq = NSMutableDictionary()
+        
+        extendedReq.setValue(NSDate(), forKey: "startDate[gt]")
+        QBRequest.countObjectsWithClassName("PLProjectCommitment", extendedRequest: extendedReq, successBlock: { (_, count) in
+            
+            print(count)
+            
+            }, errorBlock: nil)
+
+    }
+    
+    func contOfPendingTasks(){
+        let extendedReq = NSMutableDictionary()
+        extendedReq.setValue(NSDate(), forKey: "targetDate[lt]")
+        extendedReq.setValue(0, forKey: "isCompleted")
+        QBRequest.countObjectsWithClassName("PLProjectCommitment", extendedRequest: extendedReq, successBlock: { (_, count) in
+            
+            print(count)
+            
+            }, errorBlock: nil)
+
+    }
+    
+    func getDate()->NSDate{
+        
+        let formatter = NSDateFormatter()
+        formatter.dateFormat = "dd-MM-yyyy"
+        let dateString = formatter.stringFromDate(NSDate())
+        return formatter.dateFromString(dateString)!
+       
+    }
+    
 }

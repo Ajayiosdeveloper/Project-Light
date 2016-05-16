@@ -99,6 +99,11 @@
 		809F96D51CBCC35000DD1FE9 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 809F96D31CBCC35000DD1FE9 /* LaunchScreen.storyboard */; };
 		809F96E01CBCC35000DD1FE9 /* MakeitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 809F96DF1CBCC35000DD1FE9 /* MakeitTests.swift */; };
 		809F96EB1CBCC35000DD1FE9 /* MakeitUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 809F96EA1CBCC35000DD1FE9 /* MakeitUITests.swift */; };
+		80AB251A1CE74BE7008B20C3 /* logout.png in Resources */ = {isa = PBXBuildFile; fileRef = 80AB25191CE74BE7008B20C3 /* logout.png */; };
+		80AB251E1CE74CCA008B20C3 /* pendingTask.png in Resources */ = {isa = PBXBuildFile; fileRef = 80AB251B1CE74CCA008B20C3 /* pendingTask.png */; };
+		80AB251F1CE74CCA008B20C3 /* upcomingTask.png in Resources */ = {isa = PBXBuildFile; fileRef = 80AB251C1CE74CCA008B20C3 /* upcomingTask.png */; };
+		80AB25201CE74CCA008B20C3 /* todayTask.png in Resources */ = {isa = PBXBuildFile; fileRef = 80AB251D1CE74CCA008B20C3 /* todayTask.png */; };
+		80AB25221CE7503A008B20C3 /* Birthday.png in Resources */ = {isa = PBXBuildFile; fileRef = 80AB25211CE7503A008B20C3 /* Birthday.png */; };
 		80BB3EF61CC4F4BE009FAE11 /* PLProject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80BB3EF51CC4F4BE009FAE11 /* PLProject.swift */; };
 		80C49EF11CDCB8FF0073B6E2 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 80C49EF01CDCB8FF0073B6E2 /* MapKit.framework */; };
 		80C49FF11CDCBB500073B6E2 /* JSQMessagesAssets.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 80C49FB81CDCBB500073B6E2 /* JSQMessagesAssets.bundle */; };
@@ -307,6 +312,11 @@
 		809F96E61CBCC35000DD1FE9 /* MakeitUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MakeitUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		809F96EA1CBCC35000DD1FE9 /* MakeitUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MakeitUITests.swift; sourceTree = "<group>"; };
 		809F96EC1CBCC35000DD1FE9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		80AB25191CE74BE7008B20C3 /* logout.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logout.png; sourceTree = "<group>"; };
+		80AB251B1CE74CCA008B20C3 /* pendingTask.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pendingTask.png; sourceTree = "<group>"; };
+		80AB251C1CE74CCA008B20C3 /* upcomingTask.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = upcomingTask.png; sourceTree = "<group>"; };
+		80AB251D1CE74CCA008B20C3 /* todayTask.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = todayTask.png; sourceTree = "<group>"; };
+		80AB25211CE7503A008B20C3 /* Birthday.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Birthday.png; sourceTree = "<group>"; };
 		80BB3EF51CC4F4BE009FAE11 /* PLProject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLProject.swift; sourceTree = "<group>"; };
 		80C49EF01CDCB8FF0073B6E2 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		80C49FB81CDCBB500073B6E2 /* JSQMessagesAssets.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = JSQMessagesAssets.bundle; sourceTree = "<group>"; };
@@ -470,6 +480,11 @@
 		806B1E0B1CD8A7070018B026 /* SupportingFiles */ = {
 			isa = PBXGroup;
 			children = (
+				80AB25211CE7503A008B20C3 /* Birthday.png */,
+				80AB25191CE74BE7008B20C3 /* logout.png */,
+				80AB251B1CE74CCA008B20C3 /* pendingTask.png */,
+				80AB251C1CE74CCA008B20C3 /* upcomingTask.png */,
+				80AB251D1CE74CCA008B20C3 /* todayTask.png */,
 				946DA8311CE3474100FF7AB9 /* close.png */,
 				946DA8321CE3474100FF7AB9 /* close@2x.png */,
 				948382D81CE3310100B51BA6 /* bar.png */,
@@ -980,9 +995,12 @@
 				805144441CE1AB060000B1AF /* sideBar.png in Resources */,
 				809F96D51CBCC35000DD1FE9 /* LaunchScreen.storyboard in Resources */,
 				80C4A01D1CDCBB500073B6E2 /* JSQMessagesLoadEarlierHeaderView.xib in Resources */,
+				80AB251E1CE74CCA008B20C3 /* pendingTask.png in Resources */,
 				806B1E101CD8A7D60018B026 /* UserImage.png in Resources */,
+				80AB25221CE7503A008B20C3 /* Birthday.png in Resources */,
 				948382D91CE3310100B51BA6 /* bar.png in Resources */,
 				809F96D21CBCC35000DD1FE9 /* Assets.xcassets in Resources */,
+				80AB251F1CE74CCA008B20C3 /* upcomingTask.png in Resources */,
 				946DA8331CE3474100FF7AB9 /* close.png in Resources */,
 				806B1E111CD8A7D60018B026 /* video.png in Resources */,
 				808B04151CE709BA00A8B2CB /* PLProjectViewCell.xib in Resources */,
@@ -991,7 +1009,9 @@
 				946DA8341CE3474100FF7AB9 /* close@2x.png in Resources */,
 				805EFB601CD239200066B4CB /* PLTableViewCell.xib in Resources */,
 				809F96D01CBCC35000DD1FE9 /* Main.storyboard in Resources */,
+				80AB251A1CE74BE7008B20C3 /* logout.png in Resources */,
 				80C4A0181CDCBB500073B6E2 /* JSQMessagesCollectionViewCellOutgoing.xib in Resources */,
+				80AB25201CE74CCA008B20C3 /* todayTask.png in Resources */,
 				806D4AEA1CC210910054A9AF /* SVProgressHUD.bundle in Resources */,
 				80C49FF11CDCBB500073B6E2 /* JSQMessagesAssets.bundle in Resources */,
 				807024901CD869A200DD8DE5 /* DigitsKitResources.bundle in Resources */,

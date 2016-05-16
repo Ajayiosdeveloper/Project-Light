@@ -426,10 +426,10 @@ class PLProjectDetailTableViewController: UITableViewController,EKEventEditViewD
         SVProgressHUD.showWithStatus("Saving")
         do{
             
-            try commitmentViewModel.commitmentValidations(title, targetDate:targetDate, description:description)
+            try commitmentViewModel.commitmentValidations(title,startDate: startDate,targetDate:targetDate, description:description)
             
               commitmentViewModel.addCommitmentToCalendar(title, date:targetDate)
-              commitmentViewModel.createCommitmentWith(title,targetDate:targetDate,description:description ,projectId: projectId){ result in
+              commitmentViewModel.createCommitmentWith(title,startDate: startDate,targetDate:targetDate,description:description ,projectId: projectId){ result in
                 
                 if result{
                     
