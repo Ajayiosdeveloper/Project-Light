@@ -25,11 +25,15 @@ class PLProjectAssignmentViewModel: NSObject {
         selectedAssigneeList = [PLTeamMember]()
     }
     
-    func assignmentValidations(name:String,targetDate:NSDate,description:String,projectId:String,assignees:[PLTeamMember]) throws->Bool {
+    func assignmentValidations(name:String,startDate:NSDate, targetDate:NSDate,description:String,projectId:String,assignees:[PLTeamMember]) throws->Bool {
         
         if name.characters.count == 0 { throw AssignmentValidation.NameEmpty}
         let today = NSDate()
         if (targetDate.earlierDate(today).isEqualToDate(targetDate)){
+            
+            throw AssignmentValidation.InvalidDate
+        }
+        if (startDate.earlierDate(today).isEqualToDate(startDate)){
             
             throw AssignmentValidation.InvalidDate
         }
@@ -44,7 +48,7 @@ class PLProjectAssignmentViewModel: NSObject {
         return true
     }
     
-    func createAssignmentForProject(id:String,name:String,targetDate:NSDate,description:String,assignees:[PLTeamMember],completion:(Bool)->Void)
+    func createAssignmentForProject(id:String,name:String,startDate : NSDate?, targetDate:NSDate?,description:String,assignees:[PLTeamMember],completion:(Bool)->Void)
     {
         
         var asigneeIds:[String] = [String]()
@@ -56,16 +60,47 @@ class PLProjectAssignmentViewModel: NSObject {
             assigneeUserIds.append(each.memberUserId)
         }
         
+        let startDateOfCommitment = dateFormat(startDate!)
+        let targetDateOfCommitment = dateFormat(targetDate!)
+        let startTimeOfCommitment = timeFormat(startDate!)
+        let targetTimeOfCommitment = timeFormat(targetDate!)
+        
         qbClient = PLQuickbloxHttpClient()
-        let targetDateString = NSDateFormatter.localizedStringFromDate(targetDate, dateStyle: NSDateFormatterStyle.MediumStyle, timeStyle: NSDateFormatterStyle.NoStyle)
-        qbClient.createAssignmentForProject(id, date:targetDateString , name:name, description: description, assignees:asigneeIds,assigneeUserIds:assigneeUserIds) { (res) in
+//        let targetDateString = NSDateFormatter.localizedStringFromDate(startDate!, dateStyle: NSDateFormatterStyle.MediumStyle, timeStyle: NSDateFormatterStyle.ShortStyle)
+//        let startDateString = NSDateFormatter.localizedStringFromDate(targetDate!, dateStyle: NSDateFormatterStyle.MediumStyle, timeStyle: NSDateFormatterStyle.ShortStyle)
+//
+//        let dateFormatter = NSDateFormatter()
+//        dateFormatter.dateFormat = "MMM dd, yyyy, hh:mm aa"
+//        dateFormatter.timeZone = NSTimeZone(forSecondsFromGMT: 0)
+//        dateFormatter.locale = NSLocale.currentLocale()
+//        let startDateFormat = dateFormatter.dateFromString(startDateString)
+//        let targetDateFormat = dateFormatter.dateFromString(targetDateString)
+        
+        qbClient.createAssignmentForProject(id,startDate: Int(startDateOfCommitment), targetDate: Int(targetDateOfCommitment), name:name, description: description, assignees:asigneeIds,assigneeUserIds:assigneeUserIds,startTime: startTimeOfCommitment, endTime: targetTimeOfCommitment) { (res) in
             
             completion(res)
         }
-        
-        
-        
     }
+    
+    func dateFormat(date : NSDate) -> NSTimeInterval
+    {
+        let dateFormatter = NSDateFormatter()
+        dateFormatter.dateFormat = "dd-MM-yyyy"
+        dateFormatter.timeZone = NSTimeZone(forSecondsFromGMT: NSTimeZone.localTimeZone().secondsFromGMT)
+        
+        let stringDate = dateFormatter.stringFromDate(date)
+        dateFormatter.timeZone = NSTimeZone(forSecondsFromGMT: 0)
+        let stringToDate = dateFormatter.dateFromString(stringDate)?.timeIntervalSince1970
+        return stringToDate!
+    }
+    
+    func timeFormat(date: NSDate) -> String
+    {
+        let formatter = NSDateFormatter()
+        formatter.dateFormat = "HH:mm"
+        return formatter.stringFromDate(date)
+    }
+
     
     func numbersOfRows()->Int
     {
@@ -124,6 +159,12 @@ class PLProjectAssignmentViewModel: NSObject {
         
         return selectedAssignment!.targetDate
     }
+    
+    func assignmentStartDate() -> String {
+        
+        return selectedAssignment!.startDate
+    }
+
     
     func assignmentDescription() -> String {
         

@@ -11,15 +11,14 @@ import UIKit
 class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,UITableViewDelegate {
 
     @IBOutlet var assignmentNameTextFiled: UITextField!
-   
     @IBOutlet var assignmenttargetDateTextField: UITextField!
-    
     @IBOutlet var assigneeListTableView: UITableView!
-    
-   
+    @IBOutlet weak var assignmentStartDateTextField: UITextField!
     @IBOutlet var assignmentDescriptionTextView: UITextView!
+    
     var projectId:String!
-    var commitmentDatePicker:UIDatePicker!
+    var startDatecommitmentDatePicker:UIDatePicker!
+    var targetDatecommitmentDatePicker:UIDatePicker!
     var assignementViewModel:PLProjectAssignmentViewModel!
    
     
@@ -29,12 +28,17 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
         print(assignementViewModel.assigneeList)
         self.assigneeListTableView.registerNib(UINib(nibName:"PLTableViewCell", bundle:NSBundle.mainBundle()), forCellReuseIdentifier: "Cell")
         addDoneBarButtonItem()
-        commitmentDatePicker = UIDatePicker()
-        commitmentDatePicker.datePickerMode = .Date
-        self.assignmenttargetDateTextField.inputView = commitmentDatePicker
-        addDoneButtonToDatePicker()
-       
+        startDatecommitmentDatePicker = UIDatePicker()
+        startDatecommitmentDatePicker.datePickerMode = .Date
+        self.assignmentStartDateTextField.inputView = startDatecommitmentDatePicker
+        startDateDoneButtonToDatePicker()
+        
+        targetDatecommitmentDatePicker = UIDatePicker()
+        targetDatecommitmentDatePicker.datePickerMode = .Date
+        self.assignmenttargetDateTextField.inputView = targetDatecommitmentDatePicker
+        targetDateDoneButtonToDatePicker()
     }
+    
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         if let _ = assignementViewModel, _ = assignementViewModel.assigneeList{
@@ -44,6 +48,7 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
         
         if let _ = assignementViewModel.selectedAssignment{
                 assignmentNameTextFiled.text = assignementViewModel.assignmentName()
+                assignmentStartDateTextField.text = assignementViewModel.assignmentStartDate()
                 assignmenttargetDateTextField.text = assignementViewModel.assignmentTargetDate()
                 assignmentDescriptionTextView.text = assignementViewModel.assignmentDescription()
                 self.navigationItem.rightBarButtonItem?.enabled = false
@@ -71,9 +76,9 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
         
         do{
             
-            try assignementViewModel.assignmentValidations(assignmentNameTextFiled.text!,targetDate: commitmentDatePicker.date,description: assignmentDescriptionTextView.text,projectId: projectId,assignees:assignementViewModel.getSelectedAssigneeList())
+            try assignementViewModel.assignmentValidations(assignmentNameTextFiled.text!,startDate:startDatecommitmentDatePicker.date ,targetDate: targetDatecommitmentDatePicker.date,description: assignmentDescriptionTextView.text,projectId: projectId,assignees:assignementViewModel.getSelectedAssigneeList())
             
-            assignementViewModel.createAssignmentForProject(projectId, name:assignmentNameTextFiled.text! , targetDate: commitmentDatePicker.date, description: assignmentDescriptionTextView.text, assignees:assignementViewModel.getSelectedAssigneeList()){result in
+            assignementViewModel.createAssignmentForProject(projectId, name:assignmentNameTextFiled.text! ,startDate: startDatecommitmentDatePicker.date, targetDate: targetDatecommitmentDatePicker.date, description: assignmentDescriptionTextView.text, assignees:assignementViewModel.getSelectedAssigneeList()){result in
                 if result{
                   dispatch_async(dispatch_get_main_queue(), {
                         
@@ -95,7 +100,26 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
       
     }
 
-    func addDoneButtonToDatePicker()
+    func startDateDoneButtonToDatePicker()
+    {
+        let toolBar = UIToolbar()
+        toolBar.barStyle = UIBarStyle.Default
+        toolBar.sizeToFit()
+        let doneButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Done, target:self, action: #selector(PLProjectAssignmentViewController.dateSelection))
+        toolBar.items = [doneButton]
+        assignmentStartDateTextField.inputAccessoryView = toolBar
+    }
+    
+    
+    func dateSelection()
+    {
+        assignmentStartDateTextField.resignFirstResponder()
+        assignmentStartDateTextField.text = NSDateFormatter.localizedStringFromDate(startDatecommitmentDatePicker.date, dateStyle: NSDateFormatterStyle.MediumStyle, timeStyle: NSDateFormatterStyle.NoStyle)
+        assignmenttargetDateTextField.becomeFirstResponder()
+        
+    }
+
+    func targetDateDoneButtonToDatePicker()
     {
         let toolBar = UIToolbar()
         toolBar.barStyle = UIBarStyle.Default
@@ -104,12 +128,12 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
         toolBar.items = [doneButton]
         assignmenttargetDateTextField.inputAccessoryView = toolBar
     }
-
+    
     func peformDateSelection()
-    { assignmenttargetDateTextField.resignFirstResponder()
-      assignmenttargetDateTextField.text = NSDateFormatter.localizedStringFromDate(commitmentDatePicker.date, dateStyle: NSDateFormatterStyle.MediumStyle, timeStyle: NSDateFormatterStyle.NoStyle)
+    {
+        assignmenttargetDateTextField.resignFirstResponder()
+        assignmenttargetDateTextField.text = NSDateFormatter.localizedStringFromDate(targetDatecommitmentDatePicker.date, dateStyle: NSDateFormatterStyle.MediumStyle, timeStyle: NSDateFormatterStyle.NoStyle)
         assignmentDescriptionTextView.becomeFirstResponder()
-        
     }
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
@@ -186,7 +210,7 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
        assignmentNameTextFiled.text = ""
        assignmenttargetDateTextField.text = ""
        assignmentDescriptionTextView.text = ""
-        
+       assignmentStartDateTextField.text = ""
     }
    
     override func viewWillDisappear(animated: Bool) {

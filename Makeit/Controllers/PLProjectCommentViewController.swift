@@ -12,14 +12,11 @@ import EventKitUI
 class PLProjectCommentViewController: UITableViewController,EKEventEditViewDelegate,UIPickerViewDelegate,UIPickerViewDataSource {
     
     @IBOutlet var commitmentNameTextField: UITextField!
-    
     @IBOutlet var commitmentTargetDateTextField: UITextField!
-    
     @IBOutlet weak var commitmentEndDateTextField: UITextField!
-    
     @IBOutlet weak var commitmentPriorityTextField: UITextField!
-    
     @IBOutlet var commitmentDescriptionTextView: UITextView!
+    
     var pickerView:UIPickerView? = UIPickerView()
     var projectId:String!
     lazy  var commitmentViewModel:PLProjectCommentViewModel = {
@@ -52,7 +49,8 @@ class PLProjectCommentViewController: UITableViewController,EKEventEditViewDeleg
         {
            commitmentNameTextField.text = commitmentViewModel.commitmentName()
            commitmentDescriptionTextView.text = commitmentViewModel.commitmentDescription()
-           commitmentTargetDateTextField.text = commitmentViewModel.commitmentTargetDate()
+           commitmentTargetDateTextField.text = commitmentViewModel.commitmentStartDate()
+           commitmentEndDateTextField.text = commitmentViewModel.commitmentEndDate()
            self.navigationItem.rightBarButtonItem?.enabled = false
            self.navigationItem.rightBarButtonItem?.tintColor = UIColor.clearColor()
           
@@ -88,7 +86,7 @@ class PLProjectCommentViewController: UITableViewController,EKEventEditViewDeleg
             
             try commitmentViewModel.commitmentValidations(commitmentNameTextField.text!, startDate:commitmentDatePicker.date ,targetDate:commitmentDatePicker.date, description: commitmentDescriptionTextView.text)
 
-            commitmentViewModel.createCommitmentWith(commitmentNameTextField.text!,startDate:commitmentDatePicker.date,targetDate: commitmentDatePicker.date,description: commitmentDescriptionTextView.text,projectId: projectId){ result in
+            commitmentViewModel.createCommitmentWith(commitmentNameTextField.text!,startDate:commitmentDatePicker.date,targetDate: commitmentDatePicker.date, description: commitmentDescriptionTextView.text,projectId: projectId){ result in
                 
                 if result{
                     self.navigationController?.popViewControllerAnimated(true)

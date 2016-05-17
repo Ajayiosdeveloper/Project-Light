@@ -54,9 +54,8 @@ class PLCommitment: NSObject {
     var name:String = ""
     var details: String = ""
     var commitmentId:String = ""
+    var startDate:String = ""
     var targetDate:String = ""
-    
-    
 }
 
 class PLAssignment: NSObject {
@@ -64,8 +63,8 @@ class PLAssignment: NSObject {
     var name:String = ""
     var details: String = ""
     var commitmentId:String = ""
-    var startDate:String = ""
     var targetDate:String = ""
+    var startDate:String = ""
     var assignees:[String] = [String]()
     var assineesUserIds:[UInt] = [UInt]()
 }
