@@ -66,16 +66,6 @@ class PLProjectAssignmentViewModel: NSObject {
         let targetTimeOfCommitment = timeFormat(targetDate!)
         
         qbClient = PLQuickbloxHttpClient()
-//        let targetDateString = NSDateFormatter.localizedStringFromDate(startDate!, dateStyle: NSDateFormatterStyle.MediumStyle, timeStyle: NSDateFormatterStyle.ShortStyle)
-//        let startDateString = NSDateFormatter.localizedStringFromDate(targetDate!, dateStyle: NSDateFormatterStyle.MediumStyle, timeStyle: NSDateFormatterStyle.ShortStyle)
-//
-//        let dateFormatter = NSDateFormatter()
-//        dateFormatter.dateFormat = "MMM dd, yyyy, hh:mm aa"
-//        dateFormatter.timeZone = NSTimeZone(forSecondsFromGMT: 0)
-//        dateFormatter.locale = NSLocale.currentLocale()
-//        let startDateFormat = dateFormatter.dateFromString(startDateString)
-//        let targetDateFormat = dateFormatter.dateFromString(targetDateString)
-        
         qbClient.createAssignmentForProject(id,startDate: Int(startDateOfCommitment), targetDate: Int(targetDateOfCommitment), name:name, description: description, assignees:asigneeIds,assigneeUserIds:assigneeUserIds,startTime: startTimeOfCommitment, endTime: targetTimeOfCommitment) { (res) in
             
             completion(res)

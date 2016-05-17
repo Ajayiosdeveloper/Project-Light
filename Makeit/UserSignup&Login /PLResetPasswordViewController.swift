@@ -8,7 +8,7 @@
 
 import UIKit
 
-class PLResetPasswordViewController: UIViewController {
+class PLResetPasswordViewController: UIViewController,UIAlertViewDelegate {
 
     @IBOutlet weak var emailIdField: UITextField!
     
@@ -43,7 +43,9 @@ class PLResetPasswordViewController: UIViewController {
 
         } else {
             // Fallback on earlier versions
-        
+            let alertView = UIAlertView(title: "Reset Password link will be sent to the registered email", message: "", delegate: self, cancelButtonTitle: nil, otherButtonTitles: "Ok")
+            alertView.tag = 1
+            alertView.show()
         }
             
      }
@@ -51,6 +53,30 @@ class PLResetPasswordViewController: UIViewController {
       {
         self.showAlertWithMessage("Invalid Email", message: "Please enter valid email")
       }
+    }
+    
+    func alertView(alertView: UIAlertView, clickedButtonAtIndex buttonIndex: Int) {
+        print(buttonIndex)
+        switch (alertView.tag)
+        {
+        case 1:
+            switch (buttonIndex) {
+            case 0:
+                print("Ok")
+                let email = self.emailIdField.text
+                let finalEmail = email!.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
+                self.userAccountViewModel.sendForgotPasswordLinkToeMail(finalEmail)
+                let loginViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("PLUserSignupAndLoginViewController")
+                self.presentViewController(loginViewController, animated: true, completion: nil)
+            
+            default:
+                print("")
+            }
+            
+        default:
+            print("")
+        }
+
     }
     
     func showAlertWithMessage(title:String,message:String)
@@ -64,6 +90,9 @@ class PLResetPasswordViewController: UIViewController {
             self.presentViewController(alertController, animated:true, completion:nil)
         } else {
             // Fallback on earlier versions
+            let alertView = UIAlertView(title: title, message: message, delegate: self, cancelButtonTitle: nil, otherButtonTitles: "Ok")
+            alertView.show()
+            
         }
     }
     

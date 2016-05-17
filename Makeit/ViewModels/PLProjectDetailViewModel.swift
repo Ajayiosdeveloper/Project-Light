@@ -129,40 +129,51 @@ class PLProjectDetailViewModel: NSObject {
                  commitment.commitmentId = each.ID!
                  commitment.name = each.fields?.objectForKey("name") as! String
                  commitment.details = (each.fields?.objectForKey("description"))! as! String
-                // commitment.targetDate = (each.fields?.objectForKey("targetDate"))! as! String
-                 self.commitments.append(commitment)
+                 let targetDate  = (each.fields?.objectForKey("targetDate"))! as! NSTimeInterval
+                 let startDate  = (each.fields?.objectForKey("startDate"))! as! NSTimeInterval
+                commitment.targetDate = self.dateFormat(targetDate)
+                commitment.startDate = self.dateFormat(startDate)
+                self.commitments.append(commitment)
                 }
+                
                 completion(true)
             }else{completion(false)}
-            
-            
         }
-        
     }
+    
+    func dateFormat(timeInterval : NSTimeInterval) -> String
+    {
+        let date = NSDate(timeIntervalSince1970: timeInterval)
+        let dateFormatter = NSDateFormatter()
+        dateFormatter.dateFormat = "dd-MM-yyyy"
+        dateFormatter.timeZone = NSTimeZone(forSecondsFromGMT: NSTimeZone.localTimeZone().secondsFromGMT)
+        return dateFormatter.stringFromDate(date)
+    }
+
     
     func getAssignmentsFromRemote(id:String,completion:(Bool)->Void)
     {
         qbClient.fetchAssignmentsForProject(id){res,assignments in
             
-            if let _ = assignments{
-                
-                for each in assignments!{
-                
+            if let _ = assignments
+            {
+                for each in assignments!
+                {
                 let assignment = PLAssignment()
                 assignment.commitmentId = each.ID!
                 assignment.name = each.fields?.objectForKey("name") as! String
                 assignment.details = (each.fields?.objectForKey("description"))! as! String
-               // assignment.targetDate = (each.fields?.objectForKey("targetDate"))! as! String
-               
+                let targetDate = (each.fields?.objectForKey("targetDate"))! as! NSTimeInterval
+                let startDate = (each.fields?.objectForKey("startDate"))! as! NSTimeInterval
+                assignment.targetDate = self.dateFormat(targetDate)
+                assignment.startDate = self.dateFormat(startDate)
                 assignment.assineesUserIds = (each.fields?.objectForKey("assigneeUserId"))! as! [UInt]
                 self.assignments.append(assignment)
               }
                 completion(true)
 
             }else {completion(false)}
-            
-    }
-
+         }
     }
     
     func selectedCommitmentFor(row:Int)->PLCommitment?

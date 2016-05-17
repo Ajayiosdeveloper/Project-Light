@@ -76,6 +76,9 @@ class PLUserLoginViewController: UIViewController,UITextFieldDelegate {
             self.presentViewController(alertController, animated:true, completion:nil)
 
         } else {
+            let alert = UIAlertView(title: title, message: message, delegate:nil, cancelButtonTitle:nil, otherButtonTitles:"Ok") as UIAlertView
+            alert.show()
+
             // Fallback on earlier versions
         }
         
