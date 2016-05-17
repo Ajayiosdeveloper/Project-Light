@@ -23,8 +23,7 @@ class PLProjectsViewModel: NSObject {
    
     func fetchProjectsFromRemote() {
         
-        
-        quickBloxClient.countOfTodayCommitments()
+   
         
         createdProjectList.removeAll(keepCapacity: true)
         contributingProjectList.removeAll(keepCapacity: true)
@@ -315,4 +314,47 @@ class PLProjectsViewModel: NSObject {
             }
         }
      }
+    
+    func getTodayTasksCount(completion:(String)->Void){
+        
+        quickBloxClient.countOfTodayCommitments(){ count in
+            
+            if count == 0{
+                completion(String(0))
+            }else{
+                
+                completion(String(count))
+            }
+        
+        }
+        
+        
+    }
+    
+    func getUPcomingTasksCount(completion:(String)->Void){
+        
+        quickBloxClient.countOfUpComingCommitments()
+        { count in
+            if count == 0{
+                completion(String(0))
+            }else{
+                
+                completion(String(count))
+            }
+        }
+    }
+    
+    func getPendingTasksCount(completion:(String)->Void){
+        
+        quickBloxClient.contOfPendingTasks(){ count in
+            if count == 0{
+                completion(String(0))
+            }else{
+                
+                completion(String(count))
+            }
+        }
+        
+    }
+    
 }

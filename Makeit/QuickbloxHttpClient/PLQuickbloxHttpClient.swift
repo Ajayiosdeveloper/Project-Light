@@ -803,56 +803,80 @@ class PLQuickbloxHttpClient
     
     
     
-    func countOfTodayCommitments(){
+    func countOfTodayCommitments(completion:(UInt)->Void){
         
     let extendedReq = NSMutableDictionary()
         
-        let d = NSDate()
-        let formatter = NSDateFormatter()
-        formatter.dateFormat = "yyyy-MM-dd"
-        print("Check out")
-        let s = formatter.stringFromDate(d)
-        print(s)
-        print(formatter.dateFromString(s))
         
-        extendedReq.setValue(1, forKey: "isCompleted[lt]")
-        
+        let timeInterval = Int(convertdateToTimeinterval(NSDate()))
+        extendedReq.setValue(timeInterval, forKey: "startDate")
+        extendedReq.setValue(QBSession.currentSession().currentUser?.ID, forKey: "user_id")
         QBRequest.countObjectsWithClassName("PLProjectCommitment", extendedRequest: extendedReq, successBlock: { (res, count) in
             
-            print("Here the count is")
+            print("Here the count is Today")
             print(count)
             print(res)
+            completion(count)
             
         }) { (res) in
-            print("Error response is \(res)")
+           
+            completion(0)
             
         }
     }
     
     
-    func countOfUpComingCommitments(){
-        
+    func countOfUpComingCommitments(completion:(UInt)->Void){
+        let timeInterval = Int(convertdateToTimeinterval(NSDate()))
         let extendedReq = NSMutableDictionary()
-        
-        extendedReq.setValue(NSDate(), forKey: "startDate[gt]")
+        extendedReq.setValue(timeInterval, forKey: "startDate[gt]")
+        extendedReq.setValue(QBSession.currentSession().currentUser?.ID, forKey: "user_id")
         QBRequest.countObjectsWithClassName("PLProjectCommitment", extendedRequest: extendedReq, successBlock: { (_, count) in
             
+            print("Here the count is Tomorrow")
             print(count)
+            completion(count)
+
             
-            }, errorBlock: nil)
+        }){ (res) in
+            
+            completion(0)
+            
+        }
 
     }
     
-    func contOfPendingTasks(){
+    func contOfPendingTasks(completion:(UInt)->Void){
+        let timeInterval = Int(convertdateToTimeinterval(NSDate()))
         let extendedReq = NSMutableDictionary()
-        extendedReq.setValue(NSDate(), forKey: "targetDate[lt]")
+        extendedReq.setValue(timeInterval, forKey: "endDate[lt]")
+        extendedReq.setValue(QBSession.currentSession().currentUser?.ID, forKey: "user_id")
         extendedReq.setValue(0, forKey: "isCompleted")
         QBRequest.countObjectsWithClassName("PLProjectCommitment", extendedRequest: extendedReq, successBlock: { (_, count) in
-            
+           
+            print("Here the count is Pending")
             print(count)
+           
+            completion(count)
             
-            }, errorBlock: nil)
+        }){ (res) in
+            
+            completion(0)
+            
+        }
 
+    }
+    
+    func convertdateToTimeinterval(date : NSDate) -> NSTimeInterval
+    {
+        let dateFormatter = NSDateFormatter()
+        dateFormatter.dateFormat = "dd-MM-yyyy"
+        dateFormatter.timeZone = NSTimeZone(forSecondsFromGMT: NSTimeZone.localTimeZone().secondsFromGMT)
+        
+        let stringDate = dateFormatter.stringFromDate(date)
+        dateFormatter.timeZone = NSTimeZone(forSecondsFromGMT: 0)
+        let stringToDate = dateFormatter.dateFromString(stringDate)?.timeIntervalSince1970
+        return stringToDate!
     }
     
    

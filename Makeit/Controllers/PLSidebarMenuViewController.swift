@@ -108,6 +108,31 @@ class PLSidebarMenuViewController: UIViewController,UIImagePickerControllerDeleg
         {
         cell.nameLabel?.text = taskList[indexPath.row]
         cell.imageIcon?.image = UIImage(named: taskListImage[indexPath.row])
+         
+            switch indexPath.row {
+            case 0:
+            
+                projectViewModel.getTodayTasksCount({ (countString) in
+                    cell.countLabel.text = countString
+                })
+                
+            case 1:
+                
+                projectViewModel.getUPcomingTasksCount({ (countString) in
+                    
+                    cell.countLabel.text = countString
+                })
+                
+            case 2:
+                
+                projectViewModel.getPendingTasksCount({ (countString) in
+                    
+                    cell.countLabel.text = countString
+                })
+                
+            default:
+                print("")
+            }
         }
         else if indexPath.section == 1
         {
@@ -216,6 +241,7 @@ class PLSidebarMenuViewController: UIViewController,UIImagePickerControllerDeleg
          else
          {
             // Fallback on earlier versions
+            print("iOS 7")
          }
        
      }
