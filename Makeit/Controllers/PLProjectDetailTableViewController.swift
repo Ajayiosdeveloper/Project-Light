@@ -119,6 +119,7 @@ class PLProjectDetailTableViewController: UITableViewController,EKEventEditViewD
             let cell = tableView.dequeueReusableCellWithIdentifier("DefaultCell", forIndexPath: indexPath)  as UITableViewCell
             cell.textLabel?.text = projectDetailViewModel.commitmentTitleForRowAtIndexPath(indexPath.row)
             cell.detailTextLabel?.text = projectDetailViewModel.commitmentSubTitleForRowAtIndexPath(indexPath.row)
+            cell.accessoryType = .DisclosureIndicator
             cell.textLabel?.textColor = UIColor.blackColor()
             return cell
         }
@@ -128,6 +129,7 @@ class PLProjectDetailTableViewController: UITableViewController,EKEventEditViewD
             cell.textLabel?.text = projectDetailViewModel.assignmentTitleForRowAtIndexPath(indexPath.row)
             cell.detailTextLabel?.text = projectDetailViewModel.assignmentSubTitleForRowAtIndexPath(indexPath.row)
             cell.textLabel?.textColor = UIColor.blackColor()
+            cell.accessoryType = .DisclosureIndicator
             return cell
         }
         else if indexPath.section == 3{

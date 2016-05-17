@@ -24,26 +24,64 @@ class PLProjectCommentViewController: UITableViewController,EKEventEditViewDeleg
         return PLProjectCommentViewModel()
     }()
     
-    var commitmentDatePicker:UIDatePicker!
+    var startDatecommitmentDatePicker:UIDatePicker!
+    var targetDatecommitmentDatePicker:UIDatePicker!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.pickerView?.delegate = self
         self.pickerView?.dataSource = self
         commitmentPriorityTextField.inputView = pickerView
-        
+        commitmentPriorityTextField.text = "Critical"
         addDoneBarButtonItem()
-        commitmentDatePicker = UIDatePicker()
-        commitmentDatePicker.datePickerMode = .Date
-        self.commitmentTargetDateTextField.inputView = commitmentDatePicker
-        self.commitmentEndDateTextField.inputView = commitmentDatePicker
-        addDoneButtonToDatePicker()
+        startDatecommitmentDatePicker = UIDatePicker()
+        startDatecommitmentDatePicker.datePickerMode = .Date
+        self.commitmentTargetDateTextField.inputView = startDatecommitmentDatePicker
+        startDateDoneButtonToDatePicker()
+        targetDatecommitmentDatePicker = UIDatePicker()
+        targetDatecommitmentDatePicker.datePickerMode = .Date
+        self.commitmentEndDateTextField.inputView = targetDatecommitmentDatePicker
+        targetDateDoneButtonToDatePicker()
         }
     
-    override func viewWillAppear(animated: Bool) {
+    func startDateDoneButtonToDatePicker()
+    {
+        let toolBar = UIToolbar()
+        toolBar.barStyle = UIBarStyle.Default
+        toolBar.sizeToFit()
+        let doneButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Done, target:self, action: #selector(PLProjectCommentViewController.dateSelection))
+        toolBar.items = [doneButton]
+        commitmentTargetDateTextField.inputAccessoryView = toolBar
+    }
+    
+    
+    func dateSelection()
+    {
+        commitmentTargetDateTextField.resignFirstResponder()
+        commitmentTargetDateTextField.text = NSDateFormatter.localizedStringFromDate(startDatecommitmentDatePicker.date, dateStyle: NSDateFormatterStyle.MediumStyle, timeStyle: NSDateFormatterStyle.NoStyle)
+        commitmentEndDateTextField.becomeFirstResponder()
+    }
+    
+    func targetDateDoneButtonToDatePicker()
+    {
+        let toolBar = UIToolbar()
+        toolBar.barStyle = UIBarStyle.Default
+        toolBar.sizeToFit()
+        let doneButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Done, target:self, action: #selector(PLProjectCommentViewController.peformTargetDateSelection))
+        toolBar.items = [doneButton]
+        commitmentEndDateTextField.inputAccessoryView = toolBar
+    }
+    
+    func peformTargetDateSelection()
+    {
+        commitmentEndDateTextField.resignFirstResponder()
+        commitmentEndDateTextField.text = NSDateFormatter.localizedStringFromDate(targetDatecommitmentDatePicker.date, dateStyle: NSDateFormatterStyle.MediumStyle, timeStyle: NSDateFormatterStyle.NoStyle)
+        commitmentPriorityTextField.becomeFirstResponder()
+    }
+
+     override func viewWillAppear(animated: Bool) {
+        
         super.viewWillAppear(animated)
-        commitmentPriorityTextField.text = "Critical"
-        commitmentDatePicker.date = NSDate()
         self.commitmentNameTextField.becomeFirstResponder()
         if let _ = commitmentViewModel.commitment
         {
@@ -71,25 +109,13 @@ class PLProjectCommentViewController: UITableViewController,EKEventEditViewDeleg
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.Plain, target:self, action:#selector(PLAddProjectViewController.performDone))
     }
     
-    func addDoneButtonToDatePicker()
-    {
-       let toolBar = UIToolbar()
-       toolBar.barStyle = UIBarStyle.Default
-       toolBar.sizeToFit()
-       let  doneButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Done, target:self, action: #selector(PLProjectCommentViewController.peformDateSelection))
-        toolBar.items = [doneButton]
-        commitmentTargetDateTextField.inputAccessoryView = toolBar
-        commitmentEndDateTextField.inputAccessoryView = toolBar
-        commitmentPriorityTextField.inputAccessoryView = toolBar
-    }
-    
     func performDone()
     {
         do{
             
-            try commitmentViewModel.commitmentValidations(commitmentNameTextField.text!, startDate:commitmentDatePicker.date ,targetDate:commitmentDatePicker.date, description: commitmentDescriptionTextView.text)
+            try commitmentViewModel.commitmentValidations(commitmentNameTextField.text!, startDate:startDatecommitmentDatePicker.date ,targetDate:targetDatecommitmentDatePicker.date, description: commitmentDescriptionTextView.text)
 
-            commitmentViewModel.createCommitmentWith(commitmentNameTextField.text!,startDate:commitmentDatePicker.date,targetDate: commitmentDatePicker.date, description: commitmentDescriptionTextView.text,projectId: projectId){ result in
+            commitmentViewModel.createCommitmentWith(commitmentNameTextField.text!,startDate:startDatecommitmentDatePicker.date,targetDate: targetDatecommitmentDatePicker.date, description: commitmentDescriptionTextView.text,projectId: projectId){ result in
                 
                 if result{
                     self.navigationController?.popViewControllerAnimated(true)
@@ -102,25 +128,6 @@ class PLProjectCommentViewController: UITableViewController,EKEventEditViewDeleg
         catch CommitValidation.InvalidDate{print("Earlier date")}
         catch CommitValidation.DescriptionEmpty{print("Empty Description")}
         catch {}
-    }
-
-    func peformDateSelection()
-    {
-        if self.commitmentEndDateTextField.isFirstResponder(){
-            
-            self.commitmentEndDateTextField.resignFirstResponder()
-            commitmentEndDateTextField.text = NSDateFormatter.localizedStringFromDate(commitmentDatePicker.date, dateStyle: NSDateFormatterStyle.MediumStyle, timeStyle: NSDateFormatterStyle.NoStyle)
-            commitmentPriorityTextField.becomeFirstResponder()
-        }else if self.commitmentTargetDateTextField.isFirstResponder(){
-        self.commitmentTargetDateTextField.resignFirstResponder()
-         commitmentTargetDateTextField.text = NSDateFormatter.localizedStringFromDate(commitmentDatePicker.date, dateStyle: NSDateFormatterStyle.MediumStyle, timeStyle: NSDateFormatterStyle.NoStyle)
-           commitmentEndDateTextField.becomeFirstResponder()
-        }
-        else{
-            
-            self.commitmentPriorityTextField.resignFirstResponder()
-            self.commitmentDescriptionTextView.becomeFirstResponder()
-        }
     }
     
     func clearFields(){
@@ -166,17 +173,14 @@ class PLProjectCommentViewController: UITableViewController,EKEventEditViewDeleg
         return commitmentViewModel.priorityDataCount()
     }
     
-    func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+    func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String?
+    {
         return commitmentViewModel.priorityTypeForRow(row)
     }
     
     func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int)
     {
          commitmentPriorityTextField.text = commitmentViewModel.priorityTypeForRow(row)
-        
     }
-    
-    
-       
-   }
+ }
 
