@@ -115,7 +115,7 @@ class PLAddProjectViewController: UIViewController,UISearchBarDelegate,UITextFie
     
     func showAlertWithMessage(title:String,message:String)
     {
-        if #available(iOS 9, *)
+        if #available(iOS 8, *)
         {
             let alertController = UIAlertController(title:title, message:message, preferredStyle: UIAlertControllerStyle.Alert)
             let action = UIAlertAction(title:"Ok", style: UIAlertActionStyle.Default, handler: { (action) -> Void in

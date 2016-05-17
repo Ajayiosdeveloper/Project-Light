@@ -47,13 +47,18 @@ class PLProjectCommentViewController: UITableViewController,EKEventEditViewDeleg
         self.commitmentNameTextField.becomeFirstResponder()
         if let _ = commitmentViewModel.commitment
         {
+            if PLSharedManager.manager.isCalendarAccess{
+                
+                print("Cander Access is there")
+                
+            }else{
            commitmentNameTextField.text = commitmentViewModel.commitmentName()
            commitmentDescriptionTextView.text = commitmentViewModel.commitmentDescription()
            commitmentTargetDateTextField.text = commitmentViewModel.commitmentStartDate()
            commitmentEndDateTextField.text = commitmentViewModel.commitmentEndDate()
            self.navigationItem.rightBarButtonItem?.enabled = false
            self.navigationItem.rightBarButtonItem?.tintColor = UIColor.clearColor()
-          
+            }
         }
         else{
                self.navigationItem.rightBarButtonItem?.tintColor = nil;
@@ -80,8 +85,6 @@ class PLProjectCommentViewController: UITableViewController,EKEventEditViewDeleg
     
     func performDone()
     {
-        print("JESUS LOVES you")
-        
         do{
             
             try commitmentViewModel.commitmentValidations(commitmentNameTextField.text!, startDate:commitmentDatePicker.date ,targetDate:commitmentDatePicker.date, description: commitmentDescriptionTextView.text)
@@ -90,7 +93,9 @@ class PLProjectCommentViewController: UITableViewController,EKEventEditViewDeleg
                 
                 if result{
                     self.navigationController?.popViewControllerAnimated(true)
-                }else {print("Handle Error")}
+                }else {
+                    print("Handle Error")
+                }
             }
         }
         catch CommitValidation.NameEmpty{print("Empty Name")}
@@ -137,17 +142,20 @@ class PLProjectCommentViewController: UITableViewController,EKEventEditViewDeleg
         // Dispose of any resources that can be recreated.
     }
 
-    @IBAction func advancedCommitmentOptionsWithCalendar(sender: AnyObject) {
+    @IBAction func advancedCommitmentOptionsWithCalendar(sender: AnyObject)
+    {
         
         let editViewController = EKEventEditViewController()
         editViewController.navigationController?.navigationItem.title = "Welcome"
         editViewController.eventStore = EKEventStore()
         editViewController.editViewDelegate = self
         self.presentViewController(editViewController, animated: true, completion:nil)
+        
     }
     
     func eventEditViewController(controller: EKEventEditViewController, didCompleteWithAction action: EKEventEditViewAction){
-
+       // self.fetchEvents(commitmentViewModel.eventStore)
+       // print("'sdfgghghhj")
         self.dismissViewControllerAnimated(true, completion:nil)
     }
    
@@ -165,5 +173,10 @@ class PLProjectCommentViewController: UITableViewController,EKEventEditViewDeleg
     func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int)
     {
          commitmentPriorityTextField.text = commitmentViewModel.priorityTypeForRow(row)
+        
     }
-}
+    
+    
+       
+   }
+

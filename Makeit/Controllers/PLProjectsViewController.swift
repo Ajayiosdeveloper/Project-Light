@@ -360,6 +360,8 @@ class PLProjectsViewController: UITableViewController,UIImagePickerControllerDel
         projectDeletePopup.showPopup()
 
     }
+  
+
     
 }
 

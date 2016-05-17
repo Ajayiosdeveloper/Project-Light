@@ -98,7 +98,7 @@ class PLProjectDetailTableViewController: UITableViewController,EKEventEditViewD
         if indexPath.section == 0{
         let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! PLTableViewCell
         cell.memberName.text = projectDetailViewModel.contributorTitleForRowAtIndexPath(indexPath.row)
-            cell.memberDetail.text = projectDetailViewModel.contributorEmailForRowAtIndexPath(indexPath.row)
+        cell.memberDetail.text = projectDetailViewModel.contributorEmailForRowAtIndexPath(indexPath.row)
         cell.accessoryType = .DisclosureIndicator
         projectDetailViewModel.contributorImageRowAtIndexPath(indexPath.row, completion: { (avatar) in
             
@@ -290,7 +290,6 @@ class PLProjectDetailTableViewController: UITableViewController,EKEventEditViewD
     }
     
     func showEventEditViewController(){
-        
         let editViewController = EKEventEditViewController()
         editViewController.eventStore = EKEventStore()
         editViewController.editViewDelegate = self
@@ -318,8 +317,17 @@ class PLProjectDetailTableViewController: UITableViewController,EKEventEditViewD
         {
             if PLSharedManager.manager.isCalendarAccess{
                 
-                showEventEditViewController()
+                //showEventEditViewController()
                 
+                //fetchEvents(<#T##startDate: NSDate##NSDate#>, endDate: <#T##NSDate#>, completed: <#T##(NSMutableArray) -> ()#>)
+                
+                let commitment = projectDetailViewModel.selectedCommitmentFor(indexPath.row)
+                
+                print("Its coming Here")
+                print(commitment!.name)
+                print(commitment!.startDate)
+                print(commitment!.targetDate)
+
             }else{
             showCommitmentViewController()
              commitmentViewController.commitmentViewModel.commitment = projectDetailViewModel.selectedCommitmentFor(indexPath.row)
@@ -444,6 +452,15 @@ class PLProjectDetailTableViewController: UITableViewController,EKEventEditViewD
         catch {}
     }
 
-   
+    func fetchEvents(startDate: NSDate,endDate: NSDate,completed: ( NSMutableArray) -> ())
+    {
+        let eventStore = EKEventStore()
+        let calendar = EKCalendar(forEntityType:.Event, eventStore: eventStore)
+        let predicate = eventStore.predicateForEventsWithStartDate(startDate, endDate:endDate, calendars:[calendar])
+        let events = NSMutableArray(array:eventStore.eventsMatchingPredicate(predicate))
+        completed(events)
+    }
+
+  
 
 }

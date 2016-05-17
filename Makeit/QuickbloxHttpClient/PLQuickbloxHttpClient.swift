@@ -43,7 +43,7 @@ class PLQuickbloxHttpClient
     
     func initiateUserLogin(name:String,password:String,completion:(Bool)->Void){
         
-        SVProgressHUD.showWithStatus("Loging in")
+        SVProgressHUD.showWithStatus("Logging in")
         QBRequest.logInWithUserLogin(name, password: password, successBlock: { (response, retrievedUser) -> Void in
             NSUserDefaults.standardUserDefaults().setValue(retrievedUser?.ID, forKey:"USER_ID")
             PLSharedManager.manager.userName = name
