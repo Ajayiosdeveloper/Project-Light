@@ -47,7 +47,7 @@ class PLProjectDetailViewModel: NSObject {
         return member.fullName
     }
     
-    func contributorEmailForRowAtIndexPath(row:Int)->String
+   func contributorEmailForRowAtIndexPath(row:Int)->String
     {
         let member = contributors[row]
         
@@ -129,7 +129,7 @@ class PLProjectDetailViewModel: NSObject {
                  commitment.commitmentId = each.ID!
                  commitment.name = each.fields?.objectForKey("name") as! String
                  commitment.details = (each.fields?.objectForKey("description"))! as! String
-                 commitment.targetDate = (each.fields?.objectForKey("targetDate"))! as! String
+                // commitment.targetDate = (each.fields?.objectForKey("targetDate"))! as! String
                  self.commitments.append(commitment)
                 }
                 completion(true)
@@ -152,8 +152,8 @@ class PLProjectDetailViewModel: NSObject {
                 assignment.commitmentId = each.ID!
                 assignment.name = each.fields?.objectForKey("name") as! String
                 assignment.details = (each.fields?.objectForKey("description"))! as! String
-                assignment.targetDate = (each.fields?.objectForKey("targetDate"))! as! String
-               // assignment.assignees = (each.fields?.objectForKey("assignees"))! as! [String]
+               // assignment.targetDate = (each.fields?.objectForKey("targetDate"))! as! String
+               
                 assignment.assineesUserIds = (each.fields?.objectForKey("assigneeUserId"))! as! [UInt]
                 self.assignments.append(assignment)
               }

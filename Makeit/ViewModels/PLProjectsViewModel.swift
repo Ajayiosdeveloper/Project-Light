@@ -225,6 +225,8 @@ class PLProjectsViewModel: NSObject {
 
                  let loggedInId = QBSession.currentSession().currentUser?.ID
                
+                
+                if let _ = members{
                 for each in members! {
                     
                     let member_user_id = each.fields?.objectForKey("member_User_Id") as! UInt
@@ -243,7 +245,7 @@ class PLProjectsViewModel: NSObject {
                         teamMembers.append(member)
                     }
                 }
-                
+            }
                 let creatorId = PLTeamMember.creatorDetails!["creatorUserId"] as! UInt
                 
                 if  creatorId != loggedInId{
@@ -276,8 +278,8 @@ class PLProjectsViewModel: NSObject {
                 }
                 else{
                     completion(false)
-                }
-            }
+        }
+        }
     }
     
     
