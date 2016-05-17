@@ -131,6 +131,7 @@ class PLProjectDetailViewModel: NSObject {
                  commitment.details = (each.fields?.objectForKey("description"))! as! String
                  let targetDate  = (each.fields?.objectForKey("targetDate"))! as! NSTimeInterval
                  let startDate  = (each.fields?.objectForKey("startDate"))! as! NSTimeInterval
+                commitment.isCompleted = each.fields?.objectForKey("isCompleted") as! Int
                 commitment.targetDate = self.dateFormat(targetDate)
                 commitment.startDate = self.dateFormat(startDate)
                 self.commitments.append(commitment)

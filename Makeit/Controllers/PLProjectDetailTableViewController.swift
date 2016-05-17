@@ -317,7 +317,7 @@ class PLProjectDetailTableViewController: UITableViewController,EKEventEditViewD
         {
             if PLSharedManager.manager.isCalendarAccess{
                 
-                //showEventEditViewController()
+                showEventEditViewController()
                 
                 //fetchEvents(<#T##startDate: NSDate##NSDate#>, endDate: <#T##NSDate#>, completed: <#T##(NSMutableArray) -> ()#>)
                 
@@ -327,6 +327,12 @@ class PLProjectDetailTableViewController: UITableViewController,EKEventEditViewD
                 print(commitment!.name)
                 print(commitment!.startDate)
                 print(commitment!.targetDate)
+                print(commitment!.isCompleted)
+                
+                if commitment!.isCompleted == 0{
+                    
+                self.performSelector(#selector(PLProjectDetailTableViewController.showTaskCompletePopup), withObject:nil, afterDelay:5)
+                }
 
             }else{
             showCommitmentViewController()
@@ -461,6 +467,16 @@ class PLProjectDetailTableViewController: UITableViewController,EKEventEditViewD
         completed(events)
     }
 
-  
+    func showTaskCompletePopup() {
+        
+        let popUp = Popup(title: "Update Task Status", subTitle:"Provide current status of the Task for better managing your tasks and to know project status accurately ", cancelTitle:"Not Yet!", successTitle: "Finished", cancelBlock: {
+               print("Not yet pressed")
+            }) { 
+                print("Finished pressed")
+        }
+        popUp.backgroundBlurType = .Dark
+        popUp.showPopup()
+        
+    }
 
 }
