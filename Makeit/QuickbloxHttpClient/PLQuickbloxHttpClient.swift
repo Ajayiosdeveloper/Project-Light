@@ -215,6 +215,7 @@ class PLQuickbloxHttpClient
         customObject.fields?.setValue(targetDate, forKey:"targetDate")
         customObject.fields?.setValue(startTime, forKey: "startTime")
         customObject.fields?.setValue(endTime, forKey: "endTime")
+        customObject.fields?.setValue(0, forKey: "isCompleted")
         customObject.fields?.setValue(id, forKey:"_parent_id")
         QBRequest.createObject(customObject, successBlock: { (response,object) in
             
