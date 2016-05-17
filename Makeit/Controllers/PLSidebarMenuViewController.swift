@@ -9,7 +9,7 @@
 import UIKit
 import Social
 
-class PLSidebarMenuViewController: UIViewController,UIImagePickerControllerDelegate,UINavigationControllerDelegate,UITableViewDataSource,UITableViewDelegate
+class PLSidebarMenuViewController: UIViewController,UIImagePickerControllerDelegate,UINavigationControllerDelegate,UITableViewDataSource,UITableViewDelegate,UIActionSheetDelegate
 {
     @IBOutlet var userProfilePic: UIImageView!
     @IBOutlet var userNameTextfield: UILabel!
@@ -215,11 +215,78 @@ class PLSidebarMenuViewController: UIViewController,UIImagePickerControllerDeleg
             
          else
          {
-            // Fallback on earlier versions
+            let actionSheet = UIActionSheet(title: "Edit Photo", delegate: self, cancelButtonTitle: nil, destructiveButtonTitle: nil, otherButtonTitles: "Photo Library","Take Photo","Share on Facebook","Share on Twitter","Cancel")
+            actionSheet.showInView(self.view)
+            actionSheet.tag = 1
+            print("Fallback on earlier versions")
          }
        
      }
  
+    func sharePhotoOnFacebook()
+    {
+        if SLComposeViewController.isAvailableForServiceType(SLServiceTypeFacebook)
+        {
+            let composeViewController = SLComposeViewController(forServiceType: SLServiceTypeFacebook)
+            composeViewController.addImage(self.userProfilePic.image)
+            self.presentViewController(composeViewController, animated: true, completion: nil)
+            
+        }
+        else{
+            print("You are not logged in to your Facebook account")
+        }
+
+    }
+    func sharePhotoOnTwitter()
+    {
+        if SLComposeViewController.isAvailableForServiceType(SLServiceTypeTwitter)
+        {
+            let composeViewController = SLComposeViewController(forServiceType: SLServiceTypeTwitter)
+            composeViewController.addImage(self.userProfilePic.image)
+            self.presentViewController(composeViewController, animated: true, completion: nil)
+        }
+            
+        else{
+            print("You are not logged in to your Twitter account")
+        }
+    }
+
+    func actionSheet(actionSheet: UIActionSheet, clickedButtonAtIndex buttonIndex: Int) {
+        print(buttonIndex)
+        
+        switch (actionSheet.tag)
+        {
+        case 1:
+            switch (buttonIndex) {
+            case 0:
+                print("Photo Lib")
+                self.imagePicker.allowsEditing = true
+                self.imagePicker.sourceType = .PhotoLibrary
+                self.imagePicker.modalPresentationStyle = UIModalPresentationStyle.Custom
+                self.presentViewController(self.imagePicker, animated: true, completion: nil)
+            case 2:
+                sharePhotoOnFacebook()
+                print("sharePhotoOnFacebook")
+            case 3:
+                sharePhotoOnTwitter()
+                print("sharePhotoOnTwitter")
+            case 1:
+                print("Camera")
+                self.imagePicker.allowsEditing = true
+                self.imagePicker.sourceType = .Camera
+                self.imagePicker.modalPresentationStyle = UIModalPresentationStyle.Custom
+                self.presentViewController(self.imagePicker, animated: true, completion: nil)
+            case 4:
+               print("Cancel")
+            default:
+             print("")
+            }
+            
+        default:
+            print("")
+        }
+    }
+    
     func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
         let img =  info[UIImagePickerControllerOriginalImage] as! UIImage
         userProfilePic.image = img

@@ -954,6 +954,7 @@
 				TargetAttributes = {
 					809F96C61CBCC35000DD1FE9 = {
 						CreatedOnToolsVersion = 7.1;
+						DevelopmentTeam = 44XXETDT6W;
 					};
 					809F96DA1CBCC35000DD1FE9 = {
 						CreatedOnToolsVersion = 7.1;
@@ -1302,7 +1303,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -1342,7 +1343,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1374,7 +1375,7 @@
 					"-lxml2",
 					"$(inherited)",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.exilant.makeit;
+				PRODUCT_BUNDLE_IDENTIFIER = com.exilant.makei;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Makeit-Bridging-Header.h";
@@ -1406,7 +1407,7 @@
 					"-lxml2",
 					"$(inherited)",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.exilant.makeit;
+				PRODUCT_BUNDLE_IDENTIFIER = com.exilant.makei;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Makeit-Bridging-Header.h";

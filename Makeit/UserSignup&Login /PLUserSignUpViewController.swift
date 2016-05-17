@@ -93,6 +93,9 @@ class PLUserSignUpViewController: UIViewController,UITextFieldDelegate
             self.presentViewController(alertController, animated:true, completion:nil)
 
         } else {
+            let alert = UIAlertView(title: title, message: message, delegate:nil, cancelButtonTitle:"Ok", otherButtonTitles:"") as UIAlertView
+            alert.show()
+
             // Fallback on earlier versions
         }
             }

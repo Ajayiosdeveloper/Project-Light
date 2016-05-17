@@ -9,10 +9,8 @@
 import UIKit
 import Quickblox
 
-class PLTeamCommunicationViewController: UIViewController,UITableViewDelegate,UITableViewDataSource,QBRTCClientDelegate {
-    
-    //
-    
+class PLTeamCommunicationViewController: UIViewController,UITableViewDelegate,UITableViewDataSource,QBRTCClientDelegate,UIAlertViewDelegate
+{
     var communicationType:Int!
     var currentSession:QBRTCSession!
     var communicationViewModel:PLTeamCommunicationViewModel!
@@ -21,16 +19,14 @@ class PLTeamCommunicationViewController: UIViewController,UITableViewDelegate,UI
     
     @IBOutlet var teamListTableView: UITableView!
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         self.teamListTableView.registerNib(UINib(nibName:"PLTableViewCell", bundle:NSBundle.mainBundle()), forCellReuseIdentifier: "Cell")
         teamListTableView.dataSource = self
         teamListTableView.delegate = self
-        
-        
     }
+    
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         if communicationType == 2{
@@ -188,20 +184,13 @@ class PLTeamCommunicationViewController: UIViewController,UITableViewDelegate,UI
                 
                 self!.communicationViewModel.createProjectGroup(self!.textFld.text!){[weak self] resu, chatGroup in
                     if resu{
-                        
                         self!.teamChatViewController.projectTeamChatViewModel.addChatGroup(chatGroup!)
-                        
                         self?.navigationController?.popViewControllerAnimated(true)
                     }
                     else{
                         print("Failed")
                     }
-                    
                 }
-                
-               
-               
-
             }
             
             let cancelAction = UIAlertAction(title:"Cancel", style: UIAlertActionStyle.Cancel, handler:nil)
@@ -211,15 +200,48 @@ class PLTeamCommunicationViewController: UIViewController,UITableViewDelegate,UI
                 // self?.textFld.frame = CGRect(x: 0.0, y: 0.0, width: 100.0, height: 30.0)
                 self?.textFld = textField
             }
-            
-             self.presentViewController(alertViewController, animated: true, completion: nil)
+              self.presentViewController(alertViewController, animated: true, completion: nil)
+        } else {
+            let alertView = UIAlertView(title: "Enter Group Name", message: "", delegate: self, cancelButtonTitle: nil, otherButtonTitles: "Ok", "Cancel")
+            alertView.tag = 1
+            alertView.show()
 
             
-        } else {
             // Fallback on earlier versions
         }
     }
     
+    func alertView(alertView: UIAlertView, clickedButtonAtIndex buttonIndex: Int) {
+        print(buttonIndex)
+        switch (alertView.tag)
+        {
+        case 1:
+            switch (buttonIndex) {
+            case 0:
+                print("Ok")
+                self.communicationViewModel.createProjectGroup(self.textFld.text!){[weak self] resu, chatGroup in
+                    if resu{
+                        self!.teamChatViewController.projectTeamChatViewModel.addChatGroup(chatGroup!)
+                        self?.navigationController?.popViewControllerAnimated(true)
+                    }
+                    else{
+                        print("Failed")
+                    }
+                }
+
+                alertView.show()
+            case 1:
+                print("Cancel")
+            default:
+                print("")
+            }
+            
+        default:
+            print("")
+        }
+        
+    }
+
 
 
     func startConference(){
