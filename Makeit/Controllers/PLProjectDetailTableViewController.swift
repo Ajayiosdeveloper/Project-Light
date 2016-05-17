@@ -290,7 +290,6 @@ class PLProjectDetailTableViewController: UITableViewController,EKEventEditViewD
     }
     
     func showEventEditViewController(){
-        
         let editViewController = EKEventEditViewController()
         editViewController.eventStore = EKEventStore()
         editViewController.editViewDelegate = self
@@ -319,7 +318,7 @@ class PLProjectDetailTableViewController: UITableViewController,EKEventEditViewD
             if PLSharedManager.manager.isCalendarAccess{
                 
                 showEventEditViewController()
-                
+                                
             }else{
             showCommitmentViewController()
              commitmentViewController.commitmentViewModel.commitment = projectDetailViewModel.selectedCommitmentFor(indexPath.row)
@@ -444,6 +443,7 @@ class PLProjectDetailTableViewController: UITableViewController,EKEventEditViewD
         catch {}
     }
 
-   
+    
+  
 
 }
