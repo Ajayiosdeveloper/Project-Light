@@ -503,6 +503,7 @@ class PLQuickbloxHttpClient
             chatGroup.name = name
             chatGroup.opponents = (createdDialog?.occupantIDs)!
             chatGroup.chatGroupId = (createdDialog?.roomJID)!
+            chatGroup.unReadMessageCount = 0
             completion(true,chatGroup)
             
         }) { (responce : QBResponse!) -> Void in
@@ -552,6 +553,7 @@ class PLQuickbloxHttpClient
                     chatGroup.name = self!.removeProjectIdFromChatGroupName((eachGroup.name)!)
                     chatGroup.chatGroupId = (eachGroup.ID)!
                     chatGroup.lastMessage = eachGroup.lastMessageText
+                    chatGroup.unReadMessageCount = eachGroup.unreadMessagesCount
                     if let _ = eachGroup.lastMessageDate{
                         chatGroup.lastMessageDate = NSDateFormatter.localizedStringFromDate(eachGroup.lastMessageDate!, dateStyle: NSDateFormatterStyle.MediumStyle, timeStyle: NSDateFormatterStyle.ShortStyle)
                     }

@@ -84,6 +84,18 @@ class PLProjectTeamChatViewController: UIViewController,UITableViewDelegate,UITa
         let cell = tableView.dequeueReusableCellWithIdentifier("Cell") as! PLTableViewCell
         cell.memberName.text = projectTeamChatViewModel.titleForRow(indexPath.row)
         cell.memberDetail.text = projectTeamChatViewModel.detailTitleForRow(indexPath.row)
+        let unreadMessages = projectTeamChatViewModel.getUnreadMessageCoutAtIndex(indexPath.row)
+        if unreadMessages == "0"{
+            cell.messageCountLabel.hidden = true
+            cell.countHostingView.hidden = true
+            cell.memberDetail.textColor = UIColor.blackColor()
+        }else{
+            cell.messageCountLabel.hidden = false
+            cell.countHostingView.hidden = false
+            cell.memberDetail.textColor = enableButtonColor
+            cell.messageCountLabel.text = unreadMessages
+        }
+       
         cell.teamMemberProfile.image = UIImage(named:"chatGroup")
         cell.accessoryType = .DisclosureIndicator
         return cell

@@ -78,6 +78,7 @@ class PLChatGroup:NSObject{
     var lastMessage:String? = ""
     var lastMessageSenderId:UInt? = 0
     var lastMessageDate:String? = ""
+    var unReadMessageCount:UInt = 0
     
 }
 class PLSharedManager:NSObject{
