@@ -177,14 +177,6 @@ class PLProjectCommentViewController: UITableViewController,EKEventEditViewDeleg
     }
     
     
-    func fetchEvents(startDate:NSDate,endDate:NSDate,completed: ( NSMutableArray) -> ())
-    {
-        let eventStore = EKEventStore()
-        let calendar = EKCalendar(forEntityType:.Event, eventStore: eventStore)
-        let predicate = eventStore.predicateForEventsWithStartDate(NSDate(), endDate:NSDate(), calendars:[calendar])
-        let events = NSMutableArray(array:eventStore.eventsMatchingPredicate(predicate))
-        completed(events)
-    }
-    
+       
    }
 

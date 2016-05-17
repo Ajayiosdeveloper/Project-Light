@@ -317,8 +317,17 @@ class PLProjectDetailTableViewController: UITableViewController,EKEventEditViewD
         {
             if PLSharedManager.manager.isCalendarAccess{
                 
-                showEventEditViewController()
-                                
+                //showEventEditViewController()
+                
+                //fetchEvents(<#T##startDate: NSDate##NSDate#>, endDate: <#T##NSDate#>, completed: <#T##(NSMutableArray) -> ()#>)
+                
+                let commitment = projectDetailViewModel.selectedCommitmentFor(indexPath.row)
+                
+                print("Its coming Here")
+                print(commitment!.name)
+                print(commitment!.startDate)
+                print(commitment!.targetDate)
+
             }else{
             showCommitmentViewController()
              commitmentViewController.commitmentViewModel.commitment = projectDetailViewModel.selectedCommitmentFor(indexPath.row)
@@ -443,7 +452,15 @@ class PLProjectDetailTableViewController: UITableViewController,EKEventEditViewD
         catch {}
     }
 
-    
+    func fetchEvents(startDate: NSDate,endDate: NSDate,completed: ( NSMutableArray) -> ())
+    {
+        let eventStore = EKEventStore()
+        let calendar = EKCalendar(forEntityType:.Event, eventStore: eventStore)
+        let predicate = eventStore.predicateForEventsWithStartDate(startDate, endDate:endDate, calendars:[calendar])
+        let events = NSMutableArray(array:eventStore.eventsMatchingPredicate(predicate))
+        completed(events)
+    }
+
   
 
 }
