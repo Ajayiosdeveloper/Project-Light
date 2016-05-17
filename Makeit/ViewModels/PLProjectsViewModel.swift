@@ -23,8 +23,7 @@ class PLProjectsViewModel: NSObject {
    
     func fetchProjectsFromRemote() {
         
-        
-        quickBloxClient.countOfTodayCommitments()
+   
         
         createdProjectList.removeAll(keepCapacity: true)
         contributingProjectList.removeAll(keepCapacity: true)
@@ -225,6 +224,8 @@ class PLProjectsViewModel: NSObject {
 
                  let loggedInId = QBSession.currentSession().currentUser?.ID
                
+                
+                if let _ = members{
                 for each in members! {
                     
                     let member_user_id = each.fields?.objectForKey("member_User_Id") as! UInt
@@ -243,7 +244,7 @@ class PLProjectsViewModel: NSObject {
                         teamMembers.append(member)
                     }
                 }
-                
+            }
                 let creatorId = PLTeamMember.creatorDetails!["creatorUserId"] as! UInt
                 
                 if  creatorId != loggedInId{
@@ -276,8 +277,8 @@ class PLProjectsViewModel: NSObject {
                 }
                 else{
                     completion(false)
-                }
-            }
+        }
+        }
     }
     
     
@@ -313,4 +314,47 @@ class PLProjectsViewModel: NSObject {
             }
         }
      }
+    
+    func getTodayTasksCount(completion:(String)->Void){
+        
+        quickBloxClient.countOfTodayCommitments(){ count in
+            
+            if count == 0{
+                completion(String(0))
+            }else{
+                
+                completion(String(count))
+            }
+        
+        }
+        
+        
+    }
+    
+    func getUPcomingTasksCount(completion:(String)->Void){
+        
+        quickBloxClient.countOfUpComingCommitments()
+        { count in
+            if count == 0{
+                completion(String(0))
+            }else{
+                
+                completion(String(count))
+            }
+        }
+    }
+    
+    func getPendingTasksCount(completion:(String)->Void){
+        
+        quickBloxClient.contOfPendingTasks(){ count in
+            if count == 0{
+                completion(String(0))
+            }else{
+                
+                completion(String(count))
+            }
+        }
+        
+    }
+    
 }

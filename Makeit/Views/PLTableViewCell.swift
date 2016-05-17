@@ -13,10 +13,15 @@ class PLTableViewCell: UITableViewCell {
     @IBOutlet var teamMemberProfile: UIImageView!
     @IBOutlet var memberName: UILabel!
     @IBOutlet var memberDetail: UILabel!
+    @IBOutlet var countHostingView: UIView!
+    @IBOutlet var messageCountLabel: UILabel!
+    
+    
     
     
     override func awakeFromNib() {
         super.awakeFromNib()
+      
     }
 
     override func setSelected(selected: Bool, animated: Bool) {

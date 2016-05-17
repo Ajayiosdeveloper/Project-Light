@@ -37,6 +37,12 @@ class PLProjectTeamChatViewModel: NSObject {
         
     }
     
+    func getUnreadMessageCoutAtIndex(row:Int)->String{
+        
+        let group = projectChatGroupsList[row]
+        return String(group.unReadMessageCount)
+    }
+    
     func detailTitleForRow(row:Int)->String{
         
         let group = projectChatGroupsList[row]

@@ -47,7 +47,7 @@ class PLProjectDetailViewModel: NSObject {
         return member.fullName
     }
     
-    func contributorEmailForRowAtIndexPath(row:Int)->String
+   func contributorEmailForRowAtIndexPath(row:Int)->String
     {
         let member = contributors[row]
         
