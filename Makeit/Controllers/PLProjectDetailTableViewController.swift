@@ -316,26 +316,33 @@ class PLProjectDetailTableViewController: UITableViewController,EKEventEditViewD
         }
         else if indexPath.section  == 1
         {
-                if PLSharedManager.manager.isCalendarAccess{
+          let commitment = projectDetailViewModel.selectedCommitmentFor(indexPath.row)
+            
+        if PLSharedManager.manager.isCalendarAccess{
                 
                 showEventEditViewController()
                 
-                //fetchEvents(<#T##startDate: NSDate##NSDate#>, endDate: <#T##NSDate#>, completed: <#T##(NSMutableArray) -> ()#>)
+                 fetchEvents(NSDate(), endDate:NSDate(), completed: { (events) in
+                    
+                    print(events.count)
+                    
+                    for x in events{
+                        
+                        let y = x as! EKEvent
+                       
+                        print(y.title)
+                        print(y.startDate)
+                        print(y.endDate)
+                        print(y.notes)
+                    }
+                })
+            
+            if commitment!.isCompleted == 0{
                 
-                let commitment = projectDetailViewModel.selectedCommitmentFor(indexPath.row)
-                
-                print("Its coming Here")
-                print(commitment!.name)
-                print(commitment!.startDate)
-                print(commitment!.targetDate)
-                print(commitment!.isCompleted)
-                
-                if commitment!.isCompleted == 0{
-                
-                self.performSelector(#selector(PLProjectDetailTableViewController.showTaskCompletePopup), withObject:nil, afterDelay:5)
+               //self.performSelector(#selector(PLProjectDetailTableViewController.showTaskCompletePopup), withObject:nil, afterDelay:5)
                 }
-
-            }else{
+            }
+        else{
                  
             showCommitmentViewController()
              commitmentViewController.commitmentViewModel.commitment = projectDetailViewModel.selectedCommitmentFor(indexPath.row)
@@ -444,7 +451,7 @@ class PLProjectDetailTableViewController: UITableViewController,EKEventEditViewD
             
             try commitmentViewModel.commitmentValidations(title,startDate: startDate,targetDate:targetDate, description:description)
             
-              commitmentViewModel.addCommitmentToCalendar(title, date:targetDate)
+              commitmentViewModel.addCommitmentToCalendar(title, date:startDate,endDate: targetDate)
               commitmentViewModel.createCommitmentWith(title,startDate: startDate,targetDate:targetDate,description:description ,projectId: projectId){ result in
                 
                 if result{
@@ -463,7 +470,8 @@ class PLProjectDetailTableViewController: UITableViewController,EKEventEditViewD
     func fetchEvents(startDate: NSDate,endDate: NSDate,completed: ( NSMutableArray) -> ())
     {
         let eventStore = EKEventStore()
-        let calendar = EKCalendar(forEntityType:.Event, eventStore: eventStore)
+        let calendar = eventStore.defaultCalendarForNewEvents
+       
         let predicate = eventStore.predicateForEventsWithStartDate(startDate, endDate:endDate, calendars:[calendar])
         let events = NSMutableArray(array:eventStore.eventsMatchingPredicate(predicate))
         completed(events)

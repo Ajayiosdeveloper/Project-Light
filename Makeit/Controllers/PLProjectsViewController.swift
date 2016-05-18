@@ -171,7 +171,7 @@ class PLProjectsViewController: UITableViewController,UIImagePickerControllerDel
     
          if indexPath.section == 2{
              let cell = tableView.dequeueReusableCellWithIdentifier("Cell")! as UITableViewCell
-             cell.textLabel?.text = "Improve Profile"
+             cell.textLabel?.text = "Improve Your Profile"
              cell.textLabel?.textColor = enableButtonColor
              cell.detailTextLabel?.text = ""
             return cell
