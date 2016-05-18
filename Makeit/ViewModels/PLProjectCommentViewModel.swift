@@ -46,6 +46,14 @@ class PLProjectCommentViewModel: NSObject {
         return stringToDate!
     }
     
+    func completedTask(commitmentId:String,completed: Bool, completion:(Bool)->Void)
+    {
+        qbClient.updateCommitmentTask(commitmentId,isCompleted: completed) { (result) in
+            completion(result)
+        }
+    }
+    
+    
     func timeFormat(date: NSDate) -> String
     {
         let formatter = NSDateFormatter()
@@ -105,6 +113,16 @@ class PLProjectCommentViewModel: NSObject {
     func commitmentDescription() -> String {
         
         return commitment!.details
+    }
+    
+    func commitmentId() -> String {
+        
+        return commitment!.commitmentId
+    }
+    
+    func commitmentStatus() -> Int {
+        
+        return commitment!.isCompleted
     }
     
     func priorityDataCount()->Int{

@@ -230,6 +230,30 @@ class PLQuickbloxHttpClient
         }
     }
     
+    func updateCommitmentTask(commitmentId:String,isCompleted : Bool,completion:(Bool)->Void)
+    {
+        let updateObject = QBCOCustomObject()
+            updateObject.className = "PLProjectCommitment"
+            updateObject.ID = commitmentId
+            updateObject.parentID = PLSharedManager.manager.projectId
+            updateObject.fields?.setObject(1, forKey: "isCompleted")
+        QBRequest.updateObject(updateObject, successBlock: { (respinse, object) in
+                        completion(true)
+                        }) { (res) in
+                            completion(false)
+                   
+        }
+        
+        
+//        let customObject = QBCOCustomObject()
+//         customObject.fields?.setValue(isCompleted, forKey: "isCompleted")
+//        QBRequest.updateObject(customObject, successBlock: { (respinse, object) in
+//            completion(true)
+//            }) { (res) in
+//                completion(false)
+//        }
+    }
+    
     //Create Assignment for Project in QuickBlox
     
     func createAssignmentForProject(id:String,startDate: Int, targetDate:Int, name:String,description:String,assignees:[String],assigneeUserIds:[UInt],startTime : String, endTime: String, completion:(Bool)->Void) {
