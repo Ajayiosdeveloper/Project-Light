@@ -39,11 +39,11 @@ class PLProjectCommentViewController: UITableViewController,EKEventEditViewDeleg
         commitmentPriorityTextField.text = "Critical"
         addDoneBarButtonItem()
         startDatecommitmentDatePicker = UIDatePicker()
-        startDatecommitmentDatePicker.datePickerMode = .Date
+        startDatecommitmentDatePicker.datePickerMode = .DateAndTime
         self.commitmentTargetDateTextField.inputView = startDatecommitmentDatePicker
         startDateDoneButtonToDatePicker()
         targetDatecommitmentDatePicker = UIDatePicker()
-        targetDatecommitmentDatePicker.datePickerMode = .Date
+        targetDatecommitmentDatePicker.datePickerMode = .DateAndTime
         self.commitmentEndDateTextField.inputView = targetDatecommitmentDatePicker
         targetDateDoneButtonToDatePicker()
        }
@@ -120,7 +120,7 @@ class PLProjectCommentViewController: UITableViewController,EKEventEditViewDeleg
     func dateSelection()
     {
         commitmentTargetDateTextField.resignFirstResponder()
-        commitmentTargetDateTextField.text = NSDateFormatter.localizedStringFromDate(startDatecommitmentDatePicker.date, dateStyle: NSDateFormatterStyle.MediumStyle, timeStyle: NSDateFormatterStyle.NoStyle)
+        commitmentTargetDateTextField.text = NSDateFormatter.localizedStringFromDate(startDatecommitmentDatePicker.date, dateStyle: NSDateFormatterStyle.MediumStyle, timeStyle: NSDateFormatterStyle.ShortStyle)
         commitmentEndDateTextField.becomeFirstResponder()
     }
     
@@ -137,7 +137,7 @@ class PLProjectCommentViewController: UITableViewController,EKEventEditViewDeleg
     func peformTargetDateSelection()
     {
         commitmentEndDateTextField.resignFirstResponder()
-        commitmentEndDateTextField.text = NSDateFormatter.localizedStringFromDate(targetDatecommitmentDatePicker.date, dateStyle: NSDateFormatterStyle.MediumStyle, timeStyle: NSDateFormatterStyle.NoStyle)
+        commitmentEndDateTextField.text = NSDateFormatter.localizedStringFromDate(targetDatecommitmentDatePicker.date, dateStyle: NSDateFormatterStyle.MediumStyle, timeStyle: NSDateFormatterStyle.ShortStyle)
         commitmentPriorityTextField.becomeFirstResponder()
     }
 

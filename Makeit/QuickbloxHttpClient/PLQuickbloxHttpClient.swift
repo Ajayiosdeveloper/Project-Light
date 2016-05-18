@@ -243,15 +243,6 @@ class PLQuickbloxHttpClient
                             completion(false)
                    
         }
-        
-        
-//        let customObject = QBCOCustomObject()
-//         customObject.fields?.setValue(isCompleted, forKey: "isCompleted")
-//        QBRequest.updateObject(customObject, successBlock: { (respinse, object) in
-//            completion(true)
-//            }) { (res) in
-//                completion(false)
-//        }
     }
     
     //Create Assignment for Project in QuickBlox
@@ -503,8 +494,8 @@ class PLQuickbloxHttpClient
                     let plAssignment = PLAssignment()
                     plAssignment.name = assignment.fields?.objectForKey("name") as! String
                     plAssignment.details = assignment.fields?.objectForKey("description") as! String
-                 //   plAssignment.targetDate = assignment.fields?.objectForKey("targetDate") as! String
-                  //  plAssignment.startDate = assignment.fields?.objectForKey("startDate") as! String
+                    plAssignment.targetDate = assignment.fields?.objectForKey("targetDate") as! String
+                    plAssignment.startDate = assignment.fields?.objectForKey("startDate") as! String
                     plAssignment.assineesUserIds = assignment.fields?.objectForKey("assigneeUserId") as! [UInt]
                     assigmnents.append(plAssignment)
                 }
@@ -851,31 +842,51 @@ class PLQuickbloxHttpClient
         }
     }
     
-    func tasksWithType(type : String, completion:( _ : [QBCOCustomObject]?)->Void){
+//    func tasksWithType(type : String, completion:( _ : [QBCOCustomObject]?)->Void){
+//        
+//        let extendedReq = NSMutableDictionary()
+//        let taskLimit =  Int(convertdateToTimeinterval(NSDate(),dateFormat: "dd-MM-yyyy"))
+//        if type == "targetDate[lt]"
+//        {
+//             extendedReq.setValue(0, forKey: "isCompleted")
+//        }
+//        extendedReq.setValue(taskLimit, forKey: type)
+//        extendedReq.setValue(QBSession.currentSession().currentUser?.ID, forKey: "user_id")
+//      QBRequest.objectsWithClassName("PLProjectCommitment", extendedRequest: extendedReq, successBlock: { (_, objects, _) in
+//        
+//        completion(objects)
+//        
+//        print(objects)
+//        }) { (res) in
+//            
+//            print("Error is \(res)")
+//        }
+//    }
+    func tasksWithType(type : String, completion:([QBCOCustomObject]?)->Void){
         
         let extendedReq = NSMutableDictionary()
-        let taskLimit =  Int(convertdateToTimeinterval(NSDate()))
+        let taskLimit =  Int(convertdateToTimeinterval(NSDate(),dateFormat: "dd-MM-yyyy"))
         if type == "targetDate[lt]"
         {
-             extendedReq.setValue(0, forKey: "isCompleted")
+            extendedReq.setValue(0, forKey: "isCompleted")
         }
         extendedReq.setValue(taskLimit, forKey: type)
         extendedReq.setValue(QBSession.currentSession().currentUser?.ID, forKey: "user_id")
-      QBRequest.objectsWithClassName("PLProjectCommitment", extendedRequest: extendedReq, successBlock: { (_, objects, _) in
-        
-        completion(objects)
-        
-        print(objects)
+        QBRequest.objectsWithClassName("PLProjectCommitment", extendedRequest: extendedReq, successBlock: { (_, objects, _) in
+           
+            completion(objects)
+            
         }) { (res) in
             
             print("Error is \(res)")
+            completion(nil)
         }
     }
-    
+
     
     
        func countOfUpComingCommitments(completion:(UInt)->Void){
-        let timeInterval = Int(convertdateToTimeinterval(NSDate()))
+        let timeInterval = Int(convertdateToTimeinterval(NSDate(),dateFormat: "dd-MM-yyyy"))
         let extendedReq = NSMutableDictionary()
         extendedReq.setValue(timeInterval, forKey: "startDate[gt]")
         extendedReq.setValue(QBSession.currentSession().currentUser?.ID, forKey: "user_id")

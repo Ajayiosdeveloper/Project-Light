@@ -16,7 +16,6 @@ class PLSidebarMenuViewController: UIViewController,UIImagePickerControllerDeleg
     @IBOutlet weak var sideBarTableView: UITableView!
     
     var projectViewModel:PLProjectsViewModel = PLProjectsViewModel()
-    var sidebarViewModel = PLSidebarViewModel()
     var tapGestureRecognizer : UITapGestureRecognizer?
     var imagePicker = UIImagePickerController()
     var taskList = [String]()
@@ -56,7 +55,7 @@ class PLSidebarMenuViewController: UIViewController,UIImagePickerControllerDeleg
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-    }
+            }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -162,31 +161,42 @@ class PLSidebarMenuViewController: UIViewController,UIImagePickerControllerDeleg
         
         if indexPath.section == 0
         {
+            let taskViewController : PLTaskViewController? = self.storyboard?.instantiateViewControllerWithIdentifier("TaskViewController") as? PLTaskViewController
+            let nav = UINavigationController(rootViewController: taskViewController!)
+            self.presentViewController(nav, animated: true, completion: nil)
+
             switch indexPath.row
             {
+                
             case 0:
-                sidebarViewModel.getTodaysTasks()
+             taskViewController!.selectedType = 0
+                
             case 1:
-                sidebarViewModel.getUpcomingTasks()
+               
+                taskViewController!.selectedType = 1
             case 2:
-                sidebarViewModel.getPendingTasks()
+             
+               taskViewController!.selectedType = 2
             default: print("")
+           
             }
             
-          // let taskViewController : PLTaskViewController? = self.storyboard?.instantiateViewControllerWithIdentifier("TaskViewController") as? PLTaskViewController
-           
+            
            
         }
-        
         if indexPath.section == 2
         {
             print("Logout Action")
             var signUpViewController : PLUserLoginViewController? = self.storyboard?.instantiateViewControllerWithIdentifier("PLUserSignupAndLoginViewController") as? PLUserLoginViewController
-          self.presentViewController(signUpViewController!, animated: true, completion: nil)
-          signUpViewController = nil
+            self.presentViewController(signUpViewController!, animated: true, completion: nil)
+            signUpViewController = nil
         }
-    }
+        
+}
+   
     
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+           }
     
     func editUserProfilePicture()
     {
