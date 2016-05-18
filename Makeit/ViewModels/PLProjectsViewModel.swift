@@ -24,7 +24,7 @@ class PLProjectsViewModel: NSObject {
     func fetchProjectsFromRemote() {
         
    
-        
+     
         createdProjectList.removeAll(keepCapacity: true)
         contributingProjectList.removeAll(keepCapacity: true)
         quickBloxClient.fetchContributingProjectsOfUser{(res) in
@@ -352,6 +352,19 @@ class PLProjectsViewModel: NSObject {
                 completion(String(0))
             }else{
                 
+                completion(String(count))
+            }
+        }
+        
+    }
+    
+    func getBirthdaysCount(completion:(String)->Void){
+        
+        quickBloxClient.findBirthdays(){ count in
+            
+            if count == 0{
+                completion(String(0))
+            }else{
                 completion(String(count))
             }
         }
