@@ -161,7 +161,9 @@
 		80DE821D1CC0D87700D5017A /* PLUserSignupAndLoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80DE821C1CC0D87700D5017A /* PLUserSignupAndLoginViewModel.swift */; };
 		80ED65A41CE09F4600C61090 /* AFDropdownNotification.m in Sources */ = {isa = PBXBuildFile; fileRef = 80ED65A31CE09F4600C61090 /* AFDropdownNotification.m */; };
 		80ED65A61CE0B36900C61090 /* emptyMessages.png in Resources */ = {isa = PBXBuildFile; fileRef = 80ED65A51CE0B36900C61090 /* emptyMessages.png */; };
+		9419F5DD1CEC453400A0B341 /* PLTaskViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9419F5DC1CEC453400A0B341 /* PLTaskViewController.swift */; };
 		9439811D1CE45603000B362E /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9439811C1CE45603000B362E /* Social.framework */; };
+		945E443C1CEC551A00A024BC /* PLSidebarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 945E443B1CEC551A00A024BC /* PLSidebarViewModel.swift */; };
 		946DA8331CE3474100FF7AB9 /* close.png in Resources */ = {isa = PBXBuildFile; fileRef = 946DA8311CE3474100FF7AB9 /* close.png */; };
 		946DA8341CE3474100FF7AB9 /* close@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 946DA8321CE3474100FF7AB9 /* close@2x.png */; };
 		948382D51CE3302200B51BA6 /* PLUserSignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948382D31CE3302200B51BA6 /* PLUserSignUpViewController.swift */; };
@@ -378,7 +380,9 @@
 		80ED65A31CE09F4600C61090 /* AFDropdownNotification.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFDropdownNotification.m; sourceTree = "<group>"; };
 		80ED65A51CE0B36900C61090 /* emptyMessages.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = emptyMessages.png; sourceTree = "<group>"; };
 		845C10BAD4397155B390B307 /* libPods-Makeit.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Makeit.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		9419F5DC1CEC453400A0B341 /* PLTaskViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLTaskViewController.swift; sourceTree = "<group>"; };
 		9439811C1CE45603000B362E /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
+		945E443B1CEC551A00A024BC /* PLSidebarViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLSidebarViewModel.swift; sourceTree = "<group>"; };
 		946DA8311CE3474100FF7AB9 /* close.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = close.png; sourceTree = "<group>"; };
 		946DA8321CE3474100FF7AB9 /* close@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "close@2x.png"; sourceTree = "<group>"; };
 		948382D31CE3302200B51BA6 /* PLUserSignUpViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLUserSignUpViewController.swift; sourceTree = "<group>"; };
@@ -608,6 +612,7 @@
 				80485F071CD4B19700F49209 /* PLTeamCommunicationViewController.swift */,
 				808A52441CD71CCB0032ED0D /* PLProjectTeamChatViewController.swift */,
 				802468581CDA2F3F00CAE735 /* PLChatDetailViewController.swift */,
+				9419F5DC1CEC453400A0B341 /* PLTaskViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -634,6 +639,7 @@
 				80485F051CD4B14800F49209 /* PLTeamCommunicationViewModel.swift */,
 				808A52461CD71CF20032ED0D /* PLProjectTeamChatViewModel.swift */,
 				80C61B9E1CDB64900022CAFA /* PLChatDetailViewModel.swift */,
+				945E443B1CEC551A00A024BC /* PLSidebarViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -1139,6 +1145,7 @@
 				8074F7371CE4423D00CAADB9 /* Popup.m in Sources */,
 				80C4A0091CDCBB500073B6E2 /* JSQMessageBubbleImageDataSource.swift in Sources */,
 				80C4A0111CDCBB500073B6E2 /* JSQVideoMediaItem.swift in Sources */,
+				945E443C1CEC551A00A024BC /* PLSidebarViewModel.swift in Sources */,
 				80C4A0031CDCBB500073B6E2 /* JSQMessagesCollectionViewFlowLayoutInvalidationContext.swift in Sources */,
 				806B1E411CD8AA080018B026 /* UIImageView+HighlightedWebCache.m in Sources */,
 				806B1E381CD8AA080018B026 /* SDWebImageDecoder.m in Sources */,
@@ -1175,6 +1182,7 @@
 				8066356D1CE0BAD900D21103 /* PLUserProfileInfoTableViewController.swift in Sources */,
 				8078A46D1CC88C11008AC4DD /* PLProjectDetailViewModel.swift in Sources */,
 				948382D51CE3302200B51BA6 /* PLUserSignUpViewController.swift in Sources */,
+				9419F5DD1CEC453400A0B341 /* PLTaskViewController.swift in Sources */,
 				8066356F1CE0BB0400D21103 /* PLUserProfileInfoViewModel.swift in Sources */,
 				806D4AD51CC1FF110054A9AF /* PLQuickbloxHttpClient.swift in Sources */,
 				802468591CDA2F3F00CAE735 /* PLChatDetailViewController.swift in Sources */,
