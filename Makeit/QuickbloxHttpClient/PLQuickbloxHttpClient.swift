@@ -23,6 +23,7 @@ class PLQuickbloxHttpClient
         user.password = password
         user.email = email
         user.customData = "Avatar"
+        user.phone = "000000"
         SVProgressHUD.showWithStatus("Signing up")
         QBRequest.signUp(user, successBlock: { (response, retrievedUser) -> Void in
             
@@ -809,7 +810,7 @@ class PLQuickbloxHttpClient
     let extendedReq = NSMutableDictionary()
         
         
-        let timeInterval = Int(convertdateToTimeinterval(NSDate()))
+        let timeInterval = Int(convertdateToTimeinterval(NSDate(),dateFormat: "dd-MM-yyyy"))
         extendedReq.setValue(timeInterval, forKey: "startDate")
         extendedReq.setValue(QBSession.currentSession().currentUser?.ID, forKey: "user_id")
         QBRequest.countObjectsWithClassName("PLProjectCommitment", extendedRequest: extendedReq, successBlock: { (res, count) in
@@ -828,7 +829,7 @@ class PLQuickbloxHttpClient
     
     
     func countOfUpComingCommitments(completion:(UInt)->Void){
-        let timeInterval = Int(convertdateToTimeinterval(NSDate()))
+        let timeInterval = Int(convertdateToTimeinterval(NSDate(),dateFormat: "dd-MM-yyyy"))
         let extendedReq = NSMutableDictionary()
         extendedReq.setValue(timeInterval, forKey: "startDate[gt]")
         extendedReq.setValue(QBSession.currentSession().currentUser?.ID, forKey: "user_id")
@@ -848,7 +849,7 @@ class PLQuickbloxHttpClient
     }
     
     func contOfPendingTasks(completion:(UInt)->Void){
-        let timeInterval = Int(convertdateToTimeinterval(NSDate()))
+        let timeInterval = Int(convertdateToTimeinterval(NSDate(),dateFormat: "dd-MM-yyyy"))
         let extendedReq = NSMutableDictionary()
         extendedReq.setValue(timeInterval, forKey: "endDate[lt]")
         extendedReq.setValue(QBSession.currentSession().currentUser?.ID, forKey: "user_id")
@@ -868,10 +869,32 @@ class PLQuickbloxHttpClient
 
     }
     
-    func convertdateToTimeinterval(date : NSDate) -> NSTimeInterval
+    
+    func findBirthdays(completion:(UInt)->Void){
+        
+    let timeInterval = Int(convertdateToTimeinterval(NSDate(),dateFormat: "dd-MM"))
+        
+        let extendedReq = NSMutableDictionary()
+        extendedReq.setValue(timeInterval, forKey: "birthday")
+        extendedReq.setValue(QBSession.currentSession().currentUser?.ID, forKey: "user_id")
+        QBRequest.countObjectsWithClassName("PLProjectMember", extendedRequest: extendedReq, successBlock: { (_, count) in
+            
+            print("Here the Birthday Count")
+            print(count)
+            completion(count)
+          
+            
+        }){ (res) in
+            
+          completion(0)
+        }
+     }
+    
+    
+    func convertdateToTimeinterval(date : NSDate,dateFormat:String) -> NSTimeInterval
     {
         let dateFormatter = NSDateFormatter()
-        dateFormatter.dateFormat = "dd-MM-yyyy"
+        dateFormatter.dateFormat = dateFormat
         dateFormatter.timeZone = NSTimeZone(forSecondsFromGMT: NSTimeZone.localTimeZone().secondsFromGMT)
         
         let stringDate = dateFormatter.stringFromDate(date)
@@ -880,6 +903,18 @@ class PLQuickbloxHttpClient
         return stringToDate!
     }
     
-   
+    func saveUserBirthday(interval:UInt){
+        
+        let user = QBUpdateUserParameters()
+        user.phone = String(interval)
+        QBRequest.updateCurrentUser(user, successBlock: { (_, _) in
+            
+            print("PRAISE THE LORD")
+            
+            }) { (_) in
+                
+                print("Hello")
+        }
+    }
     
 }

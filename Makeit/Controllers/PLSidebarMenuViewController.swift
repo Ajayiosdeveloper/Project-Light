@@ -138,6 +138,11 @@ class PLSidebarMenuViewController: UIViewController,UIImagePickerControllerDeleg
         {
           cell.nameLabel?.text = "Birthdays"
           cell.imageIcon?.image = UIImage(named:"Birthday.png")
+          
+            projectViewModel.getBirthdaysCount(){ countString in
+                
+                cell.countLabel.text = countString
+        }
             
         }else if indexPath.section == 2{
             
