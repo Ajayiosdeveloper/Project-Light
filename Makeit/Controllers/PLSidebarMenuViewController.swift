@@ -16,6 +16,7 @@ class PLSidebarMenuViewController: UIViewController,UIImagePickerControllerDeleg
     @IBOutlet weak var sideBarTableView: UITableView!
     
     var projectViewModel:PLProjectsViewModel = PLProjectsViewModel()
+    var sidebarViewModel = PLSidebarViewModel()
     var tapGestureRecognizer : UITapGestureRecognizer?
     var imagePicker = UIImagePickerController()
     var taskList = [String]()
@@ -100,9 +101,6 @@ class PLSidebarMenuViewController: UIViewController,UIImagePickerControllerDeleg
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell
     {
         let cell = tableView.dequeueReusableCellWithIdentifier("Cell") as! PLSideBarTableViewCell
-        
-        
-        
         cell.accessoryType = .DisclosureIndicator
         if indexPath.section == 0
         {
@@ -156,9 +154,27 @@ class PLSidebarMenuViewController: UIViewController,UIImagePickerControllerDeleg
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        
+        if indexPath.section == 0
+        {
+            switch indexPath.row
+            {
+            case 0:
+                sidebarViewModel.getTodaysTasks()
+            case 1:
+                sidebarViewModel.getUpcomingTasks()
+            case 2:
+                sidebarViewModel.getPendingTasks()
+            default: print("")
+            }
+            
+          // let taskViewController : PLTaskViewController? = self.storyboard?.instantiateViewControllerWithIdentifier("TaskViewController") as? PLTaskViewController
+           
+           
+        }
+        
         if indexPath.section == 2
         {
-            //self.projectViewModel.performLogout()
             print("Logout Action")
             var signUpViewController : PLUserLoginViewController? = self.storyboard?.instantiateViewControllerWithIdentifier("PLUserSignupAndLoginViewController") as? PLUserLoginViewController
           self.presentViewController(signUpViewController!, animated: true, completion: nil)

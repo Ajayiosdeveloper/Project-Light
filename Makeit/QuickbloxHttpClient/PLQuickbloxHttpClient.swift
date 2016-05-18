@@ -850,8 +850,30 @@ class PLQuickbloxHttpClient
         }
     }
     
+    func tasksWithType(type : String, completion:( _ : [QBCOCustomObject]?)->Void){
+        
+        let extendedReq = NSMutableDictionary()
+        let taskLimit =  Int(convertdateToTimeinterval(NSDate()))
+        if type == "targetDate[lt]"
+        {
+             extendedReq.setValue(0, forKey: "isCompleted")
+        }
+        extendedReq.setValue(taskLimit, forKey: type)
+        extendedReq.setValue(QBSession.currentSession().currentUser?.ID, forKey: "user_id")
+      QBRequest.objectsWithClassName("PLProjectCommitment", extendedRequest: extendedReq, successBlock: { (_, objects, _) in
+        
+        completion(objects)
+        
+        print(objects)
+        }) { (res) in
+            
+            print("Error is \(res)")
+        }
+    }
     
-    func countOfUpComingCommitments(completion:(UInt)->Void){
+    
+    
+       func countOfUpComingCommitments(completion:(UInt)->Void){
         let timeInterval = Int(convertdateToTimeinterval(NSDate()))
         let extendedReq = NSMutableDictionary()
         extendedReq.setValue(timeInterval, forKey: "startDate[gt]")
@@ -874,7 +896,7 @@ class PLQuickbloxHttpClient
     func contOfPendingTasks(completion:(UInt)->Void){
         let timeInterval = Int(convertdateToTimeinterval(NSDate()))
         let extendedReq = NSMutableDictionary()
-        extendedReq.setValue(timeInterval, forKey: "endDate[lt]")
+        extendedReq.setValue(timeInterval, forKey: "targetDate[lt]")
         extendedReq.setValue(QBSession.currentSession().currentUser?.ID, forKey: "user_id")
         extendedReq.setValue(0, forKey: "isCompleted")
         QBRequest.countObjectsWithClassName("PLProjectCommitment", extendedRequest: extendedReq, successBlock: { (_, count) in

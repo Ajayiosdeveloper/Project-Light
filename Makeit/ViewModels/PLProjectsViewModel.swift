@@ -315,6 +315,7 @@ class PLProjectsViewModel: NSObject {
         }
      }
     
+    
     func getTodayTasksCount(completion:(String)->Void){
         
         quickBloxClient.countOfTodayCommitments(){ count in

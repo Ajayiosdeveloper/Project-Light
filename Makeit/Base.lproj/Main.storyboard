@@ -434,7 +434,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5tl-Vp-lZ4" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="283" y="1168"/>
+            <point key="canvasLocation" x="255" y="1173"/>
         </scene>
         <!--Project Comment View Controller-->
         <scene sceneID="HqD-8u-lXe">
@@ -592,7 +592,7 @@
                                                         <constraint firstAttribute="height" constant="21" id="gNl-Ix-l9U"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="OYa-pC-TNn">
@@ -725,7 +725,7 @@
                                             <constraint firstAttribute="height" constant="21" id="T2p-Oc-tvp"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="BSD-Bn-7f0">
@@ -844,6 +844,50 @@
             </objects>
             <point key="canvasLocation" x="2569" y="496"/>
         </scene>
+        <!--Task View Controller-->
+        <scene sceneID="ZYg-kc-zsY">
+            <objects>
+                <viewController storyboardIdentifier="TaskViewController" id="HVS-JE-f0V" customClass="PLTaskViewController" customModule="Makeit" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="BQ4-hA-HFJ"/>
+                        <viewControllerLayoutGuide type="bottom" id="7hb-iz-aov"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Kaq-Na-pHQ">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="vYC-P6-cae">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Cell" id="dlw-Zt-KC1">
+                                        <rect key="frame" x="0.0" y="28" width="600" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="dlw-Zt-KC1" id="E4A-4c-2Ba">
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="HVS-JE-f0V" id="CMe-lN-x9t"/>
+                                    <outlet property="delegate" destination="HVS-JE-f0V" id="vfN-JY-fkf"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="vYC-P6-cae" firstAttribute="centerX" secondItem="Kaq-Na-pHQ" secondAttribute="centerX" id="4g4-zt-Jl9"/>
+                            <constraint firstItem="vYC-P6-cae" firstAttribute="centerY" secondItem="Kaq-Na-pHQ" secondAttribute="centerY" id="Iao-Hs-ZWN"/>
+                            <constraint firstItem="vYC-P6-cae" firstAttribute="bottom" secondItem="7hb-iz-aov" secondAttribute="top" id="iFk-ES-47I"/>
+                            <constraint firstItem="vYC-P6-cae" firstAttribute="leading" secondItem="Kaq-Na-pHQ" secondAttribute="leading" id="wRo-aq-qjs"/>
+                        </constraints>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="g6Q-Vi-9bx" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="876" y="1179"/>
+        </scene>
         <!--Team Communication View Controller-->
         <scene sceneID="hLV-hQ-pAq">
             <objects>
@@ -875,7 +919,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="D3R-tf-Tia" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1233" y="1159"/>
+            <point key="canvasLocation" x="1478" y="1173"/>
         </scene>
         <!--Project Team Chat View Controller-->
         <scene sceneID="SoF-pb-MGL">
