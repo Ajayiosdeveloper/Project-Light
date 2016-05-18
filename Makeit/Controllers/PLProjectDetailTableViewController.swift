@@ -30,7 +30,7 @@ class PLProjectDetailTableViewController: UITableViewController,EKEventEditViewD
     var projectTeamChatViewController:PLProjectTeamChatViewController!
     var commitmentViewModel:PLProjectCommentViewModel = PLProjectCommentViewModel()
     var taskPriority:String = ""
-
+    
     @IBOutlet var projectDetailsTableView: UITableView!
    
     override func viewDidLoad() {
@@ -302,7 +302,6 @@ class PLProjectDetailTableViewController: UITableViewController,EKEventEditViewD
     }
 
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        
         if indexPath.section == 0
         {
             let selectedMember = projectDetailViewModel.selectedContributor(indexPath.row)
@@ -317,7 +316,7 @@ class PLProjectDetailTableViewController: UITableViewController,EKEventEditViewD
         }
         else if indexPath.section  == 1
         {
-            if PLSharedManager.manager.isCalendarAccess{
+                if PLSharedManager.manager.isCalendarAccess{
                 
                 showEventEditViewController()
                 
@@ -332,11 +331,12 @@ class PLProjectDetailTableViewController: UITableViewController,EKEventEditViewD
                 print(commitment!.isCompleted)
                 
                 if commitment!.isCompleted == 0{
-                    
+                
                 self.performSelector(#selector(PLProjectDetailTableViewController.showTaskCompletePopup), withObject:nil, afterDelay:5)
                 }
 
             }else{
+                 
             showCommitmentViewController()
              commitmentViewController.commitmentViewModel.commitment = projectDetailViewModel.selectedCommitmentFor(indexPath.row)
             print(commitmentViewController.commitmentViewModel.commitment)

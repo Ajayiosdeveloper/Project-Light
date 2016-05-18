@@ -9,14 +9,17 @@
 import UIKit
 import EventKitUI
 
-class PLProjectCommentViewController: UITableViewController,EKEventEditViewDelegate,UIPickerViewDelegate,UIPickerViewDataSource {
+class PLProjectCommentViewController: UITableViewController,EKEventEditViewDelegate,UIPickerViewDelegate,UIPickerViewDataSource
+{
     
     @IBOutlet var commitmentNameTextField: UITextField!
     @IBOutlet var commitmentTargetDateTextField: UITextField!
     @IBOutlet weak var commitmentEndDateTextField: UITextField!
     @IBOutlet weak var commitmentPriorityTextField: UITextField!
     @IBOutlet var commitmentDescriptionTextView: UITextView!
-    
+    @IBOutlet weak var isTaskCompleted: UISwitch!
+    var doneButton:UIBarButtonItem!
+    @IBOutlet weak var taskCompletedLabel: UILabel!
     var pickerView:UIPickerView? = UIPickerView()
     var projectId:String!
     lazy  var commitmentViewModel:PLProjectCommentViewModel = {
@@ -26,6 +29,7 @@ class PLProjectCommentViewController: UITableViewController,EKEventEditViewDeleg
     
     var startDatecommitmentDatePicker:UIDatePicker!
     var targetDatecommitmentDatePicker:UIDatePicker!
+    var projDetail = PLProjectDetailTableViewController()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -42,7 +46,65 @@ class PLProjectCommentViewController: UITableViewController,EKEventEditViewDeleg
         targetDatecommitmentDatePicker.datePickerMode = .Date
         self.commitmentEndDateTextField.inputView = targetDatecommitmentDatePicker
         targetDateDoneButtonToDatePicker()
+       }
+    
+      override func viewWillAppear(animated: Bool) {
+        
+        super.viewWillAppear(animated)
+       
+        if let _ = commitmentViewModel.commitment
+        {
+            if PLSharedManager.manager.isCalendarAccess{
+                
+                print("Cander Access is there")
+                
+            }else{
+                isTaskCompleted.hidden = false
+                taskCompletedLabel.hidden = false
+                commitmentNameTextField.text = commitmentViewModel.commitmentName()
+                print("Its \(commitmentViewModel.commitmentDescription())")
+                commitmentDescriptionTextView.text = commitmentViewModel.commitmentDescription()
+                commitmentTargetDateTextField.text = commitmentViewModel.commitmentStartDate()
+                commitmentEndDateTextField.text = commitmentViewModel.commitmentEndDate()
+                if commitmentViewModel.commitmentStatus() == 0{
+                    isTaskCompleted.enabled = true
+                    isTaskCompleted.on = false
+                }
+                else{
+                    isTaskCompleted.enabled = false
+                    isTaskCompleted.on = true
+                }
+                self.navigationItem.rightBarButtonItem?.enabled = false
+                self.navigationItem.rightBarButtonItem?.tintColor = UIColor.clearColor()
+            }
+            
+            self.view.endEditing(true)
         }
+        else{
+            self.commitmentNameTextField.becomeFirstResponder()
+            self.navigationItem.rightBarButtonItem?.tintColor = nil;
+            clearFields()
+            self.navigationItem.rightBarButtonItem?.enabled = true
+            doneButton.width = 0
+            isTaskCompleted.hidden = true
+            taskCompletedLabel.hidden = true
+        }
+    }
+
+    @IBAction func taskCompletedAction(sender: UISwitch) {
+        if sender.on
+        {
+            let commitmentId = commitmentViewModel.commitmentId()
+        commitmentViewModel.completedTask(commitmentId,completed: true, completion: { (result) in
+            sender.enabled = false
+        })
+        }
+//        else{
+//            commitmentViewModel.completedTask(false, completion: { (result) in
+//               
+//            })
+//        }
+    }
     
     func startDateDoneButtonToDatePicker()
     {
@@ -79,34 +141,12 @@ class PLProjectCommentViewController: UITableViewController,EKEventEditViewDeleg
         commitmentPriorityTextField.becomeFirstResponder()
     }
 
-     override func viewWillAppear(animated: Bool) {
-        
-        super.viewWillAppear(animated)
-        self.commitmentNameTextField.becomeFirstResponder()
-        if let _ = commitmentViewModel.commitment
-        {
-            if PLSharedManager.manager.isCalendarAccess{
-                
-                print("Cander Access is there")
-                
-            }else{
-           commitmentNameTextField.text = commitmentViewModel.commitmentName()
-           commitmentDescriptionTextView.text = commitmentViewModel.commitmentDescription()
-           commitmentTargetDateTextField.text = commitmentViewModel.commitmentStartDate()
-           commitmentEndDateTextField.text = commitmentViewModel.commitmentEndDate()
-           self.navigationItem.rightBarButtonItem?.enabled = false
-           self.navigationItem.rightBarButtonItem?.tintColor = UIColor.clearColor()
-            }
-        }
-        else{
-               self.navigationItem.rightBarButtonItem?.tintColor = nil;
-               clearFields()
-        }
-    }
-
+   
     func addDoneBarButtonItem(){
         
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.Plain, target:self, action:#selector(PLAddProjectViewController.performDone))
+        doneButton = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.Plain, target:self, action:#selector(PLAddProjectViewController.performDone))
+
+        self.navigationItem.rightBarButtonItem = doneButton
     }
     
     func performDone()
@@ -133,10 +173,10 @@ class PLProjectCommentViewController: UITableViewController,EKEventEditViewDeleg
     func clearFields(){
         
         commitmentNameTextField.text = ""
-        commitmentDescriptionTextView.text = ""
         commitmentTargetDateTextField.text = ""
         commitmentPriorityTextField.text = ""
         commitmentEndDateTextField.text = ""
+        commitmentDescriptionTextView.text = ""
     }
     
     override func viewWillDisappear(animated: Bool) {
@@ -161,8 +201,6 @@ class PLProjectCommentViewController: UITableViewController,EKEventEditViewDeleg
     }
     
     func eventEditViewController(controller: EKEventEditViewController, didCompleteWithAction action: EKEventEditViewAction){
-       // self.fetchEvents(commitmentViewModel.eventStore)
-       // print("'sdfgghghhj")
         self.dismissViewControllerAnimated(true, completion:nil)
     }
    

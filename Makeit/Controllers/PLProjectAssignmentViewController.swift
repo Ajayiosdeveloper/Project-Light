@@ -20,11 +20,9 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
     var startDatecommitmentDatePicker:UIDatePicker!
     var targetDatecommitmentDatePicker:UIDatePicker!
     var assignementViewModel:PLProjectAssignmentViewModel!
-   
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         print(assignementViewModel.assigneeList)
         self.assigneeListTableView.registerNib(UINib(nibName:"PLTableViewCell", bundle:NSBundle.mainBundle()), forCellReuseIdentifier: "Cell")
         addDoneBarButtonItem()
@@ -61,7 +59,6 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
                 assigneeListTableView.allowsSelection = true
                clearFields()
             }
-
     }
  
     func addDoneBarButtonItem(){
@@ -209,8 +206,8 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
     {
        assignmentNameTextFiled.text = ""
        assignmenttargetDateTextField.text = ""
-       assignmentDescriptionTextView.text = ""
        assignmentStartDateTextField.text = ""
+       assignmentDescriptionTextView.text = ""
     }
    
     override func viewWillDisappear(animated: Bool) {
