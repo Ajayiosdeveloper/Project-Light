@@ -132,8 +132,14 @@ class PLProjectDetailViewModel: NSObject {
                  let targetDate  = (each.fields?.objectForKey("targetDate"))! as! NSTimeInterval
                  let startDate  = (each.fields?.objectForKey("startDate"))! as! NSTimeInterval
                 commitment.isCompleted = each.fields?.objectForKey("isCompleted") as! Int
+                var startTime  = (each.fields?.objectForKey("startTime"))! as! String
+                var endTime  = (each.fields?.objectForKey("endTime"))! as! String
+                startTime = self.timeFormat(startTime)
+                endTime = self.timeFormat(endTime)
                 commitment.targetDate = self.dateFormat(targetDate)
                 commitment.startDate = self.dateFormat(startDate)
+                commitment.startDate += " \(startTime)"
+                commitment.targetDate += " \(endTime)"
                 self.commitments.append(commitment)
                 }
                 
@@ -150,7 +156,14 @@ class PLProjectDetailViewModel: NSObject {
         dateFormatter.timeZone = NSTimeZone(forSecondsFromGMT: NSTimeZone.localTimeZone().secondsFromGMT)
         return dateFormatter.stringFromDate(date)
     }
-
+    func timeFormat(time: String) -> String
+    {
+        let dateFormatter = NSDateFormatter()
+        dateFormatter.dateFormat = "HH:mm"
+        let time = dateFormatter.dateFromString(time)
+        dateFormatter.dateFormat = "hh:mm a"
+        return dateFormatter.stringFromDate(time!)
+    }
     
     func getAssignmentsFromRemote(id:String,completion:(Bool)->Void)
     {
