@@ -18,27 +18,31 @@ class PLTaskViewController: UIViewController,UITableViewDelegate,UITableViewData
     
     override func viewDidLoad() {
         super.viewDidLoad()
-    
+        tableView.registerNib(UINib(nibName: "PLTasksViewCell",bundle: NSBundle.mainBundle()), forCellReuseIdentifier: "Cell")
         addDoneBarButtonItem()
        }
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        self.title = "Task View"
+        
+        
        if let _ = selectedType
        {
         switch selectedType {
         case 0:
+           self.title = "Today Tasks"
            sidebarViewModel.getTodayTasks({ (res) in
             
             self.tableView!.reloadData()
             
            })
         case 1:
+               self.title = "Upcoming Tasks"
                sidebarViewModel.getUpcomingTasks({ (res) in
                self.tableView!.reloadData()
 
             })
         case 2:
+            self.title = "Pending Tasks"
             sidebarViewModel.getPendingTasks({ (res) in
                 
                 self.tableView!.reloadData()

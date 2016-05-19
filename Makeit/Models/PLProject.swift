@@ -58,6 +58,7 @@ class PLCommitment: NSObject {
     var startDate:String = ""
     var targetDate:String = ""
     var isCompleted:Int = 0
+    var projectName = ""
 }
 
 class PLAssignment: NSObject {
