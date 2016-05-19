@@ -180,11 +180,16 @@ class PLSidebarMenuViewController: UIViewController,UIImagePickerControllerDeleg
             default: print("")
            
             }
-            
-            
-           
         }
-        if indexPath.section == 2
+        else if indexPath.section == 1{
+            
+            let taskViewController : PLTaskViewController? = self.storyboard?.instantiateViewControllerWithIdentifier("TaskViewController") as? PLTaskViewController
+            let nav = UINavigationController(rootViewController: taskViewController!)
+            taskViewController!.selectedType = 3
+            self.presentViewController(nav, animated: true, completion: nil)
+            
+        }
+        else if indexPath.section == 2
         {
             print("Logout Action")
             var signUpViewController : PLUserLoginViewController? = self.storyboard?.instantiateViewControllerWithIdentifier("PLUserSignupAndLoginViewController") as? PLUserLoginViewController

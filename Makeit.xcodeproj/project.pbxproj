@@ -82,6 +82,8 @@
 		807FC87C1CCB47AF0094112E /* PLTeamMemberDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 807FC87B1CCB47AF0094112E /* PLTeamMemberDetailViewModel.swift */; };
 		807FC87E1CCB55510094112E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 807FC87D1CCB55510094112E /* Foundation.framework */; };
 		807FC8801CCB58430094112E /* VideoToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 807FC87F1CCB58430094112E /* VideoToolbox.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		8083C0DD1CED831B0051E8AF /* PLBirthdayTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8083C0DB1CED831B0051E8AF /* PLBirthdayTableViewCell.swift */; };
+		8083C0DE1CED831B0051E8AF /* PLBirthdayTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8083C0DC1CED831B0051E8AF /* PLBirthdayTableViewCell.xib */; };
 		80861A7D1CD9C52F00A2C56C /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 80861A7C1CD9C52F00A2C56C /* UIKit.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		80861A7F1CD9DE4000A2C56C /* EventKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 80861A7E1CD9DE4000A2C56C /* EventKit.framework */; };
 		80861A811CD9DE4700A2C56C /* EventKitUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 80861A801CD9DE4700A2C56C /* EventKitUI.framework */; };
@@ -292,6 +294,8 @@
 		807FC87B1CCB47AF0094112E /* PLTeamMemberDetailViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLTeamMemberDetailViewModel.swift; sourceTree = "<group>"; };
 		807FC87D1CCB55510094112E /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		807FC87F1CCB58430094112E /* VideoToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = VideoToolbox.framework; path = System/Library/Frameworks/VideoToolbox.framework; sourceTree = SDKROOT; };
+		8083C0DB1CED831B0051E8AF /* PLBirthdayTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLBirthdayTableViewCell.swift; sourceTree = "<group>"; };
+		8083C0DC1CED831B0051E8AF /* PLBirthdayTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PLBirthdayTableViewCell.xib; sourceTree = "<group>"; };
 		80861A7C1CD9C52F00A2C56C /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		80861A7E1CD9DE4000A2C56C /* EventKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = EventKit.framework; path = System/Library/Frameworks/EventKit.framework; sourceTree = SDKROOT; };
 		80861A801CD9DE4700A2C56C /* EventKitUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = EventKitUI.framework; path = System/Library/Frameworks/EventKitUI.framework; sourceTree = SDKROOT; };
@@ -621,7 +625,6 @@
 			isa = PBXGroup;
 			children = (
 				80BB3EF51CC4F4BE009FAE11 /* PLProject.swift */,
-				806D4AF11CC25DB50054A9AF /* ViewModels */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -642,8 +645,7 @@
 				80C61B9E1CDB64900022CAFA /* PLChatDetailViewModel.swift */,
 				945E443B1CEC551A00A024BC /* PLSidebarViewModel.swift */,
 			);
-			name = ViewModels;
-			path = ../ViewModels;
+			path = ViewModels;
 			sourceTree = "<group>";
 		};
 		806D4AF21CC25DB50054A9AF /* Views */ = {
@@ -654,6 +656,8 @@
 				808B04121CE709BA00A8B2CB /* PLProjectViewCell.swift */,
 				808B04131CE709BA00A8B2CB /* PLProjectViewCell.xib */,
 				8049FF581CE9D25400FF24C5 /* PLSideBarTableViewCell.swift */,
+				8083C0DB1CED831B0051E8AF /* PLBirthdayTableViewCell.swift */,
+				8083C0DC1CED831B0051E8AF /* PLBirthdayTableViewCell.xib */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -714,6 +718,7 @@
 				809F96CA1CBCC35000DD1FE9 /* AppDelegate.swift */,
 				808AA2EB1CC605DE00685226 /* Dynamics&Animations */,
 				806D4AF01CC25DB50054A9AF /* Models */,
+				806D4AF11CC25DB50054A9AF /* ViewModels */,
 				806D4AEF1CC25DB50054A9AF /* Controllers */,
 				806D4AF21CC25DB50054A9AF /* Views */,
 				806D4ADC1CC20FCD0054A9AF /* Libraries */,
@@ -1023,6 +1028,7 @@
 				80AB251A1CE74BE7008B20C3 /* logout.png in Resources */,
 				80C4A0181CDCBB500073B6E2 /* JSQMessagesCollectionViewCellOutgoing.xib in Resources */,
 				80AB25201CE74CCA008B20C3 /* todayTask.png in Resources */,
+				8083C0DE1CED831B0051E8AF /* PLBirthdayTableViewCell.xib in Resources */,
 				806D4AEA1CC210910054A9AF /* SVProgressHUD.bundle in Resources */,
 				80C49FF11CDCBB500073B6E2 /* JSQMessagesAssets.bundle in Resources */,
 				807024901CD869A200DD8DE5 /* DigitsKitResources.bundle in Resources */,
@@ -1179,6 +1185,7 @@
 				806B1E361CD8AA080018B026 /* SDImageCache.m in Sources */,
 				806D4AE81CC210910054A9AF /* SVIndefiniteAnimatedView.m in Sources */,
 				80C49FFE1CDCBB500073B6E2 /* JSQMessagesMediaViewBubbleImageMasker.swift in Sources */,
+				8083C0DD1CED831B0051E8AF /* PLBirthdayTableViewCell.swift in Sources */,
 				80C49FFC1CDCBB500073B6E2 /* JSQMessagesAvatarImageFactory.swift in Sources */,
 				8066356D1CE0BAD900D21103 /* PLUserProfileInfoTableViewController.swift in Sources */,
 				8078A46D1CC88C11008AC4DD /* PLProjectDetailViewModel.swift in Sources */,

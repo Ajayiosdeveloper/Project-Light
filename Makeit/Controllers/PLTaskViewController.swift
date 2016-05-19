@@ -12,7 +12,7 @@ class PLTaskViewController: UIViewController,UITableViewDelegate,UITableViewData
 {
     @IBOutlet weak var tableView: UITableView!
     
-   var contributors:[PLTeamMember]!
+    var contributors:[PLTeamMember]!
     var sidebarViewModel:PLSidebarViewModel = PLSidebarViewModel()
     var selectedType : Int!
     
@@ -43,6 +43,16 @@ class PLTaskViewController: UIViewController,UITableViewDelegate,UITableViewData
                 
                 self.tableView!.reloadData()
             })
+        case 3:
+            print("PRAISE THE LORD")
+            self.title = "Today Birthdays"
+            self.tableView.registerNib(UINib.init(nibName:"PLBirthdayTableViewCell", bundle: NSBundle.mainBundle()), forCellReuseIdentifier: "BirthdayCell")
+            sidebarViewModel.getTeamMemberBirthdayListForToday({ (res) in
+                self.tableView.reloadData()
+                print("The result is \(res)")
+                print(self.sidebarViewModel.teamMembersForBitrhday.count)
+                self.tableView.reloadData()
+            })
         default:
             print("")
         }
@@ -65,19 +75,35 @@ class PLTaskViewController: UIViewController,UITableViewDelegate,UITableViewData
     }
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-                
-        return 1
+        
+      return 1
     }
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int
     {
+        if selectedType == 3{
+        return 0
+        }
         return sidebarViewModel.numbersOfRows()
-        
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        if selectedType == 0 | 1 | 2{
         let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) 
         cell.textLabel!.text = sidebarViewModel.titleOfRowAtIndexPath(indexPath.row) as String
         cell.detailTextLabel!.text = sidebarViewModel.detailTitleOfRowAtIndexPath(indexPath.row) as String
         return cell
+        }else{
+           
+        let cell = tableView.dequeueReusableCellWithIdentifier("BirthdayCell") as! PLBirthdayTableViewCell
+           // cell.memberName.text = "Immanual"
+            return cell
+        }
+    }
+    
+    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        if selectedType == 3{
+            return 130
+        }
+        return 44
     }
 }

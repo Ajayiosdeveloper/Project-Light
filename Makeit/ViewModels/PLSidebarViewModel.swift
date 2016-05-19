@@ -13,6 +13,7 @@ class PLSidebarViewModel: NSObject {
 
     var qbClient = PLQuickbloxHttpClient()
     var commitments = [PLCommitment]()
+    var teamMembersForBitrhday = [PLTeamMember]()
     
     func getTodayTasks(completion:(Bool)-> Void)
     {
@@ -55,6 +56,33 @@ class PLSidebarViewModel: NSObject {
                     self!.commitments = pendingTasks
                     completion(true)
                 })
+            }
+        }
+    }
+    
+    func getTeamMemberBirthdayListForToday(completion:(Bool)-> Void){
+        
+        self.teamMembersForBitrhday.removeAll(keepCapacity: true)
+        qbClient.getBirthdayListOfTeamMembers(){ members in
+            
+            var birthdaysOfMembers = [PLTeamMember]()
+            
+            if members?.count > 0{
+                
+                for each in members!{
+                    
+                 let member = PLTeamMember(name:"", id: 0)
+                 member.fullName = each.fields?.objectForKey("name") as! String
+                 member.memberEmail = each.fields?.objectForKey("memberEmail") as! String
+                 member.memberId = String(each.userID)
+                 member.memberUserId = each.fields?.objectForKey("member_User_Id") as! UInt
+                 member.avatar = each.fields?.objectForKey("avatar") as! String
+                 birthdaysOfMembers.append(member)
+                }
+                
+                self.teamMembersForBitrhday = birthdaysOfMembers
+                
+                completion(true)
             }
         }
     }
@@ -126,11 +154,18 @@ class PLSidebarViewModel: NSObject {
     
     func detailTitleOfRowAtIndexPath(row:Int)->String
     {
-         var taskDetails = [AnyObject]()
+        var taskDetails = [AnyObject]()
         for data in commitments
         {
             taskDetails.append(data.details)
         }
         return taskDetails[row] as! String
-        }
+    }
+    
+    func numberOfBirthdayRows() -> Int {
+        
+        return 10
+    }
+    
+    
 }
