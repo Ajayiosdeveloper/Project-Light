@@ -842,26 +842,6 @@ class PLQuickbloxHttpClient
         }
     }
     
-//    func tasksWithType(type : String, completion:( _ : [QBCOCustomObject]?)->Void){
-//        
-//        let extendedReq = NSMutableDictionary()
-//        let taskLimit =  Int(convertdateToTimeinterval(NSDate(),dateFormat: "dd-MM-yyyy"))
-//        if type == "targetDate[lt]"
-//        {
-//             extendedReq.setValue(0, forKey: "isCompleted")
-//        }
-//        extendedReq.setValue(taskLimit, forKey: type)
-//        extendedReq.setValue(QBSession.currentSession().currentUser?.ID, forKey: "user_id")
-//      QBRequest.objectsWithClassName("PLProjectCommitment", extendedRequest: extendedReq, successBlock: { (_, objects, _) in
-//        
-//        completion(objects)
-//        
-//        print(objects)
-//        }) { (res) in
-//            
-//            print("Error is \(res)")
-//        }
-//    }
     func tasksWithType(type : String, completion:([QBCOCustomObject]?)->Void){
         
         let extendedReq = NSMutableDictionary()

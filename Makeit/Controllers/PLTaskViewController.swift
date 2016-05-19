@@ -78,17 +78,35 @@ class PLTaskViewController: UIViewController,UITableViewDelegate,UITableViewData
         
     }
     
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        return 71
+    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat
+    {
+        return 105
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell
     {
         let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! PLTasksViewCell
         cell.taskNameField.text = sidebarViewModel.titleOfRowAtIndexPath(indexPath.row) as String
-        cell.projectNameField.text = sidebarViewModel.detailTitleOfRowAtIndexPath(indexPath.row) as String
-        cell.taskStartTime.text  = "12.00"
-        cell.taskEndTime.text = "9.00"
+        cell.projectNameField.text = sidebarViewModel.projectTitleOfRowAtIndexPath(indexPath.row) as String
+        if selectedType == 0
+        {
+            cell.taskStartTime.text = "StartTime: " + sidebarViewModel.startTimeOfTask(indexPath.row)
+        cell.taskEndTime.text =  "EndTime: " + sidebarViewModel.endTimeOfTask(indexPath.row)
+        }
+        else if selectedType == 1 || selectedType == 2
+        {
+         
+          cell.taskStartTime.text  = "StartDate: " + sidebarViewModel.startTaskDate(indexPath.row)
+          cell.taskEndTime.text = "EndDate: " + sidebarViewModel.endTaskDate(indexPath.row)
+        }
+       
         return cell
     }
+    
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        
+//        let commitmentViewController = self.storyboard?.instantiateViewControllerWithIdentifier("PLProjectCommentViewController") as! PLProjectCommentViewController
+//        self.presentViewController(commitmentViewController, animated: true, completion: nil)
+    }
+    
 }

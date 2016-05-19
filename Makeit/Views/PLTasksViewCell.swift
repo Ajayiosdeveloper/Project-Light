@@ -8,9 +8,10 @@
 
 import UIKit
 
-class PLTasksViewCell: UITableViewCell {
+class PLTasksViewCell: UITableViewCell
+{
 
-    @IBOutlet weak var commitmentDetailsIndicator: UIButton!
+    @IBOutlet weak var detailsField: UILabel!
     @IBOutlet weak var taskEndTime: UILabel!
     @IBOutlet weak var taskStartTime: UILabel!
     @IBOutlet weak var projectNameField: UILabel!
@@ -19,9 +20,7 @@ class PLTasksViewCell: UITableViewCell {
         super.awakeFromNib()
         // Initialization code
     }
-
-    @IBAction func toEditCommitmentDetails(sender: AnyObject) {
-    }
+    
     override func setSelected(selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 
