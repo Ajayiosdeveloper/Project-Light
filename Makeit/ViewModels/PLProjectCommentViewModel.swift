@@ -142,12 +142,13 @@ class PLProjectCommentViewModel: NSObject {
          self.isAccessGranted(){[weak self] result in
             
             if result{
+                print("Saving")
                 let event = EKEvent(eventStore: self!.eventStore!)
                  event.title = name
                  event.startDate = date
                  event.endDate = endDate
                  event.calendar = self!.eventStore!.defaultCalendarForNewEvents
-                 try!  self!.eventStore!.saveEvent(event, span: EKSpan.FutureEvents)
+                 try!  self!.eventStore!.saveEvent(event, span: EKSpan.ThisEvent)
             }
             else{
                 
