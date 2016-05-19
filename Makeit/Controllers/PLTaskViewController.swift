@@ -12,13 +12,14 @@ class PLTaskViewController: UIViewController,UITableViewDelegate,UITableViewData
 {
     @IBOutlet weak var tableView: UITableView!
     
-   var contributors:[PLTeamMember]!
+    var contributors:[PLTeamMember]!
     var sidebarViewModel:PLSidebarViewModel = PLSidebarViewModel()
     var selectedType : Int!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.registerNib(UINib(nibName: "PLTasksViewCell",bundle: NSBundle.mainBundle()), forCellReuseIdentifier: "Cell")
+        self.tableView.registerNib(UINib(nibName:"PLBirthdayTableViewCell", bundle: NSBundle.mainBundle()), forCellReuseIdentifier: "BirthdayCell")
         addDoneBarButtonItem()
        }
     override func viewWillAppear(animated: Bool) {
@@ -47,6 +48,12 @@ class PLTaskViewController: UIViewController,UITableViewDelegate,UITableViewData
                 
                 self.tableView!.reloadData()
             })
+        case 3:
+            print("PRAISE THE LORD")
+            self.title = "Today Birthdays"
+               sidebarViewModel.getTeamMemberBirthdayListForToday({ (res) in
+                self.tableView.reloadData()
+            })
         default:
             print("")
         }
@@ -69,13 +76,37 @@ class PLTaskViewController: UIViewController,UITableViewDelegate,UITableViewData
     }
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-                
-        return 1
+        
+      return 1
     }
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int
     {
+        if selectedType == 3{
+        return sidebarViewModel.numberOfBirthdayRows()
+        }
         return sidebarViewModel.numbersOfRows()
-        
+    }
+    
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        if selectedType != 3 {
+        let cell = self.tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! PLTasksViewCell
+        cell.taskNameField.text = sidebarViewModel.titleOfRowAtIndexPath(indexPath.row) as String
+        cell.projectNameField.text = sidebarViewModel.detailTitleOfRowAtIndexPath(indexPath.row) as String
+        return cell
+        }
+        else{
+           
+        let cell = self.tableView.dequeueReusableCellWithIdentifier("BirthdayCell") as! PLBirthdayTableViewCell
+            cell.memberName.text = sidebarViewModel.birthdayMemberName(indexPath.row)
+            cell.memberDetail.text = sidebarViewModel.birthdayMemberEmail(indexPath.row)
+            cell.makeCall.addTarget(self, action: #selector(PLTaskViewController.makeCall), forControlEvents: UIControlEvents.TouchUpInside)
+            cell.makeCall.tag = indexPath.row
+            cell.makeMessage.addTarget(self, action: #selector(PLTaskViewController.sendMessage), forControlEvents: UIControlEvents.TouchUpInside)
+            cell.makeMessage.tag = indexPath.row
+            cell.sendBirthdayGreetings.addTarget(self, action: #selector(PLTaskViewController.sendBirthdayGreetings), forControlEvents: UIControlEvents.TouchUpInside)
+            cell.sendBirthdayGreetings.tag = indexPath.row
+            return cell
+        }
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat
