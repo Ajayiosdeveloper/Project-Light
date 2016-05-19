@@ -107,7 +107,7 @@ class PLSidebarViewModel: NSObject {
     
     func getCommitmentArray(objects : [QBCOCustomObject], completion: ([PLCommitment])->Void)
     {
-        var commitments = [PLCommitment]()
+        var commitmentsArray = [PLCommitment]()
         
        if objects.count > 0
        {
@@ -129,16 +129,19 @@ class PLSidebarViewModel: NSObject {
                 commitment.targetDate += " \(endTime)"
                 commitment.commitmentId = each.ID!
                 commitment.isCompleted = each.fields?.objectForKey("isCompleted") as! Int
-                commitments.append(commitment)
+                commitmentsArray.append(commitment)
             }
-          completion(commitments)
+          completion(commitmentsArray)
         }
         
     }
     
     func numbersOfRows()->Int
     {
-        return 7
+        if self.commitments.count > 0{
+        return self.commitments.count
+        }
+        return 0
     }
     
     func titleOfRowAtIndexPath(row:Int)->String
@@ -164,8 +167,21 @@ class PLSidebarViewModel: NSObject {
     
     func numberOfBirthdayRows() -> Int {
         
-        return 10
+        if self.teamMembersForBitrhday.count > 0{
+            return self.teamMembersForBitrhday.count
+        }
+        return 0
     }
     
+    func birthdayMemberName(row:Int) -> String {
+        
+        let member = self.teamMembersForBitrhday[row]
+        return member.fullName
+        
+    }
+    func birthdayMemberEmail(row:Int)->String{
+        let member = self.teamMembersForBitrhday[row]
+        return member.memberEmail
+    }
     
 }

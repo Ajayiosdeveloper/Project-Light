@@ -19,6 +19,7 @@ class PLTaskViewController: UIViewController,UITableViewDelegate,UITableViewData
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.registerNib(UINib(nibName: "PLTasksViewCell",bundle: NSBundle.mainBundle()), forCellReuseIdentifier: "Cell")
+        self.tableView.registerNib(UINib(nibName:"PLBirthdayTableViewCell", bundle: NSBundle.mainBundle()), forCellReuseIdentifier: "BirthdayCell")
         addDoneBarButtonItem()
        }
     override func viewWillAppear(animated: Bool) {
@@ -50,11 +51,7 @@ class PLTaskViewController: UIViewController,UITableViewDelegate,UITableViewData
         case 3:
             print("PRAISE THE LORD")
             self.title = "Today Birthdays"
-            self.tableView.registerNib(UINib.init(nibName:"PLBirthdayTableViewCell", bundle: NSBundle.mainBundle()), forCellReuseIdentifier: "BirthdayCell")
-            sidebarViewModel.getTeamMemberBirthdayListForToday({ (res) in
-                self.tableView.reloadData()
-                print("The result is \(res)")
-                print(self.sidebarViewModel.teamMembersForBitrhday.count)
+               sidebarViewModel.getTeamMemberBirthdayListForToday({ (res) in
                 self.tableView.reloadData()
             })
         default:
@@ -85,29 +82,81 @@ class PLTaskViewController: UIViewController,UITableViewDelegate,UITableViewData
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int
     {
         if selectedType == 3{
-        return 0
+        return sidebarViewModel.numberOfBirthdayRows()
         }
-        return 0
+        return sidebarViewModel.numbersOfRows()
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        if selectedType == 0 | 1 | 2{
-        let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) 
-      //  cell.textLabel!.text = sidebarViewModel.titleOfRowAtIndexPath(indexPath.row) as String
-      //  cell.detailTextLabel!.text = sidebarViewModel.detailTitleOfRowAtIndexPath(indexPath.row) as String
+        if selectedType != 3 {
+        let cell = self.tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! PLTasksViewCell
+        cell.taskNameField.text = sidebarViewModel.titleOfRowAtIndexPath(indexPath.row) as String
+        cell.projectNameField.text = sidebarViewModel.detailTitleOfRowAtIndexPath(indexPath.row) as String
         return cell
-        }else{
+        }
+        else{
            
-        let cell = tableView.dequeueReusableCellWithIdentifier("BirthdayCell") as! PLBirthdayTableViewCell
-           // cell.memberName.text = "Immanual"
+        let cell = self.tableView.dequeueReusableCellWithIdentifier("BirthdayCell") as! PLBirthdayTableViewCell
+            cell.memberName.text = sidebarViewModel.birthdayMemberName(indexPath.row)
+            cell.memberDetail.text = sidebarViewModel.birthdayMemberEmail(indexPath.row)
+            cell.makeCall.addTarget(self, action: #selector(PLTaskViewController.makeCall), forControlEvents: UIControlEvents.TouchUpInside)
+            cell.makeCall.tag = indexPath.row
+            cell.makeMessage.addTarget(self, action: #selector(PLTaskViewController.sendMessage), forControlEvents: UIControlEvents.TouchUpInside)
+            cell.makeMessage.tag = indexPath.row
+            cell.sendBirthdayGreetings.addTarget(self, action: #selector(PLTaskViewController.sendBirthdayGreetings), forControlEvents: UIControlEvents.TouchUpInside)
+            cell.sendBirthdayGreetings.tag = indexPath.row
             return cell
         }
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         if selectedType == 3{
-            return 130
+            return 100
         }
-        return 44
+        return 71
+    }
+    
+    func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+        
+        let transform = CATransform3DTranslate(CATransform3DIdentity, -500, 10, 0)
+        cell.layer.transform = transform
+        UIView.animateWithDuration(0.2) {
+            
+            cell.layer.transform = CATransform3DIdentity
+        }
+    }
+    
+    func makeCall(sender:UIButton){
+        let callUrl = NSURL(string:"callto://")
+        if UIApplication.sharedApplication().canOpenURL(callUrl!){
+            
+           UIApplication.sharedApplication().openURL(callUrl!)
+        }else{
+            print("Can not make a call")
+        }
+    }
+    
+    func sendMessage(sender:UIButton){
+        
+        let message = NSURL(string:"sms://")
+        if UIApplication.sharedApplication().canOpenURL(message!){
+            
+            UIApplication.sharedApplication().openURL(message!)
+        }else{
+            print("Can not make sms")
+        }
+    }
+    
+    func sendBirthdayGreetings(sender:UIButton){
+        
+        print("Send Greetings")
+        print(sender.tag)
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+        self.sidebarViewModel.commitments = []
+        self.sidebarViewModel.teamMembersForBitrhday = []
+        self.tableView.reloadData()
     }
 }
