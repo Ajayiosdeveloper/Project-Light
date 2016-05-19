@@ -107,4 +107,30 @@ class PLSidebarViewModel: NSObject {
         }
         
     }
+    
+    func numbersOfRows()->Int
+    {
+        return commitments.count
+    }
+    
+    func titleOfRowAtIndexPath(row:Int)->String
+    {
+      var taskList = [AnyObject]()
+       
+       for data in commitments
+       {
+        taskList.append(data.name)
+       }
+       return taskList[row] as! String
+    }
+    
+    func detailTitleOfRowAtIndexPath(row:Int)->String
+    {
+         var taskDetails = [AnyObject]()
+        for data in commitments
+        {
+            taskDetails.append(data.details)
+        }
+        return taskDetails[row] as! String
+        }
 }

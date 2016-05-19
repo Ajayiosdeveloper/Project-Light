@@ -10,13 +10,15 @@ import UIKit
 
 class PLTaskViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
 {
+    @IBOutlet weak var tableView: UITableView!
+    
    var contributors:[PLTeamMember]!
-    var commitmentsArray = [AnyObject]()
     var sidebarViewModel:PLSidebarViewModel = PLSidebarViewModel()
     var selectedType : Int!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+    
         addDoneBarButtonItem()
        }
     override func viewWillAppear(animated: Bool) {
@@ -27,22 +29,19 @@ class PLTaskViewController: UIViewController,UITableViewDelegate,UITableViewData
         switch selectedType {
         case 0:
            sidebarViewModel.getTodayTasks({ (res) in
-            print(res)
-            print(self.sidebarViewModel.commitments.count)
-
-        
+            
+            self.tableView!.reloadData()
+            
            })
         case 1:
                sidebarViewModel.getUpcomingTasks({ (res) in
-                print(res)
-                print(self.sidebarViewModel.commitments.count)
+               self.tableView!.reloadData()
 
             })
         case 2:
             sidebarViewModel.getPendingTasks({ (res) in
-                print(res)
-                print(self.sidebarViewModel.commitments.count)
-
+                
+                self.tableView!.reloadData()
             })
         default:
             print("")
@@ -71,12 +70,14 @@ class PLTaskViewController: UIViewController,UITableViewDelegate,UITableViewData
     }
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int
     {
-        return commitmentsArray.count
+        return sidebarViewModel.numbersOfRows()
+        
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath)
-        cell.textLabel?.text = commitmentsArray[indexPath.row] as? String
+        let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) 
+        cell.textLabel!.text = sidebarViewModel.titleOfRowAtIndexPath(indexPath.row) as String
+        cell.detailTextLabel!.text = sidebarViewModel.detailTitleOfRowAtIndexPath(indexPath.row) as String
         return cell
     }
 }
