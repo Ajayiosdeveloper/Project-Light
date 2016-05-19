@@ -203,7 +203,7 @@ class PLTeamCommunicationViewController: UIViewController,UITableViewDelegate,UI
               self.presentViewController(alertViewController, animated: true, completion: nil)
         } else {
             let alertView = UIAlertView(title: "Enter Group Name", message: "", delegate: self, cancelButtonTitle: nil, otherButtonTitles: "Ok", "Cancel")
-            alertView.tag = 1
+            alertView.alertViewStyle = .PlainTextInput
             alertView.show()
 
             
@@ -212,14 +212,11 @@ class PLTeamCommunicationViewController: UIViewController,UITableViewDelegate,UI
     }
     
     func alertView(alertView: UIAlertView, clickedButtonAtIndex buttonIndex: Int) {
-        print(buttonIndex)
-        switch (alertView.tag)
-        {
-        case 1:
-            switch (buttonIndex) {
-            case 0:
-                print("Ok")
-                self.communicationViewModel.createProjectGroup(self.textFld.text!){[weak self] resu, chatGroup in
+        
+        if buttonIndex == 0{
+        
+            let text = alertView.textFieldAtIndex(0)! as UITextField
+                self.communicationViewModel.createProjectGroup(text.text!){[weak self] resu, chatGroup in
                     if resu{
                         self!.teamChatViewController.projectTeamChatViewModel.addChatGroup(chatGroup!)
                         self?.navigationController?.popViewControllerAnimated(true)
@@ -227,19 +224,11 @@ class PLTeamCommunicationViewController: UIViewController,UITableViewDelegate,UI
                     else{
                         print("Failed")
                     }
-                }
-
-                alertView.show()
-            case 1:
-                print("Cancel")
-            default:
-                print("")
             }
-            
-        default:
-            print("")
         }
-        
+        else{
+            print("Cancel clicked")
+        }
     }
 
 
