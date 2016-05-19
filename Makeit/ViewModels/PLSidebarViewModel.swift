@@ -159,32 +159,45 @@ class PLSidebarViewModel: NSObject {
     
     func projectTitleOfRowAtIndexPath(row:Int)->String
     {
+        var taskList = [AnyObject]()
+        
+        for title in commitments
+        {
+            taskList.append(title.projectName)
+        }
+        return taskList[row] as! String
+    }
+    
+    func commitmentDetails(row:Int)->String
+    {
         var taskDetails = [AnyObject]()
         for projectName in commitments
         {
-            taskDetails.append(projectName.projectName)
+            taskDetails.append(projectName.details)
         }
         return taskDetails[row] as! String
     }
     
     func startTaskDate(row : Int) -> String
     {
-        var taskDetails = [AnyObject]()
-        for projectName in commitments
+        var taskDetail = [AnyObject]()
+        for endTime in commitments
         {
-            taskDetails.append(projectName.startDate)
+            let time = stringDate(endTime.startDate)
+            taskDetail.append(time)
         }
-        return taskDetails[row] as! String
+        return taskDetail[row] as! String
     }
     
     func endTaskDate(row : Int) -> String
     {
-        var taskDetails = [AnyObject]()
-        for projectName in commitments
+        var taskDetail = [AnyObject]()
+        for endTime in commitments
         {
-            taskDetails.append(projectName.targetDate)
+            let time = stringDate(endTime.targetDate)
+            taskDetail.append(time)
         }
-        return taskDetails[row] as! String
+        return taskDetail[row] as! String
     }
     
     func startTimeOfTask(row: Int) -> String
@@ -209,6 +222,17 @@ class PLSidebarViewModel: NSObject {
         return taskDetail[row] as! String
     }
     
+    func stringDate(dateTime : String) -> String
+    {
+        let dateFormatter = NSDateFormatter()
+        dateFormatter.dateFormat = "dd-MM-yyyy hh:mm a"
+        let date = dateFormatter.dateFromString(dateTime)
+        
+        dateFormatter.dateFormat = "dd/MM/yy hh:mm a"
+        let dateString = dateFormatter.stringFromDate(date!)
+        return dateString
+    }
+    
     func timeFormats(time: String) -> String
     {
         let dateFormatter = NSDateFormatter()
@@ -218,5 +242,24 @@ class PLSidebarViewModel: NSObject {
         dateFormatter.dateFormat = "hh:mm a"
         let dateString = dateFormatter.stringFromDate(date!)
         return dateString
+    }
+    
+    func numberOfBirthdayRows() -> Int {
+        
+        if self.teamMembersForBitrhday.count > 0{
+            return self.teamMembersForBitrhday.count
+        }
+        return 0
+    }
+    
+    func birthdayMemberName(row:Int) -> String {
+        
+        let member = self.teamMembersForBitrhday[row]
+        return member.fullName
+        
+    }
+    func birthdayMemberEmail(row:Int)->String{
+        let member = self.teamMembersForBitrhday[row]
+        return member.memberEmail
     }
 }

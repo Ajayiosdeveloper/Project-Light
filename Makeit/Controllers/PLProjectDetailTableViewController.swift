@@ -105,30 +105,32 @@ class PLProjectDetailTableViewController: UITableViewController,EKEventEditViewD
             if let _ = avatar{
                 
                 cell.teamMemberProfile.image = avatar!
-            }else{
-                
-                cell.teamMemberProfile.image = UIImage(named:"UserImage.png")
             }
-            
-        })
-        
-            
+            else{
+                    cell.teamMemberProfile.image = UIImage(named:"UserImage.png")
+            }
+            })
         return cell
+            
         }
         else if indexPath.section == 1{
-            let cell = tableView.dequeueReusableCellWithIdentifier("DefaultCell", forIndexPath: indexPath)  as UITableViewCell
+            let cell = UITableViewCell(style: .Subtitle, reuseIdentifier: "DefaultCell")
+            cell.textLabel?.font = UIFont.boldSystemFontOfSize(17)
             cell.textLabel?.text = projectDetailViewModel.commitmentTitleForRowAtIndexPath(indexPath.row)
+            cell.detailTextLabel?.textColor = UIColor.darkGrayColor()
+            cell.detailTextLabel?.font = UIFont.systemFontOfSize(17)
             cell.detailTextLabel?.text = projectDetailViewModel.commitmentSubTitleForRowAtIndexPath(indexPath.row)
             cell.accessoryType = .DisclosureIndicator
-            cell.textLabel?.textColor = UIColor.blackColor()
             return cell
         }
         else if indexPath.section == 2{
-            let cell = tableView.dequeueReusableCellWithIdentifier("DefaultCell", forIndexPath: indexPath)  as UITableViewCell
-
+          
+            let cell = UITableViewCell(style: .Subtitle, reuseIdentifier: "DefaultCell")           
+            cell.textLabel?.font = UIFont.boldSystemFontOfSize(17)
             cell.textLabel?.text = projectDetailViewModel.assignmentTitleForRowAtIndexPath(indexPath.row)
+            cell.detailTextLabel?.font = UIFont.systemFontOfSize(17)
+            cell.detailTextLabel?.textColor = UIColor.darkGrayColor()
             cell.detailTextLabel?.text = projectDetailViewModel.assignmentSubTitleForRowAtIndexPath(indexPath.row)
-            cell.textLabel?.textColor = UIColor.blackColor()
             cell.accessoryType = .DisclosureIndicator
             return cell
         }
@@ -208,7 +210,7 @@ class PLProjectDetailTableViewController: UITableViewController,EKEventEditViewD
         {
             return 55.0
         }
-         return 44.0
+         return 55
     }
     
     override   func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat
