@@ -138,7 +138,7 @@ class PLSidebarViewModel: NSObject {
     
     func numbersOfRows()->Int
     {
-        return commitments.count
+        return 7
     }
     
     func titleOfRowAtIndexPath(row:Int)->String

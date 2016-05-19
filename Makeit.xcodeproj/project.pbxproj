@@ -26,6 +26,8 @@
 		803E04061CBCC95D00C59233 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 803E04051CBCC95D00C59233 /* SystemConfiguration.framework */; };
 		80485F061CD4B14800F49209 /* PLTeamCommunicationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80485F051CD4B14800F49209 /* PLTeamCommunicationViewModel.swift */; };
 		80485F081CD4B19700F49209 /* PLTeamCommunicationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80485F071CD4B19700F49209 /* PLTeamCommunicationViewController.swift */; };
+		804889671CED90F800484284 /* PLTasksViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 804889651CED90F800484284 /* PLTasksViewCell.swift */; };
+		804889681CED90F800484284 /* PLTasksViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 804889661CED90F800484284 /* PLTasksViewCell.xib */; };
 		8049FF591CE9D25400FF24C5 /* PLSideBarTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8049FF581CE9D25400FF24C5 /* PLSideBarTableViewCell.swift */; };
 		805144401CE19E410000B1AF /* PLSidebarRootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8051443F1CE19E410000B1AF /* PLSidebarRootViewController.swift */; };
 		805144421CE19F640000B1AF /* PLSidebarMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 805144411CE19F640000B1AF /* PLSidebarMenuViewController.swift */; };
@@ -93,7 +95,6 @@
 		80879D411CC8E71D00B41D2D /* PLProjectAssignmentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80879D401CC8E71D00B41D2D /* PLProjectAssignmentViewModel.swift */; };
 		808A52451CD71CCB0032ED0D /* PLProjectTeamChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 808A52441CD71CCB0032ED0D /* PLProjectTeamChatViewController.swift */; };
 		808A52471CD71CF20032ED0D /* PLProjectTeamChatViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 808A52461CD71CF20032ED0D /* PLProjectTeamChatViewModel.swift */; };
-		808AA2ED1CC6060800685226 /* PLDynamicEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 808AA2EC1CC6060800685226 /* PLDynamicEngine.swift */; };
 		808B04141CE709BA00A8B2CB /* PLProjectViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 808B04121CE709BA00A8B2CB /* PLProjectViewCell.swift */; };
 		808B04151CE709BA00A8B2CB /* PLProjectViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 808B04131CE709BA00A8B2CB /* PLProjectViewCell.xib */; };
 		809F96CB1CBCC35000DD1FE9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 809F96CA1CBCC35000DD1FE9 /* AppDelegate.swift */; };
@@ -172,8 +173,6 @@
 		948382D71CE3304000B51BA6 /* PLResetPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948382D61CE3304000B51BA6 /* PLResetPasswordViewController.swift */; };
 		948382D91CE3310100B51BA6 /* bar.png in Resources */ = {isa = PBXBuildFile; fileRef = 948382D81CE3310100B51BA6 /* bar.png */; };
 		948382DF1CE3368400B51BA6 /* PLUserLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948382DE1CE3368400B51BA6 /* PLUserLoginViewController.swift */; };
-		948671DC1CED8183009403F5 /* PLTasksViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948671DA1CED8183009403F5 /* PLTasksViewCell.swift */; };
-		948671DD1CED8183009403F5 /* PLTasksViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 948671DB1CED8183009403F5 /* PLTasksViewCell.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -216,6 +215,8 @@
 		803E04071CBCD90100C59233 /* Makeit-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Makeit-Bridging-Header.h"; sourceTree = "<group>"; };
 		80485F051CD4B14800F49209 /* PLTeamCommunicationViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLTeamCommunicationViewModel.swift; sourceTree = "<group>"; };
 		80485F071CD4B19700F49209 /* PLTeamCommunicationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLTeamCommunicationViewController.swift; sourceTree = "<group>"; };
+		804889651CED90F800484284 /* PLTasksViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLTasksViewCell.swift; sourceTree = "<group>"; };
+		804889661CED90F800484284 /* PLTasksViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PLTasksViewCell.xib; sourceTree = "<group>"; };
 		8049FF581CE9D25400FF24C5 /* PLSideBarTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLSideBarTableViewCell.swift; sourceTree = "<group>"; };
 		8051443F1CE19E410000B1AF /* PLSidebarRootViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLSidebarRootViewController.swift; sourceTree = "<group>"; };
 		805144411CE19F640000B1AF /* PLSidebarMenuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLSidebarMenuViewController.swift; sourceTree = "<group>"; };
@@ -395,8 +396,6 @@
 		948382D61CE3304000B51BA6 /* PLResetPasswordViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLResetPasswordViewController.swift; sourceTree = "<group>"; };
 		948382D81CE3310100B51BA6 /* bar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bar.png; sourceTree = "<group>"; };
 		948382DE1CE3368400B51BA6 /* PLUserLoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLUserLoginViewController.swift; sourceTree = "<group>"; };
-		948671DA1CED8183009403F5 /* PLTasksViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLTasksViewCell.swift; sourceTree = "<group>"; };
-		948671DB1CED8183009403F5 /* PLTasksViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PLTasksViewCell.xib; sourceTree = "<group>"; };
 		AB4C5F8A0BCA9989B855A1CB /* Pods-Makeit.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Makeit.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Makeit/Pods-Makeit.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -655,6 +654,8 @@
 		806D4AF21CC25DB50054A9AF /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				804889651CED90F800484284 /* PLTasksViewCell.swift */,
+				804889661CED90F800484284 /* PLTasksViewCell.xib */,
 				805EFB5D1CD239200066B4CB /* PLTableViewCell.swift */,
 				805EFB5E1CD239200066B4CB /* PLTableViewCell.xib */,
 				808B04121CE709BA00A8B2CB /* PLProjectViewCell.swift */,
@@ -1014,7 +1015,6 @@
 				80C4A0221CDCBB500073B6E2 /* JSQMessagesTypingIndicatorFooterView.xib in Resources */,
 				805144441CE1AB060000B1AF /* sideBar.png in Resources */,
 				809F96D51CBCC35000DD1FE9 /* LaunchScreen.storyboard in Resources */,
-				948671DD1CED8183009403F5 /* PLTasksViewCell.xib in Resources */,
 				80C4A01D1CDCBB500073B6E2 /* JSQMessagesLoadEarlierHeaderView.xib in Resources */,
 				80AB251E1CE74CCA008B20C3 /* pendingTask.png in Resources */,
 				806B1E101CD8A7D60018B026 /* UserImage.png in Resources */,
@@ -1024,6 +1024,7 @@
 				80AB251F1CE74CCA008B20C3 /* upcomingTask.png in Resources */,
 				946DA8331CE3474100FF7AB9 /* close.png in Resources */,
 				806B1E111CD8A7D60018B026 /* video.png in Resources */,
+				804889681CED90F800484284 /* PLTasksViewCell.xib in Resources */,
 				808B04151CE709BA00A8B2CB /* PLProjectViewCell.xib in Resources */,
 				8024685B1CDA2FB900CAE735 /* chatGroup.png in Resources */,
 				80ED65A61CE0B36900C61090 /* emptyMessages.png in Resources */,
@@ -1169,8 +1170,6 @@
 				806B1E3C1CD8AA080018B026 /* SDWebImagePrefetcher.m in Sources */,
 				80879D411CC8E71D00B41D2D /* PLProjectAssignmentViewModel.swift in Sources */,
 				800318141CCF7D180084514A /* WYStoryboardPopoverSegue.m in Sources */,
-				948671DC1CED8183009403F5 /* PLTasksViewCell.swift in Sources */,
-				808AA2ED1CC6060800685226 /* PLDynamicEngine.swift in Sources */,
 				80C49FF31CDCBB500073B6E2 /* NSBundle.swift in Sources */,
 				80C4A0041CDCBB500073B6E2 /* JSQMessagesCollectionViewLayoutAttributes.swift in Sources */,
 				80ED65A41CE09F4600C61090 /* AFDropdownNotification.m in Sources */,
@@ -1217,6 +1216,7 @@
 				80C49FF91CDCBB500073B6E2 /* JSQMessagesKeyboardController.swift in Sources */,
 				806D4AF41CC260080054A9AF /* PLProjectsViewController.swift in Sources */,
 				806B1E3D1CD8AA080018B026 /* UIButton+WebCache.m in Sources */,
+				804889671CED90F800484284 /* PLTasksViewCell.swift in Sources */,
 				806D4AE91CC210910054A9AF /* SVProgressAnimatedView.m in Sources */,
 				8073C8CE1CC737F400AE4CB6 /* PLDisplayMembersPopover.swift in Sources */,
 				806D4AF91CC261280054A9AF /* Reachability.m in Sources */,

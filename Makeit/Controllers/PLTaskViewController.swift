@@ -87,14 +87,14 @@ class PLTaskViewController: UIViewController,UITableViewDelegate,UITableViewData
         if selectedType == 3{
         return 0
         }
-        return sidebarViewModel.numbersOfRows()
+        return 0
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         if selectedType == 0 | 1 | 2{
         let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) 
-        cell.textLabel!.text = sidebarViewModel.titleOfRowAtIndexPath(indexPath.row) as String
-        cell.detailTextLabel!.text = sidebarViewModel.detailTitleOfRowAtIndexPath(indexPath.row) as String
+      //  cell.textLabel!.text = sidebarViewModel.titleOfRowAtIndexPath(indexPath.row) as String
+      //  cell.detailTextLabel!.text = sidebarViewModel.detailTitleOfRowAtIndexPath(indexPath.row) as String
         return cell
         }else{
            

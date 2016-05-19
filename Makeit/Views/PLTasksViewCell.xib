@@ -90,10 +90,10 @@
                 <variation key="default">
                     <mask key="constraints">
                         <exclude reference="pWI-U5-OIA"/>
-                        <exclude reference="FX8-9h-Pgo"/>
-                        <exclude reference="yN9-s2-dK1"/>
                         <exclude reference="XHv-Ov-gB6"/>
                         <exclude reference="gch-dc-YfR"/>
+                        <exclude reference="FX8-9h-Pgo"/>
+                        <exclude reference="yN9-s2-dK1"/>
                     </mask>
                 </variation>
             </tableViewCellContentView>
