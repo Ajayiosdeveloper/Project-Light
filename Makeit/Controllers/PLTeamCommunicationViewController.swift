@@ -205,8 +205,6 @@ class PLTeamCommunicationViewController: UIViewController,UITableViewDelegate,UI
             let alertView = UIAlertView(title: "Enter Group Name", message: "", delegate: self, cancelButtonTitle: nil, otherButtonTitles: "Ok", "Cancel")
             alertView.alertViewStyle = .PlainTextInput
             alertView.show()
-
-            
             // Fallback on earlier versions
         }
     }

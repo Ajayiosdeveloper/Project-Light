@@ -90,9 +90,23 @@ class PLTaskViewController: UIViewController,UITableViewDelegate,UITableViewData
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         if selectedType != 3 {
         let cell = self.tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! PLTasksViewCell
-        cell.taskNameField.text = sidebarViewModel.titleOfRowAtIndexPath(indexPath.row) as String
-        cell.projectNameField.text = sidebarViewModel.detailTitleOfRowAtIndexPath(indexPath.row) as String
-        return cell
+            
+            cell.taskNameField.text = sidebarViewModel.titleOfRowAtIndexPath(indexPath.row)
+            cell.projectNameField.text = sidebarViewModel.projectTitleOfRowAtIndexPath(indexPath.row)
+            cell.detailsField.text = sidebarViewModel.commitmentDetails(indexPath.row)
+            if selectedType == 0
+            {
+                cell.taskStartTime.text = "StartTime: " + sidebarViewModel.startTimeOfTask(indexPath.row)
+                cell.taskEndTime.text =  "EndTime: " + sidebarViewModel.endTimeOfTask(indexPath.row)
+            }
+            else if selectedType == 1 || selectedType == 2
+            {
+                
+                cell.taskStartTime.text  = "StartDate: " + sidebarViewModel.startTaskDate(indexPath.row)
+                cell.taskEndTime.text = "EndDate: " + sidebarViewModel.endTaskDate(indexPath.row)
+            }
+            
+            return cell
         }
         else{
            
@@ -109,11 +123,14 @@ class PLTaskViewController: UIViewController,UITableViewDelegate,UITableViewData
         }
     }
     
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        if selectedType == 3{
+    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) ->
+        CGFloat
+    {
+        if selectedType == 3
+        {
             return 100
         }
-        return 71
+        return 105
     }
     
     func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
@@ -130,7 +147,7 @@ class PLTaskViewController: UIViewController,UITableViewDelegate,UITableViewData
         let callUrl = NSURL(string:"callto://")
         if UIApplication.sharedApplication().canOpenURL(callUrl!){
             
-           UIApplication.sharedApplication().openURL(callUrl!)
+            UIApplication.sharedApplication().openURL(callUrl!)
         }else{
             print("Can not make a call")
         }
@@ -159,4 +176,11 @@ class PLTaskViewController: UIViewController,UITableViewDelegate,UITableViewData
         self.sidebarViewModel.teamMembersForBitrhday = []
         self.tableView.reloadData()
     }
+    
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        
+//        let commitmentViewController = self.storyboard?.instantiateViewControllerWithIdentifier("PLProjectCommentViewController") as! PLProjectCommentViewController
+//        self.presentViewController(commitmentViewController, animated: true, completion: nil)
+    }
+    
 }
