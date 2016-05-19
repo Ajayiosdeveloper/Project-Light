@@ -126,7 +126,7 @@ class PLSidebarViewModel: NSObject {
     
     func detailTitleOfRowAtIndexPath(row:Int)->String
     {
-         var taskDetails = [AnyObject]()
+        var taskDetails = [AnyObject]()
         for data in commitments
         {
             taskDetails.append(data.details)

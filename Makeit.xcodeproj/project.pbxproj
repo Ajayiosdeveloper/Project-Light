@@ -170,6 +170,8 @@
 		948382D71CE3304000B51BA6 /* PLResetPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948382D61CE3304000B51BA6 /* PLResetPasswordViewController.swift */; };
 		948382D91CE3310100B51BA6 /* bar.png in Resources */ = {isa = PBXBuildFile; fileRef = 948382D81CE3310100B51BA6 /* bar.png */; };
 		948382DF1CE3368400B51BA6 /* PLUserLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948382DE1CE3368400B51BA6 /* PLUserLoginViewController.swift */; };
+		948671DC1CED8183009403F5 /* PLTasksViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948671DA1CED8183009403F5 /* PLTasksViewCell.swift */; };
+		948671DD1CED8183009403F5 /* PLTasksViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 948671DB1CED8183009403F5 /* PLTasksViewCell.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -389,6 +391,8 @@
 		948382D61CE3304000B51BA6 /* PLResetPasswordViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLResetPasswordViewController.swift; sourceTree = "<group>"; };
 		948382D81CE3310100B51BA6 /* bar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bar.png; sourceTree = "<group>"; };
 		948382DE1CE3368400B51BA6 /* PLUserLoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLUserLoginViewController.swift; sourceTree = "<group>"; };
+		948671DA1CED8183009403F5 /* PLTasksViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLTasksViewCell.swift; sourceTree = "<group>"; };
+		948671DB1CED8183009403F5 /* PLTasksViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PLTasksViewCell.xib; sourceTree = "<group>"; };
 		AB4C5F8A0BCA9989B855A1CB /* Pods-Makeit.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Makeit.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Makeit/Pods-Makeit.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -654,6 +658,8 @@
 				808B04121CE709BA00A8B2CB /* PLProjectViewCell.swift */,
 				808B04131CE709BA00A8B2CB /* PLProjectViewCell.xib */,
 				8049FF581CE9D25400FF24C5 /* PLSideBarTableViewCell.swift */,
+				948671DA1CED8183009403F5 /* PLTasksViewCell.swift */,
+				948671DB1CED8183009403F5 /* PLTasksViewCell.xib */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -1005,6 +1011,7 @@
 				80C4A0221CDCBB500073B6E2 /* JSQMessagesTypingIndicatorFooterView.xib in Resources */,
 				805144441CE1AB060000B1AF /* sideBar.png in Resources */,
 				809F96D51CBCC35000DD1FE9 /* LaunchScreen.storyboard in Resources */,
+				948671DD1CED8183009403F5 /* PLTasksViewCell.xib in Resources */,
 				80C4A01D1CDCBB500073B6E2 /* JSQMessagesLoadEarlierHeaderView.xib in Resources */,
 				80AB251E1CE74CCA008B20C3 /* pendingTask.png in Resources */,
 				806B1E101CD8A7D60018B026 /* UserImage.png in Resources */,
@@ -1158,6 +1165,7 @@
 				806B1E3C1CD8AA080018B026 /* SDWebImagePrefetcher.m in Sources */,
 				80879D411CC8E71D00B41D2D /* PLProjectAssignmentViewModel.swift in Sources */,
 				800318141CCF7D180084514A /* WYStoryboardPopoverSegue.m in Sources */,
+				948671DC1CED8183009403F5 /* PLTasksViewCell.swift in Sources */,
 				808AA2ED1CC6060800685226 /* PLDynamicEngine.swift in Sources */,
 				80C49FF31CDCBB500073B6E2 /* NSBundle.swift in Sources */,
 				80C4A0041CDCBB500073B6E2 /* JSQMessagesCollectionViewLayoutAttributes.swift in Sources */,

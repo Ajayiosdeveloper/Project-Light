@@ -18,27 +18,31 @@ class PLTaskViewController: UIViewController,UITableViewDelegate,UITableViewData
     
     override func viewDidLoad() {
         super.viewDidLoad()
-    
+        tableView.registerNib(UINib(nibName: "PLTasksViewCell",bundle: NSBundle.mainBundle()), forCellReuseIdentifier: "Cell")
         addDoneBarButtonItem()
        }
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        self.title = "Task View"
+        
+        
        if let _ = selectedType
        {
         switch selectedType {
         case 0:
+           self.title = "Today Tasks"
            sidebarViewModel.getTodayTasks({ (res) in
             
             self.tableView!.reloadData()
             
            })
         case 1:
+               self.title = "Upcoming Tasks"
                sidebarViewModel.getUpcomingTasks({ (res) in
                self.tableView!.reloadData()
 
             })
         case 2:
+            self.title = "Pending Tasks"
             sidebarViewModel.getPendingTasks({ (res) in
                 
                 self.tableView!.reloadData()
@@ -74,10 +78,17 @@ class PLTaskViewController: UIViewController,UITableViewDelegate,UITableViewData
         
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) 
-        cell.textLabel!.text = sidebarViewModel.titleOfRowAtIndexPath(indexPath.row) as String
-        cell.detailTextLabel!.text = sidebarViewModel.detailTitleOfRowAtIndexPath(indexPath.row) as String
+    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        return 71
+    }
+    
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell
+    {
+        let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! PLTasksViewCell
+        cell.taskNameField.text = sidebarViewModel.titleOfRowAtIndexPath(indexPath.row) as String
+        cell.projectNameField.text = sidebarViewModel.detailTitleOfRowAtIndexPath(indexPath.row) as String
+        cell.taskStartTime.text  = "12.00"
+        cell.taskEndTime.text = "9.00"
         return cell
     }
 }
