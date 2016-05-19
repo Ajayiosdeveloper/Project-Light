@@ -305,7 +305,7 @@ class PLProjectDetailTableViewController: UITableViewController,EKEventEditViewD
             ev.notes = event!.notes
             print("Coming")
             print(ev.title)
-            editViewController.event = ev
+            //editViewController.event = ev
         }
        //let array = editViewController.navigationBar.items;
         //let titleItem = array![0]
