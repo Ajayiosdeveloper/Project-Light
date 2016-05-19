@@ -13,6 +13,7 @@ class PLSidebarViewModel: NSObject {
 
     var qbClient = PLQuickbloxHttpClient()
     var commitments = [PLCommitment]()
+    var teamMembersForBitrhday = [PLTeamMember]()
     
     func getTodayTasks(completion:(Bool)-> Void)
     {
@@ -59,6 +60,33 @@ class PLSidebarViewModel: NSObject {
         }
     }
     
+    func getTeamMemberBirthdayListForToday(completion:(Bool)-> Void){
+        
+        self.teamMembersForBitrhday.removeAll(keepCapacity: true)
+        qbClient.getBirthdayListOfTeamMembers(){ members in
+            
+            var birthdaysOfMembers = [PLTeamMember]()
+            
+            if members?.count > 0{
+                
+                for each in members!{
+                    
+                 let member = PLTeamMember(name:"", id: 0)
+                 member.fullName = each.fields?.objectForKey("name") as! String
+                 member.memberEmail = each.fields?.objectForKey("memberEmail") as! String
+                 member.memberId = String(each.userID)
+                 member.memberUserId = each.fields?.objectForKey("member_User_Id") as! UInt
+                 member.avatar = each.fields?.objectForKey("avatar") as! String
+                 birthdaysOfMembers.append(member)
+                }
+                
+                self.teamMembersForBitrhday = birthdaysOfMembers
+                
+                completion(true)
+            }
+        }
+    }
+    
     func dateFormat(timeInterval : NSTimeInterval) -> String
     {
         let date = NSDate(timeIntervalSince1970: timeInterval)
@@ -79,7 +107,7 @@ class PLSidebarViewModel: NSObject {
     
     func getCommitmentArray(objects : [QBCOCustomObject], completion: ([PLCommitment])->Void)
     {
-        var commitments = [PLCommitment]()
+        var commitmentsArray = [PLCommitment]()
         
        if objects.count > 0
        {
@@ -93,44 +121,145 @@ class PLSidebarViewModel: NSObject {
                 let targetDate = each.fields?.objectForKey("targetDate") as! NSTimeInterval
                 var startTime  = (each.fields?.objectForKey("startTime"))! as! String
                 var endTime  = (each.fields?.objectForKey("endTime"))! as! String
-                 startTime = self.timeFormat(startTime)
-                 endTime = self.timeFormat(endTime)
+                startTime = self.timeFormat(startTime)
+                endTime = self.timeFormat(endTime)
+                commitment.projectName = (each.fields?.objectForKey("projectName"))! as! String
                 commitment.targetDate = self.dateFormat( targetDate)
                 commitment.startDate = self.dateFormat( startDate)
                 commitment.startDate += " \(startTime)"
                 commitment.targetDate += " \(endTime)"
                 commitment.commitmentId = each.ID!
                 commitment.isCompleted = each.fields?.objectForKey("isCompleted") as! Int
-                commitments.append(commitment)
+                commitmentsArray.append(commitment)
             }
-          completion(commitments)
+          completion(commitmentsArray)
         }
         
     }
     
     func numbersOfRows()->Int
     {
+        if commitments.count > 0
+        {
         return commitments.count
+        }
+        return 0
     }
     
     func titleOfRowAtIndexPath(row:Int)->String
     {
       var taskList = [AnyObject]()
        
-       for data in commitments
+       for title in commitments
        {
-        taskList.append(data.name)
+        taskList.append(title.name)
        }
        return taskList[row] as! String
     }
     
-    func detailTitleOfRowAtIndexPath(row:Int)->String
+    func projectTitleOfRowAtIndexPath(row:Int)->String
     {
-         var taskDetails = [AnyObject]()
-        for data in commitments
+        var taskList = [AnyObject]()
+        
+        for title in commitments
         {
-            taskDetails.append(data.details)
+            taskList.append(title.projectName)
+        }
+        return taskList[row] as! String
+    }
+    
+    func commitmentDetails(row:Int)->String
+    {
+        var taskDetails = [AnyObject]()
+        for projectName in commitments
+        {
+            taskDetails.append(projectName.details)
         }
         return taskDetails[row] as! String
+    }
+    
+    func startTaskDate(row : Int) -> String
+    {
+        var taskDetail = [AnyObject]()
+        for endTime in commitments
+        {
+            let time = stringDate(endTime.startDate)
+            taskDetail.append(time)
         }
+        return taskDetail[row] as! String
+    }
+    
+    func endTaskDate(row : Int) -> String
+    {
+        var taskDetail = [AnyObject]()
+        for endTime in commitments
+        {
+            let time = stringDate(endTime.targetDate)
+            taskDetail.append(time)
+        }
+        return taskDetail[row] as! String
+    }
+    
+    func startTimeOfTask(row: Int) -> String
+    {
+        var taskDetail = [AnyObject]()
+        for startTime in commitments
+        {
+            let time = timeFormats(startTime.startDate)
+            taskDetail.append(time)
+        }
+        return taskDetail[row] as! String
+    }
+    
+    func endTimeOfTask(row:Int) -> String
+    {
+        var taskDetail = [AnyObject]()
+        for endTime in commitments
+        {
+            let time = timeFormats(endTime.targetDate)
+            taskDetail.append(time)
+        }
+        return taskDetail[row] as! String
+    }
+    
+    func stringDate(dateTime : String) -> String
+    {
+        let dateFormatter = NSDateFormatter()
+        dateFormatter.dateFormat = "dd-MM-yyyy hh:mm a"
+        let date = dateFormatter.dateFromString(dateTime)
+        
+        dateFormatter.dateFormat = "dd/MM/yy hh:mm a"
+        let dateString = dateFormatter.stringFromDate(date!)
+        return dateString
+    }
+    
+    func timeFormats(time: String) -> String
+    {
+        let dateFormatter = NSDateFormatter()
+        dateFormatter.dateFormat = "dd-MM-yyyy hh:mm a"
+        let date = dateFormatter.dateFromString(time)
+        
+        dateFormatter.dateFormat = "hh:mm a"
+        let dateString = dateFormatter.stringFromDate(date!)
+        return dateString
+    }
+    
+    func numberOfBirthdayRows() -> Int {
+        
+        if self.teamMembersForBitrhday.count > 0{
+            return self.teamMembersForBitrhday.count
+        }
+        return 0
+    }
+    
+    func birthdayMemberName(row:Int) -> String {
+        
+        let member = self.teamMembersForBitrhday[row]
+        return member.fullName
+        
+    }
+    func birthdayMemberEmail(row:Int)->String{
+        let member = self.teamMembersForBitrhday[row]
+        return member.memberEmail
+    }
 }

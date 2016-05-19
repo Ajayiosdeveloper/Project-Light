@@ -201,12 +201,11 @@ class PLTeamCommunicationViewController: UIViewController,UITableViewDelegate,UI
                 self?.textFld = textField
             }
               self.presentViewController(alertViewController, animated: true, completion: nil)
-        } else {
-            let alertView = UIAlertView(title: "Enter Group Name", message: "", delegate: self, cancelButtonTitle: nil, otherButtonTitles: "Ok", "Cancel")
+        }
+        else {
+            let alertView = UIAlertView(title: "Enter Group Name", message: "", delegate: self, cancelButtonTitle: nil, otherButtonTitles: "Ok")
             alertView.tag = 1
             alertView.show()
-
-            
             // Fallback on earlier versions
         }
     }
@@ -229,9 +228,6 @@ class PLTeamCommunicationViewController: UIViewController,UITableViewDelegate,UI
                     }
                 }
 
-                alertView.show()
-            case 1:
-                print("Cancel")
             default:
                 print("")
             }
