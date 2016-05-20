@@ -160,17 +160,18 @@ class PLProjectCommentViewModel: NSObject {
         return priorityType[row]
       }
     
-    func addCommitmentToCalendar(name:String,date:NSDate){
+    func addCommitmentToCalendar(name:String,date:NSDate,endDate:NSDate){
         
          self.isAccessGranted(){[weak self] result in
             
             if result{
+                print("Saving")
                 let event = EKEvent(eventStore: self!.eventStore!)
                  event.title = name
                  event.startDate = date
-                 event.endDate = event.startDate.dateByAddingTimeInterval(60*60)
+                 event.endDate = endDate
                  event.calendar = self!.eventStore!.defaultCalendarForNewEvents
-                 try!  self!.eventStore!.saveEvent(event, span: EKSpan.FutureEvents)
+                 try!  self!.eventStore!.saveEvent(event, span: EKSpan.ThisEvent)
             }
             else{
                 
