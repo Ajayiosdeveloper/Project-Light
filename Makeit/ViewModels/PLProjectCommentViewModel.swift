@@ -33,7 +33,17 @@ class PLProjectCommentViewModel: NSObject {
             completion(result)
         }
     }
- 
+    
+    func updateCommitmentWith(name:String,startDate:NSDate,targetDate:NSDate, description:String,projectId:String,completion:(Bool)->Void)
+    {
+        commitment?.name = name
+        commitment?.startDate = dateToString(startDate)
+        commitment?.targetDate = dateToString(targetDate)
+        commitment?.details = description
+        qbClient.updateCommitmentTask(commitment!) { (res) in
+            print("Updated result is \(res)")
+        }
+    }
     func dateFormat(date : NSDate) -> NSTimeInterval
     {
         let dateFormatter = NSDateFormatter()
@@ -46,9 +56,10 @@ class PLProjectCommentViewModel: NSObject {
         return stringToDate!
     }
     
-    func completedTask(commitmentId:String,completed: Bool, completion:(Bool)->Void)
+    func completedTask(completion:(Bool)->Void)
     {
-        qbClient.updateCommitmentTask(commitmentId,isCompleted: completed) { (result) in
+        print("isCompleted")
+        qbClient.updateCommitmentTask(commitment!) { (result) in
             completion(result)
         }
     }
@@ -93,6 +104,18 @@ class PLProjectCommentViewModel: NSObject {
         }
        
         return true
+    }
+    
+    func updateCommitmentStatus(completion:(Bool)->Void)
+    {
+       
+        commitment?.isCompleted = 1
+        self.completedTask({ (resul) in
+            
+           completion(resul)
+
+        })
+
     }
     
     func commitmentName()->String{
@@ -166,6 +189,13 @@ class PLProjectCommentViewModel: NSObject {
                 
                 completion(granted)
           })
+    }
+    func dateToString(dateTime : NSDate) -> String
+    {
+        let dateFormatter = NSDateFormatter()
+        dateFormatter.dateFormat = "dd-MM-yyyy hh:mm a"
+       return dateFormatter.stringFromDate(dateTime)
+        
     }
 
 }

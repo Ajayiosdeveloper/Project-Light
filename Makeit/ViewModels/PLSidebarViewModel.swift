@@ -129,12 +129,25 @@ class PLSidebarViewModel: NSObject {
                 commitment.startDate += " \(startTime)"
                 commitment.targetDate += " \(endTime)"
                 commitment.commitmentId = each.ID!
+                commitment.projectId = each.parentID!
                 commitment.isCompleted = each.fields?.objectForKey("isCompleted") as! Int
                 commitmentsArray.append(commitment)
             }
           completion(commitmentsArray)
         }
         
+    }
+    
+    func getSelectedCommitment(row:Int)->PLCommitment{
+        
+        let commitment = commitments[row]
+        return commitment
+    }
+    
+    func projectIdForSelectedCommitement(row : Int) -> String
+    {
+        let commitment = commitments[row]
+        return commitment.projectId
     }
     
     func numbersOfRows()->Int

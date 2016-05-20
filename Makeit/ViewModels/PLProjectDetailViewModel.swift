@@ -140,6 +140,7 @@ class PLProjectDetailViewModel: NSObject {
                 commitment.startDate = self.dateFormat(startDate)
                 commitment.startDate += " \(startTime)"
                 commitment.targetDate += " \(endTime)"
+                commitment.projectId = each.parentID!
                 self.commitments.append(commitment)
                 }
                 

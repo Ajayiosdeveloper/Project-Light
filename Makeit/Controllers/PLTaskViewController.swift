@@ -20,8 +20,9 @@ class PLTaskViewController: UIViewController,UITableViewDelegate,UITableViewData
         super.viewDidLoad()
         tableView.registerNib(UINib(nibName: "PLTasksViewCell",bundle: NSBundle.mainBundle()), forCellReuseIdentifier: "Cell")
         self.tableView.registerNib(UINib(nibName:"PLBirthdayTableViewCell", bundle: NSBundle.mainBundle()), forCellReuseIdentifier: "BirthdayCell")
-        addDoneBarButtonItem()
+        addBackBarButtonItem()
        }
+    
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
@@ -60,7 +61,7 @@ class PLTaskViewController: UIViewController,UITableViewDelegate,UITableViewData
        }
     }
     
-    func addDoneBarButtonItem(){
+    func addBackBarButtonItem(){
         
         let backButton = UIBarButtonItem(barButtonSystemItem:.Cancel, target: self, action: #selector(PLTaskViewController.performCancel))
         self.navigationItem.leftBarButtonItem = backButton
@@ -91,9 +92,9 @@ class PLTaskViewController: UIViewController,UITableViewDelegate,UITableViewData
         if selectedType != 3 {
         let cell = self.tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! PLTasksViewCell
             
-            cell.taskNameField.text = sidebarViewModel.titleOfRowAtIndexPath(indexPath.row)
-            cell.projectNameField.text = sidebarViewModel.projectTitleOfRowAtIndexPath(indexPath.row)
-            cell.detailsField.text = sidebarViewModel.commitmentDetails(indexPath.row)
+            cell.taskNameField.text = "Task:  " + sidebarViewModel.titleOfRowAtIndexPath(indexPath.row)
+            cell.projectNameField.text =  "Project: " + sidebarViewModel.projectTitleOfRowAtIndexPath(indexPath.row)
+            cell.detailsField.text = "Detail: " + sidebarViewModel.commitmentDetails(indexPath.row)
             if selectedType == 0
             {
                 cell.taskStartTime.text = "StartTime: " + sidebarViewModel.startTimeOfTask(indexPath.row)
@@ -102,8 +103,8 @@ class PLTaskViewController: UIViewController,UITableViewDelegate,UITableViewData
             else if selectedType == 1 || selectedType == 2
             {
                 
-                cell.taskStartTime.text  = "StartDate: " + sidebarViewModel.startTaskDate(indexPath.row)
-                cell.taskEndTime.text = "EndDate: " + sidebarViewModel.endTaskDate(indexPath.row)
+                cell.taskStartTime.text  = "Start: " + sidebarViewModel.startTaskDate(indexPath.row)
+                cell.taskEndTime.text = "End: " + sidebarViewModel.endTaskDate(indexPath.row)
             }
             
             return cell
@@ -177,10 +178,16 @@ class PLTaskViewController: UIViewController,UITableViewDelegate,UITableViewData
         self.tableView.reloadData()
     }
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath)
+    {
+        let commitmentViewController = self.storyboard?.instantiateViewControllerWithIdentifier("PLProjectCommentViewController") as! PLProjectCommentViewController
+        commitmentViewController.commitmentViewModel = PLProjectCommentViewModel()
+        commitmentViewController.commitmentViewModel.commitment = sidebarViewModel.getSelectedCommitment(indexPath.row)
+        commitmentViewController.projectId = sidebarViewModel.projectIdForSelectedCommitement(indexPath.row)
+        let navigation = UINavigationController(rootViewController: commitmentViewController)
+        self.presentViewController(navigation, animated: true, completion: nil)
+        commitmentViewController.addBackBarButtonItem()
         
-//        let commitmentViewController = self.storyboard?.instantiateViewControllerWithIdentifier("PLProjectCommentViewController") as! PLProjectCommentViewController
-//        self.presentViewController(commitmentViewController, animated: true, completion: nil)
     }
     
 }

@@ -615,10 +615,10 @@
 				8078A46A1CC88BD1008AC4DD /* PLProjectDetailTableViewController.swift */,
 				80879D3A1CC8DC1C00B41D2D /* PLProjectCommentViewController.swift */,
 				80879D3E1CC8E70100B41D2D /* PLProjectAssignmentViewController.swift */,
-				807FC8791CCB47920094112E /* PLTeamMemberDetailsTableViewController.swift */,
 				80485F071CD4B19700F49209 /* PLTeamCommunicationViewController.swift */,
 				808A52441CD71CCB0032ED0D /* PLProjectTeamChatViewController.swift */,
 				802468581CDA2F3F00CAE735 /* PLChatDetailViewController.swift */,
+				807FC8791CCB47920094112E /* PLTeamMemberDetailsTableViewController.swift */,
 				9419F5DC1CEC453400A0B341 /* PLTaskViewController.swift */,
 			);
 			path = Controllers;
@@ -1295,6 +1295,7 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_MODULE_DEBUGGING = NO;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
@@ -1341,6 +1342,7 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_MODULE_DEBUGGING = NO;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;

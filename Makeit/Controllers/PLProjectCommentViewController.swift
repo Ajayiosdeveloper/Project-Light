@@ -18,8 +18,9 @@ class PLProjectCommentViewController: UITableViewController,EKEventEditViewDeleg
     @IBOutlet weak var commitmentPriorityTextField: UITextField!
     @IBOutlet var commitmentDescriptionTextView: UITextView!
     @IBOutlet weak var isTaskCompleted: UISwitch!
-    var doneButton:UIBarButtonItem!
     @IBOutlet weak var taskCompletedLabel: UILabel!
+    
+    var doneButton:UIBarButtonItem!
     var pickerView:UIPickerView? = UIPickerView()
     var projectId:String!
     lazy  var commitmentViewModel:PLProjectCommentViewModel = {
@@ -29,7 +30,6 @@ class PLProjectCommentViewController: UITableViewController,EKEventEditViewDeleg
     
     var startDatecommitmentDatePicker:UIDatePicker!
     var targetDatecommitmentDatePicker:UIDatePicker!
-    var projDetail = PLProjectDetailTableViewController()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -51,7 +51,8 @@ class PLProjectCommentViewController: UITableViewController,EKEventEditViewDeleg
       override func viewWillAppear(animated: Bool) {
         
         super.viewWillAppear(animated)
-       
+        print(commitmentViewModel)
+        print(commitmentViewModel.commitment)
         if let _ = commitmentViewModel.commitment
         {
             if PLSharedManager.manager.isCalendarAccess{
@@ -69,13 +70,16 @@ class PLProjectCommentViewController: UITableViewController,EKEventEditViewDeleg
                 if commitmentViewModel.commitmentStatus() == 0{
                     isTaskCompleted.enabled = true
                     isTaskCompleted.on = false
+                    self.doneButton.enabled = true
+                    self.doneButton.width = 0
                 }
                 else{
                     isTaskCompleted.enabled = false
                     isTaskCompleted.on = true
+                    self.navigationItem.rightBarButtonItem?.enabled = false
+                    self.navigationItem.rightBarButtonItem?.tintColor = UIColor.clearColor()
                 }
-                self.navigationItem.rightBarButtonItem?.enabled = false
-                self.navigationItem.rightBarButtonItem?.tintColor = UIColor.clearColor()
+                
             }
             
             self.view.endEditing(true)
@@ -92,18 +96,15 @@ class PLProjectCommentViewController: UITableViewController,EKEventEditViewDeleg
     }
 
     @IBAction func taskCompletedAction(sender: UISwitch) {
+
         if sender.on
         {
-            let commitmentId = commitmentViewModel.commitmentId()
-        commitmentViewModel.completedTask(commitmentId,completed: true, completion: { (result) in
-            sender.enabled = false
-        })
+            commitmentViewModel.updateCommitmentStatus(){(res) in
+                if res{
+                    self.isTaskCompleted.enabled = false
+                }
+            }
         }
-//        else{
-//            commitmentViewModel.completedTask(false, completion: { (result) in
-//               
-//            })
-//        }
     }
     
     func startDateDoneButtonToDatePicker()
@@ -144,37 +145,64 @@ class PLProjectCommentViewController: UITableViewController,EKEventEditViewDeleg
    
     func addDoneBarButtonItem(){
         
-        doneButton = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.Plain, target:self, action:#selector(PLAddProjectViewController.performDone))
+        doneButton = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.Plain, target:self, action:#selector(PLProjectCommentViewController.performDone))
 
         self.navigationItem.rightBarButtonItem = doneButton
     }
     
+    func addBackBarButtonItem(){
+        
+        let backButton = UIBarButtonItem(title: "Back", style: UIBarButtonItemStyle.Plain, target:self, action:#selector(PLProjectCommentViewController.performCancel))
+        self.navigationItem.leftBarButtonItem = backButton
+    }
+    
+    func performCancel()
+    {
+        self.dismissViewControllerAnimated(true, completion: nil)
+    }
+    
     func performDone()
     {
+        print("done btn")
+
         do{
             
             try commitmentViewModel.commitmentValidations(commitmentNameTextField.text!, startDate:startDatecommitmentDatePicker.date ,targetDate:targetDatecommitmentDatePicker.date, description: commitmentDescriptionTextView.text)
-
+            if commitmentViewModel.commitment == nil{
             commitmentViewModel.createCommitmentWith(commitmentNameTextField.text!,startDate:startDatecommitmentDatePicker.date,targetDate: targetDatecommitmentDatePicker.date, description: commitmentDescriptionTextView.text,projectId: projectId){ result in
-                
+            
                 if result{
+                    print("updated")
                     self.navigationController?.popViewControllerAnimated(true)
                 }else {
                     print("Handle Error")
                 }
             }
+            }else{
+                
+                commitmentViewModel.updateCommitmentWith(commitmentNameTextField.text!, startDate:startDatecommitmentDatePicker.date ,targetDate:targetDatecommitmentDatePicker.date, description: commitmentDescriptionTextView.text,projectId: projectId) { res in
+                    
+                    
+                }
+                
+              
+              
+              //  self.dismissViewControllerAnimated(true, completion: nil)
+               
+            }
+       
+        
         }
         catch CommitValidation.NameEmpty{print("Empty Name")}
         catch CommitValidation.InvalidDate{print("Earlier date")}
         catch CommitValidation.DescriptionEmpty{print("Empty Description")}
         catch {}
-    }
+   }
     
     func clearFields(){
         
         commitmentNameTextField.text = ""
         commitmentTargetDateTextField.text = ""
-        commitmentPriorityTextField.text = ""
         commitmentEndDateTextField.text = ""
         commitmentDescriptionTextView.text = ""
     }
