@@ -29,6 +29,7 @@
 		804889671CED90F800484284 /* PLTasksViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 804889651CED90F800484284 /* PLTasksViewCell.swift */; };
 		804889681CED90F800484284 /* PLTasksViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 804889661CED90F800484284 /* PLTasksViewCell.xib */; };
 		8049FF591CE9D25400FF24C5 /* PLSideBarTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8049FF581CE9D25400FF24C5 /* PLSideBarTableViewCell.swift */; };
+		804CDDF91CF029EF00DD7DD2 /* PLProjectNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 804CDDF81CF029EF00DD7DD2 /* PLProjectNotification.swift */; };
 		805144401CE19E410000B1AF /* PLSidebarRootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8051443F1CE19E410000B1AF /* PLSidebarRootViewController.swift */; };
 		805144421CE19F640000B1AF /* PLSidebarMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 805144411CE19F640000B1AF /* PLSidebarMenuViewController.swift */; };
 		805144441CE1AB060000B1AF /* sideBar.png in Resources */ = {isa = PBXBuildFile; fileRef = 805144431CE1AB060000B1AF /* sideBar.png */; };
@@ -218,6 +219,7 @@
 		804889651CED90F800484284 /* PLTasksViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLTasksViewCell.swift; sourceTree = "<group>"; };
 		804889661CED90F800484284 /* PLTasksViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PLTasksViewCell.xib; sourceTree = "<group>"; };
 		8049FF581CE9D25400FF24C5 /* PLSideBarTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLSideBarTableViewCell.swift; sourceTree = "<group>"; };
+		804CDDF81CF029EF00DD7DD2 /* PLProjectNotification.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLProjectNotification.swift; sourceTree = "<group>"; };
 		8051443F1CE19E410000B1AF /* PLSidebarRootViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLSidebarRootViewController.swift; sourceTree = "<group>"; };
 		805144411CE19F640000B1AF /* PLSidebarMenuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLSidebarMenuViewController.swift; sourceTree = "<group>"; };
 		805144431CE1AB060000B1AF /* sideBar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sideBar.png; sourceTree = "<group>"; };
@@ -628,6 +630,7 @@
 			isa = PBXGroup;
 			children = (
 				80BB3EF51CC4F4BE009FAE11 /* PLProject.swift */,
+				804CDDF81CF029EF00DD7DD2 /* PLProjectNotification.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -1169,6 +1172,7 @@
 				80711A7F1CE323A700473856 /* DLHamburguerViewController.swift in Sources */,
 				806B1E3C1CD8AA080018B026 /* SDWebImagePrefetcher.m in Sources */,
 				80879D411CC8E71D00B41D2D /* PLProjectAssignmentViewModel.swift in Sources */,
+				804CDDF91CF029EF00DD7DD2 /* PLProjectNotification.swift in Sources */,
 				800318141CCF7D180084514A /* WYStoryboardPopoverSegue.m in Sources */,
 				80C49FF31CDCBB500073B6E2 /* NSBundle.swift in Sources */,
 				80C4A0041CDCBB500073B6E2 /* JSQMessagesCollectionViewLayoutAttributes.swift in Sources */,

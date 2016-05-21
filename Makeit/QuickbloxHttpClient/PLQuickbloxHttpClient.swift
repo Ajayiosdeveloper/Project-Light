@@ -283,6 +283,8 @@ class PLQuickbloxHttpClient
             
             print("PRAISE THE LORD")
             
+            PLProjectNotification.sendAssignmentNotificationToAssignees(assigneeUserIds,assignmentName: "Makeit",projectName: "Makeit")
+            
             completion(true)
             
         }) { (res) in

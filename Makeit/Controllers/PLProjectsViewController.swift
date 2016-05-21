@@ -52,7 +52,6 @@ class PLProjectsViewController: UITableViewController,UIImagePickerControllerDel
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-       
         //projectViewModel = PLProjectsViewModel()
         projectViewModel.addObserver(self, forKeyPath:"createdProjectList", options: NSKeyValueObservingOptions.New, context:&observerContext)
         projectViewModel.fetchProjectsFromRemote()
