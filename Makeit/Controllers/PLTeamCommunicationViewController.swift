@@ -95,12 +95,13 @@ class PLTeamCommunicationViewController: UIViewController,UITableViewDelegate,UI
         let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! PLTableViewCell
         
         cell.memberName.text = communicationViewModel.contributorTitleForRowAtIndexPath(indexPath.row)
-        cell.memberDetail.text = "some tags"
+        cell.memberDetail.text = communicationViewModel.contributorEmailForRowAtIndexPath(indexPath.row)
         communicationViewModel.contributorImageRowAtIndexPath(indexPath.row, completion: { (avatar) in
             
             if let _ = avatar{
                 
                 cell.teamMemberProfile.image = avatar!
+                cell.teamMemberProfile.layer.masksToBounds = true
             }else{
                 
                 cell.teamMemberProfile.image = UIImage(named:"UserImage.png")

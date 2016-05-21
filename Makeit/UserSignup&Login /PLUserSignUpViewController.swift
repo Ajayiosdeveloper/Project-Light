@@ -15,6 +15,7 @@ class PLUserSignUpViewController: UIViewController,UITextFieldDelegate
     @IBOutlet var signupUserConfirmPasswordTextField: UITextField!
     @IBOutlet var userSignup: UIButton!
     @IBOutlet weak var emailIdField: UITextField!
+    var sideBarRootViewController:PLSidebarRootViewController!
     
     var projectsViewController:PLProjectsViewController!
     
@@ -71,10 +72,10 @@ class PLUserSignUpViewController: UIViewController,UITextFieldDelegate
     override func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutablePointer<Void>) {
         
         if keyPath == kSignupResultNotifier{
-           // handleStatus(change,tag:kSignupTag)
-            removeObservationsOn(kSignupResultNotifier)
+            print("Coming in notifier")
+           //handleStatus(change,tag:kSignupTag)
+            
         }
-
     }
     
     func clearTextfields(){
@@ -100,47 +101,52 @@ class PLUserSignUpViewController: UIViewController,UITextFieldDelegate
         }
             }
 
-//    func handleStatus(change:[String:AnyObject]?,tag:Int){
-//        
-//        if let _ = change, value = change![NSKeyValueChangeNewKey]{
-//            
-//            if value as! NSNumber == 1 { // Handling Alert Messages for Sign in
-//                if tag == 0{ clearTextfields()}
-//                
-//                presentProjectsViewController()
-//            }
-//            else{ // Handling Alert Messages for Login
-//                
-//                if tag == 0 {showAlertWithMessage("Failed!", message:"User name already exist.Please try another")}
-//                else{showAlertWithMessage("Error!", message:"Please try again")}
-//            }
-//        }
-//    }
-//    func presentProjectsViewController(){
-//        
-//        if (projectsViewController == nil){
-//            
-//            projectsViewController = self.storyboard?.instantiateViewControllerWithIdentifier("projectsViewController") as! PLProjectsViewController
-//        }
-//        if !(self.navigationController?.topViewController?.isKindOfClass(PLAddProjectViewController))!
-//        {
-//            
-//            self.navigationController?.pushViewController(projectsViewController, animated: false)
-//            
-//        }
-//        
-//    }
+    /*func handleStatus(change:[String:AnyObject]?,tag:Int){
+        
+        if let _ = change, value = change![NSKeyValueChangeNewKey]{
+            
+            if value as! NSNumber == 1 { // Handling Alert Messages for Sign in
+                if tag == 0{ clearTextfields()}
+                 print("Coming in handle")
+                presentProjectsViewController()
+            }
+            else{ // Handling Alert Messages for Login
+                
+                if tag == 0 {showAlertWithMessage("Failed!", message:"User name already exist.Please try another")}
+                else{showAlertWithMessage("Error!", message:"Please try again")}
+            }
+        }
+    }*/
+    func presentProjectsViewController(){
+      
+        if (sideBarRootViewController == nil){
+            
+           sideBarRootViewController = self.storyboard?.instantiateViewControllerWithIdentifier("PLSidebarRootViewController") as! PLSidebarRootViewController
+        }
     
-    func removeObservationsOn(KeyPath:String)
-    {
-        userAccountViewModel.removeObserver(self,forKeyPath:KeyPath)
+        self.presentViewController(sideBarRootViewController, animated: true, completion:nil)
+        
+      
     }
+    
+  
     
     @IBAction func signupNewUser(sender: AnyObject) {
         
         if userAccountViewModel.isValidEmail(self.emailIdField.text!)
         {
-             self.authenticateWithDigitsBeforeAccountCreation()
+             //self.authenticateWithDigitsBeforeAccountCreation()
+         
+            self.userAccountViewModel.startProcessingUserSignup(self.signupUserNameTextField.text!,password: self.signupUserPasswordTextField.text!,email: self.emailIdField.text!){[weak self]res in
+                
+                if res{
+                    
+                    self!.presentProjectsViewController()
+                }else{
+                    self!.showAlertWithMessage("Signup failed!", message:"Please try again!")
+                }
+                
+            }
         }
         else{
             self.showAlertWithMessage("Emailid invalid", message:"Please enter proper emailid")
@@ -149,7 +155,6 @@ class PLUserSignUpViewController: UIViewController,UITextFieldDelegate
     
     func authenticateWithDigitsBeforeAccountCreation()  {
         
-        self.userAccountViewModel.addObserver(self, forKeyPath: "signupResultNotifier", options: NSKeyValueObservingOptions.New, context:nil)
         do{
             try self.userAccountViewModel.validateUserSignupCredentials(self.signupUserNameTextField.text!, password:self.signupUserPasswordTextField.text!, confirmPassword:self.signupUserConfirmPasswordTextField.text!)
             self.view.endEditing(true)

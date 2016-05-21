@@ -182,6 +182,7 @@ class PLAddProjectViewController: UIViewController,UISearchBarDelegate,UITextFie
             if let _ = avatar{
                 
                 cell.teamMemberProfile.image = avatar!
+                cell.teamMemberProfile.layer.masksToBounds = true
             }else{
                 
                 cell.teamMemberProfile.image = UIImage(named:"UserImage.png")

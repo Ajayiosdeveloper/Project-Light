@@ -318,7 +318,7 @@
                                         </constraints>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="W1A-HO-5oz">
-                                        <rect key="frame" x="136" y="28" width="456" height="39"/>
+                                        <rect key="frame" x="104" y="28" width="488" height="39"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="39" id="dug-uj-Yn4"/>
                                         </constraints>
@@ -334,7 +334,7 @@
                                     <constraint firstAttribute="bottom" secondItem="Ygh-yE-e1w" secondAttribute="bottom" constant="15" id="OXK-rf-jCi"/>
                                     <constraint firstAttribute="trailing" secondItem="W1A-HO-5oz" secondAttribute="trailing" constant="8" id="Xnq-FO-dc1"/>
                                     <constraint firstItem="Ygh-yE-e1w" firstAttribute="leading" secondItem="nks-QB-E7q" secondAttribute="leading" constant="24" id="bgn-ih-5Us"/>
-                                    <constraint firstItem="W1A-HO-5oz" firstAttribute="leading" secondItem="Ygh-yE-e1w" secondAttribute="trailing" constant="42" id="qiV-iU-Otz"/>
+                                    <constraint firstItem="W1A-HO-5oz" firstAttribute="leading" secondItem="Ygh-yE-e1w" secondAttribute="trailing" constant="10" id="qiV-iU-Otz"/>
                                 </constraints>
                             </view>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="60" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="QXX-1X-9B9">

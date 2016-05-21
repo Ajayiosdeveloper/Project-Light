@@ -60,7 +60,7 @@ class PLDisplayMembersPopover: UITableViewController {
         teamMemberModelView.contributorImageRowAtIndexPath(indexPath.row, completion: { (avatar) in
             
             if let _ = avatar{
-                
+                cell.teamMemberProfile.layer.masksToBounds = true
                 cell.teamMemberProfile.image = avatar!
             }else{
                 

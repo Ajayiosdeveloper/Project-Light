@@ -16,6 +16,7 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
     @IBOutlet weak var assignmentStartDateTextField: UITextField!
     @IBOutlet var assignmentDescriptionTextView: UITextView!
     
+    var selectedIndexes = NSMutableArray()
     var projectId:String!
     var startDatecommitmentDatePicker:UIDatePicker!
     var targetDatecommitmentDatePicker:UIDatePicker!
@@ -39,6 +40,9 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
+       
+    
+        
         if let _ = assignementViewModel, _ = assignementViewModel.assigneeList{
             
             assigneeListTableView.reloadData()
@@ -59,6 +63,8 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
                 assigneeListTableView.allowsSelection = true
                clearFields()
             }
+        
+            clearCellCheckMarks()
     }
  
     func addDoneBarButtonItem(){
@@ -153,12 +159,21 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
             if let _ = avatar{
                 
                 cell.teamMemberProfile.image = avatar!
+                cell.teamMemberProfile.layer.masksToBounds = true
             }else{
                 
                 cell.teamMemberProfile.image = UIImage(named:"UserImage.png")
             }
-            
         })
+        
+        if selectedIndexes.containsObject(indexPath){
+            cell.accessoryType = .Checkmark
+        }else{
+            cell.accessoryType = .None
+        }
+        
+     
+        
         return cell
      
     }
@@ -181,20 +196,19 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
         
         if assignementViewModel.selectedAssignment == nil
         {
-        
-        if tableView.cellForRowAtIndexPath(indexPath)?.accessoryType == .Checkmark
-        {
-            tableView.cellForRowAtIndexPath(indexPath)?.accessoryType = .None
-            assignementViewModel.removeAssignee(indexPath.row)
             
+            if selectedIndexes.containsObject(indexPath){
+                
+                selectedIndexes.removeObject(indexPath)
+                tableView.cellForRowAtIndexPath(indexPath)?.accessoryType = .None
+                assignementViewModel.removeAssignee(indexPath.row)
+            }else{
+                selectedIndexes.addObject(indexPath)
+                tableView.cellForRowAtIndexPath(indexPath)?.accessoryType = .Checkmark
+                assignementViewModel.addAssignee(indexPath.row)
+            }
         }
-        else{
-            tableView.cellForRowAtIndexPath(indexPath)?.accessoryType = .Checkmark
-            assignementViewModel.addAssignee(indexPath.row)
-            
-          }
-        }
-    }
+     }
 
     
     override func didReceiveMemoryWarning() {
@@ -210,9 +224,18 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
        assignmentDescriptionTextView.text = ""
     }
    
+    func clearCellCheckMarks(){
+        
+        for cell in self.assigneeListTableView.visibleCells{
+            
+            cell.accessoryType = .None
+        }
+    }
+    
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
         assignementViewModel.selectedAssignment = nil
+        selectedIndexes = []
     }
     
     /*

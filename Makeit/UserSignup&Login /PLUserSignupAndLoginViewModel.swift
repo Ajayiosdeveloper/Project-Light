@@ -23,7 +23,6 @@ class PLUserSignupAndLoginViewModel : NSObject
 {
     var quickBloxClient:PLQuickbloxHttpClient = PLQuickbloxHttpClient()
     
-    dynamic var signupResultNotifier:Bool = false
     dynamic var loginResultNotifier:Bool = false
     
     func validateUserLoginCredentials(withUserName:String,password:String)  -> Bool
@@ -98,13 +97,13 @@ class PLUserSignupAndLoginViewModel : NSObject
         }
     }
     
-    func startProcessingUserSignup(withUserName:String,password:String,email:String)
+    func startProcessingUserSignup(withUserName:String,password:String,email:String,completion:(Bool)->Void)
     {
         //if quickBloxClient == nil{ quickBloxClient = PLQuickbloxHttpClient() }
         
         quickBloxClient.createNewUserWith(withUserName, password:password,email: email){[weak self]result in
-            
-            self!.signupResultNotifier = result
+           
+           completion(result)
         }
         
     }

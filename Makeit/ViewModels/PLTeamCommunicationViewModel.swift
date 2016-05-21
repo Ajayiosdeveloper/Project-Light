@@ -33,7 +33,12 @@ class PLTeamCommunicationViewModel: NSObject {
         let member = teamMembersList[row]
         return member.fullName
     }
-    
+    func contributorEmailForRowAtIndexPath(row:Int)->String
+    {
+        let member = teamMembersList[row]
+        return member.memberEmail
+    }
+
     
     func addTeamMemberAtRow(row:Int){
         

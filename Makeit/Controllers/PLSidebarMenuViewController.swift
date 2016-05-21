@@ -391,7 +391,7 @@ class PLSidebarMenuViewController: UIViewController,UIImagePickerControllerDeleg
         image.drawInRect(rect)
         let resizedImage = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
-        let compressedImageData = UIImageJPEGRepresentation(resizedImage, 0.1)
+        let compressedImageData = UIImageJPEGRepresentation(resizedImage, 1)
         let image =  UIImage(data:compressedImageData!)!
         
         return maskRoundedImage(image, radius: 12)

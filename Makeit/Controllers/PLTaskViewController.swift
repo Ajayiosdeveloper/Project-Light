@@ -114,6 +114,19 @@ class PLTaskViewController: UIViewController,UITableViewDelegate,UITableViewData
         let cell = self.tableView.dequeueReusableCellWithIdentifier("BirthdayCell") as! PLBirthdayTableViewCell
             cell.memberName.text = sidebarViewModel.birthdayMemberName(indexPath.row)
             cell.memberDetail.text = sidebarViewModel.birthdayMemberEmail(indexPath.row)
+            cell.memberImage.layer.masksToBounds = true
+            sidebarViewModel.contributorImageRowAtIndexPath(indexPath.row, completion: { (avatar) in
+                
+                if let _ = avatar{
+                    
+                    cell.memberImage.image = avatar!
+                    cell.memberImage.layer.masksToBounds = true
+                }else{
+                    
+                    cell.memberImage.image = UIImage(named:"UserImage.png")
+                }
+            })
+            
             cell.makeCall.addTarget(self, action: #selector(PLTaskViewController.makeCall), forControlEvents: UIControlEvents.TouchUpInside)
             cell.makeCall.tag = indexPath.row
             cell.makeMessage.addTarget(self, action: #selector(PLTaskViewController.sendMessage), forControlEvents: UIControlEvents.TouchUpInside)

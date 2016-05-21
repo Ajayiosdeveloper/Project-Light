@@ -224,6 +224,7 @@ class PLChatDetailViewController: JSQMessagesViewController, UIActionSheetDelega
                 
                 cell.textView?.textColor = UIColor.whiteColor()
                 
+                
             }
             else {
                 

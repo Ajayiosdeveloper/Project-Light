@@ -275,4 +275,29 @@ class PLSidebarViewModel: NSObject {
         let member = self.teamMembersForBitrhday[row]
         return member.memberEmail
     }
+    
+    func contributorImageRowAtIndexPath(row:Int,completion:(UIImage?)->Void) {
+        
+        let member = teamMembersForBitrhday[row]
+        let avatar = member.avatar
+        if avatar == "Avatar"
+        {
+            completion(nil)
+        }
+        else{
+            
+            qbClient.downloadTeamMemberAvatar(avatar){result in
+                
+                if result != nil{
+                    
+                    completion(result)
+                }
+                else{
+                    
+                    completion(nil)
+                }
+            }
+        }
+    }
+    
 }

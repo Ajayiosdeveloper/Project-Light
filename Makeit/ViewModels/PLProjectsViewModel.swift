@@ -279,12 +279,14 @@ class PLProjectsViewModel: NSObject {
                     completion(false)
         }
         }
+   
     }
     
     
     
     func fetchUserAvatar(completion:(UIImage?)->Void) {
         
+      
         
         quickBloxClient.fetchUserAvatarWithBlobId() { result in
         

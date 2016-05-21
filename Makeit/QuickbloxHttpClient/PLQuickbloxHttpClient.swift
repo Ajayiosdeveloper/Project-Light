@@ -412,6 +412,8 @@ class PLQuickbloxHttpClient
                     self.uploadProfilePicture(image, completion: { (res, _) in
                         
                         if res {
+                           
+                            self.updateUserParamenterForAvatar(1234)
                             
                             completion(true)
                         }
@@ -429,15 +431,13 @@ class PLQuickbloxHttpClient
                         
                         if blob.name == "MYAVATAR\(avatarUnique!)"
                         {
-                            let imageData = UIImageJPEGRepresentation(image, 0.1)
+                            let imageData = UIImageJPEGRepresentation(image, 1)
                             
                             self.updateUserParamenterForAvatar(blob.ID)
                             
                             QBRequest.TUpdateFileWithData(imageData, file: blob, successBlock: { (res) in
                                 
-                                
-                                
-                                completion(true)
+                            completion(true)
                                 
                                 }, statusBlock: { (_, _) in
                                     
@@ -445,7 +445,6 @@ class PLQuickbloxHttpClient
                                     
                                     completion(false)
                             })
-                            
                         }
                     }
                 }
@@ -461,6 +460,7 @@ class PLQuickbloxHttpClient
         let customString = String(withBlobId)
         let updateUser = QBUpdateUserParameters()
         updateUser.customData = customString
+        updateUser.blobID = Int(withBlobId)
         QBRequest.updateCurrentUser(updateUser, successBlock: { (_, _) in
             
             print(QBSession.currentSession().currentUser?.customData)
