@@ -56,7 +56,13 @@ class PLSidebarMenuViewController: UIViewController,UIImagePickerControllerDeleg
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-            }
+      
+        let selectedrow = self.sideBarTableView.indexPathForSelectedRow
+        if let _ = selectedrow{
+            
+            self.sideBarTableView.deselectRowAtIndexPath(selectedrow!, animated: true)
+        }
+      }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

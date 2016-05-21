@@ -230,15 +230,32 @@ class PLQuickbloxHttpClient
         }
     }
     
-    func updateCommitmentTask(commitmentId:String,isCompleted : Bool,completion:(Bool)->Void)
+    func updateCommitmentTask(commitment:PLCommitment,completion:(Bool)->Void)
     {
-        let updateObject = QBCOCustomObject()
+        
+    
+        
+        let startTime = self.timeFormats(commitment.startDate)
+        let endTime = self.timeFormats(commitment.targetDate)
+        
+        let startInterval = self.convertdateToTimeinterval(stringToDate(commitment.startDate), dateFormat: "dd-MM-yyyy")
+        let endInterval = self.convertdateToTimeinterval(stringToDate(commitment.targetDate),  dateFormat: "dd-MM-yyyy")
+    
+            let updateObject = QBCOCustomObject()
             updateObject.className = "PLProjectCommitment"
-            updateObject.ID = commitmentId
-            updateObject.parentID = PLSharedManager.manager.projectId
-            updateObject.fields?.setObject(1, forKey: "isCompleted")
-        QBRequest.updateObject(updateObject, successBlock: { (respinse, object) in
+            updateObject.ID = commitment.commitmentId
+            updateObject.fields?.setObject(commitment.name, forKey: "name")
+            updateObject.fields?.setObject(commitment.details, forKey: "description")
+            updateObject.parentID = commitment.projectId
+            updateObject.fields?.setObject(startTime, forKey: "startTime")
+            updateObject.fields?.setObject(endTime, forKey: "endTime")
+            updateObject.fields?.setObject(startInterval, forKey: "startDate")
+            updateObject.fields?.setObject(endInterval, forKey: "targetDate")
+            updateObject.fields?.setObject(commitment.isCompleted, forKey: "isCompleted")
+            QBRequest.updateObject(updateObject, successBlock: { (respinse, object) in
                         completion(true)
+            print("Trur true")
+                print("Trur true \(commitment.name)")
                         }) { (res) in
                             completion(false)
                    
@@ -945,7 +962,14 @@ class PLQuickbloxHttpClient
             completion(nil)
         }
     }
-    
+    func stringToDate(dateTime : String) -> NSDate
+    {
+        let dateFormatter = NSDateFormatter()
+        dateFormatter.dateFormat = "dd-MM-yyyy hh:mm a"
+        let date = dateFormatter.dateFromString(dateTime)
+        return date!
+    }
+
     
     func convertdateToTimeinterval(date : NSDate,dateFormat:String) -> NSTimeInterval
     {
@@ -957,6 +981,17 @@ class PLQuickbloxHttpClient
         dateFormatter.timeZone = NSTimeZone(forSecondsFromGMT: 0)
         let stringToDate = dateFormatter.dateFromString(stringDate)?.timeIntervalSince1970
         return stringToDate!
+    }
+    
+    func timeFormats(time: String) -> String
+    {
+        let dateFormatter = NSDateFormatter()
+        dateFormatter.dateFormat = "dd-MM-yyyy hh:mm a"
+        let date = dateFormatter.dateFromString(time)
+        
+        dateFormatter.dateFormat = "HH:mm"
+        let dateString = dateFormatter.stringFromDate(date!)
+        return dateString
     }
     
     func saveUserBirthday(interval:UInt){
