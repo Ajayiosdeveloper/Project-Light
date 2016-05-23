@@ -62,15 +62,6 @@ class PLQuickbloxHttpClient
     
     func registerForAPNS()
     {
-        
-       let versionString = UIDevice.currentDevice().systemVersion
-       let version = Float(versionString)
-        if version! < 8.0{
-            
-            let types:UIRemoteNotificationType = [.Badge, .Sound, .Alert]
-            
-            UIApplication.sharedApplication().registerForRemoteNotificationTypes(types)
-        }else{
             
             let application = UIApplication.sharedApplication()
             
@@ -80,8 +71,13 @@ class PLQuickbloxHttpClient
                 
                 application.registerUserNotificationSettings(pushNotificationSettings)
                 application.registerForRemoteNotifications()
+            }else{
+                
+                let types:UIRemoteNotificationType = [.Badge, .Sound, .Alert]
+                
+                UIApplication.sharedApplication().registerForRemoteNotificationTypes(types)
             }
-        }
+       
     }
     //Saving login credentials to Defaults
     
