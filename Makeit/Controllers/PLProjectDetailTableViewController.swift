@@ -167,6 +167,8 @@ class PLProjectDetailTableViewController: UITableViewController,EKEventEditViewD
                 cell.textLabel?.text = projectDetailViewModel.communicationType(indexPath.row)
                 cell.detailTextLabel?.text = ""
                 cell.textLabel?.textColor = enableButtonColor
+                cell.accessoryType = .DisclosureIndicator
+                cell.accessoryView = nil
                 return cell
             }
         }
@@ -190,11 +192,18 @@ class PLProjectDetailTableViewController: UITableViewController,EKEventEditViewD
     func configureAssignmentCell(cell:UITableViewCell,row:Int){
         
         cell.textLabel?.font = UIFont.boldSystemFontOfSize(17)
-        cell.textLabel?.text = projectDetailViewModel.assignmentTitleForRowAtIndexPath(row)
+          cell.textLabel?.text = projectDetailViewModel.assignmentTitleForRowAtIndexPath(row)
         cell.detailTextLabel?.font = UIFont.systemFontOfSize(17)
         cell.detailTextLabel?.textColor = UIColor.darkGrayColor()
         cell.detailTextLabel?.text = projectDetailViewModel.assignmentSubTitleForRowAtIndexPath(row)
-        cell.accessoryType = .DisclosureIndicator
+        
+        if projectDetailViewModel.isUserAssignedToAssignment(row)
+        {
+            cell.accessoryView = UIImageView(image: UIImage(named: "me"))
+        }
+        else{
+          cell.accessoryType = .DisclosureIndicator
+        }
     }
     
     

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Quickblox
 
 class PLProjectDetailViewModel: NSObject {
     
@@ -62,6 +63,21 @@ class PLProjectDetailViewModel: NSObject {
         let member = contributors[row]
         
         return member.memberEmail
+    }
+    
+    
+    func isUserAssignedToAssignment(row : Int) -> Bool
+    {
+        let assignment = assignments[row]
+        let loggedInUserid = QBSession.currentSession().currentUser?.ID
+        
+        let result = assignment.assineesUserIds.contains(loggedInUserid!)
+        if result
+        {
+           return true
+        }
+      return false
+        
     }
 
     

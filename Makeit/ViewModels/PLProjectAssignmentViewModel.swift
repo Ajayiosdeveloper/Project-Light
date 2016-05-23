@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Quickblox
 
 enum AssignmentValidation:ErrorType {
     case NameEmpty,InvalidDate,DescriptionEmpty,NoAssignee
@@ -181,6 +182,22 @@ class PLProjectAssignmentViewModel: NSObject {
                     selectedAssigneeList.append(x)
                 }
              }
+        }
+        
+        let loggedInUserid = QBSession.currentSession().currentUser?.ID
+        
+        let result = selectedAssignment?.assineesUserIds.contains(loggedInUserid!)
+        if let _ = result
+        {
+            if result!
+            {
+                let user = PLTeamMember(name: "", id: 0)
+                user.fullName = "Me"
+                user.memberEmail = (QBSession.currentSession().currentUser?.email)!
+                user.memberUserId = (QBSession.currentSession().currentUser?.ID)!
+                user.avatar = (QBSession.currentSession().currentUser?.customData)!
+                selectedAssigneeList.insert(user, atIndex: 0)
+            }
         }
         
     
