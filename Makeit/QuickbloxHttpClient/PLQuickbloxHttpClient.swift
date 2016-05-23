@@ -49,7 +49,7 @@ class PLQuickbloxHttpClient
             NSUserDefaults.standardUserDefaults().setValue(retrievedUser?.ID, forKey:"USER_ID")
             PLSharedManager.manager.userName = name
             PLSharedManager.manager.userPassword = password
-            
+            self.registerForAPNS()
             completion(true)
             SVProgressHUD.dismiss()
             
@@ -60,6 +60,29 @@ class PLQuickbloxHttpClient
         }
     }
     
+    func registerForAPNS()
+    {
+        
+       let versionString = UIDevice.currentDevice().systemVersion
+       let version = Float(versionString)
+        if version! < 8.0{
+            
+            let types:UIRemoteNotificationType = [.Badge, .Sound, .Alert]
+            
+            UIApplication.sharedApplication().registerForRemoteNotificationTypes(types)
+        }else{
+            
+            let application = UIApplication.sharedApplication()
+            
+            if #available(iOS 8.0, *) {
+                let notificationTypes: UIUserNotificationType = [UIUserNotificationType.Alert, UIUserNotificationType.Badge, UIUserNotificationType.Sound]
+                let pushNotificationSettings = UIUserNotificationSettings(forTypes: notificationTypes, categories: nil)
+                
+                application.registerUserNotificationSettings(pushNotificationSettings)
+                application.registerForRemoteNotifications()
+            }
+        }
+    }
     //Saving login credentials to Defaults
     
     func  saveUserCredentialsInDefaults(name:String,password:String){

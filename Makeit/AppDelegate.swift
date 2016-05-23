@@ -37,8 +37,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate,QBChatDelegate {
         NSNotificationCenter.defaultCenter().addObserver(self, selector:#selector(AppDelegate.handleNewtorkChanges), name:kReachabilityChangedNotification, object:nil)
         reachability.startNotifier()
         
-      //  Fabric.with([Digits.self])
-        
+            
 
         
         return true
@@ -109,6 +108,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate,QBChatDelegate {
         ) {
         //Log an error for debugging purposes, user doesn't need to know
         NSLog("Failed to get token; error: %@", error)
+    }
+    
+    func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject]) {
+        print(userInfo)
     }
     
     func chatRoomDidReceiveMessage(message: QBChatMessage, fromDialogID dialogID: String) {

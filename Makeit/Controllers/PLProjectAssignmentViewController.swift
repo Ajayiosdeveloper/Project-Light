@@ -21,6 +21,7 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
     var startDatecommitmentDatePicker:UIDatePicker!
     var targetDatecommitmentDatePicker:UIDatePicker!
     var assignementViewModel:PLProjectAssignmentViewModel!
+   
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -70,6 +71,7 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
     func addDoneBarButtonItem(){
         
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.Plain, target:self, action:#selector(PLAddProjectViewController.performDone))
+        
     }
 
     func performDone()
