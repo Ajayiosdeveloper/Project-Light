@@ -53,8 +53,13 @@ class PLUserLoginViewController: UIViewController,UITextFieldDelegate {
     
     func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
         //Login button enabling & disabling
-        if loginUserNameTextField.text?.characters.count > 0 && loginUserPasswordTextField.text?.characters.count > 0{userLogin.setTitleColor(enableButtonColor, forState: UIControlState.Normal); userLogin.enabled = true}
-        else {userLogin.setTitleColor(UIColor.grayColor(), forState: UIControlState.Normal); userLogin.enabled = false}
+        if loginUserNameTextField.text?.characters.count > 0 && loginUserPasswordTextField.text?.characters.count > 0
+        {
+            userLogin.setTitleColor(enableButtonColor, forState: UIControlState.Normal); userLogin.enabled = true
+        }
+        else {
+            userLogin.setTitleColor(UIColor.grayColor(), forState: UIControlState.Normal); userLogin.enabled = false
+        }
         
         return true
     }
