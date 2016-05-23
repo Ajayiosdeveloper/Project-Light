@@ -13,38 +13,46 @@ class PLProjectNotification: NSObject {
     
     
  static   func sendProjectContributorNotificationToContributors(members:[UInt],projectName:String){
+    
+    var usersString = ""
+    let creator = QBSession.currentSession().currentUser?.fullName
+    let message = "Hi! you've been added to \(projectName) as a contributor by \(creator!)"
+    
+    for each in members{
+        usersString += String(each)
+        usersString += ","
+    }
+    QBRequest.sendPushWithText(message, toUsers: usersString, successBlock: { (_, _) in
         
-        for member in members{
-            
-            let pushMessage = "Hi Brother! you become now a contributor to \(projectName) Project by \(QBSession.currentSession().currentUser?.fullName!)"
-            
-            QBRequest.sendPushWithText(pushMessage, toUsers:String(member), successBlock: { (_, _) in
-                
-                print("Success")
-                
-                }, errorBlock: { (err) in
-                    
-                    print(err)
-            })
-        }
+        print("Push sent succesfully")
+        
+    }) { (error) in
+        
+        print("Error occured")
+        print(error)
+    }
     }
     
     
  static   func sendAssignmentNotificationToAssignees(members:[UInt],assignmentName:String,projectName:String){
         
-        for member in members{
-            
-            let pushMessage = "Hi Brother! you got an assignment in \(projectName) Project by \(QBSession.currentSession().currentUser?.fullName!)"
-            
-            QBRequest.sendPushWithText(pushMessage, toUsers:String(member), successBlock: { (_, _) in
-                
-                print("Success")
-                
-                }, errorBlock: { (err) in
-                    
-                    print(err)
-            })
-        }
+    var usersString = ""
+    let assigner = QBSession.currentSession().currentUser?.fullName
+    let message = "Hi! you've been assigned to \(assignmentName) in \(projectName) by \(assigner!)"
+    
+    for each in members{
+        usersString += String(each)
+        usersString += ","
     }
+    QBRequest.sendPushWithText(message, toUsers: usersString, successBlock: { (_, _) in
+        
+        print("Push sent succesfully")
+        
+        }) { (error) in
+            
+          print("Error occured")
+          print(error)
+    }
+ }
     
 }

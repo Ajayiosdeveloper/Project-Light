@@ -112,6 +112,13 @@ class PLQuickbloxHttpClient
         
         QBRequest.createObjects(members, className:"PLProjectMember", successBlock: { (response, contributors) in
             
+            var membersIds = [UInt]()
+            for member in members{
+                membersIds += [member.userID]
+            }
+            
+           PLProjectNotification.sendProjectContributorNotificationToContributors(membersIds, projectName:PLSharedManager.manager.projectName)
+           
             completion(true)
             
         }) { (response) in
@@ -302,7 +309,7 @@ class PLQuickbloxHttpClient
             
             print("PRAISE THE LORD")
             
-            PLProjectNotification.sendAssignmentNotificationToAssignees(assigneeUserIds,assignmentName: "Makeit",projectName: "Makeit")
+            PLProjectNotification.sendAssignmentNotificationToAssignees(assigneeUserIds,assignmentName:name,projectName: PLSharedManager.manager.projectName)
             
             completion(true)
             
