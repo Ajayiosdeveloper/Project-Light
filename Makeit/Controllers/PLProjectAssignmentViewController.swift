@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Quickblox
 
 class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,UITableViewDelegate {
 
@@ -194,6 +195,35 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
         return "SELECT ONE OR MORE ASSIGNEES"
     }
     
+    func tableView(tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        
+        if assignementViewModel.selectedAssignment != nil{
+           
+            let footerView:UIView! = UIView(frame:CGRectMake(0,0,self.view.frame.size.width-0,40))
+            footerView.backgroundColor = UIColor(colorLiteralRed: 89/255, green: 181/255, blue: 50/255, alpha: 1)
+            footerView.layer.cornerRadius = 15
+            footerView.clipsToBounds = true
+            
+            let userId = QBSession.currentSession().currentUser?.ID
+            if userId! == PLSharedManager.manager.projectCreatedByUserId{
+                
+                self.addButtonForTableViewFooterOnView(footerView, title: "Close", tag: 1)
+                
+            }else{
+                
+                self.addButtonForTableViewFooterOnView(footerView, title: "Completed ?", tag: 1)
+            }
+            
+            
+            return footerView
+        }
+        return nil
+    }
+    
+    func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        return 50
+    }
+    
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
         if assignementViewModel.selectedAssignment == nil
@@ -211,7 +241,26 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
             }
         }
      }
+    
+    func addButtonForTableViewFooterOnView(addOnView:UIView,title:String,tag:Int)
+    {
+        let addMemberButton = UIButton(type:.Custom)
+        addMemberButton.tag = tag
+        addMemberButton.setTitle(title, forState: UIControlState.Normal)
+        addMemberButton.titleLabel?.font = UIFont(name:"Avenir Next Demi Bold ", size: 24)
+        addMemberButton.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
+        addMemberButton.addTarget(self, action:#selector(PLProjectAssignmentViewController.performButtonActionOfFooterView), forControlEvents: UIControlEvents.TouchUpInside)
+        addMemberButton.frame = CGRectMake(0, 0, self.view.frame.size.width, 40)
+        addMemberButton.contentHorizontalAlignment = .Center
+        addMemberButton.contentEdgeInsets = UIEdgeInsetsMake(15, 0, 0, 0)
+        addOnView.addSubview(addMemberButton)
+    }
 
+    func performButtonActionOfFooterView(){
+        
+        
+        print("PRAISE THE LORD")
+    }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
