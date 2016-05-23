@@ -199,7 +199,7 @@ class PLProjectDetailTableViewController: UITableViewController,EKEventEditViewD
         
         if projectDetailViewModel.isUserAssignedToAssignment(row)
         {
-            cell.accessoryView = UIImageView(image: UIImage(named: "me"))
+            cell.accessoryView = UIImageView(image: UIImage(named: "assignment"))
         }
         else{
           cell.accessoryType = .DisclosureIndicator
