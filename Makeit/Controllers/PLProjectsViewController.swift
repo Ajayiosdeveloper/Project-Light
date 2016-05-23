@@ -252,7 +252,7 @@ class PLProjectsViewController: UITableViewController,UIImagePickerControllerDel
         selectedProjectDescription = selected.subTitle
         selectedProejctCreatorId = selected.createdBy
         selectedSection = indexPath.section
-            
+        PLSharedManager.manager.projectCreatedByUserId = selected.createdBy
         projectViewModel.getProjectMembersList(selectedProjectId!){ resultedMembers in
             
             if let _ = resultedMembers{
