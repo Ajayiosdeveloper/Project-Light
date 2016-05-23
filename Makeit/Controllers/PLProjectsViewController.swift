@@ -27,6 +27,7 @@ class PLProjectsViewController: UITableViewController,UIImagePickerControllerDel
     var plPhotoPickerController:UIImagePickerController!
     var userProfileController : PLUserProfileInfoTableViewController?
     var editProjectButton:UIBarButtonItem!
+    var selectedSection:Int!
 
   override func viewDidLoad() {
         super.viewDidLoad()
@@ -235,7 +236,10 @@ class PLProjectsViewController: UITableViewController,UIImagePickerControllerDel
             self.userProfileController = self.storyboard?.instantiateViewControllerWithIdentifier("PLUserProfileInfoTableViewController") as? PLUserProfileInfoTableViewController
             self.navigationController?.pushViewController(self.userProfileController!, animated: true)
             
-        }else if indexPath.section == 0 || indexPath.section == 1{
+        }else {
+            
+            print("The selected is \(indexPath.section)")
+            
             let selected = projectViewModel.didSelectRowAtIndex(indexPath.row,section:indexPath.section) as PLProject
         PLSharedManager.manager.projectName = selected.name
         PLSharedManager.manager.projectId = selected.projectId!
@@ -243,6 +247,8 @@ class PLProjectsViewController: UITableViewController,UIImagePickerControllerDel
         selectedProjectName = selected.name
         selectedProjectDescription = selected.subTitle
         selectedProejctCreatorId = selected.createdBy
+        selectedSection = indexPath.section
+            
         projectViewModel.getProjectMembersList(selectedProjectId!){ resultedMembers in
             
             if let _ = resultedMembers{
@@ -337,6 +343,10 @@ class PLProjectsViewController: UITableViewController,UIImagePickerControllerDel
         detailViewController.projectCreatedBy = selectedProejctCreatorId
         detailViewController.projectDescription = selectedProjectDescription
         let projectDetailViewModel = PLProjectDetailViewModel(members:resulted)
+        print("Thje selected Section is \(selectedSection)")
+        if let _ = selectedSection{
+            projectDetailViewModel.numberOfSections = selectedSection!
+        }
         detailViewController.projectDetailViewModel = projectDetailViewModel
     }
   

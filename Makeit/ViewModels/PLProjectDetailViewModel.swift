@@ -15,6 +15,7 @@ class PLProjectDetailViewModel: NSObject {
     var assignments:[PLAssignment]!
     var communicationWays:[String]!
     var qbClient:PLQuickbloxHttpClient!
+    var numberOfSections:Int!
     
     
     init(members:[PLTeamMember]) {
@@ -23,6 +24,15 @@ class PLProjectDetailViewModel: NSObject {
         commitments = [PLCommitment]()
         assignments = [PLAssignment]()
         communicationWays = ["Voice Chat","Video Chat","Text Chat"]
+    }
+    
+    func numberOfSectionsInTableView() -> Int {
+        
+        if numberOfSections == 0{
+            return 4
+        }
+        
+        return 3
     }
     
     func numbersOfContributorsRows()->Int

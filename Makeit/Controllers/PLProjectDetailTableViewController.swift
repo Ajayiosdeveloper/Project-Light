@@ -67,12 +67,16 @@ class PLProjectDetailTableViewController: UITableViewController,EKEventEditViewD
 
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         
-            return 4
+    return projectDetailViewModel.numberOfSectionsInTableView()
       
     }
 
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int
+    {
         var total = 0
+        if projectDetailViewModel.numberOfSectionsInTableView() == 4
+        {
+        
         if section == 0 {
            total = projectDetailViewModel.numbersOfContributorsRows()
         }
@@ -88,13 +92,27 @@ class PLProjectDetailTableViewController: UITableViewController,EKEventEditViewD
         {
             total = 3
         }
+        }
+        else
+        {
+            if section == 0 {
+                total = projectDetailViewModel.numbersOfContributorsRows()
+            }
+            else if section == 1{
+                
+                 total = projectDetailViewModel.numberOfAssignmentRows()
+            }
+            else if section == 2
+            {
+                total = 3
+            }
+     }
         return total
     }
 
    
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
-       
         if indexPath.section == 0{
         let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! PLTableViewCell
         cell.memberName.text = projectDetailViewModel.contributorTitleForRowAtIndexPath(indexPath.row)
@@ -114,37 +132,71 @@ class PLProjectDetailTableViewController: UITableViewController,EKEventEditViewD
         return cell
             
         }
-        else if indexPath.section == 1{
-            let cell = UITableViewCell(style: .Subtitle, reuseIdentifier: "DefaultCell")
-            cell.textLabel?.font = UIFont.boldSystemFontOfSize(17)
-            cell.textLabel?.text = projectDetailViewModel.commitmentTitleForRowAtIndexPath(indexPath.row)
-            cell.detailTextLabel?.textColor = UIColor.darkGrayColor()
-            cell.detailTextLabel?.font = UIFont.systemFontOfSize(17)
-            cell.detailTextLabel?.text = projectDetailViewModel.commitmentSubTitleForRowAtIndexPath(indexPath.row)
-            cell.accessoryType = .DisclosureIndicator
-            return cell
+      
+        if projectDetailViewModel.numberOfSectionsInTableView() == 4{
+            
+            if indexPath.section == 1{
+                let cell = UITableViewCell(style: .Subtitle, reuseIdentifier: "DefaultCell")
+                self.configureCommitmentCell(cell, row: indexPath.row)
+                return cell
+            }
+            if indexPath.section == 2{
+                let cell = UITableViewCell(style: .Subtitle, reuseIdentifier: "DefaultCell")
+                 self.configureAssignmentCell(cell, row: indexPath.row)
+                return cell
+                
+            }
+            if indexPath.section == 3{
+                let cell = tableView.dequeueReusableCellWithIdentifier("DefaultCell", forIndexPath: indexPath)  as UITableViewCell
+                cell.textLabel?.text = projectDetailViewModel.communicationType(indexPath.row)
+                cell.detailTextLabel?.text = ""
+                cell.textLabel?.textColor = enableButtonColor
+                return cell
+            }
+            
+        }else{
+            
+            if indexPath.section == 1{
+                let cell = UITableViewCell(style: .Subtitle, reuseIdentifier: "DefaultCell")
+                self.configureAssignmentCell(cell, row: indexPath.row)
+                return cell
+            }
+            if indexPath.section == 2{
+               
+                let cell = tableView.dequeueReusableCellWithIdentifier("DefaultCell", forIndexPath: indexPath)  as UITableViewCell
+                cell.textLabel?.text = projectDetailViewModel.communicationType(indexPath.row)
+                cell.detailTextLabel?.text = ""
+                cell.textLabel?.textColor = enableButtonColor
+                return cell
+            }
         }
-        else if indexPath.section == 2{
-          
-            let cell = UITableViewCell(style: .Subtitle, reuseIdentifier: "DefaultCell")           
-            cell.textLabel?.font = UIFont.boldSystemFontOfSize(17)
-            cell.textLabel?.text = projectDetailViewModel.assignmentTitleForRowAtIndexPath(indexPath.row)
-            cell.detailTextLabel?.font = UIFont.systemFontOfSize(17)
-            cell.detailTextLabel?.textColor = UIColor.darkGrayColor()
-            cell.detailTextLabel?.text = projectDetailViewModel.assignmentSubTitleForRowAtIndexPath(indexPath.row)
-            cell.accessoryType = .DisclosureIndicator
-            return cell
-        }
-        else if indexPath.section == 3{
-            let cell = tableView.dequeueReusableCellWithIdentifier("DefaultCell", forIndexPath: indexPath)  as UITableViewCell
-            cell.textLabel?.text = projectDetailViewModel.communicationType(indexPath.row)
-            cell.detailTextLabel?.text = ""
-            cell.textLabel?.textColor = enableButtonColor
-            return cell
-        }
-       
+        
         return UITableViewCell()
+    
     }
+    
+    
+    func configureCommitmentCell(cell:UITableViewCell,row:Int){
+        
+        cell.textLabel?.font = UIFont.boldSystemFontOfSize(17)
+        cell.textLabel?.text = projectDetailViewModel.commitmentTitleForRowAtIndexPath(row)
+        cell.detailTextLabel?.textColor = UIColor.darkGrayColor()
+        cell.detailTextLabel?.font = UIFont.systemFontOfSize(17)
+        cell.detailTextLabel?.text = projectDetailViewModel.commitmentSubTitleForRowAtIndexPath(row)
+        cell.accessoryType = .DisclosureIndicator
+
+    }
+    
+    func configureAssignmentCell(cell:UITableViewCell,row:Int){
+        
+        cell.textLabel?.font = UIFont.boldSystemFontOfSize(17)
+        cell.textLabel?.text = projectDetailViewModel.assignmentTitleForRowAtIndexPath(row)
+        cell.detailTextLabel?.font = UIFont.systemFontOfSize(17)
+        cell.detailTextLabel?.textColor = UIColor.darkGrayColor()
+        cell.detailTextLabel?.text = projectDetailViewModel.assignmentSubTitleForRowAtIndexPath(row)
+        cell.accessoryType = .DisclosureIndicator
+    }
+    
     
 //    override func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
 //        
@@ -185,38 +237,50 @@ class PLProjectDetailTableViewController: UITableViewController,EKEventEditViewD
     override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         
         var headerTitle:String = ""
-        if section == 0{
-            headerTitle = "CONTRIBUTORS"
-        }
-        else if section == 1
-        {
-            headerTitle = "COMMITMENTS"
-        }
-        else if section == 2
-        {
-            headerTitle = "ASSIGNMENTS"
-        }
-        else if section == 3
-        {
-            headerTitle = "COMMUNICATE"
-        }
         
+        if projectDetailViewModel.numberOfSectionsInTableView() == 4{
+            
+            if section == 0{
+                headerTitle = "CONTRIBUTORS"
+            }
+            else if section == 1
+            {
+                headerTitle = "COMMITMENTS"
+            }
+            else if section == 2
+            {
+                headerTitle = "ASSIGNMENTS"
+            }
+            else if section == 3
+            {
+                headerTitle = "COMMUNICATE"
+            }
+ 
+        }else{
+            if section == 0{
+                headerTitle = "CONTRIBUTORS"
+            }
+            else if section == 1
+            {
+                headerTitle = "ASSIGNMENTS"
+            }
+            else if section == 2
+            {
+                headerTitle = "COMMUNICATE"
+            }
+       }
         return headerTitle
         
     }
     
    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         
-        if indexPath.section == 0
-        {
-            return 55.0
-        }
-         return 55
+        return 55
     }
     
     override   func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat
     {
-        return 40.0
+        return 40
     }
     
     override func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat
@@ -315,62 +379,96 @@ class PLProjectDetailTableViewController: UITableViewController,EKEventEditViewD
     }
 
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        if indexPath.section == 0
-        {
-            let selectedMember = projectDetailViewModel.selectedContributor(indexPath.row)
-            
-            if teamMemberDetailViewController == nil{
-                
-                teamMemberDetailViewController = self.storyboard?.instantiateViewControllerWithIdentifier("PLTeamMemberDetailsTableViewController") as! PLTeamMemberDetailsTableViewController
-            }
-            teamMemberDetailViewController.teamMemberDetailViewModel = PLTeamMemberDetailViewModel(withMemberName: selectedMember.fullName,userId: selectedMember.memberUserId,projectId: selectedMember.projectId)
-            self.navigationController?.pushViewController(teamMemberDetailViewController, animated:true)
         
-        }
-        else if indexPath.section  == 1
+        if projectDetailViewModel.numberOfSectionsInTableView() == 4
         {
-          let commitment = projectDetailViewModel.selectedCommitmentFor(indexPath.row)
-            
-        if PLSharedManager.manager.isCalendarAccess{
+            if indexPath.section == 0
+            {
+                let selectedMember = projectDetailViewModel.selectedContributor(indexPath.row)
                 
-            print(commitment?.startDate)
-            print(commitment?.targetDate)
-            let startDate = getDateForCommitmentUsingString((commitment?.startDate)!)
-            let endDate = getDateForCommitmentUsingString((commitment?.targetDate)!)
-            
-            fetchEvents(startDate, endDate:endDate, completed: { (events) in
+                if teamMemberDetailViewController == nil{
+                    
+                    teamMemberDetailViewController = self.storyboard?.instantiateViewControllerWithIdentifier("PLTeamMemberDetailsTableViewController") as! PLTeamMemberDetailsTableViewController
+                }
+                teamMemberDetailViewController.teamMemberDetailViewModel = PLTeamMemberDetailViewModel(withMemberName: selectedMember.fullName,userId: selectedMember.memberUserId,projectId: selectedMember.projectId)
+                self.navigationController?.pushViewController(teamMemberDetailViewController, animated:true)
                 
-                   let  event = events.lastObject as! EKEvent
-                   self.showEventEditViewController(event)
-                
-                })
-            
-            //if commitment!.isCompleted == 0{
-                
-               //self.performSelector(#selector(PLProjectDetailTableViewController.showTaskCompletePopup), withObject:nil, afterDelay:5)
-                //}
             }
+            else if indexPath.section  == 1
+            {
+                let commitment = projectDetailViewModel.selectedCommitmentFor(indexPath.row)
+                
+                if PLSharedManager.manager.isCalendarAccess{
+                    
+                    print(commitment?.startDate)
+                    print(commitment?.targetDate)
+                    let startDate = getDateForCommitmentUsingString((commitment?.startDate)!)
+                    let endDate = getDateForCommitmentUsingString((commitment?.targetDate)!)
+                    
+                    fetchEvents(startDate, endDate:endDate, completed: { (events) in
+                        
+                        let  event = events.lastObject as! EKEvent
+                        self.showEventEditViewController(event)
+                        
+                    })
+                }
+                else{
+                    
+                    showCommitmentViewController()
+                    commitmentViewController.commitmentViewModel.commitment = projectDetailViewModel.selectedCommitmentFor(indexPath.row)
+                    print(commitmentViewController.commitmentViewModel.commitment)
+                    
+                }
+            }
+            else if indexPath.section == 2
+            {
+                showAssignmentViewController()
+                assignmentViewController.assignementViewModel.selectedAssignment = projectDetailViewModel.selectedAssignment(indexPath.row)
+            }
+                
+            else if indexPath.section == 3{
+                
+                if indexPath.row == 0 {presentTeamCommunicationViewController(0)}
+                else if indexPath.row == 1 {presentTeamCommunicationViewController(1)}
+                else {presentProjectTeamChatViewController()}
+                
+            }
+
+        }
+        
         else{
-                 
-            showCommitmentViewController()
-             commitmentViewController.commitmentViewModel.commitment = projectDetailViewModel.selectedCommitmentFor(indexPath.row)
-            print(commitmentViewController.commitmentViewModel.commitment)
-           
+            //else part
+            
+            if indexPath.section == 0
+            {
+                let selectedMember = projectDetailViewModel.selectedContributor(indexPath.row)
+                
+                if teamMemberDetailViewController == nil{
+                    
+                    teamMemberDetailViewController = self.storyboard?.instantiateViewControllerWithIdentifier("PLTeamMemberDetailsTableViewController") as! PLTeamMemberDetailsTableViewController
+                }
+                teamMemberDetailViewController.teamMemberDetailViewModel = PLTeamMemberDetailViewModel(withMemberName: selectedMember.fullName,userId: selectedMember.memberUserId,projectId: selectedMember.projectId)
+                self.navigationController?.pushViewController(teamMemberDetailViewController, animated:true)
+                
             }
-        }
-        else if indexPath.section == 2
-        {
-            showAssignmentViewController()
-            assignmentViewController.assignementViewModel.selectedAssignment = projectDetailViewModel.selectedAssignment(indexPath.row)
+            else if indexPath.section == 1
+            {
+                showAssignmentViewController()
+                assignmentViewController.assignementViewModel.selectedAssignment = projectDetailViewModel.selectedAssignment(indexPath.row)
+            }
+                
+            else if indexPath.section == 2{
+                
+                if indexPath.row == 0 {presentTeamCommunicationViewController(0)}
+                else if indexPath.row == 1 {presentTeamCommunicationViewController(1)}
+                else {presentProjectTeamChatViewController()}
+                
+            }
+
+            
+            //end of else part
         }
         
-        else if indexPath.section == 3{
-            
-            if indexPath.row == 0 {presentTeamCommunicationViewController(0)}
-            else if indexPath.row == 1 {presentTeamCommunicationViewController(1)}
-            else {presentProjectTeamChatViewController()}
-            
-        }
         
     }
     
