@@ -28,6 +28,7 @@ class PLProjectsViewController: UITableViewController,UIImagePickerControllerDel
     var userProfileController : PLUserProfileInfoTableViewController?
     var editProjectButton:UIBarButtonItem!
     var selectedSection:Int!
+    var fetchDataFlag = false
 
   override func viewDidLoad() {
         super.viewDidLoad()
@@ -57,7 +58,10 @@ class PLProjectsViewController: UITableViewController,UIImagePickerControllerDel
         super.viewWillAppear(animated)
         //projectViewModel = PLProjectsViewModel()
         projectViewModel.addObserver(self, forKeyPath:"createdProjectList", options: NSKeyValueObservingOptions.New, context:&observerContext)
+        if fetchDataFlag == false
+        {
         projectViewModel.fetchProjectsFromRemote()
+        }
         addActivityIndicatorView()
       }
     
@@ -228,7 +232,7 @@ class PLProjectsViewController: UITableViewController,UIImagePickerControllerDel
     }
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        
+        fetchDataFlag = true
         if indexPath.section == 2{
             
             print("Improve Profile ViewController")
