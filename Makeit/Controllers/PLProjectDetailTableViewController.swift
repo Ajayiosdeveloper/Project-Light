@@ -379,62 +379,96 @@ class PLProjectDetailTableViewController: UITableViewController,EKEventEditViewD
     }
 
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        if indexPath.section == 0
-        {
-            let selectedMember = projectDetailViewModel.selectedContributor(indexPath.row)
-            
-            if teamMemberDetailViewController == nil{
-                
-                teamMemberDetailViewController = self.storyboard?.instantiateViewControllerWithIdentifier("PLTeamMemberDetailsTableViewController") as! PLTeamMemberDetailsTableViewController
-            }
-            teamMemberDetailViewController.teamMemberDetailViewModel = PLTeamMemberDetailViewModel(withMemberName: selectedMember.fullName,userId: selectedMember.memberUserId,projectId: selectedMember.projectId)
-            self.navigationController?.pushViewController(teamMemberDetailViewController, animated:true)
         
-        }
-        else if indexPath.section  == 1
+        if projectDetailViewModel.numberOfSectionsInTableView() == 4
         {
-          let commitment = projectDetailViewModel.selectedCommitmentFor(indexPath.row)
-            
-        if PLSharedManager.manager.isCalendarAccess{
+            if indexPath.section == 0
+            {
+                let selectedMember = projectDetailViewModel.selectedContributor(indexPath.row)
                 
-            print(commitment?.startDate)
-            print(commitment?.targetDate)
-            let startDate = getDateForCommitmentUsingString((commitment?.startDate)!)
-            let endDate = getDateForCommitmentUsingString((commitment?.targetDate)!)
-            
-            fetchEvents(startDate, endDate:endDate, completed: { (events) in
+                if teamMemberDetailViewController == nil{
+                    
+                    teamMemberDetailViewController = self.storyboard?.instantiateViewControllerWithIdentifier("PLTeamMemberDetailsTableViewController") as! PLTeamMemberDetailsTableViewController
+                }
+                teamMemberDetailViewController.teamMemberDetailViewModel = PLTeamMemberDetailViewModel(withMemberName: selectedMember.fullName,userId: selectedMember.memberUserId,projectId: selectedMember.projectId)
+                self.navigationController?.pushViewController(teamMemberDetailViewController, animated:true)
                 
-                   let  event = events.lastObject as! EKEvent
-                   self.showEventEditViewController(event)
-                
-                })
-            
-            //if commitment!.isCompleted == 0{
-                
-               //self.performSelector(#selector(PLProjectDetailTableViewController.showTaskCompletePopup), withObject:nil, afterDelay:5)
-                //}
             }
+            else if indexPath.section  == 1
+            {
+                let commitment = projectDetailViewModel.selectedCommitmentFor(indexPath.row)
+                
+                if PLSharedManager.manager.isCalendarAccess{
+                    
+                    print(commitment?.startDate)
+                    print(commitment?.targetDate)
+                    let startDate = getDateForCommitmentUsingString((commitment?.startDate)!)
+                    let endDate = getDateForCommitmentUsingString((commitment?.targetDate)!)
+                    
+                    fetchEvents(startDate, endDate:endDate, completed: { (events) in
+                        
+                        let  event = events.lastObject as! EKEvent
+                        self.showEventEditViewController(event)
+                        
+                    })
+                }
+                else{
+                    
+                    showCommitmentViewController()
+                    commitmentViewController.commitmentViewModel.commitment = projectDetailViewModel.selectedCommitmentFor(indexPath.row)
+                    print(commitmentViewController.commitmentViewModel.commitment)
+                    
+                }
+            }
+            else if indexPath.section == 2
+            {
+                showAssignmentViewController()
+                assignmentViewController.assignementViewModel.selectedAssignment = projectDetailViewModel.selectedAssignment(indexPath.row)
+            }
+                
+            else if indexPath.section == 3{
+                
+                if indexPath.row == 0 {presentTeamCommunicationViewController(0)}
+                else if indexPath.row == 1 {presentTeamCommunicationViewController(1)}
+                else {presentProjectTeamChatViewController()}
+                
+            }
+
+        }
+        
         else{
-                 
-            showCommitmentViewController()
-             commitmentViewController.commitmentViewModel.commitment = projectDetailViewModel.selectedCommitmentFor(indexPath.row)
-            print(commitmentViewController.commitmentViewModel.commitment)
-           
+            //else part
+            
+            if indexPath.section == 0
+            {
+                let selectedMember = projectDetailViewModel.selectedContributor(indexPath.row)
+                
+                if teamMemberDetailViewController == nil{
+                    
+                    teamMemberDetailViewController = self.storyboard?.instantiateViewControllerWithIdentifier("PLTeamMemberDetailsTableViewController") as! PLTeamMemberDetailsTableViewController
+                }
+                teamMemberDetailViewController.teamMemberDetailViewModel = PLTeamMemberDetailViewModel(withMemberName: selectedMember.fullName,userId: selectedMember.memberUserId,projectId: selectedMember.projectId)
+                self.navigationController?.pushViewController(teamMemberDetailViewController, animated:true)
+                
             }
-        }
-        else if indexPath.section == 2
-        {
-            showAssignmentViewController()
-            assignmentViewController.assignementViewModel.selectedAssignment = projectDetailViewModel.selectedAssignment(indexPath.row)
+            else if indexPath.section == 1
+            {
+                showAssignmentViewController()
+                assignmentViewController.assignementViewModel.selectedAssignment = projectDetailViewModel.selectedAssignment(indexPath.row)
+            }
+                
+            else if indexPath.section == 2{
+                
+                if indexPath.row == 0 {presentTeamCommunicationViewController(0)}
+                else if indexPath.row == 1 {presentTeamCommunicationViewController(1)}
+                else {presentProjectTeamChatViewController()}
+                
+            }
+
+            
+            //end of else part
         }
         
-        else if indexPath.section == 3{
-            
-            if indexPath.row == 0 {presentTeamCommunicationViewController(0)}
-            else if indexPath.row == 1 {presentTeamCommunicationViewController(1)}
-            else {presentProjectTeamChatViewController()}
-            
-        }
         
     }
     

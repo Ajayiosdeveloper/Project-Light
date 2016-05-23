@@ -22,6 +22,7 @@ class PLSidebarMenuViewController: UIViewController,UIImagePickerControllerDeleg
     var taskList = [String]()
     var taskListImage = [String]()
     var settingsList = [String]()
+    var birthdayList = [String]()
     
     override func viewDidLoad()
     {
@@ -32,6 +33,8 @@ class PLSidebarMenuViewController: UIViewController,UIImagePickerControllerDeleg
         taskListImage.append("todayTask.png")
         taskListImage.append("upcomingTask.png")
         taskListImage.append("pendingTask.png")
+        birthdayList.append("Today")
+        birthdayList.append("Upcoming")
         settingsList.append("Logout")
         imagePicker.delegate = self
         tapGestureRecognizer = UITapGestureRecognizer.init(target: self, action: #selector(PLSidebarMenuViewController.editUserProfilePicture))
@@ -81,7 +84,7 @@ class PLSidebarMenuViewController: UIViewController,UIImagePickerControllerDeleg
         }
         else if section == 1
         {
-            return "Notifications"
+            return "Birthdays"
         }
         else
         {
@@ -96,7 +99,7 @@ class PLSidebarMenuViewController: UIViewController,UIImagePickerControllerDeleg
         }
         else if section == 1
         {
-            return 1
+            return birthdayList.count
         }
         else
         {
@@ -140,15 +143,27 @@ class PLSidebarMenuViewController: UIViewController,UIImagePickerControllerDeleg
         }
         else if indexPath.section == 1
         {
-          cell.nameLabel?.text = "Birthdays"
+          cell.nameLabel?.text = birthdayList[indexPath.row]
           cell.imageIcon?.image = UIImage(named:"Birthday.png")
           
-            projectViewModel.getBirthdaysCount(){ countString in
-                
-                cell.countLabel.text = countString
-        }
+            switch indexPath.row
+            {
+            case 0:
+                projectViewModel.getBirthdaysCount(){ countString in
+                    
+                    cell.countLabel.text = countString
+                }
+            case 1:
+        
+                projectViewModel.getUpcoimgBirthdaysCount(){ countString in
+                    cell.countLabel.text = countString
+                }
+                 
+            default: print("")
+            }
             
-        }else if indexPath.section == 2{
+        }
+        else if indexPath.section == 2{
             
             cell.nameLabel?.text = settingsList[indexPath.row]
             

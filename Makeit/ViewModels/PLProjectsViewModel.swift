@@ -317,7 +317,6 @@ class PLProjectsViewModel: NSObject {
         }
      }
     
-    
     func getTodayTasksCount(completion:(String)->Void){
         
         quickBloxClient.countOfTodayCommitments(){ count in
@@ -328,11 +327,8 @@ class PLProjectsViewModel: NSObject {
                 
                 completion(String(count))
             }
-        
-        }
-        
-        
-    }
+         }
+     }
     
     func getUPcomingTasksCount(completion:(String)->Void){
         
@@ -357,8 +353,21 @@ class PLProjectsViewModel: NSObject {
                 completion(String(count))
             }
         }
-        
     }
+    
+    func getUpcoimgBirthdaysCount(completion:(String)-> Void)
+    {
+        quickBloxClient.upcomingBirthdays() { count in
+            if count == 0
+            {
+                completion(String(0))
+            }
+            else{
+                completion(String(count))
+            }
+        }
+    }
+    
     
     func getBirthdaysCount(completion:(String)->Void){
         

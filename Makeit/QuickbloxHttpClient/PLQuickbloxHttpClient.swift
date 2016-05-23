@@ -964,12 +964,31 @@ class PLQuickbloxHttpClient
             print(count)
             completion(count)
           
-            
         }){ (res) in
             
           completion(0)
         }
      }
+    
+    func upcomingBirthdays(completion:(UInt)->Void){
+        
+        let timeInterval = Int(convertdateToTimeinterval(NSDate(),dateFormat: "dd-MM"))
+        
+        let extendedReq = NSMutableDictionary()
+        extendedReq.setValue(timeInterval, forKey: "birthday[gt]")
+        extendedReq.setValue(QBSession.currentSession().currentUser?.ID, forKey: "user_id")
+        QBRequest.countObjectsWithClassName("PLProjectMember", extendedRequest: extendedReq, successBlock: { (_, count) in
+            
+            print("UpComing Birthday Count")
+            print(count)
+            completion(count)
+            
+            
+        }){ (res) in
+            
+            completion(0)
+        }
+    }
     
     func getBirthdayListOfTeamMembers(completion:([QBCOCustomObject]?)->Void){
         
