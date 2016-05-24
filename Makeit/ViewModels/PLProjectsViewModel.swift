@@ -92,6 +92,12 @@ class PLProjectsViewModel: NSObject {
         }
     }
     
+    func  addNewProjectToCreatedProjectList(project:PLProject,completion:(Bool)->Void){
+        
+        self.createdProjectList.append(project)
+        completion(true)
+    }
+    
     
     func rowsCount() -> Int {
         

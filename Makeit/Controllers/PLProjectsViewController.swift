@@ -10,7 +10,7 @@ import UIKit
 import Quickblox
 
 
-class PLProjectsViewController: UITableViewController,UIImagePickerControllerDelegate,UINavigationControllerDelegate,PopupDelegate {
+class PLProjectsViewController: UITableViewController,UIImagePickerControllerDelegate,UINavigationControllerDelegate,PopupDelegate,RefreshProjectsDataSource {
     
     @IBOutlet var projectTableView: UITableView!
     var selectedProjectId:String?
@@ -53,7 +53,10 @@ class PLProjectsViewController: UITableViewController,UIImagePickerControllerDel
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         projectViewModel.addObserver(self, forKeyPath:"createdProjectList", options: NSKeyValueObservingOptions.New, context:&observerContext)
+        if fetchDataFlag == false
+        {
         projectViewModel.fetchProjectsFromRemote()
+        }
         addActivityIndicatorView()
       }
     
@@ -96,6 +99,8 @@ class PLProjectsViewController: UITableViewController,UIImagePickerControllerDel
        if addProjectViewController == nil{
            addProjectViewController = self.storyboard?.instantiateViewControllerWithIdentifier("PLAddProjectViewController") as? PLAddProjectViewController
         }
+        fetchDataFlag = true
+        addProjectViewController!.delegate = self
         self.navigationController?.pushViewController(addProjectViewController!, animated: true)
         if observerContext == 0 {projectViewModel.removeObserver(self, forKeyPath:"createdProjectList")}
     }
@@ -225,7 +230,7 @@ class PLProjectsViewController: UITableViewController,UIImagePickerControllerDel
     }
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        
+        fetchDataFlag = true
         if indexPath.section == 2{
             
             print("Improve Profile ViewController")
@@ -245,8 +250,10 @@ class PLProjectsViewController: UITableViewController,UIImagePickerControllerDel
         selectedProjectDescription = selected.subTitle
         selectedProejctCreatorId = selected.createdBy
         selectedSection = indexPath.section
-            
+        PLSharedManager.manager.projectCreatedByUserId = selected.createdBy
         projectViewModel.getProjectMembersList(selectedProjectId!){ resultedMembers in
+            
+            print(resultedMembers)
             
             if let _ = resultedMembers{
                 
@@ -369,6 +376,13 @@ class PLProjectsViewController: UITableViewController,UIImagePickerControllerDel
 
     }
   
+    func addProjectToDataSource(project: PLProject) {
+        
+        projectViewModel.addNewProjectToCreatedProjectList(project){[weak self] res in
+            
+            self!.projectTableView.reloadData()
+        }
+    }
 
     
 }

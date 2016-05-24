@@ -31,14 +31,19 @@ class PLAddProjectViewModel: NSObject {
        return true
     }
 
-    func createNewProjectWith(name:String,description:String){
+    func createNewProjectWith(name:String,description:String,completion:(PLProject?)->Void){
         
         if self.selectedContributors.count == 0 {
             
-            quickBloxClient.createNewProjectWith(name, description: description){[weak self]result,projectId in
-                self!.isProjectCreated = result
-                self!.willChangeValueForKey("isProjectCreated")
-                self!.didChangeValueForKey("isProjectCreated")
+            quickBloxClient.createNewProjectWith(name, description: description){result,projectId in
+                if result{
+                let addedProject = PLProject(projectName: name, subTitle:description)
+                addedProject.projectId = projectId
+                completion(addedProject)
+                }else{completion(nil)}
+//                self!.isProjectCreated = result
+//                self!.willChangeValueForKey("isProjectCreated")
+//                self!.didChangeValueForKey("isProjectCreated")
             }
         }
         else{
@@ -67,9 +72,9 @@ class PLAddProjectViewModel: NSObject {
                 
                 self!.quickBloxClient.createNewProjectWithContributors(qbObjects){result in
                     
-                    self!.isProjectCreated = result
-                    self!.willChangeValueForKey("isProjectCreated")
-                    self!.didChangeValueForKey("isProjectCreated")
+//                    self!.isProjectCreated = result
+//                    self!.willChangeValueForKey("isProjectCreated")
+//                    self!.didChangeValueForKey("isProjectCreated")
                }
             }
         }
@@ -114,9 +119,9 @@ class PLAddProjectViewModel: NSObject {
             }
             
             completion(members)
-            self.isProjectCreated = result
-            self.willChangeValueForKey("isProjectCreated")
-            self.didChangeValueForKey("isProjectCreated")
+//            self.isProjectCreated = result
+//            self.willChangeValueForKey("isProjectCreated")
+//            self.didChangeValueForKey("isProjectCreated")
         }
         
     }

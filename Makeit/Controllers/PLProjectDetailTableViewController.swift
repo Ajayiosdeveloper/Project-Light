@@ -30,6 +30,7 @@ class PLProjectDetailTableViewController: UITableViewController,EKEventEditViewD
     var projectTeamChatViewController:PLProjectTeamChatViewController!
     var commitmentViewModel:PLProjectCommentViewModel = PLProjectCommentViewModel()
     var taskPriority:String = ""
+    var fetchDataFlag:Bool = false
     
     @IBOutlet var projectDetailsTableView: UITableView!
    
@@ -50,7 +51,17 @@ class PLProjectDetailTableViewController: UITableViewController,EKEventEditViewD
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        fetchDataFromRemote()
+    
+        if (fetchDataFlag == false)
+        {
+            fetchDataFromRemote()
+        }
+        else
+        {
+            print("Dont Fetch")
+        }
+        
+        
         
         self.navigationItem.title = projectName
         projectDetailsTableView.reloadData()
@@ -382,6 +393,8 @@ class PLProjectDetailTableViewController: UITableViewController,EKEventEditViewD
     }
 
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        
+        fetchDataFlag = true
         
         if projectDetailViewModel.numberOfSectionsInTableView() == 4
         {
