@@ -10,7 +10,7 @@ import UIKit
 import Quickblox
 
 
-class PLProjectsViewController: UITableViewController,UIImagePickerControllerDelegate,UINavigationControllerDelegate,PopupDelegate {
+class PLProjectsViewController: UITableViewController,UIImagePickerControllerDelegate,UINavigationControllerDelegate,PopupDelegate,RefreshProjectsDataSource {
     
     @IBOutlet var projectTableView: UITableView!
     var selectedProjectId:String?
@@ -104,6 +104,8 @@ class PLProjectsViewController: UITableViewController,UIImagePickerControllerDel
        if addProjectViewController == nil{
            addProjectViewController = self.storyboard?.instantiateViewControllerWithIdentifier("PLAddProjectViewController") as? PLAddProjectViewController
         }
+        fetchDataFlag = true
+        addProjectViewController!.delegate = self
         self.navigationController?.pushViewController(addProjectViewController!, animated: true)
         if observerContext == 0 {projectViewModel.removeObserver(self, forKeyPath:"createdProjectList")}
     }
@@ -255,6 +257,8 @@ class PLProjectsViewController: UITableViewController,UIImagePickerControllerDel
         PLSharedManager.manager.projectCreatedByUserId = selected.createdBy
         projectViewModel.getProjectMembersList(selectedProjectId!){ resultedMembers in
             
+            print(resultedMembers)
+            
             if let _ = resultedMembers{
                 
               self.performSegueWithIdentifier("toProjectDetails", sender: resultedMembers)
@@ -376,6 +380,13 @@ class PLProjectsViewController: UITableViewController,UIImagePickerControllerDel
 
     }
   
+    func addProjectToDataSource(project: PLProject) {
+        
+        projectViewModel.addNewProjectToCreatedProjectList(project){[weak self] res in
+            
+            self!.projectTableView.reloadData()
+        }
+    }
 
     
 }

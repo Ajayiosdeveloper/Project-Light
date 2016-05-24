@@ -20,9 +20,12 @@ class PLProjectDetailViewModel: NSObject {
     
     
     init(members:[PLTeamMember]) {
-        
-        contributors = members
-        commitments = [PLCommitment]()
+        if members.count == 0{
+            contributors = [PLTeamMember]()
+        }else{
+           contributors = members
+        }
+       commitments = [PLCommitment]()
         assignments = [PLAssignment]()
         communicationWays = ["Voice Chat","Video Chat","Text Chat"]
     }
