@@ -8,6 +8,10 @@
 
 import UIKit
 
+protocol RefreshProjectsDataSource:class{
+    
+    func addProjectToDataSource(project:PLProject)
+}
 
 class PLAddProjectViewController: UIViewController,UISearchBarDelegate,UITextFieldDelegate,UITableViewDelegate,UITableViewDataSource,PLContributorTableViewDelegate,ProjectDetailsDelegate {
     
@@ -20,6 +24,7 @@ class PLAddProjectViewController: UIViewController,UISearchBarDelegate,UITextFie
     var projectDetails:[String]!
     var projectDetailViewModel:PLProjectDetailViewModel!
     var plPopOverController:WYPopoverController?
+    weak var delegate:RefreshProjectsDataSource? = nil
     @IBOutlet var popoverbutton: UIButton!
     @IBOutlet var contributorsTableView: UITableView!
    
@@ -79,8 +84,15 @@ class PLAddProjectViewController: UIViewController,UISearchBarDelegate,UITextFie
         addProjectViewModel.addObserver(self, forKeyPath:"isProjectCreated", options: NSKeyValueObservingOptions.New, context:nil)
         if projectDetails == nil{
         if addProjectViewModel.validateProjectDetails(projectName.text!){
-            addProjectViewModel.createNewProjectWith(projectName.text!,description:projectDescription.text!)
-        }else {activityIndicatorView.stopAnimating();showAlertWithMessage("error!", message:"enter Project name")}
+            addProjectViewModel.createNewProjectWith(projectName.text!,description:projectDescription.text!){[weak self]project in
+                if let _ = project{
+                    self!.delegate?.addProjectToDataSource(project!)
+                    self!.navigationController?.popViewControllerAnimated(true)
+                    self!.cleanUp()
+
+                }
+            }
+        }else {activityIndicatorView.stopAnimating();showAlertWithMessage("error!", message:"Enter Project name")}
         }
         else{
             
