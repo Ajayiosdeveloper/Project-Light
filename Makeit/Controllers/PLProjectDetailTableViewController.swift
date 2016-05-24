@@ -36,7 +36,6 @@ class PLProjectDetailTableViewController: UITableViewController,EKEventEditViewD
    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         self.projectDetailsTableView.registerNib(UINib(nibName:"PLTableViewCell", bundle:NSBundle.mainBundle()), forCellReuseIdentifier: "Cell")
         self.projectDetailsTableView.registerClass(UITableViewCell.self, forCellReuseIdentifier:"DefaultCell")
         commitmentViewModel.isAccessGranted(){res in
@@ -60,8 +59,6 @@ class PLProjectDetailTableViewController: UITableViewController,EKEventEditViewD
         {
             print("Dont Fetch")
         }
-        
-        
         
         self.navigationItem.title = projectName
         projectDetailsTableView.reloadData()
@@ -183,7 +180,6 @@ class PLProjectDetailTableViewController: UITableViewController,EKEventEditViewD
                 return cell
             }
         }
-        
         return UITableViewCell()
     
     }
@@ -384,11 +380,9 @@ class PLProjectDetailTableViewController: UITableViewController,EKEventEditViewD
             ev.notes = event!.notes
             print("Coming")
             print(ev.title)
-            //editViewController.event = ev
+            
         }
-       //let array = editViewController.navigationBar.items;
-        //let titleItem = array![0]
-       // titleItem.title = projectName
+       
         self.presentViewController(editViewController, animated: true, completion:nil)
     }
 

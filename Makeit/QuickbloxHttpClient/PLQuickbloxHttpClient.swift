@@ -305,7 +305,6 @@ class PLQuickbloxHttpClient
         customObject.fields?.setValue(assignees, forKey: "assignees")
         customObject.fields?.setValue(assigneeUserIds, forKey: "assigneeUserId")
         customObject.fields?.setValue(id, forKey:"_parent_id")
-        
         QBRequest.createObject(customObject, successBlock: { (res,object) in
             
             print("PRAISE THE LORD")
@@ -540,8 +539,9 @@ class PLQuickbloxHttpClient
                     let plAssignment = PLAssignment()
                     plAssignment.name = assignment.fields?.objectForKey("name") as! String
                     plAssignment.details = assignment.fields?.objectForKey("description") as! String
-                    plAssignment.targetDate = assignment.fields?.objectForKey("targetDate") as! String
-                    plAssignment.startDate = assignment.fields?.objectForKey("startDate") as! String
+                    let endInterval = assignment.fields?.objectForKey("targetDate") as! Int
+                    let startInterval = assignment.fields?.objectForKey("startDate") as! Int
+                    print(endInterval + startInterval)
                     plAssignment.assineesUserIds = assignment.fields?.objectForKey("assigneeUserId") as! [UInt]
                     assigmnents.append(plAssignment)
                 }
