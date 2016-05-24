@@ -175,6 +175,8 @@
 		948382D71CE3304000B51BA6 /* PLResetPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948382D61CE3304000B51BA6 /* PLResetPasswordViewController.swift */; };
 		948382D91CE3310100B51BA6 /* bar.png in Resources */ = {isa = PBXBuildFile; fileRef = 948382D81CE3310100B51BA6 /* bar.png */; };
 		948382DF1CE3368400B51BA6 /* PLUserLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948382DE1CE3368400B51BA6 /* PLUserLoginViewController.swift */; };
+		94C7A5021CF4646100DECE8A /* PLAssigneeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94C7A5001CF4646100DECE8A /* PLAssigneeTableViewCell.swift */; };
+		94C7A5031CF4646100DECE8A /* PLAssigneeTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 94C7A5011CF4646100DECE8A /* PLAssigneeTableViewCell.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -400,6 +402,8 @@
 		948382D61CE3304000B51BA6 /* PLResetPasswordViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLResetPasswordViewController.swift; sourceTree = "<group>"; };
 		948382D81CE3310100B51BA6 /* bar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bar.png; sourceTree = "<group>"; };
 		948382DE1CE3368400B51BA6 /* PLUserLoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLUserLoginViewController.swift; sourceTree = "<group>"; };
+		94C7A5001CF4646100DECE8A /* PLAssigneeTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLAssigneeTableViewCell.swift; sourceTree = "<group>"; };
+		94C7A5011CF4646100DECE8A /* PLAssigneeTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PLAssigneeTableViewCell.xib; sourceTree = "<group>"; };
 		AB4C5F8A0BCA9989B855A1CB /* Pods-Makeit.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Makeit.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Makeit/Pods-Makeit.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -669,6 +673,8 @@
 				8049FF581CE9D25400FF24C5 /* PLSideBarTableViewCell.swift */,
 				8083C0DB1CED831B0051E8AF /* PLBirthdayTableViewCell.swift */,
 				8083C0DC1CED831B0051E8AF /* PLBirthdayTableViewCell.xib */,
+				94C7A5001CF4646100DECE8A /* PLAssigneeTableViewCell.swift */,
+				94C7A5011CF4646100DECE8A /* PLAssigneeTableViewCell.xib */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -1014,6 +1020,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				94C7A5031CF4646100DECE8A /* PLAssigneeTableViewCell.xib in Resources */,
 				9442B3E41CF320E7002FEF3F /* assignment.png in Resources */,
 				80C4A0201CDCBB500073B6E2 /* JSQMessagesToolbarContentView.xib in Resources */,
 				806B1E0F1CD8A7D60018B026 /* audio.png in Resources */,
@@ -1138,6 +1145,7 @@
 				80C49FF21CDCBB500073B6E2 /* JSQSystemSoundPlayer+Messages.swift in Sources */,
 				80879D3F1CC8E70100B41D2D /* PLProjectAssignmentViewController.swift in Sources */,
 				80C49FF81CDCBB500073B6E2 /* UIView.swift in Sources */,
+				94C7A5021CF4646100DECE8A /* PLAssigneeTableViewCell.swift in Sources */,
 				806CA5B11CC4B2A400E401A1 /* PLAddProjectViewModel.swift in Sources */,
 				948382D71CE3304000B51BA6 /* PLResetPasswordViewController.swift in Sources */,
 				80C4A01B1CDCBB500073B6E2 /* JSQMessagesLabel.swift in Sources */,
