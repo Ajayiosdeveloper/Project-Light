@@ -22,18 +22,10 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
     var startDatecommitmentDatePicker:UIDatePicker!
     var targetDatecommitmentDatePicker:UIDatePicker!
     var assignementViewModel:PLProjectAssignmentViewModel!
-    var projectDetailController = PLProjectDetailTableViewController()
+    var profileViewController:PLUserProfileInfoTableViewController!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        let teamMembers = PLTeamMember(name: "", id: 0)
-        teamMembers.fullName = (QBSession.currentSession().currentUser?.fullName)!
-        teamMembers.memberEmail = (QBSession.currentSession().currentUser?.email)!
-        teamMembers.projectId = ""
-        teamMembers.avatar = ""
-        teamMembers.memberId = ""
-        print("Team \(teamMembers)")
-     //   projectDetailController.projectDetailViewModel! = PLProjectDetailViewModel(members: <#T##[PLTeamMember]#>)
         print(assignementViewModel.assigneeList)
         self.assigneeListTableView.registerNib(UINib(nibName:"PLTableViewCell", bundle:NSBundle.mainBundle()), forCellReuseIdentifier: "Cell")
         addDoneBarButtonItem()
@@ -162,17 +154,31 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
         let cell = tableView.dequeueReusableCellWithIdentifier("Cell") as! PLTableViewCell
         cell.memberName.text = assignementViewModel.titleOfRowAtIndexPath(indexPath.row)
         cell.memberDetail.text = assignementViewModel.emailOfRowAtIndexPath(indexPath.row)
-        print(projectDetailController)
         
-//        if projectDetailController.projectDetailViewModel.isUserAssignedToAssignment(indexPath.row)
-//        {
-//            cell.disclosureIndicatorBtn.hidden = true
-//        }
-//        else
-//        {
-//        cell.disclosureIndicatorBtn.hidden = false
-//        cell.disclosureIndicatorBtn.addTarget(self, action: #selector(PLProjectAssignmentViewController.loadProfileController), forControlEvents:UIControlEvents.TouchUpInside)
-//        }
+        if PLSharedManager.manager.projectCreatedByUserId == QBSession.currentSession().currentUser?.ID
+        {
+            cell.disclosureIndicatorBtn.hidden = false
+            cell.disclosureIndicatorBtn.addTarget(self, action: #selector(PLProjectAssignmentViewController.loadProfileController), forControlEvents:UIControlEvents.TouchUpInside)
+        }
+        else
+        {
+            if assignementViewModel.isLoggedInUserPartOfAssignment()
+            {
+                if indexPath.row == 0
+                {
+                        cell.disclosureIndicatorBtn.hidden = true
+                }
+                else{
+                    cell.disclosureIndicatorBtn.hidden = false
+                    cell.disclosureIndicatorBtn.addTarget(self, action: #selector(PLProjectAssignmentViewController.loadProfileController), forControlEvents:UIControlEvents.TouchUpInside)
+                    }
+            }
+            else
+            {
+             cell.disclosureIndicatorBtn.hidden = false
+             cell.disclosureIndicatorBtn.addTarget(self, action: #selector(PLProjectAssignmentViewController.loadProfileController), forControlEvents:UIControlEvents.TouchUpInside)
+            }          
+        }
         assignementViewModel.contributorImageRowAtIndexPath(indexPath.row, completion: { (avatar) in
             
             if let _ = avatar{
@@ -300,21 +306,14 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
     
     func loadProfileController()
     {
-       let profileViewController = self.storyboard?.instantiateViewControllerWithIdentifier("PLUserProfileInfoTableViewController") as? PLUserProfileInfoTableViewController
-       let nav = UINavigationController(rootViewController: profileViewController!)
+        profileViewController = self.storyboard?.instantiateViewControllerWithIdentifier("PLUserProfileInfoTableViewController") as? PLUserProfileInfoTableViewController
+        profileViewController.disablingBtn = false
+        let nav = UINavigationController(rootViewController: profileViewController!)
        self.presentViewController(nav, animated: true, completion: nil)
        profileViewController?.addBackBarButtonItem()
-       self.disableImproveProfile()
-        
+      // profileViewController?.disableButton(true)
     }
     
-    
-    func disableImproveProfile()-> Bool
-    {
-        return false
-    }
-    
-  
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
         assignementViewModel.selectedAssignment = nil

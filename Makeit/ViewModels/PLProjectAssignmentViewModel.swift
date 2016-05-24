@@ -204,6 +204,14 @@ class PLProjectAssignmentViewModel: NSObject {
     
   }
     
+    func isLoggedInUserPartOfAssignment() -> Bool {
+        
+        let loggedInUserid = QBSession.currentSession().currentUser?.ID
+        let result = selectedAssignment?.assineesUserIds.contains(loggedInUserid!)
+        return result!
+    }
+    
+    
     func contributorImageRowAtIndexPath(row:Int,completion:(UIImage?)->Void) {
         
         if qbClient == nil{ qbClient = PLQuickbloxHttpClient()}

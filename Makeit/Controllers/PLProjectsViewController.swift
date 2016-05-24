@@ -27,7 +27,8 @@ class PLProjectsViewController: UITableViewController,UIImagePickerControllerDel
     var userProfileController : PLUserProfileInfoTableViewController?
     var editProjectButton:UIBarButtonItem!
     var selectedSection:Int!
-    
+    var fetchDataFlag = false
+
   override func viewDidLoad() {
         super.viewDidLoad()
     
@@ -236,6 +237,7 @@ class PLProjectsViewController: UITableViewController,UIImagePickerControllerDel
             print("Improve Profile ViewController")
             
             self.userProfileController = self.storyboard?.instantiateViewControllerWithIdentifier("PLUserProfileInfoTableViewController") as? PLUserProfileInfoTableViewController
+            self.userProfileController?.disablingBtn = true
             self.navigationController?.pushViewController(self.userProfileController!, animated: true)
             
         }else {

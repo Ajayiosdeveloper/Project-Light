@@ -18,32 +18,34 @@ class PLUserProfileInfoTableViewController: UITableViewController,UITextFieldDel
     @IBOutlet weak var experience: UITextField!
     @IBOutlet weak var technology: UITextField!
     @IBOutlet weak var updateProfileButton: UIButton!
+
+    var disablingBtn : Bool = true
     
-    var disableImproveProfileBtn : Bool = true
-    var projectAssignmentController = PLProjectAssignmentViewController()
     var userProfileModel = PLUserProfileInfoViewModel()
     var dobPicker:UIDatePicker!
         
     override func viewDidLoad() {
         super.viewDidLoad()
+       
+        updateProfileButton.hidden = false
         dobPicker = UIDatePicker()
         dobPicker.datePickerMode = .Date
         self.dateOfBirth.inputView = dobPicker
         addDoneButtonToDatePicker()
     }
     
+    
     override func viewWillAppear(animated: Bool)
     {
-        self.disableImproveProfileBtn = projectAssignmentController.disableImproveProfile()
-        if self.disableImproveProfileBtn == true
+        if !disablingBtn
         {
-           updateProfileButton.hidden = false
+           updateProfileButton.hidden = true
         }
-        else
-        {
-            updateProfileButton.hidden = true
+        else{
+             updateProfileButton.hidden = false
+            
         }
-        userProfileModel.getUserProfileDetail { dict in
+            userProfileModel.getUserProfileDetail { dict in
             print("Output")
             
             if let _ = dict{
@@ -60,11 +62,6 @@ class PLUserProfileInfoTableViewController: UITableViewController,UITextFieldDel
                 print("No data found")
             }
         }
-    }
-    
-    func textFieldDidBeginEditing(textField: UITextField) {
-    
-        self.updateProfileButton.hidden = false
     }
     
     func addDoneButtonToDatePicker()
@@ -113,6 +110,9 @@ class PLUserProfileInfoTableViewController: UITableViewController,UITextFieldDel
     
     func performCancel()
     {
-        self.dismissViewControllerAnimated(true, completion: nil)
+      let assignmentController = self.storyboard?.instantiateViewControllerWithIdentifier("projectsViewController") as! PLProjectsViewController
+        print(assignmentController)
+        print(self.navigationController)
+       self.navigationController!.presentViewController(assignmentController, animated: true, completion: nil)
     }
 }
