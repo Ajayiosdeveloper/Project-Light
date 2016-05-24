@@ -220,7 +220,7 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
         
         if assignementViewModel.selectedAssignment != nil{
            
-            let footerView:UIView! = UIView(frame:CGRectMake(0,0,self.view.frame.size.width-0,40))
+            let footerView:UIView! = UIView(frame:CGRectMake(0,0,self.view.frame.size.width,20))
             footerView.backgroundColor = UIColor(colorLiteralRed: 89/255, green: 181/255, blue: 50/255, alpha: 1)
             footerView.layer.cornerRadius = 15
             footerView.clipsToBounds = true
@@ -232,17 +232,22 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
                 
             }else{
                 
-                self.addButtonForTableViewFooterOnView(footerView, title: "Completed ?", tag: 1)
+                if assignementViewModel.isLoggedInUserPartOfAssignment()
+                {
+                     self.addButtonForTableViewFooterOnView(footerView, title: "Completed ?", tag: 1)
+                }
+                else{
+                    return nil
+                }
             }
-            
-            
+        
             return footerView
         }
         return nil
     }
     
     func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        return 50
+        return 45
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
@@ -273,7 +278,7 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
         addMemberButton.addTarget(self, action:#selector(PLProjectAssignmentViewController.performButtonActionOfFooterView), forControlEvents: UIControlEvents.TouchUpInside)
         addMemberButton.frame = CGRectMake(0, 0, self.view.frame.size.width, 40)
         addMemberButton.contentHorizontalAlignment = .Center
-        addMemberButton.contentEdgeInsets = UIEdgeInsetsMake(15, 0, 0, 0)
+        addMemberButton.contentEdgeInsets = UIEdgeInsetsMake(0, 0, 0, 0)
         addOnView.addSubview(addMemberButton)
     }
 
