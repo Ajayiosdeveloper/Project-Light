@@ -304,7 +304,6 @@ class PLQuickbloxHttpClient
         customObject.fields?.setValue(assignees, forKey: "assignees")
         customObject.fields?.setValue(assigneeUserIds, forKey: "assigneeUserId")
         customObject.fields?.setValue(id, forKey:"_parent_id")
-        
         QBRequest.createObject(customObject, successBlock: { (res,object) in
             
             print("PRAISE THE LORD")
