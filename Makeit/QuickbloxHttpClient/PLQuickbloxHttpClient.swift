@@ -539,8 +539,9 @@ class PLQuickbloxHttpClient
                     let plAssignment = PLAssignment()
                     plAssignment.name = assignment.fields?.objectForKey("name") as! String
                     plAssignment.details = assignment.fields?.objectForKey("description") as! String
-                    plAssignment.targetDate = assignment.fields?.objectForKey("targetDate") as! String
-                    plAssignment.startDate = assignment.fields?.objectForKey("startDate") as! String
+                    let endInterval = assignment.fields?.objectForKey("targetDate") as! Int
+                    let startInterval = assignment.fields?.objectForKey("startDate") as! Int
+                    print(endInterval + startInterval)
                     plAssignment.assineesUserIds = assignment.fields?.objectForKey("assigneeUserId") as! [UInt]
                     assigmnents.append(plAssignment)
                 }
