@@ -17,21 +17,35 @@ class PLUserProfileInfoTableViewController: UITableViewController,UITextFieldDel
     @IBOutlet weak var designation: UITextField!
     @IBOutlet weak var experience: UITextField!
     @IBOutlet weak var technology: UITextField!
+    @IBOutlet weak var updateProfileButton: UIButton!
+
+    var disablingBtn : Bool = true
     
     var userProfileModel = PLUserProfileInfoViewModel()
     var dobPicker:UIDatePicker!
-    
+        
     override func viewDidLoad() {
         super.viewDidLoad()
+       
+        updateProfileButton.hidden = false
         dobPicker = UIDatePicker()
         dobPicker.datePickerMode = .Date
         self.dateOfBirth.inputView = dobPicker
         addDoneButtonToDatePicker()
     }
     
+    
     override func viewWillAppear(animated: Bool)
     {
-        userProfileModel.getUserProfileDetail { dict in
+        if !disablingBtn
+        {
+           updateProfileButton.hidden = true
+        }
+        else{
+             updateProfileButton.hidden = false
+            
+        }
+            userProfileModel.getUserProfileDetail { dict in
             print("Output")
             
             if let _ = dict{
@@ -86,5 +100,19 @@ class PLUserProfileInfoTableViewController: UITableViewController,UITextFieldDel
             }
         
         }
+    }
+    
+    func addBackBarButtonItem(){
+        
+        let backButton = UIBarButtonItem(barButtonSystemItem:.Cancel, target: self, action: #selector(PLUserProfileInfoTableViewController.performCancel))
+        self.navigationItem.leftBarButtonItem = backButton
+    }
+    
+    func performCancel()
+    {
+      let assignmentController = self.storyboard?.instantiateViewControllerWithIdentifier("projectsViewController") as! PLProjectsViewController
+        print(assignmentController)
+        print(self.navigationController)
+       self.navigationController!.presentViewController(assignmentController, animated: true, completion: nil)
     }
 }

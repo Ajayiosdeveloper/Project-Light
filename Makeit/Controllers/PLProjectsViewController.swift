@@ -23,7 +23,6 @@ class PLProjectsViewController: UITableViewController,UIImagePickerControllerDel
     var animateCell:[Bool] = [Bool]()
     var observerContext = 0
     var profilePicSettings:UIBarButtonItem!
-    //var profilePicSettingsCustomView:UIButton!
     var plPhotoPickerController:UIImagePickerController!
     var userProfileController : PLUserProfileInfoTableViewController?
     var editProjectButton:UIBarButtonItem!
@@ -54,7 +53,6 @@ class PLProjectsViewController: UITableViewController,UIImagePickerControllerDel
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        //projectViewModel = PLProjectsViewModel()
         projectViewModel.addObserver(self, forKeyPath:"createdProjectList", options: NSKeyValueObservingOptions.New, context:&observerContext)
         if fetchDataFlag == false
         {
@@ -122,7 +120,8 @@ class PLProjectsViewController: UITableViewController,UIImagePickerControllerDel
     
    //MARK: UITableView DataSource
     
-   override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+   override func numberOfSectionsInTableView(tableView: UITableView) -> Int
+   {
         return 3
     }
 
@@ -238,6 +237,7 @@ class PLProjectsViewController: UITableViewController,UIImagePickerControllerDel
             print("Improve Profile ViewController")
             
             self.userProfileController = self.storyboard?.instantiateViewControllerWithIdentifier("PLUserProfileInfoTableViewController") as? PLUserProfileInfoTableViewController
+            self.userProfileController?.disablingBtn = true
             self.navigationController?.pushViewController(self.userProfileController!, animated: true)
             
         }else {

@@ -166,6 +166,7 @@ class PLAddProjectViewController: UIViewController,UISearchBarDelegate,UITextFie
                 }else{print("No matches Found")}
                 
             }
+            searchBar.resignFirstResponder()
         }
         if searchText.characters.count == 0
         {

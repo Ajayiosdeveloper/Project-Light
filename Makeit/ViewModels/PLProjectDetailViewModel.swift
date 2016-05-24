@@ -18,7 +18,7 @@ class PLProjectDetailViewModel: NSObject {
     var qbClient:PLQuickbloxHttpClient!
     var numberOfSections:Int!
     
-    
+
     init(members:[PLTeamMember]) {
         if members.count == 0{
             contributors = [PLTeamMember]()
@@ -30,6 +30,7 @@ class PLProjectDetailViewModel: NSObject {
         communicationWays = ["Voice Chat","Video Chat","Text Chat"]
     }
     
+
     func numberOfSectionsInTableView() -> Int {
         
         if numberOfSections == 0{
