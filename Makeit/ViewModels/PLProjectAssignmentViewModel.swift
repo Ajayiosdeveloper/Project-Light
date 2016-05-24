@@ -162,6 +162,7 @@ class PLProjectAssignmentViewModel: NSObject {
         return selectedAssignment!.details
     }
     
+    
     func responsibleForAssigniment()  {
         
        // var responsible:[PLTeamMember] = [PLTeamMember]()
@@ -237,6 +238,4 @@ class PLProjectAssignmentViewModel: NSObject {
             }
         }
     }
-
-
 }

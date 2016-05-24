@@ -16,6 +16,7 @@ class PLTableViewCell: UITableViewCell {
     @IBOutlet var countHostingView: UIView!
     @IBOutlet var messageCountLabel: UILabel!
     
+    @IBOutlet weak var disclosureIndicatorBtn: UIButton!
     
     
     

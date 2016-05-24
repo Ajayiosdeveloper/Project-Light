@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Quickblox
 
 class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,UITableViewDelegate {
 
@@ -21,10 +22,18 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
     var startDatecommitmentDatePicker:UIDatePicker!
     var targetDatecommitmentDatePicker:UIDatePicker!
     var assignementViewModel:PLProjectAssignmentViewModel!
-   
-
+    var projectDetailController = PLProjectDetailTableViewController()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        let teamMembers = PLTeamMember(name: "", id: 0)
+        teamMembers.fullName = (QBSession.currentSession().currentUser?.fullName)!
+        teamMembers.memberEmail = (QBSession.currentSession().currentUser?.email)!
+        teamMembers.projectId = ""
+        teamMembers.avatar = ""
+        teamMembers.memberId = ""
+        print("Team \(teamMembers)")
+     //   projectDetailController.projectDetailViewModel! = PLProjectDetailViewModel(members: <#T##[PLTeamMember]#>)
         print(assignementViewModel.assigneeList)
         self.assigneeListTableView.registerNib(UINib(nibName:"PLTableViewCell", bundle:NSBundle.mainBundle()), forCellReuseIdentifier: "Cell")
         addDoneBarButtonItem()
@@ -41,9 +50,6 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-       
-    
-        
         if let _ = assignementViewModel, _ = assignementViewModel.assigneeList{
             
             assigneeListTableView.reloadData()
@@ -156,6 +162,17 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
         let cell = tableView.dequeueReusableCellWithIdentifier("Cell") as! PLTableViewCell
         cell.memberName.text = assignementViewModel.titleOfRowAtIndexPath(indexPath.row)
         cell.memberDetail.text = assignementViewModel.emailOfRowAtIndexPath(indexPath.row)
+        print(projectDetailController)
+        
+//        if projectDetailController.projectDetailViewModel.isUserAssignedToAssignment(indexPath.row)
+//        {
+//            cell.disclosureIndicatorBtn.hidden = true
+//        }
+//        else
+//        {
+//        cell.disclosureIndicatorBtn.hidden = false
+//        cell.disclosureIndicatorBtn.addTarget(self, action: #selector(PLProjectAssignmentViewController.loadProfileController), forControlEvents:UIControlEvents.TouchUpInside)
+//        }
         assignementViewModel.contributorImageRowAtIndexPath(indexPath.row, completion: { (avatar) in
             
             if let _ = avatar{
@@ -173,12 +190,11 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
         }else{
             cell.accessoryType = .None
         }
-        
-     
-        
+   
         return cell
      
     }
+
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         return 55.0
@@ -234,6 +250,23 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
         }
     }
     
+    func loadProfileController()
+    {
+       let profileViewController = self.storyboard?.instantiateViewControllerWithIdentifier("PLUserProfileInfoTableViewController") as? PLUserProfileInfoTableViewController
+       let nav = UINavigationController(rootViewController: profileViewController!)
+       self.presentViewController(nav, animated: true, completion: nil)
+       profileViewController?.addBackBarButtonItem()
+       self.disableImproveProfile()
+        
+    }
+    
+    
+    func disableImproveProfile()-> Bool
+    {
+        return false
+    }
+    
+  
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
         assignementViewModel.selectedAssignment = nil

@@ -17,10 +17,13 @@ class PLUserProfileInfoTableViewController: UITableViewController,UITextFieldDel
     @IBOutlet weak var designation: UITextField!
     @IBOutlet weak var experience: UITextField!
     @IBOutlet weak var technology: UITextField!
+    @IBOutlet weak var updateProfileButton: UIButton!
     
+    var disableImproveProfileBtn : Bool = true
+    var projectAssignmentController = PLProjectAssignmentViewController()
     var userProfileModel = PLUserProfileInfoViewModel()
     var dobPicker:UIDatePicker!
-    
+        
     override func viewDidLoad() {
         super.viewDidLoad()
         dobPicker = UIDatePicker()
@@ -31,6 +34,15 @@ class PLUserProfileInfoTableViewController: UITableViewController,UITextFieldDel
     
     override func viewWillAppear(animated: Bool)
     {
+        self.disableImproveProfileBtn = projectAssignmentController.disableImproveProfile()
+        if self.disableImproveProfileBtn == true
+        {
+           updateProfileButton.hidden = false
+        }
+        else
+        {
+            updateProfileButton.hidden = true
+        }
         userProfileModel.getUserProfileDetail { dict in
             print("Output")
             
@@ -48,6 +60,11 @@ class PLUserProfileInfoTableViewController: UITableViewController,UITextFieldDel
                 print("No data found")
             }
         }
+    }
+    
+    func textFieldDidBeginEditing(textField: UITextField) {
+    
+        self.updateProfileButton.hidden = false
     }
     
     func addDoneButtonToDatePicker()
@@ -86,5 +103,16 @@ class PLUserProfileInfoTableViewController: UITableViewController,UITextFieldDel
             }
         
         }
+    }
+    
+    func addBackBarButtonItem(){
+        
+        let backButton = UIBarButtonItem(barButtonSystemItem:.Cancel, target: self, action: #selector(PLUserProfileInfoTableViewController.performCancel))
+        self.navigationItem.leftBarButtonItem = backButton
+    }
+    
+    func performCancel()
+    {
+        self.dismissViewControllerAnimated(true, completion: nil)
     }
 }

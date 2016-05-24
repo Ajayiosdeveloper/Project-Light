@@ -206,12 +206,6 @@ class PLProjectDetailTableViewController: UITableViewController,EKEventEditViewD
         }
     }
     
-    
-//    override func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-//        
-//        
-//    }
-    
     override func tableView(tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         
         var footerView:UIView! = UIView(frame:CGRectMake(0,0,self.view.frame.size.width,40))

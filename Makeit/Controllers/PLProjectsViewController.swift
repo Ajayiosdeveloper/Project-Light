@@ -23,16 +23,13 @@ class PLProjectsViewController: UITableViewController,UIImagePickerControllerDel
     var animateCell:[Bool] = [Bool]()
     var observerContext = 0
     var profilePicSettings:UIBarButtonItem!
-    //var profilePicSettingsCustomView:UIButton!
     var plPhotoPickerController:UIImagePickerController!
     var userProfileController : PLUserProfileInfoTableViewController?
     var editProjectButton:UIBarButtonItem!
     var selectedSection:Int!
-
+    
   override func viewDidLoad() {
         super.viewDidLoad()
-    
-    
     
          self.projectTableView.registerNib(UINib(nibName:"PLProjectViewCell", bundle:NSBundle.mainBundle()), forCellReuseIdentifier: "ProjectCell")
          self.projectTableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "Cell")
@@ -55,7 +52,6 @@ class PLProjectsViewController: UITableViewController,UIImagePickerControllerDel
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        //projectViewModel = PLProjectsViewModel()
         projectViewModel.addObserver(self, forKeyPath:"createdProjectList", options: NSKeyValueObservingOptions.New, context:&observerContext)
         projectViewModel.fetchProjectsFromRemote()
         addActivityIndicatorView()
@@ -118,7 +114,8 @@ class PLProjectsViewController: UITableViewController,UIImagePickerControllerDel
     
    //MARK: UITableView DataSource
     
-   override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+   override func numberOfSectionsInTableView(tableView: UITableView) -> Int
+   {
         return 3
     }
 

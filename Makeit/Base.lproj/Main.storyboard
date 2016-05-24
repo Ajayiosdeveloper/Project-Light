@@ -738,6 +738,9 @@
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="18" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="19P-fp-elD">
                                 <rect key="frame" x="0.0" y="208" width="600" height="392"/>
                                 <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="392" id="9zm-ZS-JbA"/>
+                                </constraints>
                                 <connections>
                                     <outlet property="dataSource" destination="Oui-ZP-5hI" id="0xI-4l-1Ny"/>
                                     <outlet property="delegate" destination="Oui-ZP-5hI" id="jdg-gi-oea"/>
@@ -746,11 +749,13 @@
                         </subviews>
                         <color key="backgroundColor" red="0.92156862745098034" green="0.92156862745098034" blue="0.94117647058823528" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstItem="19P-fp-elD" firstAttribute="leading" secondItem="PCl-v6-xbW" secondAttribute="leadingMargin" constant="-20" id="5zU-Ku-gpt"/>
+                            <constraint firstItem="FB1-d0-F6c" firstAttribute="top" secondItem="19P-fp-elD" secondAttribute="bottom" id="5Cg-4o-YH3"/>
+                            <constraint firstItem="19P-fp-elD" firstAttribute="trailing" secondItem="tmp-Zj-d9x" secondAttribute="trailing" id="FZK-KA-LF3"/>
                             <constraint firstItem="19P-fp-elD" firstAttribute="top" secondItem="tmp-Zj-d9x" secondAttribute="bottom" constant="1" id="GwB-TW-kcV"/>
                             <constraint firstItem="19P-fp-elD" firstAttribute="top" secondItem="tmp-Zj-d9x" secondAttribute="bottom" constant="1" id="H85-gg-DaN"/>
                             <constraint firstItem="tmp-Zj-d9x" firstAttribute="top" secondItem="1Ih-lL-agy" secondAttribute="bottom" constant="20" id="HJR-Wr-9bI"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="19P-fp-elD" secondAttribute="trailing" constant="-20" id="WiQ-xg-bzq"/>
+                            <constraint firstItem="19P-fp-elD" firstAttribute="leading" secondItem="tmp-Zj-d9x" secondAttribute="leading" id="Y58-wr-re0"/>
+                            <constraint firstItem="19P-fp-elD" firstAttribute="top" secondItem="tmp-Zj-d9x" secondAttribute="bottom" constant="1" id="YPZ-NO-7Ww"/>
                             <constraint firstItem="tmp-Zj-d9x" firstAttribute="leading" secondItem="PCl-v6-xbW" secondAttribute="leadingMargin" constant="-20" id="c1a-Op-517"/>
                             <constraint firstAttribute="trailingMargin" secondItem="tmp-Zj-d9x" secondAttribute="trailing" constant="-20" id="soS-d9-Co8"/>
                             <constraint firstItem="FB1-d0-F6c" firstAttribute="top" secondItem="19P-fp-elD" secondAttribute="bottom" id="xZC-EE-YWV"/>
@@ -766,7 +771,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pKG-s2-yoo" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1934" y="521"/>
+            <point key="canvasLocation" x="1930" y="457"/>
         </scene>
         <!--Team Member Details Table View Controller-->
         <scene sceneID="uAt-tP-lcK">
@@ -1140,6 +1145,7 @@
                         <outlet property="emailId" destination="qu5-41-1JT" id="bpR-QR-pM6"/>
                         <outlet property="experience" destination="ObC-cs-rVJ" id="YHh-3u-ddE"/>
                         <outlet property="technology" destination="B8p-At-TkM" id="qzP-vC-Jxc"/>
+                        <outlet property="updateProfileButton" destination="6nb-qW-aml" id="CNu-rJ-jxZ"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="TyV-Rd-gz1" userLabel="First Responder" sceneMemberID="firstResponder"/>
