@@ -30,12 +30,12 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
         self.assigneeListTableView.registerNib(UINib(nibName:"PLAssigneeTableViewCell", bundle:NSBundle.mainBundle()), forCellReuseIdentifier: "Cell")
         addDoneBarButtonItem()
         startDatecommitmentDatePicker = UIDatePicker()
-        startDatecommitmentDatePicker.datePickerMode = .Date
+        startDatecommitmentDatePicker.datePickerMode = .DateAndTime
         self.assignmentStartDateTextField.inputView = startDatecommitmentDatePicker
         startDateDoneButtonToDatePicker()
         
         targetDatecommitmentDatePicker = UIDatePicker()
-        targetDatecommitmentDatePicker.datePickerMode = .Date
+        targetDatecommitmentDatePicker.datePickerMode = .DateAndTime
         self.assignmenttargetDateTextField.inputView = targetDatecommitmentDatePicker
         targetDateDoneButtonToDatePicker()
     }
@@ -117,7 +117,7 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
     func dateSelection()
     {
         assignmentStartDateTextField.resignFirstResponder()
-        assignmentStartDateTextField.text = NSDateFormatter.localizedStringFromDate(startDatecommitmentDatePicker.date, dateStyle: NSDateFormatterStyle.MediumStyle, timeStyle: NSDateFormatterStyle.NoStyle)
+        assignmentStartDateTextField.text = NSDateFormatter.localizedStringFromDate(startDatecommitmentDatePicker.date, dateStyle: NSDateFormatterStyle.MediumStyle, timeStyle: NSDateFormatterStyle.ShortStyle)
         assignmenttargetDateTextField.becomeFirstResponder()
         
     }
@@ -135,7 +135,7 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
     func peformDateSelection()
     {
         assignmenttargetDateTextField.resignFirstResponder()
-        assignmenttargetDateTextField.text = NSDateFormatter.localizedStringFromDate(targetDatecommitmentDatePicker.date, dateStyle: NSDateFormatterStyle.MediumStyle, timeStyle: NSDateFormatterStyle.NoStyle)
+        assignmenttargetDateTextField.text = NSDateFormatter.localizedStringFromDate(targetDatecommitmentDatePicker.date, dateStyle: NSDateFormatterStyle.MediumStyle, timeStyle: NSDateFormatterStyle.ShortStyle)
         assignmentDescriptionTextView.becomeFirstResponder()
     }
     
@@ -336,9 +336,8 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
         profileViewController.userProfileModel = PLUserProfileInfoViewModel()
         let userId = assignementViewModel.getSelectedAssigneeUserId(sender.tag)
         profileViewController.fetchingUserDetails(userId)
-        let nav = UINavigationController(rootViewController: profileViewController!)
-       self.presentViewController(nav, animated: true, completion: nil)
-       profileViewController?.addBackBarButtonItem()
+        self.navigationController!.pushViewController(profileViewController!, animated: true)
+
    
     }
     

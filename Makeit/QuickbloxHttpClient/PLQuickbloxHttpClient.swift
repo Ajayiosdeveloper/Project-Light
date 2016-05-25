@@ -547,11 +547,15 @@ class PLQuickbloxHttpClient
                     plAssignment.details = assignment.fields?.objectForKey("description") as! String
                     let endInterval = assignment.fields?.objectForKey("targetDate") as! NSTimeInterval
                     let startInterval = assignment.fields?.objectForKey("startDate") as! NSTimeInterval
-                    print(endInterval + startInterval)
-    
+                    let endTime = assignment.fields?.objectForKey("endTime") as! String
+                    let startTime = assignment.fields?.objectForKey("startTime") as! String
+
                     plAssignment.startDate = self.dateFormat(startInterval)
                     plAssignment.targetDate = self.dateFormat(endInterval)
-                    print("date to string \(self.dateFormat(startInterval))")
+                    
+                    plAssignment.startDate += " \(startTime)"
+                    plAssignment.targetDate += " \(endTime)"
+                  
                     plAssignment.assineesUserIds = assignment.fields?.objectForKey("assigneeUserId") as! [UInt]
                     assigmnents.append(plAssignment)
                 }
@@ -1036,7 +1040,7 @@ class PLQuickbloxHttpClient
     {
         let date = NSDate(timeIntervalSince1970: timeInterval)
         let dateFormatter = NSDateFormatter()
-        dateFormatter.dateFormat = "dd-MM-yy hh:mm a"
+        dateFormatter.dateFormat = "dd-MM-yy"
         dateFormatter.timeZone = NSTimeZone(forSecondsFromGMT: NSTimeZone.localTimeZone().secondsFromGMT)
         return dateFormatter.stringFromDate(date)
     }

@@ -117,14 +117,14 @@ class PLUserProfileInfoTableViewController: UITableViewController,UITextFieldDel
         }
     }
     
-    func addBackBarButtonItem(){
-        
-        let backButton = UIBarButtonItem(barButtonSystemItem:.Cancel, target: self, action: #selector(PLUserProfileInfoTableViewController.performCancel))
-        self.navigationItem.leftBarButtonItem = backButton
-    }
-    
-    func performCancel()
-    {
-     print("Cancel")
-    }
+//    func addBackBarButtonItem(){
+//        
+//        let backButton = UIBarButtonItem(barButtonSystemItem:.Cancel, target: self, action: #selector(PLUserProfileInfoTableViewController.performCancel))
+//        self.navigationItem.leftBarButtonItem = backButton
+//    }
+//    
+//    func performCancel()
+//    {
+//        print("Cancel")
+//    }
 }

@@ -132,7 +132,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate,QBChatDelegate {
         notificationBanner.dismissOnTap = true
         notificationBanner.presentInView(currentViewController.view, withGravityAnimation: true)
 
-    
         }
         
     }

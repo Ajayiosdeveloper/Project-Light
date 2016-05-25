@@ -216,6 +216,15 @@ class PLProjectDetailViewModel: NSObject {
                 let startDate = (each.fields?.objectForKey("startDate"))! as! NSTimeInterval
                 assignment.targetDate = self.dateFormat(targetDate)
                 assignment.startDate = self.dateFormat(startDate)
+                var startTime  = (each.fields?.objectForKey("startTime"))! as! String
+                var endTime  = (each.fields?.objectForKey("endTime"))! as! String
+                startTime = self.timeFormat(startTime)
+                endTime = self.timeFormat(endTime)
+                assignment.targetDate = self.dateFormat(targetDate)
+                assignment.startDate = self.dateFormat(startDate)
+                assignment.startDate += " \(startTime)"
+                assignment.targetDate += " \(endTime)"
+
                 assignment.assineesUserIds = (each.fields?.objectForKey("assigneeUserId"))! as! [UInt]
                 let assignementStatus = (each.fields?.objectForKey("assigneeStatus"))! as! [String]
                 

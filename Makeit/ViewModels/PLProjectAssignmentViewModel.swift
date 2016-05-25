@@ -146,9 +146,22 @@ class PLProjectAssignmentViewModel: NSObject {
         return selectedAssignment!.name
     }
     
-    func assignmentTargetDate() -> String {
+    func timeFormats(time: String) -> String
+    {
+        let dateFormatter = NSDateFormatter()
+        dateFormatter.dateFormat = "dd-MM-yyyy hh:mm a"
+        let date = dateFormatter.dateFromString(time)
         
-        return selectedAssignment!.targetDate
+        dateFormatter.dateFormat = "dd-MM-yyyy hh:mm a"
+        let dateString = dateFormatter.stringFromDate(date!)
+        return dateString
+    }
+    
+    
+    func assignmentTargetDate() -> String {
+        print("datestring")
+        let dateStr = timeFormats(selectedAssignment!.targetDate)
+        return dateStr
     }
     
     func assignmentStartDate() -> String {
