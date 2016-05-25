@@ -158,11 +158,11 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
         let cell = tableView.dequeueReusableCellWithIdentifier("Cell") as! PLAssigneeTableViewCell
         cell.nameLabel.text = assignementViewModel.titleOfRowAtIndexPath(indexPath.row)
         cell.mailIdField.text = assignementViewModel.emailOfRowAtIndexPath(indexPath.row)
-        
+        cell.disclosureButton.tag = indexPath.row
        if PLSharedManager.manager.projectCreatedByUserId == QBSession.currentSession().currentUser?.ID
         {
             cell.disclosureButton.hidden = false
-            cell.disclosureButton.addTarget(self, action: #selector(PLProjectAssignmentViewController.loadProfileController), forControlEvents:UIControlEvents.TouchUpInside)
+            cell.disclosureButton.addTarget(self, action: #selector(PLProjectAssignmentViewController.loadProfileController(_:)), forControlEvents:UIControlEvents.TouchUpInside)
         }
         else
         {
@@ -174,13 +174,13 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
                 }
                 else{
                     cell.disclosureButton.hidden = false
-                    cell.disclosureButton.addTarget(self, action: #selector(PLProjectAssignmentViewController.loadProfileController), forControlEvents:UIControlEvents.TouchUpInside)
+                    cell.disclosureButton.addTarget(self, action: #selector(PLProjectAssignmentViewController.loadProfileController(_:)), forControlEvents:UIControlEvents.TouchUpInside)
                     }
             }
             else
             {
              cell.disclosureButton.hidden = false
-             cell.disclosureButton.addTarget(self, action: #selector(PLProjectAssignmentViewController.loadProfileController), forControlEvents:UIControlEvents.TouchUpInside)
+                cell.disclosureButton.addTarget(self, action: #selector(PLProjectAssignmentViewController.loadProfileController(_:)), forControlEvents:UIControlEvents.TouchUpInside)
             }          
         }
         assignementViewModel.contributorImageRowAtIndexPath(indexPath.row, completion: { (avatar) in
@@ -327,14 +327,19 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
         }
     }
     
-    func loadProfileController()
+    func loadProfileController(sender : UIButton)
     {
+        print("cell \(sender.tag)")
+        
         profileViewController = self.storyboard?.instantiateViewControllerWithIdentifier("PLUserProfileInfoTableViewController") as? PLUserProfileInfoTableViewController
         profileViewController.disablingBtn = false
+        profileViewController.userProfileModel = PLUserProfileInfoViewModel()
+        let userId = assignementViewModel.getSelectedAssigneeUserId(sender.tag)
+        profileViewController.fetchingUserDetails(userId)
         let nav = UINavigationController(rootViewController: profileViewController!)
        self.presentViewController(nav, animated: true, completion: nil)
        profileViewController?.addBackBarButtonItem()
-      // profileViewController?.disableButton(true)
+   
     }
     
     override func viewWillDisappear(animated: Bool) {

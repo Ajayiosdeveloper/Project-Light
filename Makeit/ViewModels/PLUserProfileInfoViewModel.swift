@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Quickblox
 
 class PLUserProfileInfoViewModel: NSObject {
 
@@ -33,12 +34,11 @@ class PLUserProfileInfoViewModel: NSObject {
         }
    }
 
-    func getUserProfileDetail(completion:([String:AnyObject]?)->Void)
+    func getUserProfileDetail(userId : UInt, completion:([String:AnyObject]?)->Void)
     {
-       qbClient.getUserProfileDetails { res in
-        completion(res)
-    }
-  
+        qbClient.getUserProfileDetails(userId) { res in
+            completion(res)
+        }
     }
     
     func convertdateToTimeinterval(date : NSDate) -> NSTimeInterval?

@@ -42,7 +42,11 @@ class PLProjectDetailViewModel: NSObject {
     
     func numbersOfContributorsRows()->Int
     {
+        if contributors.count > 0
+        {
         return contributors.count
+    }
+        return 0
     }
     
     func numberOfCommitmentRows() -> Int {

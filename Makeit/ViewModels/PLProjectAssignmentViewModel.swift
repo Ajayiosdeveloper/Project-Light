@@ -241,7 +241,11 @@ class PLProjectAssignmentViewModel: NSObject {
         }
     }
     
-    
+    func getSelectedAssigneeUserId(row:Int)->UInt{
+        
+        let member = assigneeList[row]
+        return member.memberUserId
+    }
     
     func updateAssigmentStatusOfLoggedInUser(){
         

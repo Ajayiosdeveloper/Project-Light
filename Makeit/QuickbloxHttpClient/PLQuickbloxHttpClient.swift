@@ -168,12 +168,12 @@ class PLQuickbloxHttpClient
         }
     }
     
-    //Perform lagout
+    //Perform logout
     
     func userLogout() {
         
         QBRequest.logOutWithSuccessBlock({ (response) in
-            
+            print("loggedout success")
             }, errorBlock:nil)
     }
     
@@ -838,12 +838,10 @@ class PLQuickbloxHttpClient
     }
     
     
-    func getUserProfileDetails(completion:([String:AnyObject]?)->Void)
+    func getUserProfileDetails(userId : UInt, completion:([String:AnyObject]?)->Void)
     {
-        let userId = QBSession.currentSession().currentUser?.ID
-        
         let params = NSMutableDictionary()
-        params.setValue(userId!, forKey:"_parent_id")
+        params.setValue(userId, forKey:"_parent_id")
         QBRequest.objectsWithClassName("UserInfo", extendedRequest: params, successBlock: { (_,objects, _) in
             
             if objects?.count == 0
