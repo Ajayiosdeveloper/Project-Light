@@ -106,7 +106,7 @@ class PLTaskViewController: UIViewController,UITableViewDelegate,UITableViewData
                 cell.taskStartTime.text  = "Start: " + sidebarViewModel.startTaskDate(indexPath.row)
                 cell.taskEndTime.text = "End: " + sidebarViewModel.endTaskDate(indexPath.row)
             }
-            
+            cell.accessoryType = .DisclosureIndicator
             return cell
         }
         else{
@@ -133,6 +133,7 @@ class PLTaskViewController: UIViewController,UITableViewDelegate,UITableViewData
             cell.makeMessage.tag = indexPath.row
             cell.sendBirthdayGreetings.addTarget(self, action: #selector(PLTaskViewController.sendBirthdayGreetings), forControlEvents: UIControlEvents.TouchUpInside)
             cell.sendBirthdayGreetings.tag = indexPath.row
+            cell.accessoryType = .DisclosureIndicator
             return cell
         }
     }

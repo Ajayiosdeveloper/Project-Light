@@ -70,37 +70,27 @@
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="detailDisclosure" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="j4M-P2-Oky">
-                        <rect key="frame" x="301" y="15" width="22" height="22"/>
-                        <constraints>
-                            <constraint firstAttribute="width" constant="22" id="Zz7-CW-Jsi"/>
-                            <constraint firstAttribute="height" constant="22" id="cUU-Ez-pxz"/>
-                        </constraints>
-                    </button>
                 </subviews>
                 <constraints>
                     <constraint firstItem="zEM-6r-mym" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="1uz-TE-6wF"/>
-                    <constraint firstItem="j4M-P2-Oky" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="7" id="5kX-Pe-la5"/>
                     <constraint firstItem="ncT-FW-nfH" firstAttribute="leading" secondItem="va1-kz-bFJ" secondAttribute="leading" id="88D-ZJ-0BA"/>
                     <constraint firstItem="Aez-Td-TuJ" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="4" id="FSY-Ao-TPM"/>
                     <constraint firstItem="Aez-Td-TuJ" firstAttribute="leading" secondItem="ncT-FW-nfH" secondAttribute="trailing" constant="8" symbolic="YES" id="KJC-KP-MXj"/>
                     <constraint firstItem="ncT-FW-nfH" firstAttribute="top" secondItem="va1-kz-bFJ" secondAttribute="bottom" constant="1" id="P6D-1V-Y43"/>
                     <constraint firstItem="ncT-FW-nfH" firstAttribute="leading" secondItem="zEM-6r-mym" secondAttribute="trailing" constant="8" id="Vcg-Wb-ez5"/>
                     <constraint firstItem="Aez-Td-TuJ" firstAttribute="leading" secondItem="va1-kz-bFJ" secondAttribute="trailing" constant="8" id="Wdn-vh-H8y"/>
-                    <constraint firstAttribute="trailingMargin" secondItem="j4M-P2-Oky" secondAttribute="trailing" constant="3" id="ZIR-N6-RhY"/>
                     <constraint firstAttribute="bottomMargin" secondItem="ncT-FW-nfH" secondAttribute="bottom" constant="-5" id="bxY-nb-yfz"/>
                     <constraint firstItem="zEM-6r-mym" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="-4" id="iLc-X5-Qed"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>
                 <outlet property="countHostingView" destination="Aez-Td-TuJ" id="T9f-9n-8xZ"/>
-                <outlet property="disclosureIndicatorBtn" destination="j4M-P2-Oky" id="HXX-in-ghL"/>
                 <outlet property="memberDetail" destination="ncT-FW-nfH" id="rbF-6A-FOy"/>
                 <outlet property="memberName" destination="va1-kz-bFJ" id="jBq-0V-9au"/>
                 <outlet property="messageCountLabel" destination="9zt-LY-GzW" id="cRT-bK-r6v"/>
                 <outlet property="teamMemberProfile" destination="zEM-6r-mym" id="A6W-pX-pkr"/>
             </connections>
-            <point key="canvasLocation" x="519" y="386.5"/>
+            <point key="canvasLocation" x="630" y="387.5"/>
         </tableViewCell>
     </objects>
 </document>

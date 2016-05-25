@@ -33,17 +33,17 @@ class PLUserProfileInfoTableViewController: UITableViewController,UITextFieldDel
         self.dateOfBirth.inputView = dobPicker
         addDoneButtonToDatePicker()
     }
-    
-    
+   
     override func viewWillAppear(animated: Bool)
     {
         if !disablingBtn
         {
            updateProfileButton.hidden = true
+           enableAndDisabledisableAllFields(false)
         }
         else{
              updateProfileButton.hidden = false
-            
+             enableAndDisabledisableAllFields(true)
         }
             userProfileModel.getUserProfileDetail { dict in
             print("Output")
@@ -64,6 +64,18 @@ class PLUserProfileInfoTableViewController: UITableViewController,UITextFieldDel
         }
     }
     
+    
+    
+    func enableAndDisabledisableAllFields(flag:Bool)
+    {
+        dateOfBirth.enabled = flag
+        emailId.enabled = flag
+        companyName.enabled = flag
+        designation.enabled = flag
+        experience.enabled = flag
+        technology.enabled = flag
+    }
+
     func addDoneButtonToDatePicker()
     {
         let toolBar = UIToolbar()
@@ -110,9 +122,6 @@ class PLUserProfileInfoTableViewController: UITableViewController,UITextFieldDel
     
     func performCancel()
     {
-      let assignmentController = self.storyboard?.instantiateViewControllerWithIdentifier("projectsViewController") as! PLProjectsViewController
-        print(assignmentController)
-        print(self.navigationController)
-       self.navigationController!.presentViewController(assignmentController, animated: true, completion: nil)
+     print("Cancel")
     }
 }

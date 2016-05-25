@@ -15,11 +15,7 @@ class PLTableViewCell: UITableViewCell {
     @IBOutlet var memberDetail: UILabel!
     @IBOutlet var countHostingView: UIView!
     @IBOutlet var messageCountLabel: UILabel!
-    
-    @IBOutlet weak var disclosureIndicatorBtn: UIButton!
-    
-    
-    
+       
     override func awakeFromNib() {
         super.awakeFromNib()
       

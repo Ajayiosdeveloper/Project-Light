@@ -27,7 +27,7 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
     override func viewDidLoad() {
         super.viewDidLoad()
         print(assignementViewModel.assigneeList)
-        self.assigneeListTableView.registerNib(UINib(nibName:"PLTableViewCell", bundle:NSBundle.mainBundle()), forCellReuseIdentifier: "Cell")
+        self.assigneeListTableView.registerNib(UINib(nibName:"PLAssigneeTableViewCell", bundle:NSBundle.mainBundle()), forCellReuseIdentifier: "Cell")
         addDoneBarButtonItem()
         startDatecommitmentDatePicker = UIDatePicker()
         startDatecommitmentDatePicker.datePickerMode = .Date
@@ -140,25 +140,29 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
     }
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return 1
+        return 2
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
+        if section == 0
+        {
         return assignementViewModel.numbersOfRows()
-        
+        }
+        return 0
     }
+    
     
       func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
-        let cell = tableView.dequeueReusableCellWithIdentifier("Cell") as! PLTableViewCell
-        cell.memberName.text = assignementViewModel.titleOfRowAtIndexPath(indexPath.row)
-        cell.memberDetail.text = assignementViewModel.emailOfRowAtIndexPath(indexPath.row)
+        let cell = tableView.dequeueReusableCellWithIdentifier("Cell") as! PLAssigneeTableViewCell
+        cell.nameLabel.text = assignementViewModel.titleOfRowAtIndexPath(indexPath.row)
+        cell.mailIdField.text = assignementViewModel.emailOfRowAtIndexPath(indexPath.row)
         
         if PLSharedManager.manager.projectCreatedByUserId == QBSession.currentSession().currentUser?.ID
         {
-            cell.disclosureIndicatorBtn.hidden = false
-            cell.disclosureIndicatorBtn.addTarget(self, action: #selector(PLProjectAssignmentViewController.loadProfileController), forControlEvents:UIControlEvents.TouchUpInside)
+            cell.disclosureButton.hidden = false
+            cell.disclosureButton.addTarget(self, action: #selector(PLProjectAssignmentViewController.loadProfileController), forControlEvents:UIControlEvents.TouchUpInside)
         }
         else
         {
@@ -166,28 +170,28 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
             {
                 if indexPath.row == 0
                 {
-                        cell.disclosureIndicatorBtn.hidden = true
+                        cell.disclosureButton.hidden = true
                 }
                 else{
-                    cell.disclosureIndicatorBtn.hidden = false
-                    cell.disclosureIndicatorBtn.addTarget(self, action: #selector(PLProjectAssignmentViewController.loadProfileController), forControlEvents:UIControlEvents.TouchUpInside)
+                    cell.disclosureButton.hidden = false
+                    cell.disclosureButton.addTarget(self, action: #selector(PLProjectAssignmentViewController.loadProfileController), forControlEvents:UIControlEvents.TouchUpInside)
                     }
             }
             else
             {
-             cell.disclosureIndicatorBtn.hidden = false
-             cell.disclosureIndicatorBtn.addTarget(self, action: #selector(PLProjectAssignmentViewController.loadProfileController), forControlEvents:UIControlEvents.TouchUpInside)
+             cell.disclosureButton.hidden = false
+             cell.disclosureButton.addTarget(self, action: #selector(PLProjectAssignmentViewController.loadProfileController), forControlEvents:UIControlEvents.TouchUpInside)
             }          
         }
         assignementViewModel.contributorImageRowAtIndexPath(indexPath.row, completion: { (avatar) in
             
             if let _ = avatar{
                 
-                cell.teamMemberProfile.image = avatar!
-                cell.teamMemberProfile.layer.masksToBounds = true
+                cell.profilePicture.image = avatar!
+                cell.profilePicture.layer.masksToBounds = true
             }else{
                 
-                cell.teamMemberProfile.image = UIImage(named:"UserImage.png")
+                cell.profilePicture.image = UIImage(named:"UserImage.png")
             }
         })
         
@@ -208,46 +212,55 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
     
     func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         
+        if section == 0
+        {
         if assignementViewModel.selectedAssignment != nil
         {
             return "ASSIGNED TO"
         }
         
         return "SELECT ONE OR MORE ASSIGNEES"
-    }
-    
-    func tableView(tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-        
-        if assignementViewModel.selectedAssignment != nil{
-           
-            let footerView:UIView! = UIView(frame:CGRectMake(0,0,self.view.frame.size.width,20))
-            footerView.backgroundColor = UIColor(colorLiteralRed: 89/255, green: 181/255, blue: 50/255, alpha: 1)
-            footerView.layer.cornerRadius = 15
-            footerView.clipsToBounds = true
-            
-            let userId = QBSession.currentSession().currentUser?.ID
-            if userId! == PLSharedManager.manager.projectCreatedByUserId{
-                
-                self.addButtonForTableViewFooterOnView(footerView, title: "Close", tag: -1)
-                
-            }else{
-                
-                if assignementViewModel.isLoggedInUserPartOfAssignment()
-                {
-                     self.addButtonForTableViewFooterOnView(footerView, title: "Completed ?", tag: 1)
-                }
-                else{
-                    return nil
-                }
-            }
-        
-            return footerView
         }
         return nil
     }
     
-    func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        return 45
+    
+    func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let footerView:UIView! = UIView(frame:CGRectMake(0,0,self.view.frame.size.width,20))
+        if section == 1
+        {
+            if assignementViewModel.selectedAssignment != nil{
+                
+                self.addButtonForTableViewFooterOnView(footerView, title: "Close", tag: -1)
+                
+                footerView.backgroundColor = UIColor(colorLiteralRed: 89/255, green: 181/255, blue: 50/255, alpha: 1)
+                footerView.layer.cornerRadius = 15
+                footerView.clipsToBounds = true
+                
+                let userId = QBSession.currentSession().currentUser?.ID
+                if userId! == PLSharedManager.manager.projectCreatedByUserId{
+                    
+                    self.addButtonForTableViewFooterOnView(footerView, title: "Close", tag: 1)
+                    
+                }else{
+                    
+                    if assignementViewModel.isLoggedInUserPartOfAssignment()
+                    {
+                        self.addButtonForTableViewFooterOnView(footerView, title: "Completed ?", tag: 1)
+                    }
+                    else{
+                        return nil
+                    }
+                }
+
+        }
+        return footerView
+    }
+    return nil
+    }
+    
+    func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 40
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
