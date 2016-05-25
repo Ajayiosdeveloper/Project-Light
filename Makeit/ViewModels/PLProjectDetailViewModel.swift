@@ -213,7 +213,18 @@ class PLProjectDetailViewModel: NSObject {
                 assignment.targetDate = self.dateFormat(targetDate)
                 assignment.startDate = self.dateFormat(startDate)
                 assignment.assineesUserIds = (each.fields?.objectForKey("assigneeUserId"))! as! [UInt]
-                self.assignments.append(assignment)
+                let assignementStatus = (each.fields?.objectForKey("assigneeStatus"))! as! [String]
+                
+                    var membersStatus = [UInt]()
+                    
+                    for status in assignementStatus{
+                     
+                        let fields = status.componentsSeparatedByString("@@@")
+                        let memberStatus = UInt(fields.last!)
+                        membersStatus.append(memberStatus!)
+                    }
+                    assignment.assigneeStatus = membersStatus
+                    self.assignments.append(assignment)
               }
                 completion(true)
 

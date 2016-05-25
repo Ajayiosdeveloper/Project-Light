@@ -73,6 +73,7 @@ class PLAssignment: NSObject {
     var startDate:String = ""
     var assignees:[String] = [String]()
     var assineesUserIds:[UInt] = [UInt]()
+    var assigneeStatus:[UInt] = [UInt]()
 }
 
 class PLChatGroup:NSObject{

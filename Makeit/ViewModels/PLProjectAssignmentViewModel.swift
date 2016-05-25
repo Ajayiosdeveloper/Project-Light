@@ -165,28 +165,20 @@ class PLProjectAssignmentViewModel: NSObject {
     
     func responsibleForAssigniment()  {
         
-       // var responsible:[PLTeamMember] = [PLTeamMember]()
-        
         selectedAssigneeList = [PLTeamMember]()
-        
         let userIds = selectedAssignment?.assineesUserIds
-        
         for userId in userIds!
         {
-            
             for x in assigneeList{
                 
                 if x.memberUserId == userId
                 {
-                    //responsible.append(x)
-                    
-                    selectedAssigneeList.append(x)
+                  selectedAssigneeList.append(x)
                 }
-             }
+            }
         }
         
         let loggedInUserid = QBSession.currentSession().currentUser?.ID
-        
         let result = selectedAssignment?.assineesUserIds.contains(loggedInUserid!)
         if let _ = result
         {
@@ -200,6 +192,8 @@ class PLProjectAssignmentViewModel: NSObject {
                 selectedAssigneeList.insert(user, atIndex: 0)
             }
         }
+       print("Members are \(selectedAssignment?.assineesUserIds)")
+       print("Status are \(selectedAssignment?.assigneeStatus)")
         
     
   }
@@ -245,5 +239,12 @@ class PLProjectAssignmentViewModel: NSObject {
                 }
             }
         }
+    }
+    
+    
+    
+    func updateAssigmentStatusOfLoggedInUser(){
+        
+        
     }
 }

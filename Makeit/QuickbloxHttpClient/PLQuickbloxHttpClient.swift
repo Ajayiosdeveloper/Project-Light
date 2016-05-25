@@ -1068,4 +1068,11 @@ class PLQuickbloxHttpClient
         }
     }
     
+    
+    func updateRemoteAssigmentStatus(){
+        
+        
+        
+    }
+    
 }

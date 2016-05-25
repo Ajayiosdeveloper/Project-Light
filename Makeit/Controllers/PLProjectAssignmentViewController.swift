@@ -228,7 +228,7 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
             let userId = QBSession.currentSession().currentUser?.ID
             if userId! == PLSharedManager.manager.projectCreatedByUserId{
                 
-                self.addButtonForTableViewFooterOnView(footerView, title: "Close", tag: 1)
+                self.addButtonForTableViewFooterOnView(footerView, title: "Close", tag: -1)
                 
             }else{
                 
@@ -282,10 +282,17 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
         addOnView.addSubview(addMemberButton)
     }
 
-    func performButtonActionOfFooterView(){
-        
-        
+    func performButtonActionOfFooterView(sender:UIButton){
+        print(sender.tag)
         print("PRAISE THE LORD")
+        if sender.tag == 1{
+            
+            
+        }
+        else{
+            
+            
+        }
     }
     
     override func didReceiveMemoryWarning() {
