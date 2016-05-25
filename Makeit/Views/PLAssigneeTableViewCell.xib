@@ -22,7 +22,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="m5j-K2-o18">
-                        <rect key="frame" x="57" y="30" width="145" height="21"/>
+                        <rect key="frame" x="57" y="30" width="213" height="21"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
@@ -43,7 +43,7 @@
                         <constraints>
                             <constraint firstAttribute="width" constant="93" id="CQw-tw-7av"/>
                         </constraints>
-                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="13"/>
+                        <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="13"/>
                         <color key="textColor" red="0.31384235780000003" green="0.81444310900000005" blue="0.58439629270000004" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
@@ -61,7 +61,7 @@
                     <constraint firstAttribute="trailingMargin" secondItem="IBQ-6K-M3A" secondAttribute="trailing" constant="12" id="UmP-uP-rxS"/>
                     <constraint firstItem="IBQ-6K-M3A" firstAttribute="leading" secondItem="PDL-EI-6kI" secondAttribute="trailing" constant="18" id="Zad-2v-6ya"/>
                     <constraint firstItem="haa-f7-RgK" firstAttribute="leading" secondItem="pWm-0N-reJ" secondAttribute="trailing" constant="3" id="Ztr-B5-8Zk"/>
-                    <constraint firstItem="haa-f7-RgK" firstAttribute="trailing" secondItem="m5j-K2-o18" secondAttribute="trailing" constant="-21" id="eHI-Ae-dDK"/>
+                    <constraint firstItem="haa-f7-RgK" firstAttribute="trailing" secondItem="m5j-K2-o18" secondAttribute="trailing" constant="-89" id="eHI-Ae-dDK"/>
                     <constraint firstItem="m5j-K2-o18" firstAttribute="top" secondItem="haa-f7-RgK" secondAttribute="bottom" constant="1" id="gsF-7e-krR"/>
                     <constraint firstItem="PDL-EI-6kI" firstAttribute="leading" secondItem="haa-f7-RgK" secondAttribute="trailing" constant="-14" id="lk9-to-VNU"/>
                     <constraint firstItem="haa-f7-RgK" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" id="qeO-wJ-V5Z"/>

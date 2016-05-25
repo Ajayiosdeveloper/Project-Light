@@ -262,8 +262,8 @@ class PLProjectsViewController: UITableViewController,UIImagePickerControllerDel
               self.performSegueWithIdentifier("toProjectDetails", sender: resultedMembers)
             }
         }
-        }
-       }
+    }
+}
     override func tableView(tableView: UITableView, commitEditingStyle editingStyle:
         UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
         
@@ -380,10 +380,14 @@ class PLProjectsViewController: UITableViewController,UIImagePickerControllerDel
   
     func addProjectToDataSource(project: PLProject) {
         
+       
+        
         projectViewModel.addNewProjectToCreatedProjectList(project){[weak self] res in
             
             self!.projectTableView.reloadData()
         }
+        
+       
     }
 
     
