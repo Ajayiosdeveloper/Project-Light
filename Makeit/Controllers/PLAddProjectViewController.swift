@@ -97,8 +97,10 @@ class PLAddProjectViewController: UIViewController,UISearchBarDelegate,UITextFie
         else{
             
             addProjectViewModel.addContributorsToExistingProject(projectDetails![0],des: projectDescription.text!){[weak self] members in
-                
                 self!.projectDetailViewModel.contributors.appendContentsOf(members)
+                self!.navigationController?.popViewControllerAnimated(true)
+                self!.cleanUp()
+
             }
         }
     }

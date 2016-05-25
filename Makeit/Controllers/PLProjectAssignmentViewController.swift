@@ -159,7 +159,7 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
         cell.nameLabel.text = assignementViewModel.titleOfRowAtIndexPath(indexPath.row)
         cell.mailIdField.text = assignementViewModel.emailOfRowAtIndexPath(indexPath.row)
         
-        if PLSharedManager.manager.projectCreatedByUserId == QBSession.currentSession().currentUser?.ID
+       if PLSharedManager.manager.projectCreatedByUserId == QBSession.currentSession().currentUser?.ID
         {
             cell.disclosureButton.hidden = false
             cell.disclosureButton.addTarget(self, action: #selector(PLProjectAssignmentViewController.loadProfileController), forControlEvents:UIControlEvents.TouchUpInside)
@@ -231,7 +231,6 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
         {
             if assignementViewModel.selectedAssignment != nil{
                 
-                
                 footerView.backgroundColor = UIColor(colorLiteralRed: 89/255, green: 181/255, blue: 50/255, alpha: 1)
                 footerView.layer.cornerRadius = 15
                 footerView.clipsToBounds = true
@@ -239,7 +238,7 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
                 let userId = QBSession.currentSession().currentUser?.ID
                 if userId! == PLSharedManager.manager.projectCreatedByUserId{
                     
-                    self.addButtonForTableViewFooterOnView(footerView, title: "Close", tag: 1)
+                    self.addButtonForTableViewFooterOnView(footerView, title: "Close", tag: -1)
                     
                 }else{
                     
@@ -294,10 +293,17 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
         addOnView.addSubview(addMemberButton)
     }
 
-    func performButtonActionOfFooterView(){
-        
-        
+    func performButtonActionOfFooterView(sender:UIButton){
+        print(sender.tag)
         print("PRAISE THE LORD")
+        if sender.tag == 1{
+            
+            
+        }
+        else{
+            
+            
+        }
     }
     
     override func didReceiveMemoryWarning() {

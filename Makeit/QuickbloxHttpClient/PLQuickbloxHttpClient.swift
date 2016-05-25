@@ -305,6 +305,12 @@ class PLQuickbloxHttpClient
         customObject.fields?.setValue(assignees, forKey: "assignees")
         customObject.fields?.setValue(assigneeUserIds, forKey: "assigneeUserId")
         customObject.fields?.setValue(id, forKey:"_parent_id")
+        var assigneeStatus:[String] = [String]()
+        for status in assigneeUserIds{
+            assigneeStatus += [String(status) + "@@@0"]
+        }
+        customObject.fields?.setValue(assigneeStatus, forKey: "assigneeStatus")
+        
         QBRequest.createObject(customObject, successBlock: { (res,object) in
             
             print("PRAISE THE LORD")
@@ -1072,6 +1078,13 @@ class PLQuickbloxHttpClient
                 
                 print("Hello")
         }
+    }
+    
+    
+    func updateRemoteAssigmentStatus(){
+        
+        
+        
     }
     
 }

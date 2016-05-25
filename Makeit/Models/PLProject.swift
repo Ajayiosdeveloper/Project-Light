@@ -38,6 +38,7 @@ class PLTeamMember: NSObject {
     var memberEmail:String = ""
     var birthdayInterval:UInt = 0
     var avatar:String
+    var assignmentStatus:UInt = 0
 
     static var creatorDetails:[String:AnyObject]?
     
@@ -72,6 +73,7 @@ class PLAssignment: NSObject {
     var startDate:String = ""
     var assignees:[String] = [String]()
     var assineesUserIds:[UInt] = [UInt]()
+    var assigneeStatus:[UInt] = [UInt]()
 }
 
 class PLChatGroup:NSObject{
