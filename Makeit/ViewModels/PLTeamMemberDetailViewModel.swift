@@ -58,22 +58,31 @@ class PLTeamMemberDetailViewModel: NSObject {
         return assignment.details
     }
     
-    func getAssignmentTargetDate(row:Int) -> String {
-        
+    func getAssignmentTargetDate(row:Int) -> String
+    {
         let assignment = assignments[row]
-        
         return assignment.targetDate
     }
     
+    func getAssignmentStartDate(row:Int) -> String {
+        
+        let assignment = assignments[row]
+        
+        return assignment.startDate
+    }
+
     
     
     func getAssignmentsOfUserForProject(completion:(Bool)->Void) {
         
            quickBloxClient.fetchUserAssignmentsForProject(userId,projectId: projectId){ assignments in
-            
+             print("assignment array")
+            print(assignments)
             if let _ = assignments{
-               
+                print(assignments)
                 self.assignments = assignments!
+                print("assignment array")
+                print(self.assignments)
                 completion(true)
             }
             else{self.assignments = nil; completion(false)}

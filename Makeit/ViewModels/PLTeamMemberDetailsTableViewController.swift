@@ -7,16 +7,18 @@
 //
 
 import UIKit
+import Quickblox
 
 class PLTeamMemberDetailsTableViewController: UITableViewController {
     
     var teamMemberDetailViewModel:PLTeamMemberDetailViewModel!
-
+    
     @IBOutlet var memberDetailsTableview: UITableView!
     override func viewDidLoad() {
         
         super.viewDidLoad()
         
+        self.memberDetailsTableview.registerNib(UINib(nibName: "PLTeamMemberDetailsTableViewCell",bundle: NSBundle.mainBundle()), forCellReuseIdentifier: "Cells")
         
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
@@ -63,16 +65,27 @@ class PLTeamMemberDetailsTableViewController: UITableViewController {
 
 
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath)
+        let cell = tableView.dequeueReusableCellWithIdentifier("Cells", forIndexPath: indexPath) as! PLTeamMemberDetailsTableViewCell
+        
         if indexPath.section == 0{
-        cell.textLabel?.text = teamMemberDetailViewModel.getAssignmentTitle(indexPath.row)
-        cell.textLabel?.textColor = UIColor.blackColor()
-        cell.detailTextLabel?.hidden = false
-        cell.detailTextLabel?.text = teamMemberDetailViewModel.getAssignmentDetail(indexPath.row)
-        }else if indexPath.section == 1{
-          cell.textLabel?.text = teamMemberDetailViewModel.getCommunicateTitle(indexPath.row)
-          cell.detailTextLabel?.hidden = true
-          cell.textLabel?.textColor = enableButtonColor
+        cell.assignmentTitle.text = teamMemberDetailViewModel.getAssignmentTitle(indexPath.row)
+        cell.assignmentDetail.hidden = false
+        cell.statusField.hidden = false
+        cell.startTime.hidden = false
+        cell.endTime.hidden = false
+        cell.startTime.text = "Start: " + teamMemberDetailViewModel.getAssignmentStartDate(indexPath.row)
+        cell.endTime.text =
+            "End: " + teamMemberDetailViewModel.getAssignmentTargetDate(indexPath.row)
+        cell.assignmentDetail.text = teamMemberDetailViewModel.getAssignmentDetail(indexPath.row)
+        return cell
+        }
+        else if indexPath.section == 1{
+          cell.assignmentTitle.text = teamMemberDetailViewModel.getCommunicateTitle(indexPath.row)
+          cell.assignmentDetail.hidden = true
+          cell.statusField.hidden = true
+          cell.startTime.hidden = true
+          cell.endTime.hidden = true
+          return cell
         }
         return cell
     }
@@ -87,7 +100,18 @@ class PLTeamMemberDetailsTableViewController: UITableViewController {
     }
         return ""
     }
-  
+    
+    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        if indexPath.section == 0
+        {
+        return 76
+        }
+        else if indexPath.section == 1
+        {
+        return 55
+        }
+        return 0
+    }
 
     /*
     // Override to support conditional editing of the table view.

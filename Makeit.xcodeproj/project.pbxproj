@@ -177,6 +177,8 @@
 		948382DF1CE3368400B51BA6 /* PLUserLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948382DE1CE3368400B51BA6 /* PLUserLoginViewController.swift */; };
 		94C7A5021CF4646100DECE8A /* PLAssigneeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94C7A5001CF4646100DECE8A /* PLAssigneeTableViewCell.swift */; };
 		94C7A5031CF4646100DECE8A /* PLAssigneeTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 94C7A5011CF4646100DECE8A /* PLAssigneeTableViewCell.xib */; };
+		94C7A5081CF479E500DECE8A /* PLTeamMemberDetailsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94C7A5061CF479E500DECE8A /* PLTeamMemberDetailsTableViewCell.swift */; };
+		94C7A5091CF479E500DECE8A /* PLTeamMemberDetailsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 94C7A5071CF479E500DECE8A /* PLTeamMemberDetailsTableViewCell.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -404,6 +406,8 @@
 		948382DE1CE3368400B51BA6 /* PLUserLoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLUserLoginViewController.swift; sourceTree = "<group>"; };
 		94C7A5001CF4646100DECE8A /* PLAssigneeTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLAssigneeTableViewCell.swift; sourceTree = "<group>"; };
 		94C7A5011CF4646100DECE8A /* PLAssigneeTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PLAssigneeTableViewCell.xib; sourceTree = "<group>"; };
+		94C7A5061CF479E500DECE8A /* PLTeamMemberDetailsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLTeamMemberDetailsTableViewCell.swift; sourceTree = "<group>"; };
+		94C7A5071CF479E500DECE8A /* PLTeamMemberDetailsTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PLTeamMemberDetailsTableViewCell.xib; sourceTree = "<group>"; };
 		AB4C5F8A0BCA9989B855A1CB /* Pods-Makeit.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Makeit.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Makeit/Pods-Makeit.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -675,6 +679,8 @@
 				8083C0DC1CED831B0051E8AF /* PLBirthdayTableViewCell.xib */,
 				94C7A5001CF4646100DECE8A /* PLAssigneeTableViewCell.swift */,
 				94C7A5011CF4646100DECE8A /* PLAssigneeTableViewCell.xib */,
+				94C7A5061CF479E500DECE8A /* PLTeamMemberDetailsTableViewCell.swift */,
+				94C7A5071CF479E500DECE8A /* PLTeamMemberDetailsTableViewCell.xib */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -1047,6 +1053,7 @@
 				809F96D01CBCC35000DD1FE9 /* Main.storyboard in Resources */,
 				80AB251A1CE74BE7008B20C3 /* logout.png in Resources */,
 				80C4A0181CDCBB500073B6E2 /* JSQMessagesCollectionViewCellOutgoing.xib in Resources */,
+				94C7A5091CF479E500DECE8A /* PLTeamMemberDetailsTableViewCell.xib in Resources */,
 				80AB25201CE74CCA008B20C3 /* todayTask.png in Resources */,
 				8083C0DE1CED831B0051E8AF /* PLBirthdayTableViewCell.xib in Resources */,
 				806D4AEA1CC210910054A9AF /* SVProgressHUD.bundle in Resources */,
@@ -1224,6 +1231,7 @@
 				800318131CCF7D180084514A /* WYPopoverController.m in Sources */,
 				80879D3D1CC8DC5300B41D2D /* PLProjectCommentViewModel.swift in Sources */,
 				806B1E371CD8AA080018B026 /* SDWebImageCompat.m in Sources */,
+				94C7A5081CF479E500DECE8A /* PLTeamMemberDetailsTableViewCell.swift in Sources */,
 				806B1E351CD8AA080018B026 /* NSData+ImageContentType.m in Sources */,
 				8073C8D01CC744DE00AE4CB6 /* PLTeamMemberModelView.swift in Sources */,
 				80C4A0081CDCBB500073B6E2 /* JSQMessageAvatarImageDataSource.swift in Sources */,

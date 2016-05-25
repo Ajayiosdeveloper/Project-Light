@@ -526,7 +526,7 @@ class PLQuickbloxHttpClient
         
         extended.setObject(userId, forKey:"assigneeUserId[or]")
         extended.setObject(projectId, forKey:"_parent_id")
-        
+
         QBRequest.objectsWithClassName("PLProjectAssignment", extendedRequest:extended, successBlock: { (res,objects, _) in
             print("PRAISE THE LORD")
             
@@ -539,9 +539,13 @@ class PLQuickbloxHttpClient
                     let plAssignment = PLAssignment()
                     plAssignment.name = assignment.fields?.objectForKey("name") as! String
                     plAssignment.details = assignment.fields?.objectForKey("description") as! String
-                    let endInterval = assignment.fields?.objectForKey("targetDate") as! Int
-                    let startInterval = assignment.fields?.objectForKey("startDate") as! Int
+                    let endInterval = assignment.fields?.objectForKey("targetDate") as! NSTimeInterval
+                    let startInterval = assignment.fields?.objectForKey("startDate") as! NSTimeInterval
                     print(endInterval + startInterval)
+    
+                    plAssignment.startDate = self.dateFormat(startInterval)
+                    plAssignment.targetDate = self.dateFormat(endInterval)
+                    print("date to string \(self.dateFormat(startInterval))")
                     plAssignment.assineesUserIds = assignment.fields?.objectForKey("assigneeUserId") as! [UInt]
                     assigmnents.append(plAssignment)
                 }
@@ -1024,6 +1028,14 @@ class PLQuickbloxHttpClient
         return date!
     }
 
+    func dateFormat(timeInterval : NSTimeInterval) -> String
+    {
+        let date = NSDate(timeIntervalSince1970: timeInterval)
+        let dateFormatter = NSDateFormatter()
+        dateFormatter.dateFormat = "dd-MM-yy hh:mm a"
+        dateFormatter.timeZone = NSTimeZone(forSecondsFromGMT: NSTimeZone.localTimeZone().secondsFromGMT)
+        return dateFormatter.stringFromDate(date)
+    }
     
     func convertdateToTimeinterval(date : NSDate,dateFormat:String) -> NSTimeInterval
     {
