@@ -78,7 +78,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate,QBChatDelegate {
         if remoteHost == NotReachable
         {
             //Handle when Network is disconnected
-            print("Not Reachable")
+   
         }
         else
         {
@@ -94,7 +94,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate,QBChatDelegate {
         subscription.deviceToken = deviceToken
         subscription.notificationChannel = QBMNotificationChannel.init(1)
         QBRequest.createSubscription(subscription, successBlock: { (_, _) in
-            print("Registration for subscription is succesfull")
+            
             
         }) { (_) in
         }
@@ -132,14 +132,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate,QBChatDelegate {
         notificationBanner.dismissOnTap = true
         notificationBanner.presentInView(currentViewController.view, withGravityAnimation: true)
 
-    
         }
         
     }
     
     func chatDidReceiveSystemMessage(message: QBChatMessage) {
         
-        print("Received System Message")
         print(message)
     }
 }

@@ -74,9 +74,9 @@ class PLQuickbloxHttpClient
                 application.registerForRemoteNotifications()
             }else{
                 
-                let types:UIRemoteNotificationType = [.Badge, .Sound, .Alert]
-                
-                UIApplication.sharedApplication().registerForRemoteNotificationTypes(types)
+                print("Coming to iOS 7")
+                let types: UIRemoteNotificationType = [.Alert, .Badge, .Sound]
+                application.registerForRemoteNotificationTypes(types)
             }
        
     }
@@ -168,12 +168,12 @@ class PLQuickbloxHttpClient
         }
     }
     
-    //Perform lagout
+    //Perform logout
     
     func userLogout() {
         
         QBRequest.logOutWithSuccessBlock({ (response) in
-            
+            print("loggedout success")
             }, errorBlock:nil)
     }
     
@@ -561,11 +561,15 @@ class PLQuickbloxHttpClient
                     plAssignment.details = assignment.fields?.objectForKey("description") as! String
                     let endInterval = assignment.fields?.objectForKey("targetDate") as! NSTimeInterval
                     let startInterval = assignment.fields?.objectForKey("startDate") as! NSTimeInterval
-                    print(endInterval + startInterval)
-    
+                    let endTime = assignment.fields?.objectForKey("endTime") as! String
+                    let startTime = assignment.fields?.objectForKey("startTime") as! String
+
                     plAssignment.startDate = self.dateFormat(startInterval)
                     plAssignment.targetDate = self.dateFormat(endInterval)
-                    print("date to string \(self.dateFormat(startInterval))")
+                    
+                    plAssignment.startDate += " \(startTime)"
+                    plAssignment.targetDate += " \(endTime)"
+                  
                     plAssignment.assineesUserIds = assignment.fields?.objectForKey("assigneeUserId") as! [UInt]
                     assigmnents.append(plAssignment)
                 }
@@ -852,12 +856,10 @@ class PLQuickbloxHttpClient
     }
     
     
-    func getUserProfileDetails(completion:([String:AnyObject]?)->Void)
+    func getUserProfileDetails(userId : UInt, completion:([String:AnyObject]?)->Void)
     {
-        let userId = QBSession.currentSession().currentUser?.ID
-        
         let params = NSMutableDictionary()
-        params.setValue(userId!, forKey:"_parent_id")
+        params.setValue(userId, forKey:"_parent_id")
         QBRequest.objectsWithClassName("UserInfo", extendedRequest: params, successBlock: { (_,objects, _) in
             
             if objects?.count == 0
@@ -1052,7 +1054,7 @@ class PLQuickbloxHttpClient
     {
         let date = NSDate(timeIntervalSince1970: timeInterval)
         let dateFormatter = NSDateFormatter()
-        dateFormatter.dateFormat = "dd-MM-yy hh:mm a"
+        dateFormatter.dateFormat = "dd-MM-yy"
         dateFormatter.timeZone = NSTimeZone(forSecondsFromGMT: NSTimeZone.localTimeZone().secondsFromGMT)
         return dateFormatter.stringFromDate(date)
     }

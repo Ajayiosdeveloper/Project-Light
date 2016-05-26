@@ -44,27 +44,30 @@ class PLUserProfileInfoTableViewController: UITableViewController,UITextFieldDel
         else{
              updateProfileButton.hidden = false
              enableAndDisabledisableAllFields(true)
-        }
-            userProfileModel.getUserProfileDetail { dict in
-            print("Output")
-            
-            if let _ = dict{
-                
-               self.dateOfBirth.text = dict!["dateOfBirth"] as? String
-                 self.emailId.text = dict!["emailId"] as? String
-                 self.technology.text = dict!["technology"] as? String
-                 self.experience.text = dict!["experience"] as? String
-                 self.companyName.text = dict!["companyName"] as? String
-                 self.designation.text = dict!["designation"] as? String
-            
-            }else{
-                
-                print("No data found")
-            }
+            self.fetchingUserDetails((QBSession.currentSession().currentUser?.ID)!)
+
         }
     }
     
+    func fetchingUserDetails(userId : UInt)
+     {
+       userProfileModel.getUserProfileDetail(userId) { dict in
+       print("Output")
+     
+      if let _ = dict{
     
+      self.dateOfBirth.text = dict!["dateOfBirth"] as? String
+      self.emailId.text = dict!["emailId"] as? String
+       self.technology.text = dict!["technology"] as? String
+      self.experience.text = dict!["experience"] as? String
+       self.companyName.text = dict!["companyName"] as? String
+      self.designation.text = dict!["designation"] as? String
+      }
+      else{
+        print("No data found")
+       }
+       }
+    }
     
     func enableAndDisabledisableAllFields(flag:Bool)
     {
@@ -114,14 +117,14 @@ class PLUserProfileInfoTableViewController: UITableViewController,UITextFieldDel
         }
     }
     
-    func addBackBarButtonItem(){
-        
-        let backButton = UIBarButtonItem(barButtonSystemItem:.Cancel, target: self, action: #selector(PLUserProfileInfoTableViewController.performCancel))
-        self.navigationItem.leftBarButtonItem = backButton
-    }
-    
-    func performCancel()
-    {
-     print("Cancel")
-    }
+//    func addBackBarButtonItem(){
+//        
+//        let backButton = UIBarButtonItem(barButtonSystemItem:.Cancel, target: self, action: #selector(PLUserProfileInfoTableViewController.performCancel))
+//        self.navigationItem.leftBarButtonItem = backButton
+//    }
+//    
+//    func performCancel()
+//    {
+//        print("Cancel")
+//    }
 }

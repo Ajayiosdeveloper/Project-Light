@@ -268,9 +268,9 @@ class PLProjectsViewModel: NSObject {
                   completion(teamMembers)
                 
             }
-            
-            else { completion(nil) }
+        
         }
+        
     }
     
     func uploadUserAvatar(image:UIImage,completion:(Bool)->Void) {
