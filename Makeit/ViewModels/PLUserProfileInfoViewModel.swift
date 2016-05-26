@@ -11,7 +11,6 @@ import Quickblox
 
 class PLUserProfileInfoViewModel: NSObject {
 
-    var userProfileData = NSMutableArray()
     var qbClient:PLQuickbloxHttpClient = PLQuickbloxHttpClient()
 
     override init() {

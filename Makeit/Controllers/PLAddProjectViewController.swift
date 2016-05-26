@@ -78,6 +78,19 @@ class PLAddProjectViewController: UIViewController,UISearchBarDelegate,UITextFie
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.Plain, target:self, action:#selector(PLAddProjectViewController.performDone))
     }
    
+    func checkContributorsAddedOrNot() -> Bool
+    {
+        if addProjectViewModel.selectedContributors.count == 0
+        {
+            activityIndicatorView.stopAnimating()
+            showAlertWithMessage("Add Contributor", message: "You must have to select atleast one contributor for a project")
+            return false
+        }
+        
+        return true
+    }
+
+    
     func performDone()
     {
         activityIndicatorView.startAnimating()

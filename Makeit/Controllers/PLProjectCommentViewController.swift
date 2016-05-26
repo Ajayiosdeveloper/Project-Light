@@ -33,6 +33,7 @@ class PLProjectCommentViewController: UITableViewController,EKEventEditViewDeleg
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.title = commitmentViewModel.commitmentName()
         self.pickerView?.delegate = self
         self.pickerView?.dataSource = self
         commitmentPriorityTextField.inputView = pickerView
@@ -51,8 +52,7 @@ class PLProjectCommentViewController: UITableViewController,EKEventEditViewDeleg
       override func viewWillAppear(animated: Bool) {
         
         super.viewWillAppear(animated)
-        print(commitmentViewModel)
-        print(commitmentViewModel.commitment)
+
         if let _ = commitmentViewModel.commitment
         {
             if PLSharedManager.manager.isCalendarAccess{
@@ -63,7 +63,6 @@ class PLProjectCommentViewController: UITableViewController,EKEventEditViewDeleg
                 isTaskCompleted.hidden = false
                 taskCompletedLabel.hidden = false
                 commitmentNameTextField.text = commitmentViewModel.commitmentName()
-                print("Its \(commitmentViewModel.commitmentDescription())")
                 commitmentDescriptionTextView.text = commitmentViewModel.commitmentDescription()
                 commitmentTargetDateTextField.text = commitmentViewModel.commitmentStartDate()
                 commitmentEndDateTextField.text = commitmentViewModel.commitmentEndDate()
@@ -200,7 +199,7 @@ class PLProjectCommentViewController: UITableViewController,EKEventEditViewDeleg
    }
     
     func clearFields(){
-        
+        self.title = ""
         commitmentNameTextField.text = ""
         commitmentTargetDateTextField.text = ""
         commitmentEndDateTextField.text = ""

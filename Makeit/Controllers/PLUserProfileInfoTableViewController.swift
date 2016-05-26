@@ -9,6 +9,11 @@
 import UIKit
 import Quickblox
 
+protocol DataTransform: class
+{
+    func selectedAssignment(assignment: PLAssignment)
+}
+
 class PLUserProfileInfoTableViewController: UITableViewController,UITextFieldDelegate
 {
     @IBOutlet weak var dateOfBirth: UITextField!
@@ -18,15 +23,20 @@ class PLUserProfileInfoTableViewController: UITableViewController,UITextFieldDel
     @IBOutlet weak var experience: UITextField!
     @IBOutlet weak var technology: UITextField!
     @IBOutlet weak var updateProfileButton: UIButton!
-
-    var disablingBtn : Bool = true
     
+    weak var delegate : DataTransform!
+    var disablingBtn : Bool = true
+    var selectedAssignment : PLAssignment!
     var userProfileModel = PLUserProfileInfoViewModel()
     var dobPicker:UIDatePicker!
-        
+    var userName : String!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-       
+        if userName != ""
+        {
+            self.title = userName
+        }
         updateProfileButton.hidden = false
         dobPicker = UIDatePicker()
         dobPicker.datePickerMode = .Date
@@ -95,6 +105,8 @@ class PLUserProfileInfoTableViewController: UITableViewController,UITextFieldDel
         dateOfBirth.text = NSDateFormatter.localizedStringFromDate(dobPicker.date, dateStyle: NSDateFormatterStyle.MediumStyle, timeStyle: NSDateFormatterStyle.NoStyle)
 
     }
+    
+    
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -116,14 +128,10 @@ class PLUserProfileInfoTableViewController: UITableViewController,UITextFieldDel
         }
     }
     
-//    func addBackBarButtonItem(){
-//        
-//        let backButton = UIBarButtonItem(barButtonSystemItem:.Cancel, target: self, action: #selector(PLUserProfileInfoTableViewController.performCancel))
-//        self.navigationItem.leftBarButtonItem = backButton
-//    }
-//    
-//    func performCancel()
-//    {
-//        print("Cancel")
-//    }
+    override func viewWillDisappear(animated: Bool) {
+        super.viewDidAppear(true)
+        if selectedAssignment != nil{
+            delegate.selectedAssignment(selectedAssignment)
+        }
+    }
 }

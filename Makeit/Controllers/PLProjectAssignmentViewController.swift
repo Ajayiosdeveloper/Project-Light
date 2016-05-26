@@ -9,7 +9,7 @@
 import UIKit
 import Quickblox
 
-class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,UITableViewDelegate {
+class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,UITableViewDelegate,DataTransform {
 
     @IBOutlet var assignmentNameTextFiled: UITextField!
     @IBOutlet var assignmenttargetDateTextField: UITextField!
@@ -26,6 +26,7 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.title = assignementViewModel.assignmentName()
         print(assignementViewModel.assigneeList)
         self.assigneeListTableView.registerNib(UINib(nibName:"PLAssigneeTableViewCell", bundle:NSBundle.mainBundle()), forCellReuseIdentifier: "Cell")
         addDoneBarButtonItem()
@@ -48,6 +49,7 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
         }
         
         if let _ = assignementViewModel.selectedAssignment{
+                print("view ll appear if part")
                 assignmentNameTextFiled.text = assignementViewModel.assignmentName()
                 assignmentStartDateTextField.text = assignementViewModel.assignmentStartDate()
                 assignmenttargetDateTextField.text = assignementViewModel.assignmentTargetDate()
@@ -57,10 +59,12 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
                 assignementViewModel.responsibleForAssigniment()
                 assigneeListTableView.reloadData()
                 assigneeListTableView.allowsSelection = false
-                }else {self.navigationItem.rightBarButtonItem?.enabled = true ;
+                }
+           else {self.navigationItem.rightBarButtonItem?.enabled = true ;
                 self.navigationItem.rightBarButtonItem?.tintColor = nil;
                 assigneeListTableView.allowsSelection = true
                clearFields()
+            print(assignementViewModel.selectedAssignment)
             }
         
             clearCellCheckMarks()
@@ -299,10 +303,7 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
 
     func performButtonActionOfFooterView(sender:UIButton){
         print(sender.tag)
-        print("PRAISE THE LORD")
         if sender.tag == 1{
-            
-            assignementViewModel.updateAssigmentStatusOfLoggedInUser()
             
         }
         else{
@@ -318,6 +319,7 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
     
     func clearFields()
     {
+       self.title = ""
        assignmentNameTextFiled.text = ""
        assignmenttargetDateTextField.text = ""
        assignmentStartDateTextField.text = ""
@@ -334,16 +336,22 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
     
     func loadProfileController(sender : UIButton)
     {
-        print("cell \(sender.tag)")
-        
         profileViewController = self.storyboard?.instantiateViewControllerWithIdentifier("PLUserProfileInfoTableViewController") as? PLUserProfileInfoTableViewController
         profileViewController.disablingBtn = false
         profileViewController.userProfileModel = PLUserProfileInfoViewModel()
         let userId = assignementViewModel.getSelectedAssigneeUserId(sender.tag)
         profileViewController.fetchingUserDetails(userId)
+        profileViewController.userName = assignementViewModel.titleOfRowAtIndexPath(sender.tag)
+        profileViewController.delegate = self
+        if assignementViewModel.selectedAssignment != nil
+        {
+            profileViewController.selectedAssignment = assignementViewModel.selectedAssignment
+        }
         self.navigationController!.pushViewController(profileViewController!, animated: true)
-
-   
+    }
+    
+    func selectedAssignment(assignment: PLAssignment) {
+       assignementViewModel.selectedAssignment = assignment
     }
     
     override func viewWillDisappear(animated: Bool) {
@@ -351,15 +359,4 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
         assignementViewModel.selectedAssignment = nil
         selectedIndexes = []
     }
-    
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }
