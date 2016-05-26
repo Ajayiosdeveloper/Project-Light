@@ -219,16 +219,14 @@ class PLSidebarMenuViewController: UIViewController,UIImagePickerControllerDeleg
         {
             print("Logout Action")
             var signUpViewController : PLUserLoginViewController? = self.storyboard?.instantiateViewControllerWithIdentifier("PLUserSignupAndLoginViewController") as? PLUserLoginViewController
+            self.projectViewModel.performLogout()
             self.presentViewController(signUpViewController!, animated: true, completion: nil)
             signUpViewController = nil
         }
         
 }
    
-    
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-           }
-    
+  
     func editUserProfilePicture()
     {
         print("edit profile")

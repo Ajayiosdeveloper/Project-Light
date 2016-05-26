@@ -34,10 +34,10 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="atO-9G-dfh">
-                        <rect key="frame" x="14" y="78" width="193" height="18"/>
+                        <rect key="frame" x="14" y="78" width="200" height="18"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="18" id="FeL-Tl-WxR"/>
-                            <constraint firstAttribute="width" constant="193" id="wab-aU-e2J"/>
+                            <constraint firstAttribute="width" constant="200" id="wab-aU-e2J"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                         <color key="textColor" red="0.1215686275" green="0.12941176469999999" blue="0.14117647059999999" alpha="1" colorSpace="calibratedRGB"/>
@@ -53,7 +53,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MQ7-Ao-fam">
-                        <rect key="frame" x="215" y="78" width="97" height="18"/>
+                        <rect key="frame" x="215" y="78" width="105" height="18"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="18" id="gF5-ZR-lDN"/>
                         </constraints>
@@ -63,8 +63,8 @@
                     </label>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="MQ7-Ao-fam" firstAttribute="leading" secondItem="atO-9G-dfh" secondAttribute="trailing" constant="8" id="1WI-px-svt"/>
-                    <constraint firstItem="MQ7-Ao-fam" firstAttribute="trailing" secondItem="H2p-sc-9uM" secondAttribute="trailingMargin" id="3dL-tB-zcc"/>
+                    <constraint firstItem="MQ7-Ao-fam" firstAttribute="leading" secondItem="atO-9G-dfh" secondAttribute="trailing" constant="1" id="1WI-px-svt"/>
+                    <constraint firstItem="MQ7-Ao-fam" firstAttribute="trailing" secondItem="H2p-sc-9uM" secondAttribute="trailingMargin" constant="8" id="3dL-tB-zcc"/>
                     <constraint firstItem="RDJ-S5-lju" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="-2" id="Cfn-PV-Trn"/>
                     <constraint firstItem="hCo-QO-pCM" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="5" id="G2H-EV-QhO"/>
                     <constraint firstItem="WId-K0-7sK" firstAttribute="top" secondItem="hCo-QO-pCM" secondAttribute="bottom" constant="5" id="Lkr-if-cq9"/>

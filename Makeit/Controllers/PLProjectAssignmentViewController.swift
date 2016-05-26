@@ -30,12 +30,12 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
         self.assigneeListTableView.registerNib(UINib(nibName:"PLAssigneeTableViewCell", bundle:NSBundle.mainBundle()), forCellReuseIdentifier: "Cell")
         addDoneBarButtonItem()
         startDatecommitmentDatePicker = UIDatePicker()
-        startDatecommitmentDatePicker.datePickerMode = .Date
+        startDatecommitmentDatePicker.datePickerMode = .DateAndTime
         self.assignmentStartDateTextField.inputView = startDatecommitmentDatePicker
         startDateDoneButtonToDatePicker()
         
         targetDatecommitmentDatePicker = UIDatePicker()
-        targetDatecommitmentDatePicker.datePickerMode = .Date
+        targetDatecommitmentDatePicker.datePickerMode = .DateAndTime
         self.assignmenttargetDateTextField.inputView = targetDatecommitmentDatePicker
         targetDateDoneButtonToDatePicker()
     }
@@ -117,7 +117,7 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
     func dateSelection()
     {
         assignmentStartDateTextField.resignFirstResponder()
-        assignmentStartDateTextField.text = NSDateFormatter.localizedStringFromDate(startDatecommitmentDatePicker.date, dateStyle: NSDateFormatterStyle.MediumStyle, timeStyle: NSDateFormatterStyle.NoStyle)
+        assignmentStartDateTextField.text = NSDateFormatter.localizedStringFromDate(startDatecommitmentDatePicker.date, dateStyle: NSDateFormatterStyle.MediumStyle, timeStyle: NSDateFormatterStyle.ShortStyle)
         assignmenttargetDateTextField.becomeFirstResponder()
         
     }
@@ -135,7 +135,7 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
     func peformDateSelection()
     {
         assignmenttargetDateTextField.resignFirstResponder()
-        assignmenttargetDateTextField.text = NSDateFormatter.localizedStringFromDate(targetDatecommitmentDatePicker.date, dateStyle: NSDateFormatterStyle.MediumStyle, timeStyle: NSDateFormatterStyle.NoStyle)
+        assignmenttargetDateTextField.text = NSDateFormatter.localizedStringFromDate(targetDatecommitmentDatePicker.date, dateStyle: NSDateFormatterStyle.MediumStyle, timeStyle: NSDateFormatterStyle.ShortStyle)
         assignmentDescriptionTextView.becomeFirstResponder()
     }
     
@@ -158,11 +158,11 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
         let cell = tableView.dequeueReusableCellWithIdentifier("Cell") as! PLAssigneeTableViewCell
         cell.nameLabel.text = assignementViewModel.titleOfRowAtIndexPath(indexPath.row)
         cell.mailIdField.text = assignementViewModel.emailOfRowAtIndexPath(indexPath.row)
-        
+        cell.disclosureButton.tag = indexPath.row
        if PLSharedManager.manager.projectCreatedByUserId == QBSession.currentSession().currentUser?.ID
         {
             cell.disclosureButton.hidden = false
-            cell.disclosureButton.addTarget(self, action: #selector(PLProjectAssignmentViewController.loadProfileController), forControlEvents:UIControlEvents.TouchUpInside)
+            cell.disclosureButton.addTarget(self, action: #selector(PLProjectAssignmentViewController.loadProfileController(_:)), forControlEvents:UIControlEvents.TouchUpInside)
         }
         else
         {
@@ -174,13 +174,13 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
                 }
                 else{
                     cell.disclosureButton.hidden = false
-                    cell.disclosureButton.addTarget(self, action: #selector(PLProjectAssignmentViewController.loadProfileController), forControlEvents:UIControlEvents.TouchUpInside)
+                    cell.disclosureButton.addTarget(self, action: #selector(PLProjectAssignmentViewController.loadProfileController(_:)), forControlEvents:UIControlEvents.TouchUpInside)
                     }
             }
             else
             {
              cell.disclosureButton.hidden = false
-             cell.disclosureButton.addTarget(self, action: #selector(PLProjectAssignmentViewController.loadProfileController), forControlEvents:UIControlEvents.TouchUpInside)
+                cell.disclosureButton.addTarget(self, action: #selector(PLProjectAssignmentViewController.loadProfileController(_:)), forControlEvents:UIControlEvents.TouchUpInside)
             }          
         }
         assignementViewModel.contributorImageRowAtIndexPath(indexPath.row, completion: { (avatar) in
@@ -327,14 +327,18 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
         }
     }
     
-    func loadProfileController()
+    func loadProfileController(sender : UIButton)
     {
+        print("cell \(sender.tag)")
+        
         profileViewController = self.storyboard?.instantiateViewControllerWithIdentifier("PLUserProfileInfoTableViewController") as? PLUserProfileInfoTableViewController
         profileViewController.disablingBtn = false
-        let nav = UINavigationController(rootViewController: profileViewController!)
-       self.presentViewController(nav, animated: true, completion: nil)
-       profileViewController?.addBackBarButtonItem()
-      // profileViewController?.disableButton(true)
+        profileViewController.userProfileModel = PLUserProfileInfoViewModel()
+        let userId = assignementViewModel.getSelectedAssigneeUserId(sender.tag)
+        profileViewController.fetchingUserDetails(userId)
+        self.navigationController!.pushViewController(profileViewController!, animated: true)
+
+   
     }
     
     override func viewWillDisappear(animated: Bool) {

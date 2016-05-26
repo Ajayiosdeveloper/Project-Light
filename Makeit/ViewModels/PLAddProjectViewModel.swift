@@ -39,6 +39,9 @@ class PLAddProjectViewModel: NSObject {
                 if result{
                 let addedProject = PLProject(projectName: name, subTitle:description)
                 addedProject.projectId = projectId
+                addedProject.createdBy = (QBSession.currentSession().currentUser?.ID)!
+
+                    
                 completion(addedProject)
                 }else{completion(nil)}
 //                self!.isProjectCreated = result

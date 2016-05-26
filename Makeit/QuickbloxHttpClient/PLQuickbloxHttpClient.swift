@@ -168,12 +168,12 @@ class PLQuickbloxHttpClient
         }
     }
     
-    //Perform lagout
+    //Perform logout
     
     func userLogout() {
         
         QBRequest.logOutWithSuccessBlock({ (response) in
-            
+            print("loggedout success")
             }, errorBlock:nil)
     }
     
@@ -532,7 +532,7 @@ class PLQuickbloxHttpClient
         
         extended.setObject(userId, forKey:"assigneeUserId[or]")
         extended.setObject(projectId, forKey:"_parent_id")
-        
+
         QBRequest.objectsWithClassName("PLProjectAssignment", extendedRequest:extended, successBlock: { (res,objects, _) in
             print("PRAISE THE LORD")
             
@@ -545,9 +545,17 @@ class PLQuickbloxHttpClient
                     let plAssignment = PLAssignment()
                     plAssignment.name = assignment.fields?.objectForKey("name") as! String
                     plAssignment.details = assignment.fields?.objectForKey("description") as! String
-                    let endInterval = assignment.fields?.objectForKey("targetDate") as! Int
-                    let startInterval = assignment.fields?.objectForKey("startDate") as! Int
-                    print(endInterval + startInterval)
+                    let endInterval = assignment.fields?.objectForKey("targetDate") as! NSTimeInterval
+                    let startInterval = assignment.fields?.objectForKey("startDate") as! NSTimeInterval
+                    let endTime = assignment.fields?.objectForKey("endTime") as! String
+                    let startTime = assignment.fields?.objectForKey("startTime") as! String
+
+                    plAssignment.startDate = self.dateFormat(startInterval)
+                    plAssignment.targetDate = self.dateFormat(endInterval)
+                    
+                    plAssignment.startDate += " \(startTime)"
+                    plAssignment.targetDate += " \(endTime)"
+                  
                     plAssignment.assineesUserIds = assignment.fields?.objectForKey("assigneeUserId") as! [UInt]
                     assigmnents.append(plAssignment)
                 }
@@ -834,12 +842,10 @@ class PLQuickbloxHttpClient
     }
     
     
-    func getUserProfileDetails(completion:([String:AnyObject]?)->Void)
+    func getUserProfileDetails(userId : UInt, completion:([String:AnyObject]?)->Void)
     {
-        let userId = QBSession.currentSession().currentUser?.ID
-        
         let params = NSMutableDictionary()
-        params.setValue(userId!, forKey:"_parent_id")
+        params.setValue(userId, forKey:"_parent_id")
         QBRequest.objectsWithClassName("UserInfo", extendedRequest: params, successBlock: { (_,objects, _) in
             
             if objects?.count == 0
@@ -1030,6 +1036,14 @@ class PLQuickbloxHttpClient
         return date!
     }
 
+    func dateFormat(timeInterval : NSTimeInterval) -> String
+    {
+        let date = NSDate(timeIntervalSince1970: timeInterval)
+        let dateFormatter = NSDateFormatter()
+        dateFormatter.dateFormat = "dd-MM-yy"
+        dateFormatter.timeZone = NSTimeZone(forSecondsFromGMT: NSTimeZone.localTimeZone().secondsFromGMT)
+        return dateFormatter.stringFromDate(date)
+    }
     
     func convertdateToTimeinterval(date : NSDate,dateFormat:String) -> NSTimeInterval
     {

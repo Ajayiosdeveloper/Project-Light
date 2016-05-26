@@ -58,21 +58,50 @@ class PLTeamMemberDetailViewModel: NSObject {
         return assignment.details
     }
     
-    func getAssignmentTargetDate(row:Int) -> String {
-        
+    func getAssignmentTargetDate(row:Int) -> String
+    {
         let assignment = assignments[row]
-        
         return assignment.targetDate
     }
     
+    func getAssignmentStartDate(row:Int) -> String {
+        
+        let assignment = assignments[row]
+        
+        return assignment.startDate
+    }
+
+    func getAssignmentStartDateWithTime(row : Int) -> String
+    {
+        let assignment = assignments[row]
+        let startTime = stringDate(assignment.startDate)
+        return startTime
+    }
     
+    func getAssignmentTargetDateWithTime(row : Int) -> String
+    {
+        let assignment = assignments[row]
+        let endTime = stringDate(assignment.targetDate)
+        return endTime
+    }
+    
+    func stringDate(dateTime : String) -> String
+    {
+        let dateFormatter = NSDateFormatter()
+        dateFormatter.dateFormat = "dd-MM-yy HH:mm"
+        let date = dateFormatter.dateFromString(dateTime)
+        
+        dateFormatter.dateFormat = "dd/MM/yy hh:mm a"
+        let dateString = dateFormatter.stringFromDate(date!)
+        return dateString
+    }
+
     
     func getAssignmentsOfUserForProject(completion:(Bool)->Void) {
         
            quickBloxClient.fetchUserAssignmentsForProject(userId,projectId: projectId){ assignments in
-            
             if let _ = assignments{
-               
+                print(assignments)
                 self.assignments = assignments!
                 completion(true)
             }
