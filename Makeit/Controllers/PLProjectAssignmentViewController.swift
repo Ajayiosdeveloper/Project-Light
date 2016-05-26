@@ -23,6 +23,8 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
     var targetDatecommitmentDatePicker:UIDatePicker!
     var assignementViewModel:PLProjectAssignmentViewModel!
     var profileViewController:PLUserProfileInfoTableViewController!
+    var assignmentStatus:UIButton!
+    var footerView:UIView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -234,7 +236,7 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
     
     
     func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let footerView:UIView! = UIView(frame:CGRectMake(0,0,self.view.frame.size.width,20))
+       footerView  = UIView(frame:CGRectMake(0,0,self.view.frame.size.width,20))
         if section == 1
         {
             if assignementViewModel.selectedAssignment != nil{
@@ -289,22 +291,32 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
     
     func addButtonForTableViewFooterOnView(addOnView:UIView,title:String,tag:Int)
     {
-        let addMemberButton = UIButton(type:.Custom)
-        addMemberButton.tag = tag
-        addMemberButton.setTitle(title, forState: UIControlState.Normal)
-        addMemberButton.titleLabel?.font = UIFont(name:"Avenir Next Demi Bold ", size: 24)
-        addMemberButton.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
-        addMemberButton.addTarget(self, action:#selector(PLProjectAssignmentViewController.performButtonActionOfFooterView), forControlEvents: UIControlEvents.TouchUpInside)
-        addMemberButton.frame = CGRectMake(0, 0, self.view.frame.size.width, 40)
-        addMemberButton.contentHorizontalAlignment = .Center
-        addMemberButton.contentEdgeInsets = UIEdgeInsetsMake(0, 0, 0, 0)
-        addOnView.addSubview(addMemberButton)
+         assignmentStatus = UIButton(type:.Custom)
+        assignmentStatus.tag = tag
+        assignmentStatus.setTitle(title, forState: UIControlState.Normal)
+        assignmentStatus.titleLabel?.font = UIFont(name:"Avenir Next Demi Bold ", size: 24)
+        assignmentStatus.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
+        assignmentStatus.addTarget(self, action:#selector(PLProjectAssignmentViewController.performButtonActionOfFooterView), forControlEvents: UIControlEvents.TouchUpInside)
+        assignmentStatus.frame = CGRectMake(0, 0, self.view.frame.size.width, 40)
+        assignmentStatus.contentHorizontalAlignment = .Center
+        assignmentStatus.contentEdgeInsets = UIEdgeInsetsMake(0, 0, 0, 0)
+        addOnView.addSubview(assignmentStatus)
     }
 
     func performButtonActionOfFooterView(sender:UIButton){
         print(sender.tag)
         if sender.tag == 1{
-            
+            assignementViewModel.updateAssigmentStatusOfLoggedInUser(){res in
+                if res{
+                    
+                  self.footerView.backgroundColor =  UIColor(colorLiteralRed: 89/255, green: 181/255, blue: 50/255, alpha: 0.5)
+                    self.assignmentStatus.setTitle("Status Updated", forState:.Normal)
+                    self.assignmentStatus.enabled = false
+                    let userCell = self.assignementViewModel.selectedAssigneeList[0]
+                    print(userCell.fullName)
+                    self.assigneeListTableView.reloadRowsAtIndexPaths([NSIndexPath(forRow:0, inSection:0)], withRowAnimation: UITableViewRowAnimation.Automatic)
+                    }
+            }
         }
         else{
             

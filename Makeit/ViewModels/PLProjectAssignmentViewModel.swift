@@ -260,8 +260,11 @@ class PLProjectAssignmentViewModel: NSObject {
         return member.memberUserId
     }
     
-    func updateAssigmentStatusOfLoggedInUser(){
+    func updateAssigmentStatusOfLoggedInUser(completion:(Bool)->Void){
         
-        qbClient.updateRemoteAssigmentStatus(selectedAssignment!.assignmentId)
+        qbClient.updateRemoteAssigmentStatus(selectedAssignment!.assignmentId){ res in
+            
+            completion(res)
+        }
     }
 }
