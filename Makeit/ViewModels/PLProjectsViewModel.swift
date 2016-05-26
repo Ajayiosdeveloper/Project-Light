@@ -60,7 +60,7 @@ class PLProjectsViewModel: NSObject {
             project.projectId = remoteObject.ID
             project.createdByName = "You"
             project.createdBy = remoteObject.userID
-            project.parentId = remoteObject.parentID
+            //project.parentId = remoteObject.parentID
             createdProjectList.append(project)
         }
        

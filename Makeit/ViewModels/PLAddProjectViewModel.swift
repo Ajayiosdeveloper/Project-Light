@@ -40,8 +40,6 @@ class PLAddProjectViewModel: NSObject {
                 let addedProject = PLProject(projectName: name, subTitle:description)
                 addedProject.projectId = projectId
                 addedProject.createdBy = (QBSession.currentSession().currentUser?.ID)!
-
-                    
                 completion(addedProject)
                 }else{completion(nil)}
 
@@ -73,6 +71,11 @@ class PLAddProjectViewModel: NSObject {
                 
                 self!.quickBloxClient.createNewProjectWithContributors(qbObjects){result in
                     
+                    let addedProject = PLProject(projectName: name, subTitle:description)
+                    addedProject.projectId = projectId
+                    addedProject.createdBy = (QBSession.currentSession().currentUser?.ID)!
+                    completion(addedProject)
+
                }
             }
         }

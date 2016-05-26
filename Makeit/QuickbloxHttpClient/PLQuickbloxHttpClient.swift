@@ -311,10 +311,24 @@ class PLQuickbloxHttpClient
         }
         customObject.fields?.setValue(assigneeStatus, forKey: "assigneeStatus")
         
-        QBRequest.createObject(customObject, successBlock: { (res,object) in
+      QBRequest.createObject(customObject, successBlock: { (res,object) in
             
-            //print("PRAISE THE LORD")
-            
+            for each in members{
+             let customObjectTwo = QBCOCustomObject()
+             customObjectTwo.className = "PLProjectAssignmentMember"
+             customObjectTwo.fields?.setValue(each.fullName, forKey: "assigneeName")
+             customObjectTwo.fields?.setValue(each.memberUserId, forKey: "assigneeUserId")
+             customObjectTwo.fields?.setValue(each.memberEmail, forKey: "assigneeEmail")
+             customObjectTwo.fields?.setValue(0, forKey: "assigneeStatus")
+             customObjectTwo.fields?.setValue(PLSharedManager.manager.projectName, forKey: "projectName")
+             customObjectTwo.fields?.setValue(object?.ID!, forKey:"_parent_id")
+             
+             QBRequest.createObject(customObjectTwo, successBlock: { (_, _) in
+                
+                }, errorBlock: { (_) in
+                    
+             })
+        }
             PLProjectNotification.sendAssignmentNotificationToAssignees(assigneeUserIds,assignmentName:name,projectName: PLSharedManager.manager.projectName)
             
             completion(true)
@@ -1069,7 +1083,7 @@ class PLQuickbloxHttpClient
         let userId = QBSession.currentSession().currentUser?.ID
         let customObject = QBCOCustomObject()
         customObject.className = "PLProjectAssignmentMember"
-        customObject.ID = "57456d1da0eb47f61b000001"
+        customObject.ID = "5746a46ea28f9a9856000014"
         customObject.fields?.setObject(id, forKey: "_parent_id")
         customObject.fields?.setObject(1, forKey: "assigneeStatus")
         customObject.fields?.setObject(userId!, forKey:"assigneeUserId")
