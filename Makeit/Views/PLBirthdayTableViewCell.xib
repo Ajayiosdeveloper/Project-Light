@@ -28,7 +28,7 @@
                         </userDefinedRuntimeAttributes>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Immanual" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CFT-2N-vO9">
-                        <rect key="frame" x="66" y="5" width="246" height="21"/>
+                        <rect key="frame" x="66" y="5" width="164" height="21"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="21" id="ckI-wG-h7a"/>
                         </constraints>
@@ -68,8 +68,19 @@
                         </constraints>
                         <state key="normal" title="Message"/>
                     </button>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TYd-Fe-ttd">
+                        <rect key="frame" x="243" y="5" width="69" height="21"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="21" id="9Yp-Rn-SZ1"/>
+                            <constraint firstAttribute="width" constant="69" id="baG-Kb-2ck"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
                 </subviews>
                 <constraints>
+                    <constraint firstItem="Lpw-09-BgC" firstAttribute="top" secondItem="TYd-Fe-ttd" secondAttribute="bottom" constant="4" id="AT3-fp-OjM"/>
                     <constraint firstAttribute="bottomMargin" secondItem="MFc-4L-FVS" secondAttribute="bottom" constant="-3" id="Ccd-dV-Tn3"/>
                     <constraint firstItem="CFT-2N-vO9" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="-3" id="F2D-EU-tzH"/>
                     <constraint firstAttribute="bottomMargin" secondItem="mYe-kB-fd5" secondAttribute="bottom" constant="-3" id="Fc9-Jx-t3b"/>
@@ -80,14 +91,16 @@
                     <constraint firstItem="Lpw-09-BgC" firstAttribute="top" secondItem="CFT-2N-vO9" secondAttribute="bottom" constant="4" id="Rwr-qc-udV"/>
                     <constraint firstItem="ieW-ua-pcC" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="S9J-lk-p67"/>
                     <constraint firstItem="mYe-kB-fd5" firstAttribute="leading" secondItem="MFc-4L-FVS" secondAttribute="trailing" constant="17" id="aYg-jG-yuo"/>
-                    <constraint firstItem="CFT-2N-vO9" firstAttribute="trailing" secondItem="H2p-sc-9uM" secondAttribute="trailingMargin" id="aqw-pY-JUZ"/>
                     <constraint firstAttribute="bottomMargin" secondItem="Osg-vf-v2A" secondAttribute="bottom" constant="-3" id="k1j-Dc-vQ1"/>
                     <constraint firstItem="Lpw-09-BgC" firstAttribute="trailing" secondItem="H2p-sc-9uM" secondAttribute="trailingMargin" id="lO5-bd-coR"/>
+                    <constraint firstItem="TYd-Fe-ttd" firstAttribute="trailing" secondItem="H2p-sc-9uM" secondAttribute="trailingMargin" id="oMc-tg-sjX"/>
+                    <constraint firstItem="TYd-Fe-ttd" firstAttribute="leading" secondItem="CFT-2N-vO9" secondAttribute="trailing" constant="13" id="qri-9G-Nck"/>
                     <constraint firstItem="mYe-kB-fd5" firstAttribute="trailing" secondItem="H2p-sc-9uM" secondAttribute="trailingMargin" id="tFx-hv-qzR"/>
                     <constraint firstItem="CFT-2N-vO9" firstAttribute="leading" secondItem="ieW-ua-pcC" secondAttribute="trailing" constant="8" id="vXy-DU-dQc"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>
+                <outlet property="birthdayDate" destination="TYd-Fe-ttd" id="yft-b9-fWt"/>
                 <outlet property="makeCall" destination="Osg-vf-v2A" id="q1l-ha-fzL"/>
                 <outlet property="makeMessage" destination="MFc-4L-FVS" id="bNe-eQ-8W8"/>
                 <outlet property="memberDetail" destination="Lpw-09-BgC" id="iaz-Eq-Ode"/>

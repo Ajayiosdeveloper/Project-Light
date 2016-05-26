@@ -1004,10 +1004,16 @@ class PLQuickbloxHttpClient
         }
     }
     
-    func getBirthdayListOfTeamMembers(completion:([QBCOCustomObject]?)->Void){
-        
-        let timeInterval = Int(convertdateToTimeinterval(NSDate(),dateFormat: "dd-MM"))
-        
+    func getBirthdayListOfTeamMembers(range:Int ,completion:([QBCOCustomObject]?)->Void){
+        var timeInterval = 0
+        if range == 0
+        {
+        timeInterval = Int(convertdateToTimeinterval(NSDate(),dateFormat: "dd-MM"))
+        }
+        else{
+            let tDate = NSDate().dateByAddingTimeInterval(60*60*24)
+            timeInterval = Int(convertdateToTimeinterval(tDate, dateFormat: "dd-MM"))
+        }
         let extendedReq = NSMutableDictionary()
         extendedReq.setValue(timeInterval, forKey: "birthday")
         extendedReq.setValue(QBSession.currentSession().currentUser?.ID, forKey: "user_id")

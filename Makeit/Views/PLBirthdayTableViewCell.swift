@@ -22,6 +22,7 @@ class PLBirthdayTableViewCell: UITableViewCell {
     
     @IBOutlet var sendBirthdayGreetings: UIButton!
     
+    @IBOutlet var birthdayDate: UILabel!
 
     override func awakeFromNib() {
         super.awakeFromNib()
