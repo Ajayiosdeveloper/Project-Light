@@ -302,6 +302,7 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
         print("PRAISE THE LORD")
         if sender.tag == 1{
             
+            assignementViewModel.updateAssigmentStatusOfLoggedInUser()
             
         }
         else{

@@ -291,7 +291,7 @@ class PLQuickbloxHttpClient
     
     //Create Assignment for Project in QuickBlox
     
-    func createAssignmentForProject(id:String,startDate: Int, targetDate:Int, name:String,description:String,assignees:[String],assigneeUserIds:[UInt],startTime : String, endTime: String, completion:(Bool)->Void) {
+    func createAssignmentForProject(id:String,startDate: Int, targetDate:Int, name:String,description:String,assignees:[String],assigneeUserIds:[UInt],startTime : String, endTime: String,members:[PLTeamMember], completion:(Bool)->Void) {
         
         let customObject = QBCOCustomObject()
         customObject.className = "PLProjectAssignment"
@@ -1062,9 +1062,24 @@ class PLQuickbloxHttpClient
     }
     
     
-    func updateRemoteAssigmentStatus(){
+    func updateRemoteAssigmentStatus(id:String){
         
+        print("updateRemoteAssigmentStatus\(id)")
         
+        let userId = QBSession.currentSession().currentUser?.ID
+        let customObject = QBCOCustomObject()
+        customObject.className = "PLProjectAssignmentMember"
+        customObject.ID = "57456d1da0eb47f61b000001"
+        customObject.fields?.setObject(id, forKey: "_parent_id")
+        customObject.fields?.setObject(1, forKey: "assigneeStatus")
+        customObject.fields?.setObject(userId!, forKey:"assigneeUserId")
+        QBRequest.updateObject(customObject, successBlock: { (_, _) in
+            
+            print("Updated Successfully")
+            
+            }) { (_) in
+                
+        }
         
     }
     
