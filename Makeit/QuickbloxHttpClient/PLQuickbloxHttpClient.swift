@@ -74,9 +74,9 @@ class PLQuickbloxHttpClient
                 application.registerForRemoteNotifications()
             }else{
                 
-                let types:UIRemoteNotificationType = [.Badge, .Sound, .Alert]
-                
-                UIApplication.sharedApplication().registerForRemoteNotificationTypes(types)
+                print("Coming to iOS 7")
+                let types: UIRemoteNotificationType = [.Alert, .Badge, .Sound]
+                application.registerForRemoteNotificationTypes(types)
             }
        
     }
@@ -291,7 +291,7 @@ class PLQuickbloxHttpClient
     
     //Create Assignment for Project in QuickBlox
     
-    func createAssignmentForProject(id:String,startDate: Int, targetDate:Int, name:String,description:String,assignees:[String],assigneeUserIds:[UInt],startTime : String, endTime: String, completion:(Bool)->Void) {
+    func createAssignmentForProject(id:String,startDate: Int, targetDate:Int, name:String,description:String,assignees:[String],assigneeUserIds:[UInt],startTime : String, endTime: String,members:[PLTeamMember], completion:(Bool)->Void) {
         
         let customObject = QBCOCustomObject()
         customObject.className = "PLProjectAssignment"
@@ -311,10 +311,24 @@ class PLQuickbloxHttpClient
         }
         customObject.fields?.setValue(assigneeStatus, forKey: "assigneeStatus")
         
-        QBRequest.createObject(customObject, successBlock: { (res,object) in
+      QBRequest.createObject(customObject, successBlock: { (res,object) in
             
-            print("PRAISE THE LORD")
-            
+            for each in members{
+             let customObjectTwo = QBCOCustomObject()
+             customObjectTwo.className = "PLProjectAssignmentMember"
+             customObjectTwo.fields?.setValue(each.fullName, forKey: "assigneeName")
+             customObjectTwo.fields?.setValue(each.memberUserId, forKey: "assigneeUserId")
+             customObjectTwo.fields?.setValue(each.memberEmail, forKey: "assigneeEmail")
+             customObjectTwo.fields?.setValue(0, forKey: "assigneeStatus")
+             customObjectTwo.fields?.setValue(PLSharedManager.manager.projectName, forKey: "projectName")
+             customObjectTwo.fields?.setValue(object?.ID!, forKey:"_parent_id")
+             
+             QBRequest.createObject(customObjectTwo, successBlock: { (_, _) in
+                
+                }, errorBlock: { (_) in
+                    
+             })
+        }
             PLProjectNotification.sendAssignmentNotificationToAssignees(assigneeUserIds,assignmentName:name,projectName: PLSharedManager.manager.projectName)
             
             completion(true)
@@ -1083,9 +1097,24 @@ class PLQuickbloxHttpClient
     }
     
     
-    func updateRemoteAssigmentStatus(){
+    func updateRemoteAssigmentStatus(id:String){
         
+        print("updateRemoteAssigmentStatus\(id)")
         
+        let userId = QBSession.currentSession().currentUser?.ID
+        let customObject = QBCOCustomObject()
+        customObject.className = "PLProjectAssignmentMember"
+        customObject.ID = "57456d1da0eb47f61b000001"
+        customObject.fields?.setObject(id, forKey: "_parent_id")
+        customObject.fields?.setObject(1, forKey: "assigneeStatus")
+        customObject.fields?.setObject(userId!, forKey:"assigneeUserId")
+        QBRequest.updateObject(customObject, successBlock: { (_, _) in
+            
+            print("Updated Successfully")
+            
+            }) { (_) in
+                
+        }
         
     }
     

@@ -101,7 +101,7 @@ class PLUserSignupAndLoginViewModel : NSObject
     {
         //if quickBloxClient == nil{ quickBloxClient = PLQuickbloxHttpClient() }
         
-        quickBloxClient.createNewUserWith(withUserName, password:password,email: email){[weak self]result in
+        quickBloxClient.createNewUserWith(withUserName, password:password,email: email){result in
            
            completion(result)
         }

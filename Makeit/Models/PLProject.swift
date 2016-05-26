@@ -38,8 +38,6 @@ class PLTeamMember: NSObject {
     var memberEmail:String = ""
     var birthdayInterval:UInt = 0
     var avatar:String
-    var assignmentStatus:UInt = 0
-
     static var creatorDetails:[String:AnyObject]?
     
     init(name:String,id:UInt) {
@@ -52,6 +50,13 @@ class PLTeamMember: NSObject {
     }
     
 }
+
+class PLAssignmentMember:PLTeamMember{
+    
+    var assignmentId:String = ""
+    var assignmentStatus: UInt = 0
+}
+
 class PLCommitment: NSObject {
     
     var name:String = ""
@@ -68,7 +73,7 @@ class PLAssignment: NSObject {
     
     var name:String = ""
     var details: String = ""
-    var commitmentId:String = ""
+    var assignmentId:String = ""
     var targetDate:String = ""
     var startDate:String = ""
     var assignees:[String] = [String]()
