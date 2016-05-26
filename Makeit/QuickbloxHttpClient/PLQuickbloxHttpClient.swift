@@ -74,9 +74,9 @@ class PLQuickbloxHttpClient
                 application.registerForRemoteNotifications()
             }else{
                 
-                let types:UIRemoteNotificationType = [.Badge, .Sound, .Alert]
-                
-                UIApplication.sharedApplication().registerForRemoteNotificationTypes(types)
+                print("Coming to iOS 7")
+                let types: UIRemoteNotificationType = [.Alert, .Badge, .Sound]
+                application.registerForRemoteNotificationTypes(types)
             }
        
     }
