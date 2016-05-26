@@ -210,6 +210,19 @@ class PLSidebarMenuViewController: UIViewController,UIImagePickerControllerDeleg
             if taskViewController == nil{
                 taskViewController = self.storyboard?.instantiateViewControllerWithIdentifier("TaskViewController") as? PLTaskViewController
             }
+            switch indexPath.row
+            {
+                
+            case 0:
+                taskViewController!.birthdayRange = 0
+                
+            case 1:
+                
+                taskViewController!.birthdayRange = 1
+           
+            default: print("")
+                
+            }
             let nav = UINavigationController(rootViewController: taskViewController!)
             taskViewController!.selectedType = 3
             self.presentViewController(nav, animated: true, completion: nil)

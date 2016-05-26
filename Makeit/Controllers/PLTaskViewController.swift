@@ -15,6 +15,7 @@ class PLTaskViewController: UIViewController,UITableViewDelegate,UITableViewData
     var contributors:[PLTeamMember]!
     var sidebarViewModel:PLSidebarViewModel = PLSidebarViewModel()
     var selectedType : Int!
+    var birthdayRange : Int!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -51,10 +52,24 @@ class PLTaskViewController: UIViewController,UITableViewDelegate,UITableViewData
             })
         case 3:
             print("PRAISE THE LORD")
-            self.title = "Today Birthdays"
-               sidebarViewModel.getTeamMemberBirthdayListForToday({ (res) in
-                self.tableView.reloadData()
-            })
+          
+            if birthdayRange == 0
+            {
+                  self.title = "Today Birthdays"
+                sidebarViewModel.getTeamMemberBirthdayListForToday(0
+                    , completion: { (res) in
+                        self.tableView.reloadData()
+                })
+        
+            }
+            else{
+                self.title = "Upcoming Birthdays"
+                sidebarViewModel.getTeamMemberBirthdayListForToday(1
+                    , completion: { (res) in
+                        self.tableView.reloadData()
+                })
+            }
+            
         default:
             print("")
         }
@@ -115,6 +130,14 @@ class PLTaskViewController: UIViewController,UITableViewDelegate,UITableViewData
             cell.memberName.text = sidebarViewModel.birthdayMemberName(indexPath.row)
             cell.memberDetail.text = sidebarViewModel.birthdayMemberEmail(indexPath.row)
             cell.memberImage.layer.masksToBounds = true
+            if birthdayRange == 0
+            {
+                cell.birthdayDate.text = ""
+            }
+            else
+            {
+                cell.birthdayDate.text = sidebarViewModel.teamMembersBirthday(indexPath.row)
+            }
             sidebarViewModel.contributorImageRowAtIndexPath(indexPath.row, completion: { (avatar) in
                 
                 if let _ = avatar{
@@ -133,7 +156,7 @@ class PLTaskViewController: UIViewController,UITableViewDelegate,UITableViewData
             cell.makeMessage.tag = indexPath.row
             cell.sendBirthdayGreetings.addTarget(self, action: #selector(PLTaskViewController.sendBirthdayGreetings), forControlEvents: UIControlEvents.TouchUpInside)
             cell.sendBirthdayGreetings.tag = indexPath.row
-            cell.accessoryType = .DisclosureIndicator
+            //cell.accessoryType = .DisclosureIndicator
             return cell
         }
     }
@@ -193,6 +216,8 @@ class PLTaskViewController: UIViewController,UITableViewDelegate,UITableViewData
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath)
     {
+        if selectedType != 3
+        {
         let commitmentViewController = self.storyboard?.instantiateViewControllerWithIdentifier("PLProjectCommentViewController") as! PLProjectCommentViewController
         commitmentViewController.commitmentViewModel = PLProjectCommentViewModel()
         commitmentViewController.commitmentViewModel.commitment = sidebarViewModel.getSelectedCommitment(indexPath.row)
@@ -200,7 +225,7 @@ class PLTaskViewController: UIViewController,UITableViewDelegate,UITableViewData
         let navigation = UINavigationController(rootViewController: commitmentViewController)
         self.presentViewController(navigation, animated: true, completion: nil)
         commitmentViewController.addBackBarButtonItem()
-        
+        }
     }
     
 }

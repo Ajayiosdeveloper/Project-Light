@@ -78,7 +78,7 @@ class PLAddProjectViewController: UIViewController,UISearchBarDelegate,UITextFie
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.Plain, target:self, action:#selector(PLAddProjectViewController.performDone))
     }
    
-    func checkContributorsAddedOrNot() -> Bool
+    func isAddedContributor() -> Bool
     {
         if addProjectViewModel.selectedContributors.count == 0
         {
@@ -106,6 +106,7 @@ class PLAddProjectViewController: UIViewController,UISearchBarDelegate,UITextFie
                     self!.cleanUp()
 
                 }
+             }
             }
           }
         }else {activityIndicatorView.stopAnimating();showAlertWithMessage("error!", message:"Enter Project name")}

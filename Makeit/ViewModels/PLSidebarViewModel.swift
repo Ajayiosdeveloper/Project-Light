@@ -60,10 +60,17 @@ class PLSidebarViewModel: NSObject {
         }
     }
     
-    func getTeamMemberBirthdayListForToday(completion:(Bool)-> Void){
+    func teamMembersBirthday(row: Int) -> String
+    {
+        let birthdays = teamMembersForBitrhday[row]
+        let birthday = timeIntervalToString(NSTimeInterval(birthdays.birthdayDate))
+        return birthday
+    }
+    
+    func getTeamMemberBirthdayListForToday(range : Int,completion:(Bool)-> Void){
         
         self.teamMembersForBitrhday.removeAll(keepCapacity: true)
-        qbClient.getBirthdayListOfTeamMembers(){ members in
+        qbClient.getBirthdayListOfTeamMembers(range){ members in
             
             var birthdaysOfMembers = [PLTeamMember]()
             
@@ -77,6 +84,7 @@ class PLSidebarViewModel: NSObject {
                  member.memberId = String(each.userID)
                  member.memberUserId = each.fields?.objectForKey("member_User_Id") as! UInt
                  member.avatar = each.fields?.objectForKey("avatar") as! String
+                 member.birthdayDate = each.fields?.objectForKey("birthday") as! Int
                  birthdaysOfMembers.append(member)
                 }
                 
@@ -85,6 +93,15 @@ class PLSidebarViewModel: NSObject {
                 completion(true)
             }
         }
+    }
+    
+    func timeIntervalToString(timeInterval : NSTimeInterval) -> String
+    {
+        let date = NSDate(timeIntervalSince1970: timeInterval)
+        let dateFormatter = NSDateFormatter()
+        dateFormatter.dateFormat = "dd MMM"
+        dateFormatter.timeZone = NSTimeZone(forSecondsFromGMT: NSTimeZone.localTimeZone().secondsFromGMT)
+        return dateFormatter.stringFromDate(date)
     }
     
     func dateFormat(timeInterval : NSTimeInterval) -> String
@@ -275,6 +292,8 @@ class PLSidebarViewModel: NSObject {
         let member = self.teamMembersForBitrhday[row]
         return member.memberEmail
     }
+    
+    
     
     func contributorImageRowAtIndexPath(row:Int,completion:(UIImage?)->Void) {
         
