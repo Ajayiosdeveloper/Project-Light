@@ -23,8 +23,8 @@ class PLProjectsViewModel: NSObject {
    
     func fetchProjectsFromRemote() {
         
-        createdProjectList.removeAll(keepCapacity: true)
-        contributingProjectList.removeAll(keepCapacity: true)
+        createdProjectList.removeAll(keepCapacity: true) //remove the method
+        contributingProjectList.removeAll(keepCapacity: true) //remove the method
         quickBloxClient.fetchContributingProjectsOfUser{(res) in
             
             if let _ = res{
@@ -92,7 +92,7 @@ class PLProjectsViewModel: NSObject {
     
     func  addNewProjectToCreatedProjectList(project:PLProject,completion:(Bool)->Void){
         
-        self.createdProjectList.append(project)
+        self.createdProjectList.append(project) // what happens with no append
         completion(true)
     }
     
@@ -107,22 +107,24 @@ class PLProjectsViewModel: NSObject {
         return contributingProjectList.count
     }
     
-    func titleAtIndexPath(indexPath:NSInteger) -> String {
+    func titleAtIndexPath(indexPath:NSInteger) -> String { //change indexpath variable name
         
         let project = createdProjectList[indexPath]
         return project.name
     }
     
-    func subTitleAtIndexPath(indexPath:NSInteger) -> String {
+    func subTitleAtIndexPath(indexPath: NSInteger) -> String { //change indexpath variable name
         
         let project = createdProjectList[indexPath]
-        if let _ = project.subTitle{
+        
+        if let _ = project.subTitle {
+            
             return project.subTitle!
         }
         return ""
     }
     
-    func projectCreatedAtIndexPath(index:Int,section:Int)->String{
+    func projectCreatedAtIndexPath(index:Int,section:Int)->String{ //rename the method
         
         if section == 0{
             let project = createdProjectList[index]
@@ -139,6 +141,7 @@ class PLProjectsViewModel: NSObject {
             return  project.name.characters.first!
         }
         else{
+            
             let project = contributingProjectList[index]
             return project.name.characters.first!
         }
@@ -146,7 +149,7 @@ class PLProjectsViewModel: NSObject {
     
     }
     
-    func projectCreatedBy(index:Int) -> String{
+    func projectCreatedBy(index:Int) -> String{ //rename as projectCreator
         
         let project = contributingProjectList[index]
         return "Created by : \(project.createdByName)"
@@ -191,7 +194,7 @@ class PLProjectsViewModel: NSObject {
         createdProjectList.removeAll()
     }
 
-    func performLogout()  {
+    func performLogout()  { //Logout
         
         quickBloxClient.userLogout()
         createdProjectList.removeAll()
@@ -203,7 +206,7 @@ class PLProjectsViewModel: NSObject {
         quickBloxClient.deleteProjectWithId(project.projectId!){result in
             
             if result { completion(true) }
-            else {completion(false)}
+            else { completion(false) }
     }
   }
     
@@ -218,6 +221,7 @@ class PLProjectsViewModel: NSObject {
                 if members?.count > 0{
                     
                     let first = members![0]
+                    
                     let creatorDetails = first.fields?.objectForKey("creatorDetails") as! [String]
                     PLTeamMember.creatorDetails = [String:String]()
                     PLTeamMember.creatorDetails!["creatorName"] = creatorDetails[0] as String
@@ -251,7 +255,7 @@ class PLProjectsViewModel: NSObject {
             }
                 let creatorId = PLTeamMember.creatorDetails!["creatorUserId"] as! UInt
                 
-                if  creatorId != loggedInId{
+                if  creatorId != loggedInId {
                   
                     let creator = PLTeamMember(name:"", id: 0)
                     creator.fullName = PLTeamMember.creatorDetails!["creatorName"] as! String
@@ -271,7 +275,7 @@ class PLProjectsViewModel: NSObject {
         
     }
     
-    func uploadUserAvatar(image:UIImage,completion:(Bool)->Void) {
+    func uploadUserAvatar(image:UIImage,completion:(Bool)->Void) { //rename the method
         
        quickBloxClient.uploadProfilePicture(image){ res, blobId in
                 
@@ -300,7 +304,7 @@ class PLProjectsViewModel: NSObject {
         
         completion(image)
         }
-        else{completion(nil)}
+        else { completion(nil) }
      
        }
         
@@ -334,7 +338,7 @@ class PLProjectsViewModel: NSObject {
          }
      }
     
-    func getUPcomingTasksCount(completion:(String)->Void){
+    func getUpcomingTasksCount(completion:(String)->Void){
         
         quickBloxClient.countOfUpComingCommitments()
         { count in

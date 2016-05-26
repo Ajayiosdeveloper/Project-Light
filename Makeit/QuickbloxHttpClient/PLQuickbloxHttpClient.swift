@@ -942,7 +942,7 @@ class PLQuickbloxHttpClient
             completion(count)
 
             
-        }){ (res) in
+        }){ (res) in // rethink on the error scenarios
             
             completion(0)
             
@@ -950,7 +950,7 @@ class PLQuickbloxHttpClient
 
     }
     
-    func contOfPendingTasks(completion:(UInt)->Void){
+    func contOfPendingTasks(completion:(UInt)->Void){ // check spelling of method
         let timeInterval = Int(convertdateToTimeinterval(NSDate(),dateFormat: "dd-MM-yyyy"))
         let extendedReq = NSMutableDictionary()
         extendedReq.setValue(timeInterval, forKey: "targetDate[lt]")
@@ -961,7 +961,7 @@ class PLQuickbloxHttpClient
            
             completion(count)
             
-        }){ (res) in
+        }){ (res) in // rethink on the error scenarios
             
             completion(0)
             
@@ -982,7 +982,7 @@ class PLQuickbloxHttpClient
           
         }){ (res) in
             
-          completion(0)
+          completion(0) // rethink on the error scenarios
         }
      }
     
@@ -1000,7 +1000,7 @@ class PLQuickbloxHttpClient
             
         }){ (res) in
             
-            completion(0)
+            completion(0) // rethink on the error scenarios
         }
     }
     
@@ -1024,7 +1024,7 @@ class PLQuickbloxHttpClient
             
         }) { (res) in
             
-            print("Error is \(res)")
+            print("Error is \(res)") // rethink on the error scenarios
             completion(nil)
         }
     }
@@ -1032,7 +1032,7 @@ class PLQuickbloxHttpClient
     {
         let dateFormatter = NSDateFormatter()
         dateFormatter.dateFormat = "dd-MM-yyyy hh:mm a"
-        let date = dateFormatter.dateFromString(dateTime)
+        let date = dateFormatter.dateFromString(dateTime) // you are getting an optional value
         return date!
     }
 
@@ -1054,7 +1054,7 @@ class PLQuickbloxHttpClient
         let stringDate = dateFormatter.stringFromDate(date)
         dateFormatter.timeZone = NSTimeZone(forSecondsFromGMT: 0)
         let stringToDate = dateFormatter.dateFromString(stringDate)?.timeIntervalSince1970
-        return stringToDate!
+        return stringToDate! // you are getting an optional value
     }
     
     func timeFormats(time: String) -> String
@@ -1064,7 +1064,7 @@ class PLQuickbloxHttpClient
         let date = dateFormatter.dateFromString(time)
         
         dateFormatter.dateFormat = "HH:mm"
-        let dateString = dateFormatter.stringFromDate(date!)
+        let dateString = dateFormatter.stringFromDate(date!) // you are getting an optional value
         return dateString
     }
     
@@ -1074,15 +1074,15 @@ class PLQuickbloxHttpClient
         user.phone = String(interval)
         QBRequest.updateCurrentUser(user, successBlock: { (_, _) in
             
-            //print("PRAISE THE LORD")
+            //print("PRAISE THE LORD")   // success
             
-            }) { (_) in
-            
+            }) { (_) in   // error response
+             
         }
     }
     
     
-    func updateRemoteAssigmentStatus(id:String){
+    func updateRemoteAssigmentStatus(id:String){ // remove Remote
         
         print("updateRemoteAssigmentStatus\(id)")
         

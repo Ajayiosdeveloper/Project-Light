@@ -154,7 +154,7 @@ class PLProjectAssignmentViewModel: NSObject {
         
         dateFormatter.dateFormat = "dd-MM-yyyy hh:mm a"
         let dateString = dateFormatter.stringFromDate(date!)
-        return dateString
+        return dateString 
     }
     
     
