@@ -205,7 +205,7 @@ class PLProjectDetailViewModel: NSObject {
                 for each in assignments!
                 {
                 let assignment = PLAssignment()
-                assignment.commitmentId = each.ID!
+                assignment.assignmentId = each.ID!
                 assignment.name = each.fields?.objectForKey("name") as! String
                 assignment.details = (each.fields?.objectForKey("description"))! as! String
                 let targetDate = (each.fields?.objectForKey("targetDate"))! as! NSTimeInterval

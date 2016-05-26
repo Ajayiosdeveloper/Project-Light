@@ -67,7 +67,7 @@ class PLProjectAssignmentViewModel: NSObject {
         let targetTimeOfCommitment = timeFormat(targetDate!)
         
         qbClient = PLQuickbloxHttpClient()
-        qbClient.createAssignmentForProject(id,startDate: Int(startDateOfCommitment), targetDate: Int(targetDateOfCommitment), name:name, description: description, assignees:asigneeIds,assigneeUserIds:assigneeUserIds,startTime: startTimeOfCommitment, endTime: targetTimeOfCommitment) { (res) in
+        qbClient.createAssignmentForProject(id,startDate: Int(startDateOfCommitment), targetDate: Int(targetDateOfCommitment), name:name, description: description, assignees:asigneeIds,assigneeUserIds:assigneeUserIds,startTime: startTimeOfCommitment, endTime: targetTimeOfCommitment,members: assignees) { (res) in
             
             completion(res)
         }
@@ -245,6 +245,6 @@ class PLProjectAssignmentViewModel: NSObject {
     
     func updateAssigmentStatusOfLoggedInUser(){
         
-        
+        qbClient.updateRemoteAssigmentStatus(selectedAssignment!.assignmentId)
     }
 }
