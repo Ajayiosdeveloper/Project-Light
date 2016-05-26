@@ -136,12 +136,12 @@ public class JSQMessagesViewController: UIViewController, JSQMessagesCollectionV
         
         if self.senderID == "" {
             
-            print("senderID must not be nil \(__FUNCTION__)")
+            
             //abort()
         }
         if self.senderDisplayName == "" {
             
-            print("senderDisplayName must not be nil \(__FUNCTION__)")
+           
            // abort()
         }
         
@@ -236,14 +236,13 @@ public class JSQMessagesViewController: UIViewController, JSQMessagesCollectionV
     
     public func didPressSendButton(button: UIButton, withMessageText text: String, senderId: String, senderDisplayName: String, date: NSDate) {
         
-        print("ERROR: required method not implemented in subclass. Need to implement \(__FUNCTION__)")
+       
         //abort()
     }
 
     public func didPressAccessoryButton(sender: UIButton) {
         
-        print("ERROR: required method not implemented in subclass. Need to implement \(__FUNCTION__)")
-        //abort()
+              //abort()
     }
     
     public func finishSendingMessage() {

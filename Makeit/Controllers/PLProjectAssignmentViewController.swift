@@ -200,6 +200,10 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
         }else{
             cell.accessoryType = .None
         }
+        
+        if assignementViewModel.selectedAssignment == nil{
+            cell.statueField.text = ""
+        }
    
         return cell
      

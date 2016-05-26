@@ -62,7 +62,7 @@ public class JSQMediaItem: NSObject, JSQMessageMediaData, NSCoding, NSCopying {
     public var mediaView: UIView? {
         
         get {
-            print("Error! required method not implemented in subclass. Need to implement \(__FUNCTION__)")
+          
             abort()
         }
     }

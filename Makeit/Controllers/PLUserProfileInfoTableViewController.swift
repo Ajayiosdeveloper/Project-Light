@@ -52,7 +52,7 @@ class PLUserProfileInfoTableViewController: UITableViewController,UITextFieldDel
     func fetchingUserDetails(userId : UInt)
      {
        userProfileModel.getUserProfileDetail(userId) { dict in
-       print("Output")
+      
      
       if let _ = dict{
     
@@ -103,7 +103,6 @@ class PLUserProfileInfoTableViewController: UITableViewController,UITextFieldDel
 
     @IBAction func updateUserProfile(sender: AnyObject)
     {
-        print("Update User Profile")
        
         userProfileModel.createUSerProfileWith(dobPicker.date, companyName: companyName.text, technology: technology.text, experience: self.experience.text , designation: designation.text, emailId : emailId.text) { (result) in
             if result

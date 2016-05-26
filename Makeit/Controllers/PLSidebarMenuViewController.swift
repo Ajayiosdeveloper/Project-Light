@@ -217,7 +217,7 @@ class PLSidebarMenuViewController: UIViewController,UIImagePickerControllerDeleg
         }
         else if indexPath.section == 2
         {
-            print("Logout Action")
+    
             var signUpViewController : PLUserLoginViewController? = self.storyboard?.instantiateViewControllerWithIdentifier("PLUserSignupAndLoginViewController") as? PLUserLoginViewController
             self.projectViewModel.performLogout()
             self.presentViewController(signUpViewController!, animated: true, completion: nil)
@@ -229,7 +229,7 @@ class PLSidebarMenuViewController: UIViewController,UIImagePickerControllerDeleg
   
     func editUserProfilePicture()
     {
-        print("edit profile")
+        
         if #available(iOS 8.0, *) {
             
             let attributedString = NSAttributedString(string: "Edit Photo", attributes: [
@@ -303,7 +303,7 @@ class PLSidebarMenuViewController: UIViewController,UIImagePickerControllerDeleg
             let actionSheet = UIActionSheet(title: "Edit Photo", delegate: self, cancelButtonTitle: nil, destructiveButtonTitle: nil, otherButtonTitles: "Photo Library","Take Photo","Share on Facebook","Share on Twitter","Cancel")
             actionSheet.showInView(self.view)
             actionSheet.tag = 1
-            print("Fallback on earlier versions")
+          
          }
        
      }
@@ -378,7 +378,7 @@ class PLSidebarMenuViewController: UIViewController,UIImagePickerControllerDeleg
         var capturedImage = resizeImage(img, width: 4.0, height: 4.0)
         SVProgressHUD.showWithStatus("Uploading")
         projectViewModel.updateUserAvatar(capturedImage){[weak self] result in
-         if result{print("Succesfully uploaded"); SVProgressHUD.dismiss();
+         if result{SVProgressHUD.dismiss();
          capturedImage = self!.resizeImage(capturedImage, width: 4.0, height: 4.0)
         
          }
@@ -390,7 +390,7 @@ class PLSidebarMenuViewController: UIViewController,UIImagePickerControllerDeleg
     
     func imagePickerControllerDidCancel(picker: UIImagePickerController) {
         
-        print("Cancelled")
+
         
         picker.dismissViewControllerAnimated(true, completion: nil)
     }

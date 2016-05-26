@@ -41,7 +41,7 @@ class PLProjectCommentViewModel: NSObject {
         commitment?.targetDate = dateToString(targetDate)
         commitment?.details = description
         qbClient.updateCommitmentTask(commitment!) { (res) in
-            print("Updated result is \(res)")
+    
         }
     }
     func dateFormat(date : NSDate) -> NSTimeInterval
@@ -165,7 +165,7 @@ class PLProjectCommentViewModel: NSObject {
          self.isAccessGranted(){[weak self] result in
             
             if result{
-                print("Saving")
+           
                 let event = EKEvent(eventStore: self!.eventStore!)
                  event.title = name
                  event.startDate = date

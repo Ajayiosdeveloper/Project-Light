@@ -72,7 +72,7 @@ class PLUserSignUpViewController: UIViewController,UITextFieldDelegate
     override func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutablePointer<Void>) {
         
         if keyPath == kSignupResultNotifier{
-            print("Coming in notifier")
+            
            //handleStatus(change,tag:kSignupTag)
             
         }

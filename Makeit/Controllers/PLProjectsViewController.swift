@@ -81,7 +81,7 @@ class PLProjectsViewController: UITableViewController,UIImagePickerControllerDel
     
     func showSettingsActionSheet()
     {
-        print("PRAISE THE LORD")
+        //print("PRAISE THE LORD")
         
         self.findHamburguerViewController()?.showMenuViewController()
     }
@@ -233,8 +233,7 @@ class PLProjectsViewController: UITableViewController,UIImagePickerControllerDel
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         fetchDataFlag = true
         if indexPath.section == 2{
-            
-            print("Improve Profile ViewController")
+      
             
             self.userProfileController = self.storyboard?.instantiateViewControllerWithIdentifier("PLUserProfileInfoTableViewController") as? PLUserProfileInfoTableViewController
             self.userProfileController?.disablingBtn = true
@@ -242,7 +241,7 @@ class PLProjectsViewController: UITableViewController,UIImagePickerControllerDel
             
         }else {
             
-            print("The selected is \(indexPath.section)")
+     
             
             let selected = projectViewModel.didSelectRowAtIndex(indexPath.row,section:indexPath.section) as PLProject
         PLSharedManager.manager.projectName = selected.name
@@ -349,7 +348,6 @@ class PLProjectsViewController: UITableViewController,UIImagePickerControllerDel
         detailViewController.projectCreatedBy = selectedProejctCreatorId
         detailViewController.projectDescription = selectedProjectDescription
         let projectDetailViewModel = PLProjectDetailViewModel(members:resulted)
-        print("Thje selected Section is \(selectedSection)")
         if let _ = selectedSection{
             projectDetailViewModel.numberOfSections = selectedSection!
         }

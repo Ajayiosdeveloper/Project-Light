@@ -44,9 +44,7 @@ class PLAddProjectViewModel: NSObject {
                     
                 completion(addedProject)
                 }else{completion(nil)}
-//                self!.isProjectCreated = result
-//                self!.willChangeValueForKey("isProjectCreated")
-//                self!.didChangeValueForKey("isProjectCreated")
+
             }
         }
         else{
@@ -75,9 +73,6 @@ class PLAddProjectViewModel: NSObject {
                 
                 self!.quickBloxClient.createNewProjectWithContributors(qbObjects){result in
                     
-//                    self!.isProjectCreated = result
-//                    self!.willChangeValueForKey("isProjectCreated")
-//                    self!.didChangeValueForKey("isProjectCreated")
                }
             }
         }
@@ -122,9 +117,7 @@ class PLAddProjectViewModel: NSObject {
             }
             
             completion(members)
-//            self.isProjectCreated = result
-//            self.willChangeValueForKey("isProjectCreated")
-//            self.didChangeValueForKey("isProjectCreated")
+
         }
         
     }

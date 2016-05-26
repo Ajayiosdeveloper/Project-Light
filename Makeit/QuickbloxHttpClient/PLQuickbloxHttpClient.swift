@@ -73,8 +73,7 @@ class PLQuickbloxHttpClient
                 application.registerUserNotificationSettings(pushNotificationSettings)
                 application.registerForRemoteNotifications()
             }else{
-                
-                print("Coming to iOS 7")
+            
                 let types: UIRemoteNotificationType = [.Alert, .Badge, .Sound]
                 application.registerForRemoteNotificationTypes(types)
             }
@@ -173,7 +172,7 @@ class PLQuickbloxHttpClient
     func userLogout() {
         
         QBRequest.logOutWithSuccessBlock({ (response) in
-            print("loggedout success")
+            
             }, errorBlock:nil)
     }
     
@@ -216,7 +215,7 @@ class PLQuickbloxHttpClient
         
         QBRequest.objectsWithClassName("PLProjectMember", extendedRequest: extendedReq, successBlock: { (_, objects, _) in
             
-            print("PRAISE THE LORD")
+            //print("PRAISE THE LORD")
             
             completion(objects)
             
@@ -247,13 +246,13 @@ class PLQuickbloxHttpClient
         customObject.fields?.setValue(id, forKey:"_parent_id")
         QBRequest.createObject(customObject, successBlock: { (response,object) in
             
-            print("PRAISE THE LORD")
+            //print("PRAISE THE LORD")
             completion(true)
             
         }) { (res) in
             
             completion(false)
-            print("Handle error")
+        
         }
     }
     
@@ -280,9 +279,10 @@ class PLQuickbloxHttpClient
             updateObject.fields?.setObject(endInterval, forKey: "targetDate")
             updateObject.fields?.setObject(commitment.isCompleted, forKey: "isCompleted")
             QBRequest.updateObject(updateObject, successBlock: { (respinse, object) in
-                        completion(true)
-            print("Trur true")
-                print("Trur true \(commitment.name)")
+                
+                completion(true)
+           
+              
                         }) { (res) in
                             completion(false)
                    
@@ -313,7 +313,7 @@ class PLQuickbloxHttpClient
         
         QBRequest.createObject(customObject, successBlock: { (res,object) in
             
-            print("PRAISE THE LORD")
+            //print("PRAISE THE LORD")
             
             PLProjectNotification.sendAssignmentNotificationToAssignees(assigneeUserIds,assignmentName:name,projectName: PLSharedManager.manager.projectName)
             
@@ -336,13 +336,13 @@ class PLQuickbloxHttpClient
         QBRequest.objectsWithClassName("PLProjectCommitment", extendedRequest: extendedReq, successBlock: { (res, commitments, page) in
             
             
-            print("PRAISE THE LORD")
+           // print("PRAISE THE LORD")
             
             completion(true,commitments)
             
         }) { (res) in
             
-            print("handle error")
+     
             
             completion(false,nil)
         }
@@ -358,7 +358,7 @@ class PLQuickbloxHttpClient
         
         QBRequest.objectsWithClassName("PLProjectAssignment", extendedRequest: extendedReq, successBlock: { (res, assignments, page) in
             
-            print("PRAISE THE LORD")
+           // print("PRAISE THE LORD")
             
             completion(true,assignments)
             
@@ -534,7 +534,8 @@ class PLQuickbloxHttpClient
         extended.setObject(projectId, forKey:"_parent_id")
 
         QBRequest.objectsWithClassName("PLProjectAssignment", extendedRequest:extended, successBlock: { (res,objects, _) in
-            print("PRAISE THE LORD")
+            
+            //print("PRAISE THE LORD")
             
             var assigmnents = [PLAssignment]()
             
@@ -591,7 +592,7 @@ class PLQuickbloxHttpClient
             
         }) { (responce : QBResponse!) -> Void in
             
-            print("The Response is \(responce)")
+         
         }
     }
     
@@ -711,8 +712,6 @@ class PLQuickbloxHttpClient
     
     func sendMessageWithoutAttachment(text:String,group:QBChatDialog,completion:(Bool)->Void){
         
-        print("no attachment______________________________________________________________________________")
-        
         let message: QBChatMessage = QBChatMessage()
         message.text = text
         let params = NSMutableDictionary()
@@ -725,8 +724,7 @@ class PLQuickbloxHttpClient
         group.sendMessage(message, completionBlock: { (error: NSError?) -> Void in
             
             if error == nil{
-                print(message.text)
-                print("Message sent Succesfully")
+              
                 completion(true)
             }
         })
@@ -736,7 +734,7 @@ class PLQuickbloxHttpClient
     
     func sendMessageWithAttachment(imageData:NSData,text:String,group:QBChatDialog,completion:(Bool)->Void){
         
-        print("attachment______________________________________________________________________________")
+    
         
         QBRequest.TUploadFile(imageData, fileName: "image.png", contentType: "image/png", isPublic: false, successBlock: {(response: QBResponse!, uploadedBlob: QBCBlob!) in
             // Create and configure message
@@ -759,8 +757,6 @@ class PLQuickbloxHttpClient
             group.sendMessage(message, completionBlock: { (error: NSError?) -> Void in
                 
                 if error == nil{
-                    print(message.text)
-                    print("Message sent Succesfully")
                     completion(true)
                 }
             })
@@ -812,7 +808,6 @@ class PLQuickbloxHttpClient
                     })
                 { (respons) in
                     completion(false)
-                    print("Error in Profile Creation")
                 }
             }
             else
@@ -830,7 +825,6 @@ class PLQuickbloxHttpClient
                     
                 }) { (res) in
                     completion(false)
-                    print("Error in Profile Updation")
                 }
                 
             }
@@ -868,14 +862,14 @@ class PLQuickbloxHttpClient
             
         }) { (_) in
             
-            print("Error")
+    
         }
     }
     
     func sendforgotPasswordLinkToEmail(email : String)
     {
         QBRequest.resetUserPasswordWithEmail(email, successBlock: { (response) in
-            print("Suceesfully Sent")
+            
         }) { (err) in
             print(err.description)
         }
@@ -893,10 +887,6 @@ class PLQuickbloxHttpClient
         extendedReq.setValue(timeInterval, forKey: "startDate")
         extendedReq.setValue(QBSession.currentSession().currentUser?.ID, forKey: "user_id")
         QBRequest.countObjectsWithClassName("PLProjectCommitment", extendedRequest: extendedReq, successBlock: { (res, count) in
-            
-            print("Here the count is Today")
-            print(count)
-            print(res)
             completion(count)
             
         }) { (res) in
@@ -922,7 +912,6 @@ class PLQuickbloxHttpClient
             
         }) { (res) in
             
-            print("Error is \(res)")
             completion(nil)
         }
     }
@@ -935,9 +924,7 @@ class PLQuickbloxHttpClient
         extendedReq.setValue(timeInterval, forKey: "startDate[gt]")
         extendedReq.setValue(QBSession.currentSession().currentUser?.ID, forKey: "user_id")
         QBRequest.countObjectsWithClassName("PLProjectCommitment", extendedRequest: extendedReq, successBlock: { (_, count) in
-            
-            print("Here the count is Tomorrow")
-            print(count)
+ 
             completion(count)
 
             
@@ -956,9 +943,7 @@ class PLQuickbloxHttpClient
         extendedReq.setValue(QBSession.currentSession().currentUser?.ID, forKey: "user_id")
         extendedReq.setValue(0, forKey: "isCompleted")
         QBRequest.countObjectsWithClassName("PLProjectCommitment", extendedRequest: extendedReq, successBlock: { (_, count) in
-           
-            print("Here the count is Pending")
-            print(count)
+ 
            
             completion(count)
             
@@ -979,9 +964,6 @@ class PLQuickbloxHttpClient
         extendedReq.setValue(timeInterval, forKey: "birthday")
         extendedReq.setValue(QBSession.currentSession().currentUser?.ID, forKey: "user_id")
         QBRequest.countObjectsWithClassName("PLProjectMember", extendedRequest: extendedReq, successBlock: { (_, count) in
-            
-            print("Here the Birthday Count")
-            print(count)
             completion(count)
           
         }){ (res) in
@@ -998,9 +980,7 @@ class PLQuickbloxHttpClient
         extendedReq.setValue(timeInterval, forKey: "birthday[gt]")
         extendedReq.setValue(QBSession.currentSession().currentUser?.ID, forKey: "user_id")
         QBRequest.countObjectsWithClassName("PLProjectMember", extendedRequest: extendedReq, successBlock: { (_, count) in
-            
-            print("UpComing Birthday Count")
-            print(count)
+        
             completion(count)
             
             
@@ -1074,11 +1054,10 @@ class PLQuickbloxHttpClient
         user.phone = String(interval)
         QBRequest.updateCurrentUser(user, successBlock: { (_, _) in
             
-            print("PRAISE THE LORD")
+            //print("PRAISE THE LORD")
             
             }) { (_) in
-                
-                print("Hello")
+            
         }
     }
     

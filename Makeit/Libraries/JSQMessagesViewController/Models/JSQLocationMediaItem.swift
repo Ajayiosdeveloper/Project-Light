@@ -98,7 +98,7 @@ public class JSQLocationMediaItem: JSQMediaItem, MKAnnotation {
             
             if error != nil {
                 
-                print("\(__FUNCTION__) Error creating map snapshot: \(error)")
+             
                 return
             }
             
