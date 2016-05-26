@@ -78,7 +78,7 @@ class PLAddProjectViewController: UIViewController,UISearchBarDelegate,UITextFie
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.Plain, target:self, action:#selector(PLAddProjectViewController.performDone))
     }
    
-    func checkContributorsAddedOrNot() -> Bool
+    func isAddedContributor() -> Bool
     {
         if addProjectViewModel.selectedContributors.count == 0
         {
@@ -97,6 +97,8 @@ class PLAddProjectViewController: UIViewController,UISearchBarDelegate,UITextFie
         addProjectViewModel.addObserver(self, forKeyPath:"isProjectCreated", options: NSKeyValueObservingOptions.New, context:nil)
         if projectDetails == nil{
         if addProjectViewModel.validateProjectDetails(projectName.text!){
+            if isAddedContributor()
+            {
             addProjectViewModel.createNewProjectWith(projectName.text!,description:projectDescription.text!){[weak self]project in
                 if let _ = project{
                     self!.delegate?.addProjectToDataSource(project!)
@@ -104,6 +106,7 @@ class PLAddProjectViewController: UIViewController,UISearchBarDelegate,UITextFie
                     self!.cleanUp()
 
                 }
+             }
             }
         }else {activityIndicatorView.stopAnimating();showAlertWithMessage("error!", message:"Enter Project name")}
         }
