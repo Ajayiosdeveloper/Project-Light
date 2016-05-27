@@ -1082,7 +1082,7 @@ class PLQuickbloxHttpClient
     }
     
     
-    func updateRemoteAssigmentStatus(id:String,completion:(Bool)->Void){
+    func updateRemoteAssigmentStatus(id:String,status:Int,completion:(Bool)->Void){
         
         print("updateRemoteAssigmentStatus\(id)")
         
@@ -1091,7 +1091,7 @@ class PLQuickbloxHttpClient
         customObject.className = "PLProjectAssignmentMember"
         customObject.ID = "5746a46ea28f9a8dd7000078"
         customObject.fields?.setObject(id, forKey: "_parent_id")
-        customObject.fields?.setObject(1, forKey: "assigneeStatus")
+        customObject.fields?.setObject(status, forKey: "assigneeStatus")
         customObject.fields?.setObject(userId!, forKey:"assigneeUserId")
         QBRequest.updateObject(customObject, successBlock: { (_, _) in
             completion(true)

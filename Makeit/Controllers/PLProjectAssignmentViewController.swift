@@ -306,7 +306,7 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
     func performButtonActionOfFooterView(sender:UIButton){
         print(sender.tag)
         if sender.tag == 1{
-            assignementViewModel.updateAssigmentStatusOfLoggedInUser(){res in
+            assignementViewModel.updateAssigmentStatusOfLoggedInUser(1){res in
                 if res{
                     
                   self.footerView.backgroundColor =  UIColor(colorLiteralRed: 89/255, green: 181/255, blue: 50/255, alpha: 0.5)
@@ -320,7 +320,15 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
         }
         else{
             
-            
+            assignementViewModel.updateAssigmentStatusOfLoggedInUser(-1){res in
+                if res{
+                    
+                    self.footerView.backgroundColor =  UIColor(colorLiteralRed: 89/255, green: 181/255, blue: 50/255, alpha: 0.5)
+                    self.assignmentStatus.setTitle("Task Closed", forState:.Normal)
+                    self.assignmentStatus.enabled = false
+                   }
+            }
+
         }
     }
     

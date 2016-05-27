@@ -97,8 +97,8 @@ class PLAddProjectViewController: UIViewController,UISearchBarDelegate,UITextFie
         addProjectViewModel.addObserver(self, forKeyPath:"isProjectCreated", options: NSKeyValueObservingOptions.New, context:nil)
         if projectDetails == nil{
         if addProjectViewModel.validateProjectDetails(projectName.text!){
-            
-            if checkContributorsAddedOrNot(){
+            if isAddedContributor()
+            {
             addProjectViewModel.createNewProjectWith(projectName.text!,description:projectDescription.text!){[weak self]project in
                 if let _ = project{
                     self!.delegate?.addProjectToDataSource(project!)
@@ -109,8 +109,7 @@ class PLAddProjectViewController: UIViewController,UISearchBarDelegate,UITextFie
              }
             }
           }
-        }else {activityIndicatorView.stopAnimating();showAlertWithMessage("error!", message:"Enter Project name")}
-        }
+        }//else {activityIndicatorView.stopAnimating();showAlertWithMessage("error!", message:"Enter Project name")}
         else{
             
             addProjectViewModel.addContributorsToExistingProject(projectDetails![0],des: projectDescription.text!){[weak self] members in
@@ -336,4 +335,5 @@ class PLAddProjectViewController: UIViewController,UISearchBarDelegate,UITextFie
            
         }
     }
+
 }
