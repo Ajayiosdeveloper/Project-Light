@@ -13,7 +13,7 @@ class PLAddProjectViewModel: NSObject {
     
     var selectedContributors:[PLTeamMember]!
     var quickBloxClient:PLQuickbloxHttpClient = PLQuickbloxHttpClient()
-    var isProjectCreated:Bool = false
+    //var isProjectCreated:Bool = false
     
     override init() {
         

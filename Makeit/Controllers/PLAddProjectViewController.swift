@@ -94,7 +94,7 @@ class PLAddProjectViewController: UIViewController,UISearchBarDelegate,UITextFie
     func performDone()
     {
         activityIndicatorView.startAnimating()
-        addProjectViewModel.addObserver(self, forKeyPath:"isProjectCreated", options: NSKeyValueObservingOptions.New, context:nil)
+        //addProjectViewModel.addObserver(self, forKeyPath:"isProjectCreated", options: NSKeyValueObservingOptions.New, context:nil)
         if projectDetails == nil{
         if addProjectViewModel.validateProjectDetails(projectName.text!){
             if isAddedContributor()
@@ -121,7 +121,7 @@ class PLAddProjectViewController: UIViewController,UISearchBarDelegate,UITextFie
         }
     }
     
-    override func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutablePointer<Void>) {
+    /*override func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutablePointer<Void>) {
         
         if keyPath == "isProjectCreated" {
         if let _ = change, value = change![NSKeyValueChangeNewKey]{
@@ -138,11 +138,11 @@ class PLAddProjectViewController: UIViewController,UISearchBarDelegate,UITextFie
                 
             }
         }
-         // addProjectViewModel.removeObserver(self, forKeyPath:"isProjectCreated")
+         addProjectViewModel.removeObserver(self, forKeyPath:"isProjectCreated")
       }
     
     }
-    
+*/
     func showAlertWithMessage(title:String,message:String)
     {
         if #available(iOS 8, *)
@@ -178,8 +178,10 @@ class PLAddProjectViewController: UIViewController,UISearchBarDelegate,UITextFie
         {
             addProjectViewModel.getUsersWithName(searchText){[weak self] members in
                 
-                if let _ = members{
+                if let _ = members
+                {
                 self!.teamMemberViewModel = PLTeamMemberModelView(searchMembers: members!)
+                searchBar.resignFirstResponder()
                 self!.showPopOver()
                 }
                 else
@@ -187,7 +189,6 @@ class PLAddProjectViewController: UIViewController,UISearchBarDelegate,UITextFie
                     print("No matches Found")
                 }
             }
-           // searchBar.resignFirstResponder()
         }
         else if searchText.characters.count == 0
         {
