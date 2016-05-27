@@ -316,7 +316,7 @@ class PLQuickbloxHttpClient
              customObjectTwo.fields?.setValue(each.memberUserId, forKey: "assigneeUserId")
              customObjectTwo.fields?.setValue(each.memberEmail, forKey: "assigneeEmail")
              customObjectTwo.fields?.setValue(0, forKey: "assigneeStatus")
-             customObjectTwo.fields?.setValue(each.avatar, forKey: "Avatar")
+             customObjectTwo.fields?.setValue(each.profilePicture, forKey: "Avatar")
              customObjectTwo.fields?.setValue(PLSharedManager.manager.projectName, forKey: "projectName")
              customObjectTwo.fields?.setValue(object?.ID!, forKey:"_parent_id")
              

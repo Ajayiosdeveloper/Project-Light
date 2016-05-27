@@ -166,10 +166,10 @@ class PLProjectAssignmentViewModel: NSObject {
     }
     
     
-    func assignmentTargetDate() -> String
-    {
-        let date = timeFormats(selectedAssignment!.targetDate)
-        return date
+    func assignmentTargetDate() -> String {
+        print("datestring")
+        let dateStr = timeFormats(selectedAssignment!.targetDate)
+        return dateStr
     }
     
     func assignmentStartDate() -> String {
@@ -203,7 +203,7 @@ class PLProjectAssignmentViewModel: NSObject {
                  assignmentMember.fullName = member.fields?.objectForKey("assigneeName") as! String
                  assignmentMember.memberUserId = member.fields?.objectForKey("assigneeUserId") as! UInt
                  assignmentMember.assigneeStatus = member.fields?.objectForKey("assigneeStatus") as! UInt
-                 assignmentMember.avatar = member.fields?.objectForKey("Avatar") as! String
+                 assignmentMember.profilePicture = member.fields?.objectForKey("Avatar") as! String
                     assignmentMember.memberEmail = member.fields?.objectForKey("assigneeEmail") as! String
                  assignmentMember.assignmentRecordId = member.ID!
                   if assignmentMember.memberUserId == QBSession.currentSession().currentUser?.ID{
@@ -222,6 +222,21 @@ class PLProjectAssignmentViewModel: NSObject {
             }
             
             
+        }
+        
+        let loggedInUserid = QBSession.currentSession().currentUser?.ID
+        let result = selectedAssignment?.assineesUserIds.contains(loggedInUserid!)
+        if let _ = result
+        {
+            if result!
+            {
+                let user = PLTeamMember(name: "", id: 0)
+                user.fullName = "Me"
+                user.memberEmail = (QBSession.currentSession().currentUser?.email)!
+                user.memberUserId = (QBSession.currentSession().currentUser?.ID)!
+                user.profilePicture = (QBSession.currentSession().currentUser?.customData)!
+                selectedAssigneeList.insert(user, atIndex: 0)
+            }
         }
     }
     
@@ -244,7 +259,7 @@ class PLProjectAssignmentViewModel: NSObject {
     }
     
     
-    func contributorImage(row:Int,completion:(UIImage?)->Void) {
+    func contributorImageRowAtIndexPath(row:Int,completion:(UIImage?)->Void) {
         
         if qbClient == nil{ qbClient = PLQuickbloxHttpClient()}
         
