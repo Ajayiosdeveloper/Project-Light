@@ -60,7 +60,7 @@ class PLProjectsViewModel: NSObject {
             project.projectId = remoteObject.ID
             project.createdByName = "You"
             project.createdBy = remoteObject.userID
-            //project.parentId = remoteObject.parentID
+            project.parentId = remoteObject.parentID
             createdProjectList.append(project)
         }
        
@@ -91,8 +91,10 @@ class PLProjectsViewModel: NSObject {
     }
     
     func  addNewProjectToCreatedProjectList(project:PLProject,completion:(Bool)->Void){
-        
+        print("created Count")
+        print(createdProjectList.count)
         self.createdProjectList.append(project) // what happens with no append
+        print(createdProjectList.count)
         completion(true)
     }
     
@@ -353,7 +355,7 @@ class PLProjectsViewModel: NSObject {
     
     func getPendingTasksCount(completion:(String)->Void){
         
-        quickBloxClient.contOfPendingTasks(){ count in
+        quickBloxClient.countOfPendingTasks(){ count in
             if count == 0{
                 completion(String(0))
             }else{

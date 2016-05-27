@@ -16,7 +16,7 @@ class PLProject: NSObject {
     var createdByName:String
     var createdAt:NSDate
     var projectId:String?
-    //var parentId:String?
+    var parentId:String?
     init(projectName:String,subTitle:String? = nil) {
         
         name = projectName
@@ -24,7 +24,7 @@ class PLProject: NSObject {
         createdBy = 0
         createdByName = ""
         projectId = nil
-        //parentId = nil
+        parentId = nil
         createdAt = NSDate()
     }
 }
