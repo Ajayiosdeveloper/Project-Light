@@ -169,7 +169,7 @@ class PLQuickbloxHttpClient
     
     //Perform logout
     
-    func userLogout() {
+    func logout() {
         
         QBRequest.logOutWithSuccessBlock({ (response) in
             
@@ -214,10 +214,7 @@ class PLQuickbloxHttpClient
         extendedReq.setObject(id, forKey:"_parent_id")
         
         QBRequest.objectsWithClassName("PLProjectMember", extendedRequest: extendedReq, successBlock: { (_, objects, _) in
-            
-            //print("PRAISE THE LORD")
-            
-            completion(objects)
+                completion(objects)
             
         }) { (res) in
             
@@ -246,7 +243,6 @@ class PLQuickbloxHttpClient
         customObject.fields?.setValue(id, forKey:"_parent_id")
         QBRequest.createObject(customObject, successBlock: { (response,object) in
             
-            //print("PRAISE THE LORD")
             completion(true)
             
         }) { (res) in
@@ -350,10 +346,7 @@ class PLQuickbloxHttpClient
         
         QBRequest.objectsWithClassName("PLProjectCommitment", extendedRequest: extendedReq, successBlock: { (res, commitments, page) in
             
-            
-           // print("PRAISE THE LORD")
-            
-            completion(true,commitments)
+                completion(true,commitments)
             
         }) { (res) in
             
@@ -372,8 +365,7 @@ class PLQuickbloxHttpClient
         extendedReq.setValue(id, forKey:"_parent_id")
         
         QBRequest.objectsWithClassName("PLProjectAssignment", extendedRequest: extendedReq, successBlock: { (res, assignments, page) in
-            
-           // print("PRAISE THE LORD")
+        
             
             completion(true,assignments)
             
@@ -408,7 +400,7 @@ class PLQuickbloxHttpClient
         }
     }
     
-    func fetchUserAvatarWithBlobId(completion:(NSData?)->Void)
+    func fetchUserProfilePictureWithBlobId(completion:(NSData?)->Void)
     {
         QBRequest.blobsWithSuccessBlock({ (_, _, blobs) in
             
@@ -447,7 +439,7 @@ class PLQuickbloxHttpClient
     }
     
     
-    func updateUserAvatarWithBlobId(image:UIImage,completion:(Bool)->Void){
+    func updateUserProfilePictureWithBlobId(image:UIImage,completion:(Bool)->Void){
         
         QBRequest.blobsWithSuccessBlock({ (_, _, blobs) in
             
@@ -1075,7 +1067,7 @@ class PLQuickbloxHttpClient
         user.phone = String(interval)
         QBRequest.updateCurrentUser(user, successBlock: { (_, _) in
             
-            //print("PRAISE THE LORD")   // success
+            // success
             
             }) { (_) in   // error response
              

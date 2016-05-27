@@ -94,7 +94,7 @@ class PLAddProjectViewController: UIViewController,UISearchBarDelegate,UITextFie
     func performDone()
     {
         activityIndicatorView.startAnimating()
-        addProjectViewModel.addObserver(self, forKeyPath:"isProjectCreated", options: NSKeyValueObservingOptions.New, context:nil)
+        //addProjectViewModel.addObserver(self, forKeyPath:"isProjectCreated", options: NSKeyValueObservingOptions.New, context:nil)
         if projectDetails == nil{
         if addProjectViewModel.validateProjectDetails(projectName.text!){
             if isAddedContributor()
@@ -121,7 +121,7 @@ class PLAddProjectViewController: UIViewController,UISearchBarDelegate,UITextFie
         }
     }
     
-    override func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutablePointer<Void>) {
+    /*override func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutablePointer<Void>) {
         
         if keyPath == "isProjectCreated" {
         if let _ = change, value = change![NSKeyValueChangeNewKey]{
@@ -138,11 +138,11 @@ class PLAddProjectViewController: UIViewController,UISearchBarDelegate,UITextFie
                 
             }
         }
-          addProjectViewModel.removeObserver(self, forKeyPath:"isProjectCreated")
+         addProjectViewModel.removeObserver(self, forKeyPath:"isProjectCreated")
       }
     
     }
-    
+*/
     func showAlertWithMessage(title:String,message:String)
     {
         if #available(iOS 8, *)
@@ -178,19 +178,21 @@ class PLAddProjectViewController: UIViewController,UISearchBarDelegate,UITextFie
         {
             addProjectViewModel.getUsersWithName(searchText){[weak self] members in
                 
-                if let _ = members{
+                if let _ = members
+                {
                 self!.teamMemberViewModel = PLTeamMemberModelView(searchMembers: members!)
+                searchBar.resignFirstResponder()
                 self!.showPopOver()
-                }else{print("No matches Found")}
-                
+                }
+                else
+                {
+                    print("No matches Found")
+                }
             }
-            searchBar.resignFirstResponder()
         }
-        if searchText.characters.count == 0
+        else if searchText.characters.count == 0
         {
-           
-            close()
-        
+           close()
         }
     }
 
@@ -200,15 +202,15 @@ class PLAddProjectViewController: UIViewController,UISearchBarDelegate,UITextFie
     
      func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        return addProjectViewModel.numberOfRowsInTableView()
+        return addProjectViewModel.numberOfRows()
     }
     
       func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! PLTableViewCell
-        cell.memberName.text = addProjectViewModel.titleAtIndexPathOfRow(indexPath.row)
-        cell.memberDetail.text = addProjectViewModel.emailAtIndexPathOfRow(indexPath.row)
-        addProjectViewModel.contributorImageRowAtIndexPath(indexPath.row, completion: { (avatar) in
+        cell.memberName.text = addProjectViewModel.projectTitle(indexPath.row)
+        cell.memberDetail.text = addProjectViewModel.memberEmailid(indexPath.row)
+        addProjectViewModel.contributorImage(indexPath.row, completion: { (avatar) in
             
             if let _ = avatar{
                 
@@ -238,23 +240,17 @@ class PLAddProjectViewController: UIViewController,UISearchBarDelegate,UITextFie
             addProjectViewModel.deleteSelectedContributor(indexPath.row)
            
            self.contributorsTableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Automatic)
-            
-           
         }
     }
     
     
-    func reloadTableViewWithComtributors(member:PLTeamMember){
+    func reloadTableViewWithContributors(member:PLTeamMember){
         
-           if  addProjectViewModel.andOrRemoveContributor(member)
+           if  addProjectViewModel.removeContributor(member)
            {
-                //dismissPopover()
-                //close()
                 contributorsTableView.reloadData()
            }
            else{
-            
-               //dismissPopover()
                close()
                showAlertWithMessage("Failed to add \(member.fullName)", message: "\(member.fullName) is already contributing to ")
           }

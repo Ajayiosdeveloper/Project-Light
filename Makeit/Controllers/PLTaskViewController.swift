@@ -24,9 +24,9 @@ class PLTaskViewController: UIViewController,UITableViewDelegate,UITableViewData
         addBackBarButtonItem()
        }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(animated: Bool)
+    {
         super.viewWillAppear(animated)
-        
         
        if let _ = selectedType
        {
@@ -60,7 +60,6 @@ class PLTaskViewController: UIViewController,UITableViewDelegate,UITableViewData
                     , completion: { (res) in
                         self.tableView.reloadData()
                 })
-        
             }
             else{
                 self.title = "Upcoming Birthdays"
@@ -70,8 +69,7 @@ class PLTaskViewController: UIViewController,UITableViewDelegate,UITableViewData
                 })
             }
             
-        default:
-            print("")
+        default: print("")
         }
        }
     }
@@ -84,17 +82,19 @@ class PLTaskViewController: UIViewController,UITableViewDelegate,UITableViewData
 
     func performCancel()
     {
-     self.dismissViewControllerAnimated(true, completion: nil)
+        self.dismissViewControllerAnimated(true, completion: nil)
     }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
     
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        
+    func numberOfSectionsInTableView(tableView: UITableView) -> Int
+    {
       return 1
     }
+    
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int
     {
         if selectedType == 3{
@@ -103,12 +103,13 @@ class PLTaskViewController: UIViewController,UITableViewDelegate,UITableViewData
         return sidebarViewModel.numbersOfRows()
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell
+    {
         if selectedType != 3 {
         let cell = self.tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! PLTasksViewCell
             
-            cell.taskNameField.text = "Task:  " + sidebarViewModel.titleOfRowAtIndexPath(indexPath.row)
-            cell.projectNameField.text =  "Project: " + sidebarViewModel.projectTitleOfRowAtIndexPath(indexPath.row)
+            cell.taskNameField.text = "Task:  " + sidebarViewModel.commitmentTitle(indexPath.row)
+            cell.projectNameField.text =  "Project: " + sidebarViewModel.projectTitle(indexPath.row)
             cell.detailsField.text = "Detail: " + sidebarViewModel.commitmentDetails(indexPath.row)
             if selectedType == 0
             {
@@ -138,7 +139,7 @@ class PLTaskViewController: UIViewController,UITableViewDelegate,UITableViewData
             {
                 cell.birthdayDate.text = sidebarViewModel.teamMembersBirthday(indexPath.row)
             }
-            sidebarViewModel.contributorImageRowAtIndexPath(indexPath.row, completion: { (avatar) in
+            sidebarViewModel.contributorImage(indexPath.row, completion: { (avatar) in
                 
                 if let _ = avatar{
                     
@@ -156,7 +157,6 @@ class PLTaskViewController: UIViewController,UITableViewDelegate,UITableViewData
             cell.makeMessage.tag = indexPath.row
             cell.sendBirthdayGreetings.addTarget(self, action: #selector(PLTaskViewController.sendBirthdayGreetings), forControlEvents: UIControlEvents.TouchUpInside)
             cell.sendBirthdayGreetings.tag = indexPath.row
-            //cell.accessoryType = .DisclosureIndicator
             return cell
         }
     }
@@ -187,7 +187,7 @@ class PLTaskViewController: UIViewController,UITableViewDelegate,UITableViewData
             
             UIApplication.sharedApplication().openURL(callUrl!)
         }else{
-            print("Can not make a call")
+            print("Cannot make a call")
         }
     }
     
@@ -198,7 +198,7 @@ class PLTaskViewController: UIViewController,UITableViewDelegate,UITableViewData
             
             UIApplication.sharedApplication().openURL(message!)
         }else{
-            print("Can not make sms")
+            print("Cannot make sms")
         }
     }
     

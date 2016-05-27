@@ -25,39 +25,39 @@ class PLTeamMemberModelView: NSObject {
         return searchList.count
     }
     
-    func titleOfRowAtIndexPath(row:Int)->String
+    func titleOfRow(row: Int)->String
     {
         let member = searchList[row]
         
         return member.fullName
     }
 
-    func emailOfRowAtIndexPath(row:Int)->String{
+    func emailOfRow(row :Int)->String{
         let member = searchList[row]
         
         return member.memberEmail
     }
     
-    func add(index:Int)->PLTeamMember {
+    func add(row : Int)->PLTeamMember {
         
-        let contributor = self.searchList[index]
+        let contributor = self.searchList[row]
         
         return contributor
         
     }
     
-    func remove(index:Int)->PLTeamMember {
+    func remove(row:Int) -> PLTeamMember {
         
-        let contributor = self.searchList[index]
+        let contributor = self.searchList[row]
         
      
 
         return contributor
     }
     
-    func isContributorAlreadyAdded(index:Int) -> Bool {
+    func isContributorAlreadyAdded(row:Int) -> Bool {
         
-        let contributor = self.searchList[index]
+        let contributor = self.searchList[row]
         
         let existingContributors = PLSharedManager.manager.existingContributorsList
         
@@ -74,12 +74,12 @@ class PLTeamMemberModelView: NSObject {
     }
     
     
-    func contributorImageRowAtIndexPath(row:Int,completion:(UIImage?)->Void) {
+    func contributorImageRow(row:Int, completion:(UIImage?)->Void) {
         
         if qbClient == nil{ qbClient = PLQuickbloxHttpClient()}
         
         let member = searchList[row]
-        let avatar = member.avatar
+        let avatar = member.profilePicture
         if avatar == "Avatar"
         {
             completion(nil)

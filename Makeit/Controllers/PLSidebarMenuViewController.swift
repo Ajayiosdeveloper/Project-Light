@@ -45,7 +45,7 @@ class PLSidebarMenuViewController: UIViewController,UIImagePickerControllerDeleg
 
         userProfilePic.layer.cornerRadius = 35.0
         userProfilePic.layer.masksToBounds = true
-        projectViewModel.fetchUserAvatar(){[weak self] avatar in
+        projectViewModel.fetchUserProfilePicture(){[weak self] avatar in
          
          if avatar != nil{
          self!.userProfilePic.image = avatar!
@@ -232,7 +232,7 @@ class PLSidebarMenuViewController: UIViewController,UIImagePickerControllerDeleg
         {
     
             var signUpViewController : PLUserLoginViewController? = self.storyboard?.instantiateViewControllerWithIdentifier("PLUserSignupAndLoginViewController") as? PLUserLoginViewController
-            self.projectViewModel.performLogout()
+            self.projectViewModel.logout()
             self.presentViewController(signUpViewController!, animated: true, completion: nil)
             signUpViewController = nil
         }
@@ -390,7 +390,7 @@ class PLSidebarMenuViewController: UIViewController,UIImagePickerControllerDeleg
         userProfilePic.image = img
         var capturedImage = resizeImage(img, width: 4.0, height: 4.0)
         SVProgressHUD.showWithStatus("Uploading")
-        projectViewModel.updateUserAvatar(capturedImage){[weak self] result in
+        projectViewModel.updateUserProfilePicture(capturedImage){[weak self] result in
          if result{SVProgressHUD.dismiss();
          capturedImage = self!.resizeImage(capturedImage, width: 4.0, height: 4.0)
         

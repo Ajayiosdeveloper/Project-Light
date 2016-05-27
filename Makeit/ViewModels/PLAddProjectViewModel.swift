@@ -13,14 +13,12 @@ class PLAddProjectViewModel: NSObject {
     
     var selectedContributors:[PLTeamMember]!
     var quickBloxClient:PLQuickbloxHttpClient = PLQuickbloxHttpClient()
-    var isProjectCreated:Bool = false
+    //var isProjectCreated:Bool = false
     
     override init() {
         
         selectedContributors = [PLTeamMember]()
-        
-    
-    }
+   }
     
     func validateProjectDetails(name:String) -> Bool {
         
@@ -31,7 +29,7 @@ class PLAddProjectViewModel: NSObject {
        return true
     }
 
-    func createNewProjectWith(name:String,description:String,completion:(PLProject?)->Void){
+    func createNewProjectWith(name:String, description:String, completion:(PLProject?)->Void){
         
         if self.selectedContributors.count == 0 {
             
@@ -58,8 +56,8 @@ class PLAddProjectViewModel: NSObject {
                    qbCustomObject.fields?.setObject(name, forKey:"projectName")
                    qbCustomObject.fields?.setObject(description, forKey:"subTitle")
                    qbCustomObject.fields?.setObject(each.fullName, forKey:"name")
-                   qbCustomObject.fields?.setObject(each.avatar, forKey:"avatar")
-                    qbCustomObject.fields?.setObject(each.memberEmail, forKey:"memberEmail")
+                   qbCustomObject.fields?.setObject(each.profilePicture, forKey:"avatar")
+                   qbCustomObject.fields?.setObject(each.memberEmail, forKey:"memberEmail")
                    qbCustomObject.fields?.setObject(each.memberUserId, forKey: "member_User_Id")
                    qbCustomObject.fields?.setObject(each.birthdayInterval, forKey:"birthday" )
 
@@ -84,11 +82,10 @@ class PLAddProjectViewModel: NSObject {
        
     }
     
-    func addContributorsToExistingProject(id:String,des:String,completion:([PLTeamMember])->Void)
+    func addContributorsToExistingProject(id:String, des:String, completion:([PLTeamMember]) -> Void)
     {
         
-        
-        var qbObjects:[QBCOCustomObject] = [QBCOCustomObject]()
+                var qbObjects:[QBCOCustomObject] = [QBCOCustomObject]()
         
         for each in self.selectedContributors{
             
@@ -99,7 +96,7 @@ class PLAddProjectViewModel: NSObject {
             qbCustomObject.fields?.setObject(each.fullName, forKey:"name")
             qbCustomObject.fields?.setObject(each.memberUserId, forKey: "member_User_Id")
             qbCustomObject.fields?.setObject(each.birthdayInterval, forKey:"birthday" )
-            qbCustomObject.fields?.setObject(each.avatar, forKey:"avatar")
+            qbCustomObject.fields?.setObject(each.profilePicture, forKey:"avatar")
             qbCustomObject.fields?.setObject(each.memberEmail, forKey:"memberEmail")
             qbCustomObject.fields?.setObject(id, forKey:"_parent_id")
             let creatorDetails:[AnyObject] = [(QBSession.currentSession().currentUser?.fullName)!, (QBSession.currentSession().currentUser?.ID)!,(QBSession.currentSession().currentUser?.customData)!,(QBSession.currentSession().currentUser?.email)!]
@@ -116,7 +113,7 @@ class PLAddProjectViewModel: NSObject {
                 let name = (each.fields?.objectForKey("name"))! as! String
                 let teamMember = PLTeamMember(name:name, id:0)
                 teamMember.memberUserId = (each.fields?.objectForKey("member_User_Id"))! as! UInt
-                teamMember.avatar = each.fields?.objectForKey("avatar") as! String
+                teamMember.profilePicture = each.fields?.objectForKey("avatar") as! String
                 teamMember.memberEmail = each.fields?.objectForKey("memberEmail") as! String
                 members.append(teamMember)
             }
@@ -142,7 +139,7 @@ class PLAddProjectViewModel: NSObject {
                     
                     let teamMember = PLTeamMember(name:qbMember.fullName!, id: qbMember.ID)
                     teamMember.memberUserId = qbMember.ID
-                    teamMember.avatar = qbMember.customData!
+                    teamMember.profilePicture = qbMember.customData!
                     teamMember.memberEmail = qbMember.email!
                     teamMember.birthdayInterval = UInt(qbMember.phone!)!
                     teamMembers.append(teamMember)
@@ -155,26 +152,26 @@ class PLAddProjectViewModel: NSObject {
            }
     }
     
-    func numberOfRowsInTableView()->Int
+    func numberOfRows()->Int
     {
         return self.selectedContributors.count
     }
     
-    func titleAtIndexPathOfRow(row:Int)->String
+    func projectTitle(row:Int)->String
     {
         let member = selectedContributors[row]
         
         return member.fullName
     }
     
-    func emailAtIndexPathOfRow(row:Int)->String
+    func memberEmailid(row:Int)->String
     {
         let member = selectedContributors[row]
         
         return member.memberEmail
     }
     
-    func andOrRemoveContributor(member:PLTeamMember)->Bool{
+    func removeContributor(member:PLTeamMember)->Bool{
         
         if self.selectedContributors.count == 0 { self.selectedContributors.append(member)}
         else{
@@ -192,15 +189,15 @@ class PLAddProjectViewModel: NSObject {
         return true
     }
   
-    func deleteSelectedContributor(index:Int) {
+    func deleteSelectedContributor(row: Int) {
         
-        self.selectedContributors.removeAtIndex(index)
+        self.selectedContributors.removeAtIndex(row)
     }
     
-    func contributorImageRowAtIndexPath(row:Int,completion:(UIImage?)->Void) {
+    func contributorImage(row:Int, completion:(UIImage?)->Void) {
         
         let member = selectedContributors[row]
-        let avatar = member.avatar
+        let avatar = member.profilePicture
         if avatar == "Avatar"
         {
             completion(nil)

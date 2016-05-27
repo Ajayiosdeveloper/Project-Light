@@ -37,7 +37,7 @@ class PLTeamMember: NSObject {
     var memberUserId:UInt
     var memberEmail:String = ""
     var birthdayInterval:UInt = 0
-    var avatar:String
+    var profilePicture:String
     var birthdayDate = 0
     static var creatorDetails:[String:AnyObject]?
     
@@ -46,7 +46,7 @@ class PLTeamMember: NSObject {
         memberId = ""
         projectId = ""
         memberUserId = 0
-        avatar = ""
+        profilePicture = ""
         memberEmail = ""
         birthdayDate = 0
     }

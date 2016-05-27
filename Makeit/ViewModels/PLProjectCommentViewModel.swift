@@ -153,7 +153,7 @@ class PLProjectCommentViewModel: NSObject {
         return 5
     }
     
-    func priorityTypeForRow(row:Int)->String{
+    func priorityTypeForRow(row:Int) -> String{
         
       let priorityType = ["Critical","Very Important","Important","Medium","Low"]
    

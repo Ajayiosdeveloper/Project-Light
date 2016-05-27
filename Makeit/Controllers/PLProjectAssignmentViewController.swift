@@ -172,8 +172,8 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
       func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCellWithIdentifier("Cell") as! PLAssigneeTableViewCell
-        cell.nameLabel.text = assignementViewModel.titleOfRowAtIndexPath(indexPath.row)
-        cell.mailIdField.text = assignementViewModel.emailOfRowAtIndexPath(indexPath.row)
+        cell.nameLabel.text = assignementViewModel.memberName(indexPath.row)
+        cell.mailIdField.text = assignementViewModel.memberEmail(indexPath.row)
         cell.disclosureButton.tag = indexPath.row
         assignementViewModel.contributorImageRowAtIndexPath(indexPath.row, completion: { (avatar) in
             
@@ -345,7 +345,8 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
         addOnView.addSubview(assignmentStatus)
     }
 
-    func performButtonActionOfFooterView(sender:UIButton){
+    func performButtonActionOfFooterView(sender:UIButton)
+    {
         print(sender.tag)
         if sender.tag == 1{
             assignementViewModel.updateAssigmentStatusOfLoggedInUser(1){res in
@@ -404,7 +405,7 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
         profileViewController.userProfileModel = PLUserProfileInfoViewModel()
         let userId = assignementViewModel.getSelectedAssigneeUserId(sender.tag)
         profileViewController.fetchingUserDetails(userId)
-        profileViewController.userName = assignementViewModel.titleOfRowAtIndexPath(sender.tag)
+        profileViewController.userName = assignementViewModel.memberName(sender.tag)
         profileViewController.delegate = self
         if assignementViewModel.selectedAssignment != nil
         {

@@ -103,7 +103,7 @@ class PLProjectAssignmentViewModel: NSObject {
         return assigneeList.count
     }
     
-    func titleOfRowAtIndexPath(row:Int)->String
+    func memberName(row:Int)->String
     {
         if selectedAssignment != nil
         {
@@ -114,7 +114,7 @@ class PLProjectAssignmentViewModel: NSObject {
         return member.fullName
     }
     
-    func  emailOfRowAtIndexPath(row:Int)->String{
+    func  memberEmail(row:Int)->String{
         
         if selectedAssignment != nil
         {
@@ -166,10 +166,10 @@ class PLProjectAssignmentViewModel: NSObject {
     }
     
     
-    func assignmentTargetDate() -> String {
-        print("datestring")
-        let dateStr = timeFormats(selectedAssignment!.targetDate)
-        return dateStr
+    func assignmentTargetDate() -> String
+    {
+        let date = timeFormats(selectedAssignment!.targetDate)
+        return date
     }
     
     func assignmentStartDate() -> String {
@@ -244,7 +244,7 @@ class PLProjectAssignmentViewModel: NSObject {
     }
     
     
-    func contributorImageRowAtIndexPath(row:Int,completion:(UIImage?)->Void) {
+    func contributorImage(row:Int,completion:(UIImage?)->Void) {
         
         if qbClient == nil{ qbClient = PLQuickbloxHttpClient()}
         
@@ -258,7 +258,7 @@ class PLProjectAssignmentViewModel: NSObject {
             member = assigneeList[row]
         }
         
-        let avatar = member.avatar
+        let avatar = member.profilePicture
         if avatar == "Avatar"
         {
             completion(nil)

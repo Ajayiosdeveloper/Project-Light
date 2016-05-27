@@ -73,9 +73,7 @@ class PLUserProfileInfoTableViewController: UITableViewController,UITextFieldDel
        self.companyName.text = dict!["companyName"] as? String
       self.designation.text = dict!["designation"] as? String
       }
-      else{
-        print("No data found")
-       }
+
        }
     }
     
@@ -105,9 +103,7 @@ class PLUserProfileInfoTableViewController: UITableViewController,UITextFieldDel
         dateOfBirth.text = NSDateFormatter.localizedStringFromDate(dobPicker.date, dateStyle: NSDateFormatterStyle.MediumStyle, timeStyle: NSDateFormatterStyle.NoStyle)
 
     }
-    
-    
-
+   
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.

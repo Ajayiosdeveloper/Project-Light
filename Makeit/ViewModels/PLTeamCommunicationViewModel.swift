@@ -28,25 +28,25 @@ class PLTeamCommunicationViewModel: NSObject {
         return 0
     }
     
-    func contributorTitleForRowAtIndexPath(row:Int)->String{
+    func contributorTitle(row:Int)->String{
         
         let member = teamMembersList[row]
         return member.fullName
     }
-    func contributorEmailForRowAtIndexPath(row:Int)->String
+    func contributorEmail(row:Int) -> String
     {
         let member = teamMembersList[row]
         return member.memberEmail
     }
 
     
-    func addTeamMemberAtRow(row:Int){
+    func addTeamMember(row:Int){
         
         self.selectedTeamMembers.append(teamMembersList[row])
         
         print(self.selectedTeamMembers)
     }
-    func removeTeamMemberAtRow(row:Int) {
+    func removeTeamMember(row:Int) {
         
         let object = self.teamMembersList[row]
         let index = self.selectedTeamMembers.indexOf(object)
@@ -54,10 +54,10 @@ class PLTeamCommunicationViewModel: NSObject {
         print(self.selectedTeamMembers)
     }
     
-    func contributorImageRowAtIndexPath(row:Int,completion:(UIImage?)->Void) {
+    func contributorImage(row:Int,completion:(UIImage?)->Void) {
         
         let member = teamMembersList[row]
-        let avatar = member.avatar
+        let avatar = member.profilePicture
         if avatar == "Avatar"
         {
             completion(nil)

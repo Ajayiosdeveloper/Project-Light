@@ -37,13 +37,13 @@ class PLProjectTeamChatViewModel: NSObject {
         
     }
     
-    func getUnreadMessageCoutAtIndex(row:Int)->String{
+    func getUnreadMessageCount(row:Int)->String{
         
         let group = projectChatGroupsList[row]
         return String(group.unReadMessageCount)
     }
     
-    func detailTitleForRow(row:Int)->String{
+    func detailTitle(row:Int)->String{
         
         let group = projectChatGroupsList[row]
         if let _ = group.lastMessage{
@@ -52,7 +52,7 @@ class PLProjectTeamChatViewModel: NSObject {
         return ""
     }
     
-    func selectedGroupForRow(row:Int)->PLChatGroup{
+    func selectedGroup(row:Int)->PLChatGroup{
         
        PLSharedManager.manager.groupName = projectChatGroupsList[row].name
         
