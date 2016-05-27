@@ -69,7 +69,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate,QBChatDelegate {
         
     }
 
-    func handleNewtorkChanges(){
+    func handleNewtorkChanges(){ //correct the spelling
         
         let remoteHost = reachability.currentReachabilityStatus() as NetworkStatus
         if remoteHost == NotReachable
