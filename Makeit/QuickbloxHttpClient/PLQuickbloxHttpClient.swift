@@ -1082,7 +1082,7 @@ class PLQuickbloxHttpClient
     }
     
     
-    func updateRemoteAssigmentStatus(id:String,status:Int,completion:(Bool)->Void){
+    func updateRemoteAssigmentStatus(id:String,status:Int,completion:(Bool)->Void){ // remove Remote
         
         print("updateRemoteAssigmentStatus\(id)")
         

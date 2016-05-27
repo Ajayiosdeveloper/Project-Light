@@ -125,7 +125,7 @@ class PLSidebarMenuViewController: UIViewController,UIImagePickerControllerDeleg
                 
             case 1:
                 
-                projectViewModel.getUPcomingTasksCount({ (countString) in
+                projectViewModel.getUpcomingTasksCount({ (countString) in
                     
                     cell.countLabel.text = countString
                 })
