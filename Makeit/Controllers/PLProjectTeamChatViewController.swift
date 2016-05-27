@@ -29,7 +29,7 @@ class PLProjectTeamChatViewController: UIViewController,UITableViewDelegate,UITa
                 SVProgressHUD.dismiss()
                 self!.chatGroupsListTableView.reloadData()
               }
-            }
+        }
         
     }
     
@@ -50,8 +50,6 @@ class PLProjectTeamChatViewController: UIViewController,UITableViewDelegate,UITa
     
     
     func createNewChatForProject(){
-        
-        print("Show Project Members for Group selection")
         
         if teamCommunicationViewController == nil{
             
@@ -83,9 +81,10 @@ class PLProjectTeamChatViewController: UIViewController,UITableViewDelegate,UITa
         
         let cell = tableView.dequeueReusableCellWithIdentifier("Cell") as! PLTableViewCell
         cell.memberName.text = projectTeamChatViewModel.titleForRow(indexPath.row)
-        cell.memberDetail.text = projectTeamChatViewModel.detailTitleForRow(indexPath.row)
-        let unreadMessages = projectTeamChatViewModel.getUnreadMessageCoutAtIndex(indexPath.row)
-        if unreadMessages == "0"{
+        cell.memberDetail.text = projectTeamChatViewModel.detailTitle(indexPath.row)
+        let unreadMessages = projectTeamChatViewModel.getUnreadMessageCount(indexPath.row)
+        if unreadMessages == "0"
+        {
             cell.messageCountLabel.hidden = true
             cell.countHostingView.hidden = true
             cell.memberDetail.textColor = UIColor.blackColor()
@@ -125,18 +124,7 @@ class PLProjectTeamChatViewController: UIViewController,UITableViewDelegate,UITa
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         
            let chatDetailViewController = segue.destinationViewController as! PLChatDetailViewController
-           chatDetailViewController.chatDetailViewModel = PLChatDetailViewModel(chatGroup: projectTeamChatViewModel.selectedGroupForRow(selectedRow))
-      
+           chatDetailViewController.chatDetailViewModel = PLChatDetailViewModel(chatGroup: projectTeamChatViewModel.selectedGroup(selectedRow))
     }
-    
-    /*
-     // MARK: - Navigation
-     
-     // In a storyboard-based application, you will often want to do a little preparation before navigation
-     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-     // Get the new view controller using segue.destinationViewController.
-     // Pass the selected object to the new view controller.
-     }
-     */
     
 }

@@ -102,7 +102,7 @@ class PLProjectAssignmentViewModel: NSObject {
         return assigneeList.count
     }
     
-    func titleOfRowAtIndexPath(row:Int)->String
+    func memberName(row:Int)->String
     {
         if selectedAssignment != nil
         {
@@ -113,7 +113,7 @@ class PLProjectAssignmentViewModel: NSObject {
         return member.fullName
     }
     
-    func  emailOfRowAtIndexPath(row:Int)->String{
+    func  memberEmail(row:Int)->String{
         
         if selectedAssignment != nil
         {
@@ -158,10 +158,10 @@ class PLProjectAssignmentViewModel: NSObject {
     }
     
     
-    func assignmentTargetDate() -> String {
-        print("datestring")
-        let dateStr = timeFormats(selectedAssignment!.targetDate)
-        return dateStr
+    func assignmentTargetDate() -> String
+    {
+        let date = timeFormats(selectedAssignment!.targetDate)
+        return date
     }
     
     func assignmentStartDate() -> String {
@@ -182,11 +182,11 @@ class PLProjectAssignmentViewModel: NSObject {
         let userIds = selectedAssignment?.assineesUserIds
         for userId in userIds!
         {
-            for x in assigneeList{
+            for member in assigneeList{
                 
-                if x.memberUserId == userId
+                if member.memberUserId == userId
                 {
-                  selectedAssigneeList.append(x)
+                  selectedAssigneeList.append(member)
                 }
             }
         }
@@ -201,15 +201,11 @@ class PLProjectAssignmentViewModel: NSObject {
                 user.fullName = "Me"
                 user.memberEmail = (QBSession.currentSession().currentUser?.email)!
                 user.memberUserId = (QBSession.currentSession().currentUser?.ID)!
-                user.avatar = (QBSession.currentSession().currentUser?.customData)!
+                user.profilePicture = (QBSession.currentSession().currentUser?.customData)!
                 selectedAssigneeList.insert(user, atIndex: 0)
             }
         }
-       print("Members are \(selectedAssignment?.assineesUserIds)")
-       print("Status are \(selectedAssignment?.assigneeStatus)")
-        
-    
-  }
+    }
     
     func isLoggedInUserPartOfAssignment() -> Bool {
         
@@ -219,7 +215,7 @@ class PLProjectAssignmentViewModel: NSObject {
     }
     
     
-    func contributorImageRowAtIndexPath(row:Int,completion:(UIImage?)->Void) {
+    func contributorImage(row:Int,completion:(UIImage?)->Void) {
         
         if qbClient == nil{ qbClient = PLQuickbloxHttpClient()}
         
@@ -233,7 +229,7 @@ class PLProjectAssignmentViewModel: NSObject {
             member = assigneeList[row]
         }
         
-        let avatar = member.avatar
+        let avatar = member.profilePicture
         if avatar == "Avatar"
         {
             completion(nil)

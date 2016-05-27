@@ -34,12 +34,15 @@ class PLProjectDetailTableViewController: UITableViewController,EKEventEditViewD
     
     @IBOutlet var projectDetailsTableView: UITableView!
    
-    override func viewDidLoad() {
+    override func viewDidLoad()
+    {
         super.viewDidLoad()
         self.projectDetailsTableView.registerNib(UINib(nibName:"PLTableViewCell", bundle:NSBundle.mainBundle()), forCellReuseIdentifier: "Cell")
         self.projectDetailsTableView.registerClass(UITableViewCell.self, forCellReuseIdentifier:"DefaultCell")
-        commitmentViewModel.isAccessGranted(){res in
-            if res{
+        
+          commitmentViewModel.isAccessGranted(){res in
+            if res
+            {
                 PLSharedManager.manager.isCalendarAccess = true
             }else{
                 PLSharedManager.manager.isCalendarAccess = false
@@ -86,15 +89,15 @@ class PLProjectDetailTableViewController: UITableViewController,EKEventEditViewD
         {
         
         if section == 0 {
-           total = projectDetailViewModel.numbersOfContributorsRows()
+           total = projectDetailViewModel.numbersOfContributors()
         }
         else if section == 1{
            
-                total = projectDetailViewModel.numberOfCommitmentRows()
+                total = projectDetailViewModel.numberOfCommitments()
         }
         else if section == 2
         {
-            total = projectDetailViewModel.numberOfAssignmentRows()
+            total = projectDetailViewModel.numberOfAssignments()
         }
         else if section == 3
         {
@@ -104,11 +107,11 @@ class PLProjectDetailTableViewController: UITableViewController,EKEventEditViewD
         else
         {
             if section == 0 {
-                total = projectDetailViewModel.numbersOfContributorsRows()
+                total = projectDetailViewModel.numbersOfContributors()
             }
             else if section == 1{
                 
-                 total = projectDetailViewModel.numberOfAssignmentRows()
+                 total = projectDetailViewModel.numberOfAssignments()
             }
             else if section == 2
             {
@@ -123,14 +126,14 @@ class PLProjectDetailTableViewController: UITableViewController,EKEventEditViewD
         
         if indexPath.section == 0{
         let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! PLTableViewCell
-        cell.memberName.text = projectDetailViewModel.contributorTitleForRowAtIndexPath(indexPath.row)
-        cell.memberDetail.text = projectDetailViewModel.contributorEmailForRowAtIndexPath(indexPath.row)
+        cell.memberName.text = projectDetailViewModel.contributorTitle(indexPath.row)
+        cell.memberDetail.text = projectDetailViewModel.contributorEmail(indexPath.row)
         cell.accessoryType = .DisclosureIndicator
-        projectDetailViewModel.contributorImageRowAtIndexPath(indexPath.row, completion: { (avatar) in
+        projectDetailViewModel.contributorImage(indexPath.row, completion: { (profilePicture) in
             
-            if let _ = avatar{
+            if let _ = profilePicture{
                 
-                cell.teamMemberProfile.image = avatar!
+                cell.teamMemberProfile.image = profilePicture!
                 cell.teamMemberProfile.layer.masksToBounds = true
             }
             else{
@@ -164,7 +167,8 @@ class PLProjectDetailTableViewController: UITableViewController,EKEventEditViewD
             
         }else{
             
-            if indexPath.section == 1{
+            if indexPath.section == 1
+            {
                 let cell = UITableViewCell(style: .Subtitle, reuseIdentifier: "DefaultCell")
                 self.configureAssignmentCell(cell, row: indexPath.row)
                 return cell
@@ -406,7 +410,7 @@ class PLProjectDetailTableViewController: UITableViewController,EKEventEditViewD
             }
             else if indexPath.section  == 1
             {
-                let commitment = projectDetailViewModel.selectedCommitmentFor(indexPath.row)
+                let commitment = projectDetailViewModel.selectedCommitment(indexPath.row)
                 
                 if PLSharedManager.manager.isCalendarAccess{
                     
@@ -425,7 +429,7 @@ class PLProjectDetailTableViewController: UITableViewController,EKEventEditViewD
                 else{
                     
                     showCommitmentViewController()
-                    commitmentViewController.commitmentViewModel.commitment = projectDetailViewModel.selectedCommitmentFor(indexPath.row)
+                    commitmentViewController.commitmentViewModel.commitment = projectDetailViewModel.selectedCommitment(indexPath.row)
                     print(commitmentViewController.commitmentViewModel.commitment)
                     
                 }
@@ -486,7 +490,7 @@ class PLProjectDetailTableViewController: UITableViewController,EKEventEditViewD
         
         projectDetailViewModel.assignments = []
         projectDetailViewModel.commitments = []
-        projectDetailViewModel.getCommitmentsFromRemote(projectId){[weak self]result in
+        projectDetailViewModel.getCommitmentsFromServer(projectId){[weak self]result in
             
             if result{  self!.projectDetailViewModel.getAssignmentsFromRemote(self!.projectId){result in
                 

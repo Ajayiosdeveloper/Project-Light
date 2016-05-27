@@ -54,7 +54,7 @@ class PLTeamCommunicationViewController: UIViewController,UITableViewDelegate,UI
             self.title = "Create Group"
             
         default:
-            print("Never")
+            print("")
         }
     }
     
@@ -94,9 +94,9 @@ class PLTeamCommunicationViewController: UIViewController,UITableViewDelegate,UI
         
         let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! PLTableViewCell
         
-        cell.memberName.text = communicationViewModel.contributorTitleForRowAtIndexPath(indexPath.row)
-        cell.memberDetail.text = communicationViewModel.contributorEmailForRowAtIndexPath(indexPath.row)
-        communicationViewModel.contributorImageRowAtIndexPath(indexPath.row, completion: { (avatar) in
+        cell.memberName.text = communicationViewModel.contributorTitle(indexPath.row)
+        cell.memberDetail.text = communicationViewModel.contributorEmail(indexPath.row)
+        communicationViewModel.contributorImage(indexPath.row, completion: { (avatar) in
             
             if let _ = avatar{
                 
@@ -119,12 +119,12 @@ class PLTeamCommunicationViewController: UIViewController,UITableViewDelegate,UI
         if tableView.cellForRowAtIndexPath(indexPath)?.accessoryType == .Checkmark
         {
             tableView.cellForRowAtIndexPath(indexPath)?.accessoryType = .None
-            communicationViewModel.removeTeamMemberAtRow(indexPath.row)
+            communicationViewModel.removeTeamMember(indexPath.row)
             
         }
         else{
             tableView.cellForRowAtIndexPath(indexPath)?.accessoryType = .Checkmark
-            communicationViewModel.addTeamMemberAtRow(indexPath.row)
+            communicationViewModel.addTeamMember(indexPath.row)
             
         }
     }
@@ -198,7 +198,7 @@ class PLTeamCommunicationViewController: UIViewController,UITableViewDelegate,UI
             alertViewController.addAction(okAction)
             alertViewController.addAction(cancelAction)
             alertViewController.addTextFieldWithConfigurationHandler {[weak self] (textField) -> Void in
-                // self?.textFld.frame = CGRect(x: 0.0, y: 0.0, width: 100.0, height: 30.0)
+
                 self?.textFld = textField
             }
               self.presentViewController(alertViewController, animated: true, completion: nil)
@@ -232,11 +232,9 @@ class PLTeamCommunicationViewController: UIViewController,UITableViewDelegate,UI
 
 
 
-    func startConference(){
-        
-        print("PRAISE THE LORD")
-        
-        if communicationType == 0{
+    func startConference()
+    {
+            if communicationType == 0{
             
            // self.callWithConferenceType(.Audio)
         }
@@ -297,18 +295,7 @@ class PLTeamCommunicationViewController: UIViewController,UITableViewDelegate,UI
         self.currentSession.rejectCall(userInfo)
     }*/
     
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-    
-    
-    deinit{
+       deinit{
         QBRTCClient.deinitializeRTC()
     }
 

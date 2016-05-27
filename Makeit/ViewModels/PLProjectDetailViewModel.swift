@@ -40,7 +40,7 @@ class PLProjectDetailViewModel: NSObject {
         return 3
     }
     
-    func numbersOfContributorsRows()->Int
+    func numbersOfContributors()->Int
     {
         if contributors.count > 0
         {
@@ -49,24 +49,24 @@ class PLProjectDetailViewModel: NSObject {
         return 0
     }
     
-    func numberOfCommitmentRows() -> Int {
+    func numberOfCommitments() -> Int {
         
         return commitments.count
     }
     
-    func numberOfAssignmentRows() -> Int {
+    func numberOfAssignments() -> Int {
         
         return assignments.count
     }
     
-    func contributorTitleForRowAtIndexPath(row:Int)->String
+    func contributorTitle(row:Int) -> String
     {
         let member = contributors[row]
         
         return member.fullName
     }
     
-   func contributorEmailForRowAtIndexPath(row:Int)->String
+   func contributorEmail(row:Int) -> String
     {
         let member = contributors[row]
         
@@ -87,12 +87,11 @@ class PLProjectDetailViewModel: NSObject {
       return false
         
     }
-
     
-    func contributorImageRowAtIndexPath(row:Int,completion:(UIImage?)->Void) {
+    func contributorImage(row:Int,completion:(UIImage?)->Void) {
         
         let member = contributors[row]
-        let avatar = member.avatar
+        let avatar = member.profilePicture
         if avatar == "Avatar"
         {
             completion(nil)
@@ -149,7 +148,7 @@ class PLProjectDetailViewModel: NSObject {
         return contributors
     }
     
-    func getCommitmentsFromRemote(id:String,completion:(Bool)->Void)
+    func getCommitmentsFromServer(id:String,completion:(Bool)->Void)
     {
         qbClient = PLQuickbloxHttpClient()
         
@@ -200,7 +199,7 @@ class PLProjectDetailViewModel: NSObject {
         return dateFormatter.stringFromDate(time!)
     }
     
-    func getAssignmentsFromRemote(id:String,completion:(Bool)->Void)
+    func getAssignmentsFromRemote(id:String, completion : (Bool) -> Void)
     {
         qbClient.fetchAssignmentsForProject(id){res,assignments in
             
@@ -245,7 +244,7 @@ class PLProjectDetailViewModel: NSObject {
          }
     }
     
-    func selectedCommitmentFor(row:Int)->PLCommitment?
+    func selectedCommitment(row:Int)->PLCommitment?
     {
         if row <= self.commitments.count
         {

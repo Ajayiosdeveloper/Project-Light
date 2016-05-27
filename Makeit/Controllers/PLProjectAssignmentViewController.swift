@@ -161,8 +161,8 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
       func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCellWithIdentifier("Cell") as! PLAssigneeTableViewCell
-        cell.nameLabel.text = assignementViewModel.titleOfRowAtIndexPath(indexPath.row)
-        cell.mailIdField.text = assignementViewModel.emailOfRowAtIndexPath(indexPath.row)
+        cell.nameLabel.text = assignementViewModel.memberName(indexPath.row)
+        cell.mailIdField.text = assignementViewModel.memberEmail(indexPath.row)
         cell.disclosureButton.tag = indexPath.row
        if PLSharedManager.manager.projectCreatedByUserId == QBSession.currentSession().currentUser?.ID
         {
@@ -188,7 +188,7 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
                 cell.disclosureButton.addTarget(self, action: #selector(PLProjectAssignmentViewController.loadProfileController(_:)), forControlEvents:UIControlEvents.TouchUpInside)
             }          
         }
-        assignementViewModel.contributorImageRowAtIndexPath(indexPath.row, completion: { (avatar) in
+        assignementViewModel.contributorImage(indexPath.row, completion: { (avatar) in
             
             if let _ = avatar{
                 
@@ -302,15 +302,14 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
         addOnView.addSubview(addMemberButton)
     }
 
-    func performButtonActionOfFooterView(sender:UIButton){
+    func performButtonActionOfFooterView(sender:UIButton)
+    {
         print(sender.tag)
         if sender.tag == 1{
             
         }
         else{
-            
-            
-        }
+       }
     }
     
     override func didReceiveMemoryWarning() {
@@ -342,7 +341,7 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
         profileViewController.userProfileModel = PLUserProfileInfoViewModel()
         let userId = assignementViewModel.getSelectedAssigneeUserId(sender.tag)
         profileViewController.fetchingUserDetails(userId)
-        profileViewController.userName = assignementViewModel.titleOfRowAtIndexPath(sender.tag)
+        profileViewController.userName = assignementViewModel.memberName(sender.tag)
         profileViewController.delegate = self
         if assignementViewModel.selectedAssignment != nil
         {

@@ -117,8 +117,7 @@ class PLProjectCommentViewController: UITableViewController,EKEventEditViewDeleg
         toolBar.items = [doneButton]
         commitmentTargetDateTextField.inputAccessoryView = toolBar
     }
-    
-    
+
     func dateSelection()
     {
         commitmentTargetDateTextField.resignFirstResponder()
@@ -164,8 +163,6 @@ class PLProjectCommentViewController: UITableViewController,EKEventEditViewDeleg
     
     func performDone()
     {
-        print("done btn")
-
         do{
             
             try commitmentViewModel.commitmentValidations(commitmentNameTextField.text!, startDate:startDatecommitmentDatePicker.date ,targetDate:targetDatecommitmentDatePicker.date, description: commitmentDescriptionTextView.text)
@@ -173,7 +170,6 @@ class PLProjectCommentViewController: UITableViewController,EKEventEditViewDeleg
             commitmentViewModel.createCommitmentWith(commitmentNameTextField.text!,startDate:startDatecommitmentDatePicker.date,targetDate: targetDatecommitmentDatePicker.date, description: commitmentDescriptionTextView.text,projectId: projectId){ result in
             
                 if result{
-                    print("updated")
                     self.navigationController?.popViewControllerAnimated(true)
                 }else {
                     print("Handle Error")
@@ -182,17 +178,8 @@ class PLProjectCommentViewController: UITableViewController,EKEventEditViewDeleg
             }else{
                 
                 commitmentViewModel.updateCommitmentWith(commitmentNameTextField.text!, startDate:startDatecommitmentDatePicker.date ,targetDate:targetDatecommitmentDatePicker.date, description: commitmentDescriptionTextView.text,projectId: projectId) { res in
-                    
-                    
-                }
-                
-              
-              
-              //  self.dismissViewControllerAnimated(true, completion: nil)
-               
+                 }
             }
-       
-        
         }
         catch CommitValidation.NameEmpty{print("Empty Name")}
         catch CommitValidation.InvalidDate{print("Earlier date")}

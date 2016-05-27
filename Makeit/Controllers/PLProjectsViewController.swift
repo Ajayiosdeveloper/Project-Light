@@ -53,19 +53,12 @@ class PLProjectsViewController: UITableViewController,UIImagePickerControllerDel
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        print("Proj view ll appear")
-       
         if fetchDataFlag == false
         {
           projectViewModel.addObserver(self, forKeyPath:"createdProjectList", options: NSKeyValueObservingOptions.New, context:&observerContext)
           addActivityIndicatorView()
           projectViewModel.fetchProjectsFromRemote()
         }
-        else
-        { print("Count is \(projectViewModel.contributingProjectList.count ) And \(projectViewModel.createdProjectList.count)")
-        
-        }
-      
       }
     
     func  addActivityIndicatorView() {
@@ -150,33 +143,33 @@ class PLProjectsViewController: UITableViewController,UIImagePickerControllerDel
         return 0
     }
     
-   override  func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+   override  func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell
+   {
         
-    
             if indexPath.section == 0
             {
             let cell = tableView.dequeueReusableCellWithIdentifier("ProjectCell")! as! PLProjectViewCell
-            cell.projectName?.text = projectViewModel.titleAtIndexPath(indexPath.row)
+            cell.projectName?.text = projectViewModel.ProjectTitle(indexPath.row)
             cell.projectName?.textColor = UIColor.blackColor()
-            cell.projectDescription?.text = projectViewModel.subTitleAtIndexPath(indexPath.row)
+            cell.projectDescription?.text = projectViewModel.subTitle(indexPath.row)
             cell.circularView.backgroundColor = projectViewModel.getViewColor()
             cell.projectLetterLabel.text = String(projectViewModel.projectNameStartLetter(indexPath.row, section: indexPath.section))
             cell.projectLetterLabel.textColor = UIColor.whiteColor()
-            cell.createdAt.text = "Created At :" + " " + projectViewModel.projectCreatedAtIndexPath(indexPath.row,section: indexPath.section)
+            cell.createdAt.text = "Created At :" + " " + projectViewModel.projectCreatedDate(indexPath.row,section: indexPath.section)
             cell.createdBy.text = "Created by : You"
             cell.accessoryType = .DisclosureIndicator
             return cell
             }
           if indexPath.section == 1{
             let cell = tableView.dequeueReusableCellWithIdentifier("ProjectCell")! as! PLProjectViewCell
-              cell.projectName?.text = projectViewModel.contributingProjectTitleAtIndexPath(indexPath.row)
+              cell.projectName?.text = projectViewModel.contributingProjectTitle(indexPath.row)
               cell.projectName?.textColor = UIColor.blackColor()
-              cell.projectDescription?.text = projectViewModel.contributingProjectSubTitleAtIndexPath(indexPath.row)
+              cell.projectDescription?.text = projectViewModel.contributingProjectSubTitle(indexPath.row)
               cell.circularView.backgroundColor = projectViewModel.getViewColor()
-              cell.createdAt.text  = "Created At :" + " " + projectViewModel.projectCreatedAtIndexPath(indexPath.row,section: indexPath.section)
+              cell.createdAt.text  = "Created At :" + " " + projectViewModel.projectCreatedDate(indexPath.row,section: indexPath.section)
               cell.projectLetterLabel.text =  String(projectViewModel.projectNameStartLetter(indexPath.row, section: indexPath.section))
               cell.projectLetterLabel.textColor = UIColor.whiteColor()
-              cell.createdBy.text = projectViewModel.projectCreatedBy(indexPath.row)
+              cell.createdBy.text = projectViewModel.projectCreator(indexPath.row)
               cell.accessoryType = .DisclosureIndicator
               return cell
             }
@@ -191,12 +184,13 @@ class PLProjectsViewController: UITableViewController,UIImagePickerControllerDel
         return UITableViewCell()
     }
     
-   override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-    if indexPath.section == 2{
-        return 40
-    }
-    return 100
-    
+   override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat
+   {
+        if indexPath.section == 2
+        {
+            return 40
+        }
+        return 100
     }
     
     override func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
@@ -205,17 +199,17 @@ class PLProjectsViewController: UITableViewController,UIImagePickerControllerDel
         
         if section == 0{
             titleForHeader = "  Created Projects"
-            return hedaerViewForTableView(titleForHeader)
+            return headerViewForTableView(titleForHeader)
         }
         else if section == 1
         {
             titleForHeader = "  Contributing Projects"
-             return hedaerViewForTableView(titleForHeader)
+             return headerViewForTableView(titleForHeader)
         }
         else if section == 2{
              let name = QBSession.currentSession().currentUser?.fullName
              titleForHeader = "  Hi \(name!) ! Love to improve profile"
-             return hedaerViewForTableView(titleForHeader)
+             return headerViewForTableView(titleForHeader)
         }
 
         return nil
@@ -246,11 +240,10 @@ class PLProjectsViewController: UITableViewController,UIImagePickerControllerDel
             self.userProfileController?.disablingBtn = true
             self.navigationController?.pushViewController(self.userProfileController!, animated: true)
             
-        }else {
-            
-     
-            
-            let selected = projectViewModel.didSelectRowAtIndex(indexPath.row,section:indexPath.section) as PLProject
+        }
+        else
+        {
+        let selected = projectViewModel.didSelectRow(indexPath.row,section:indexPath.section) as PLProject
         PLSharedManager.manager.projectName = selected.name
         PLSharedManager.manager.projectId = selected.projectId!
         selectedProjectId = selected.projectId
@@ -268,8 +261,8 @@ class PLProjectsViewController: UITableViewController,UIImagePickerControllerDel
               self.performSegueWithIdentifier("toProjectDetails", sender: resultedMembers)
             }
         }
-    }
-}
+     }
+   }
     override func tableView(tableView: UITableView, commitEditingStyle editingStyle:
         UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
         
@@ -277,7 +270,7 @@ class PLProjectsViewController: UITableViewController,UIImagePickerControllerDel
             
             activityIndicatorView.startAnimating()
             self.projectTableView.backgroundColor = UIColor(red:235/255, green: 235/255, blue: 241/255, alpha: 1)
-            projectViewModel.deleteProjectAtIndexPathOfRow(indexPath.row){[weak self] result in
+            projectViewModel.deleteProjectInParticularRow(indexPath.row){[weak self] result in
                 
                 if result{
                     self!.activityIndicatorView.stopAnimating()
@@ -335,7 +328,7 @@ class PLProjectsViewController: UITableViewController,UIImagePickerControllerDel
         
     }
     
-    func hedaerViewForTableView(title:String)->UILabel{
+    func headerViewForTableView(title:String)->UILabel{
         
         let titleLabel = UILabel(frame:CGRectMake(0,0,self.view.frame.size.width,40))
         titleLabel.text = title
@@ -383,22 +376,13 @@ class PLProjectsViewController: UITableViewController,UIImagePickerControllerDel
 
     }
   
-    func addProjectToDataSource(project: PLProject) {
+    func addProjectToDataSource(project: PLProject)
+    {
         
-       print("delegate methd")
-        print(project.name)
-        print(project.projectId)
-        print(project.subTitle)
-        print(project.createdBy)
         projectViewModel.addNewProjectToCreatedProjectList(project){ res in
-            
-          self.projectTableView.reloadData()
+            self.projectTableView.reloadData()
         }
-        
-       
-    }
-
-    
+   }
 }
 
 

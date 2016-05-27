@@ -22,9 +22,7 @@ class PLProjectsViewModel: NSObject {
  }
    
     func fetchProjectsFromRemote() {
-        
-        createdProjectList.removeAll(keepCapacity: true) //remove the method
-        contributingProjectList.removeAll(keepCapacity: true) //remove the method
+
         quickBloxClient.fetchContributingProjectsOfUser{(res) in
             
             if let _ = res{
@@ -39,18 +37,13 @@ class PLProjectsViewModel: NSObject {
                         self.fillProjectListArrayWithContents(objects)
                     }
                 }
-                
             }
-            
-            
-        }
+       }
        
     }
     
-    func fillProjectListArrayWithContents(container:[AnyObject]){
-        
-       
-    
+    func fillProjectListArrayWithContents(container:[AnyObject])
+    {
         for (i,_) in container.enumerate()
         {
             let remoteObject = container[i] as! QBCOCustomObject
@@ -69,10 +62,8 @@ class PLProjectsViewModel: NSObject {
         
     }
     
-    func fillContributionProjectsListArray(container:[AnyObject]){
-        
-      
-        
+    func fillContributionProjectsListArray(container:[AnyObject])
+    {
         for (i,_) in container.enumerate()
         {
             let remoteObject = container[i] as! QBCOCustomObject
@@ -85,19 +76,18 @@ class PLProjectsViewModel: NSObject {
             project.createdAt = remoteObject.createdAt!
             project.createdByName = creatorDetails[0]
             contributingProjectList.append(project)
-            
-           
         }
     }
     
-    func  addNewProjectToCreatedProjectList(project:PLProject,completion:(Bool)->Void){
-        print("created Count")
-        print(createdProjectList.count)
-        self.createdProjectList.append(project) // what happens with no append
+    func  addNewProjectToCreatedProjectList(project:PLProject?,completion:(Bool)->Void)
+    {
+        if let projects = project
+        {
+        self.createdProjectList.append(projects) // what happens with no append
+        }
         print(createdProjectList.count)
         completion(true)
     }
-    
     
     func rowsCount() -> Int {
         
@@ -109,15 +99,15 @@ class PLProjectsViewModel: NSObject {
         return contributingProjectList.count
     }
     
-    func titleAtIndexPath(indexPath:NSInteger) -> String { //change indexpath variable name
+    func ProjectTitle(row : NSInteger) -> String { //change indexpath variable name
         
-        let project = createdProjectList[indexPath]
+        let project = createdProjectList[row]
         return project.name
     }
     
-    func subTitleAtIndexPath(indexPath: NSInteger) -> String { //change indexpath variable name
+    func subTitle(row: NSInteger) -> String { //change indexpath variable name
         
-        let project = createdProjectList[indexPath]
+        let project = createdProjectList[row]
         
         if let _ = project.subTitle {
             
@@ -126,13 +116,13 @@ class PLProjectsViewModel: NSObject {
         return ""
     }
     
-    func projectCreatedAtIndexPath(index:Int,section:Int)->String{ //rename the method
+    func projectCreatedDate(row:Int, section:Int)->String{ //rename the method
         
         if section == 0{
-            let project = createdProjectList[index]
+            let project = createdProjectList[row]
             return NSDateFormatter.localizedStringFromDate(project.createdAt, dateStyle: NSDateFormatterStyle.MediumStyle, timeStyle: NSDateFormatterStyle.NoStyle)
         }else{
-            let project = contributingProjectList[index]
+            let project = contributingProjectList[row]
             return NSDateFormatter.localizedStringFromDate(project.createdAt, dateStyle: NSDateFormatterStyle.MediumStyle, timeStyle: NSDateFormatterStyle.NoStyle)
         }
     }
@@ -151,9 +141,9 @@ class PLProjectsViewModel: NSObject {
     
     }
     
-    func projectCreatedBy(index:Int) -> String{ //rename as projectCreator
+    func projectCreator(row:Int) -> String{ //rename as projectCreator
         
-        let project = contributingProjectList[index]
+        let project = contributingProjectList[row]
         return "Created by : \(project.createdByName)"
     }
     
@@ -167,13 +157,13 @@ class PLProjectsViewModel: NSObject {
     }
     
     
-    func contributingProjectTitleAtIndexPath(row:Int) -> String {
+    func contributingProjectTitle(row:Int) -> String {
         
         let project = contributingProjectList[row]
         return project.name
     }
     
-    func contributingProjectSubTitleAtIndexPath(row:Int) -> String {
+    func contributingProjectSubTitle(row:Int) -> String {
         
         let project = contributingProjectList[row]
         if let _ = project.subTitle{
@@ -182,7 +172,7 @@ class PLProjectsViewModel: NSObject {
         return ""
     }
     
-    func didSelectRowAtIndex(index:Int,section:Int) -> PLProject {
+    func didSelectRow(index:Int,section:Int) -> PLProject {
         
         if section == 0{
             return createdProjectList[index]
@@ -196,13 +186,13 @@ class PLProjectsViewModel: NSObject {
         createdProjectList.removeAll()
     }
 
-    func performLogout()  { //Logout
+    func logout()  { //Logout
         
-        quickBloxClient.userLogout()
+        quickBloxClient.logout()
         createdProjectList.removeAll()
     }
     
-    func deleteProjectAtIndexPathOfRow(row:Int,completion:(Bool)->Void) {
+    func deleteProjectInParticularRow(row : Int, completion:(Bool)->Void) {
         
         let project = self.createdProjectList[row]
         quickBloxClient.deleteProjectWithId(project.projectId!){result in
@@ -220,8 +210,8 @@ class PLProjectsViewModel: NSObject {
             
             if let _ = members{
                 
-                if members?.count > 0{
-                    
+                if members?.count > 0
+                {
                     let first = members![0]
                     
                     let creatorDetails = first.fields?.objectForKey("creatorDetails") as! [String]
@@ -247,7 +237,7 @@ class PLProjectsViewModel: NSObject {
                         let member = PLTeamMember(name:"", id:0)
                         member.fullName = (each.fields?.valueForKey("name"))! as! String
                         member.projectId = projectId
-                        member.avatar = each.fields?.valueForKey("avatar") as! String
+                        member.profilePicture = each.fields?.valueForKey("avatar") as! String
                         member.memberId = each.ID!
                         member.memberUserId = (each.fields?.valueForKey("member_User_Id"))! as! UInt
                         member.memberEmail = each.fields?.valueForKey("memberEmail") as! String
@@ -262,7 +252,7 @@ class PLProjectsViewModel: NSObject {
                     let creator = PLTeamMember(name:"", id: 0)
                     creator.fullName = PLTeamMember.creatorDetails!["creatorName"] as! String
                     creator.projectId = ""
-                    creator.avatar = PLTeamMember.creatorDetails!["creatorAvatarFileId"] as! String
+                    creator.profilePicture = PLTeamMember.creatorDetails!["creatorAvatarFileId"] as! String
                     creator.memberUserId = PLTeamMember.creatorDetails!["creatorUserId"] as! UInt
                     creator.memberEmail = PLTeamMember.creatorDetails!["creatorEmail"] as! String
 
@@ -277,9 +267,10 @@ class PLProjectsViewModel: NSObject {
         
     }
     
-    func uploadUserAvatar(image:UIImage,completion:(Bool)->Void) { //rename the method
-        
-       quickBloxClient.uploadProfilePicture(image){ res, blobId in
+   
+        func uploadUserProfilePicture(image:UIImage,completion:(Bool)->Void)
+        {
+        quickBloxClient.uploadProfilePicture(image){ res, blobId in
                 
                 if res
                 {
@@ -294,11 +285,11 @@ class PLProjectsViewModel: NSObject {
     
     
     
-    func fetchUserAvatar(completion:(UIImage?)->Void) {
+    func fetchUserProfilePicture(completion:(UIImage?)->Void) {
         
       
         
-        quickBloxClient.fetchUserAvatarWithBlobId() { result in
+        quickBloxClient.fetchUserProfilePictureWithBlobId() { result in
         
         if result != nil {
         
@@ -313,9 +304,9 @@ class PLProjectsViewModel: NSObject {
     }
     
     
-    func updateUserAvatar(image:UIImage,completion:(Bool)->Void) {
+    func updateUserProfilePicture(image:UIImage,completion:(Bool)->Void) {
         
-     quickBloxClient.updateUserAvatarWithBlobId(image) { result in
+     quickBloxClient.updateUserProfilePictureWithBlobId(image) { result in
             
             if result {
                 

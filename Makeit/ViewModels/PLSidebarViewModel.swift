@@ -83,7 +83,7 @@ class PLSidebarViewModel: NSObject {
                  member.memberEmail = each.fields?.objectForKey("memberEmail") as! String
                  member.memberId = String(each.userID)
                  member.memberUserId = each.fields?.objectForKey("member_User_Id") as! UInt
-                 member.avatar = each.fields?.objectForKey("avatar") as! String
+                 member.profilePicture = each.fields?.objectForKey("avatar") as! String
                  member.birthdayDate = each.fields?.objectForKey("birthday") as! Int
                  birthdaysOfMembers.append(member)
                 }
@@ -176,13 +176,13 @@ class PLSidebarViewModel: NSObject {
         return 0
     }
     
-    func titleOfRowAtIndexPath(row:Int)->String
+    func commitmentTitle(row:Int)->String
     {
         let commitment = commitments[row]
         return commitment.name
     }
     
-    func projectTitleOfRowAtIndexPath(row:Int)->String
+    func projectTitle(row:Int)->String
     {
         let commitment = commitments[row]
         return commitment.projectName
@@ -258,17 +258,16 @@ class PLSidebarViewModel: NSObject {
         return member.fullName
         
     }
+    
     func birthdayMemberEmail(row:Int)->String{
         let member = self.teamMembersForBitrhday[row]
         return member.memberEmail
-    }
+    }    
     
-    
-    
-    func contributorImageRowAtIndexPath(row:Int,completion:(UIImage?)->Void) {
+    func contributorImage(row:Int,completion:(UIImage?)->Void) {
         
         let member = teamMembersForBitrhday[row]
-        let avatar = member.avatar
+        let avatar = member.profilePicture
         if avatar == "Avatar"
         {
             completion(nil)

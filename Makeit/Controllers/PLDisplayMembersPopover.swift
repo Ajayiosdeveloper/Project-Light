@@ -10,7 +10,7 @@ import UIKit
 
 protocol PLContributorTableViewDelegate:class {
     
-    func reloadTableViewWithComtributors(member:PLTeamMember)
+    func reloadTableViewWithContributors(member:PLTeamMember)
     
 }
 
@@ -55,9 +55,9 @@ class PLDisplayMembersPopover: UITableViewController {
     override  func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCellWithIdentifier("Cell") as! PLTableViewCell
-        cell.memberName.text = teamMemberModelView.titleOfRowAtIndexPath(indexPath.row)
-        cell.memberDetail.text = teamMemberModelView.emailOfRowAtIndexPath(indexPath.row)
-        teamMemberModelView.contributorImageRowAtIndexPath(indexPath.row, completion: { (avatar) in
+        cell.memberName.text = teamMemberModelView.titleOfRow(indexPath.row)
+        cell.memberDetail.text = teamMemberModelView.emailOfRow(indexPath.row)
+        teamMemberModelView.contributorImageRow(indexPath.row, completion: { (avatar) in
             
             if let _ = avatar{
                 cell.teamMemberProfile.layer.masksToBounds = true
@@ -75,7 +75,7 @@ class PLDisplayMembersPopover: UITableViewController {
     
             if teamMemberModelView.isContributorAlreadyAdded(indexPath.row)
             {
-                let name = teamMemberModelView.titleOfRowAtIndexPath(indexPath.row)
+                let name = teamMemberModelView.titleOfRow(indexPath.row)
                  showAlertWithMessage("Failed to add \(name)", message: "\(name) is already contributing to \("Project")")
             }
             else{
@@ -86,7 +86,7 @@ class PLDisplayMembersPopover: UITableViewController {
                     
                     let contributor =  teamMemberModelView.remove(indexPath.row)
                     
-                    if let _ = delegate{ delegate?.reloadTableViewWithComtributors(contributor) }
+                    if let _ = delegate{ delegate?.reloadTableViewWithContributors(contributor) }
                     
                 }
                 else{
@@ -94,7 +94,7 @@ class PLDisplayMembersPopover: UITableViewController {
                     
                     let contributor  = teamMemberModelView.add(indexPath.row)
                     
-                    if let _ = delegate{ delegate?.reloadTableViewWithComtributors(contributor) }
+                    if let _ = delegate{ delegate?.reloadTableViewWithContributors(contributor) }
                     
                 }
             }

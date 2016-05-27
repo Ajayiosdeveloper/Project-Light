@@ -200,15 +200,15 @@ class PLAddProjectViewController: UIViewController,UISearchBarDelegate,UITextFie
     
      func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        return addProjectViewModel.numberOfRowsInTableView()
+        return addProjectViewModel.numberOfRows()
     }
     
       func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! PLTableViewCell
-        cell.memberName.text = addProjectViewModel.titleAtIndexPathOfRow(indexPath.row)
-        cell.memberDetail.text = addProjectViewModel.emailAtIndexPathOfRow(indexPath.row)
-        addProjectViewModel.contributorImageRowAtIndexPath(indexPath.row, completion: { (avatar) in
+        cell.memberName.text = addProjectViewModel.projectTitle(indexPath.row)
+        cell.memberDetail.text = addProjectViewModel.memberEmailid(indexPath.row)
+        addProjectViewModel.contributorImage(indexPath.row, completion: { (avatar) in
             
             if let _ = avatar{
                 
@@ -238,23 +238,17 @@ class PLAddProjectViewController: UIViewController,UISearchBarDelegate,UITextFie
             addProjectViewModel.deleteSelectedContributor(indexPath.row)
            
            self.contributorsTableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Automatic)
-            
-           
         }
     }
     
     
-    func reloadTableViewWithComtributors(member:PLTeamMember){
+    func reloadTableViewWithContributors(member:PLTeamMember){
         
-           if  addProjectViewModel.andOrRemoveContributor(member)
+           if  addProjectViewModel.removeContributor(member)
            {
-                //dismissPopover()
-                //close()
                 contributorsTableView.reloadData()
            }
            else{
-            
-               //dismissPopover()
                close()
                showAlertWithMessage("Failed to add \(member.fullName)", message: "\(member.fullName) is already contributing to ")
           }

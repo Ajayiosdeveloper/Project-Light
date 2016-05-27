@@ -87,11 +87,10 @@ class PLChatDetailViewController: JSQMessagesViewController, UIActionSheetDelega
     
     func sendMessageWithImageAttachment(type:AttachmentType){
         
-        chatDetailViewModel.sendMessage(chatGroup, text: "PRAISE THE LORD Forever and Evermore!", attachment: attachment) {[weak self] (res) in
+        chatDetailViewModel.sendMessage(chatGroup, text: "Forever and Evermore!", attachment: attachment) {[weak self] (res) in
             
             if res{
-                
-                print("PRAISE THE LORD!")
+               
                 if type == .Image{
                 let photoItem = JSQPhotoMediaItem(image: UIImage(data:self!.attachment))
                 let photoMessage = JSQMessage.message(senderId:self!.senderID, senderDisplayName:self!.senderDisplayName, media: photoItem)
@@ -132,7 +131,7 @@ class PLChatDetailViewController: JSQMessagesViewController, UIActionSheetDelega
 
         default:
             
-            print("Never")
+            print("")
         }
     }
     
@@ -283,8 +282,6 @@ class PLChatDetailViewController: JSQMessagesViewController, UIActionSheetDelega
     // MARK: - Responding to collection view tap events
     
     func collectionView(collectionView: JSQMessagesCollectionView, header: JSQMessagesLoadEarlierHeaderView, didTapLoadEarlierMessagesButton button: UIButton?) {
-        
-        print("Load earlier messages!")
         
         if notificationBanner == nil{
             notificationBanner = AFDropdownNotification()
