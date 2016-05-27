@@ -138,7 +138,7 @@ class PLAddProjectViewController: UIViewController,UISearchBarDelegate,UITextFie
                 
             }
         }
-          addProjectViewModel.removeObserver(self, forKeyPath:"isProjectCreated")
+         // addProjectViewModel.removeObserver(self, forKeyPath:"isProjectCreated")
       }
     
     }
@@ -181,16 +181,17 @@ class PLAddProjectViewController: UIViewController,UISearchBarDelegate,UITextFie
                 if let _ = members{
                 self!.teamMemberViewModel = PLTeamMemberModelView(searchMembers: members!)
                 self!.showPopOver()
-                }else{print("No matches Found")}
-                
+                }
+                else
+                {
+                    print("No matches Found")
+                }
             }
-            searchBar.resignFirstResponder()
+           // searchBar.resignFirstResponder()
         }
-        if searchText.characters.count == 0
+        else if searchText.characters.count == 0
         {
-           
-            close()
-        
+           close()
         }
     }
 

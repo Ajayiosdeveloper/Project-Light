@@ -69,8 +69,7 @@ class PLTaskViewController: UIViewController,UITableViewDelegate,UITableViewData
                 })
             }
             
-        default:
-            print("")
+        default: print("")
         }
        }
     }
@@ -83,17 +82,19 @@ class PLTaskViewController: UIViewController,UITableViewDelegate,UITableViewData
 
     func performCancel()
     {
-     self.dismissViewControllerAnimated(true, completion: nil)
+        self.dismissViewControllerAnimated(true, completion: nil)
     }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
     
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        
+    func numberOfSectionsInTableView(tableView: UITableView) -> Int
+    {
       return 1
     }
+    
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int
     {
         if selectedType == 3{
@@ -102,7 +103,8 @@ class PLTaskViewController: UIViewController,UITableViewDelegate,UITableViewData
         return sidebarViewModel.numbersOfRows()
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell
+    {
         if selectedType != 3 {
         let cell = self.tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! PLTasksViewCell
             
@@ -185,7 +187,7 @@ class PLTaskViewController: UIViewController,UITableViewDelegate,UITableViewData
             
             UIApplication.sharedApplication().openURL(callUrl!)
         }else{
-            print("Can not make a call")
+            print("Cannot make a call")
         }
     }
     
@@ -196,7 +198,7 @@ class PLTaskViewController: UIViewController,UITableViewDelegate,UITableViewData
             
             UIApplication.sharedApplication().openURL(message!)
         }else{
-            print("Can not make sms")
+            print("Cannot make sms")
         }
     }
     
