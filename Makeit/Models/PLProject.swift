@@ -55,8 +55,8 @@ class PLTeamMember: NSObject {
 
 class PLAssignmentMember:PLTeamMember{
     
-    var assignmentId:String = ""
-    var assignmentStatus: UInt = 0
+    var assignmentRecordId:String = ""
+    var assigneeStatus: UInt = 0
 }
 
 class PLCommitment: NSObject {
@@ -78,6 +78,7 @@ class PLAssignment: NSObject {
     var assignmentId:String = ""
     var targetDate:String = ""
     var startDate:String = ""
+    var creatorId:UInt = 0
     var assignees:[String] = [String]()
     var assineesUserIds:[UInt] = [UInt]()
     var assigneeStatus:[UInt] = [UInt]()

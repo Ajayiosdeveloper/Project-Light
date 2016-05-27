@@ -20,6 +20,7 @@ class PLProjectAssignmentViewModel: NSObject {
     var assigneeList:[PLTeamMember]!
     var selectedAssigneeList:[PLTeamMember]!
     var selectedAssignment:PLAssignment?
+    var assignmentRecordId:String! // For updating the logged in user assignment status in PLAssignmentMember Table
     init(assignees:[PLTeamMember]) {
         
         assigneeList = assignees
@@ -124,6 +125,13 @@ class PLProjectAssignmentViewModel: NSObject {
         return member.memberEmail
    }
     
+    func assigneeStatus(row:Int)->String{
+      
+       let member = selectedAssigneeList[row] as! PLAssignmentMember
+        
+       return String(member.assigneeStatus)
+    }
+    
     func addAssignee(row:Int) {
         
         self.selectedAssigneeList.append(self.assigneeList[row])
@@ -176,46 +184,63 @@ class PLProjectAssignmentViewModel: NSObject {
     }
     
     
-    func responsibleForAssigniment()  {
+    func responsibleForAssigniment(completion:(Bool)->Void)  {
+        
+        print("Assignment Id is \(selectedAssignment?.assignmentId)")
+        
+        if qbClient == nil{ qbClient = PLQuickbloxHttpClient()}
+
         
         selectedAssigneeList = [PLTeamMember]()
-        let userIds = selectedAssignment?.assineesUserIds
-        for userId in userIds!
-        {
-            for x in assigneeList{
+        
+        qbClient.getAssignmentMembersForAssignmentId(selectedAssignment!.assignmentId){ members in
+            
+            if let _ = members{
                 
-                if x.memberUserId == userId
-                {
-                  selectedAssigneeList.append(x)
+                for member in members!{
+                    
+                 let assignmentMember = PLAssignmentMember(name:"", id: 0)
+                 assignmentMember.fullName = member.fields?.objectForKey("assigneeName") as! String
+                 assignmentMember.memberUserId = member.fields?.objectForKey("assigneeUserId") as! UInt
+                 assignmentMember.assigneeStatus = member.fields?.objectForKey("assigneeStatus") as! UInt
+                 assignmentMember.avatar = member.fields?.objectForKey("Avatar") as! String
+                    assignmentMember.memberEmail = member.fields?.objectForKey("assigneeEmail") as! String
+                 assignmentMember.assignmentRecordId = member.ID!
+                  if assignmentMember.memberUserId == QBSession.currentSession().currentUser?.ID{
+                    
+                    assignmentMember.fullName = "Me"
+                     self.assignmentRecordId = member.ID!
+                     self.selectedAssigneeList.insert(assignmentMember, atIndex: 0)
+
+                    }else{
+                      self.selectedAssigneeList.append(assignmentMember)
+                    }
                 }
+                completion(true)
+            }else{
+                completion(false)
             }
+            
+            
         }
-        
-        let loggedInUserid = QBSession.currentSession().currentUser?.ID
-        let result = selectedAssignment?.assineesUserIds.contains(loggedInUserid!)
-        if let _ = result
-        {
-            if result!
-            {
-                let user = PLTeamMember(name: "", id: 0)
-                user.fullName = "Me"
-                user.memberEmail = (QBSession.currentSession().currentUser?.email)!
-                user.memberUserId = (QBSession.currentSession().currentUser?.ID)!
-                user.avatar = (QBSession.currentSession().currentUser?.customData)!
-                selectedAssigneeList.insert(user, atIndex: 0)
-            }
-        }
-       print("Members are \(selectedAssignment?.assineesUserIds)")
-       print("Status are \(selectedAssignment?.assigneeStatus)")
-        
-    
-  }
+    }
     
     func isLoggedInUserPartOfAssignment() -> Bool {
         
         let loggedInUserid = QBSession.currentSession().currentUser?.ID
         let result = selectedAssignment?.assineesUserIds.contains(loggedInUserid!)
         return result!
+    }
+    
+    func isUserCreatorOfAssignment()->Bool{
+        
+        if let _ = selectedAssignment{
+            
+            if selectedAssignment!.creatorId == PLSharedManager.manager.loggedInUserId{
+                return true
+            }
+        }
+        return false
     }
     
     
@@ -262,8 +287,11 @@ class PLProjectAssignmentViewModel: NSObject {
     
     func updateAssigmentStatusOfLoggedInUser(status:Int,completion:(Bool)->Void){
         
-        qbClient.updateRemoteAssigmentStatus(selectedAssignment!.assignmentId,status: status){ res in
-            
+        
+        
+        qbClient.updateRemoteAssigmentStatus(assignmentRecordId,status: status){ res in
+            let userAssignment = self.selectedAssigneeList[0] as! PLAssignmentMember
+            userAssignment.assigneeStatus = 1
             completion(res)
         }
     }

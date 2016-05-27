@@ -53,17 +53,13 @@ class PLProjectsViewController: UITableViewController,UIImagePickerControllerDel
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        print("Proj view ll appear")
+       
        
         if fetchDataFlag == false
         {
           projectViewModel.addObserver(self, forKeyPath:"createdProjectList", options: NSKeyValueObservingOptions.New, context:&observerContext)
           addActivityIndicatorView()
           projectViewModel.fetchProjectsFromRemote()
-        }
-        else
-        { print("Count is \(projectViewModel.contributingProjectList.count ) And \(projectViewModel.createdProjectList.count)")
-        
         }
       
       }

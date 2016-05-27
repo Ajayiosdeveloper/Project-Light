@@ -25,7 +25,7 @@ class PLProjectDetailViewModel: NSObject {
         }else{
            contributors = members
         }
-       commitments = [PLCommitment]()
+        commitments = [PLCommitment]()
         assignments = [PLAssignment]()
         communicationWays = ["Voice Chat","Video Chat","Text Chat"]
     }
@@ -210,6 +210,7 @@ class PLProjectDetailViewModel: NSObject {
                 {
                 let assignment = PLAssignment()
                 assignment.assignmentId = each.ID!
+                assignment.creatorId = each.userID
                 assignment.name = each.fields?.objectForKey("name") as! String
                 assignment.details = (each.fields?.objectForKey("description"))! as! String
                 let targetDate = (each.fields?.objectForKey("targetDate"))! as! NSTimeInterval

@@ -24,7 +24,10 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
     var assignementViewModel:PLProjectAssignmentViewModel!
     var profileViewController:PLUserProfileInfoTableViewController!
     var assignmentStatus:UIButton!
-    var footerView:UIView!
+    var headerView:UIView!
+    var refreshFlag = true
+    var headerColor = UIColor(colorLiteralRed: 89/255, green: 181/255, blue: 50/255, alpha: 1)
+    var loggedInUserStatus = "0"
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -48,27 +51,33 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
         if let _ = assignementViewModel, _ = assignementViewModel.assigneeList{
             
             assigneeListTableView.reloadData()
+            
         }
         
         if let _ = assignementViewModel.selectedAssignment{
-             self.title = assignementViewModel.assignmentName()
-
+               self.title = assignementViewModel.assignmentName()
                 assignmentNameTextFiled.text = assignementViewModel.assignmentName()
                 assignmentStartDateTextField.text = assignementViewModel.assignmentStartDate()
                 assignmenttargetDateTextField.text = assignementViewModel.assignmentTargetDate()
                 assignmentDescriptionTextView.text = assignementViewModel.assignmentDescription()
                 self.navigationItem.rightBarButtonItem?.enabled = false
                 self.navigationItem.rightBarButtonItem?.tintColor = UIColor.clearColor()
-                assignementViewModel.responsibleForAssigniment()
-                assigneeListTableView.reloadData()
-                assigneeListTableView.allowsSelection = false
+              if refreshFlag{
+              assignementViewModel.responsibleForAssigniment(){[weak self]result in
+                
+                if result{
+                    self!.assigneeListTableView.reloadData()
+                    self!.assigneeListTableView.allowsSelection = false
+                  }
                 }
+             }
+            
+          }
            else {self.navigationItem.rightBarButtonItem?.enabled = true ;
                 self.navigationItem.rightBarButtonItem?.tintColor = nil;
                 assigneeListTableView.allowsSelection = true
                clearFields()
-            print(assignementViewModel.selectedAssignment)
-            }
+          }
         
             clearCellCheckMarks()
     }
@@ -166,7 +175,25 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
         cell.nameLabel.text = assignementViewModel.titleOfRowAtIndexPath(indexPath.row)
         cell.mailIdField.text = assignementViewModel.emailOfRowAtIndexPath(indexPath.row)
         cell.disclosureButton.tag = indexPath.row
-       if PLSharedManager.manager.projectCreatedByUserId == QBSession.currentSession().currentUser?.ID
+        assignementViewModel.contributorImageRowAtIndexPath(indexPath.row, completion: { (avatar) in
+            
+            if let _ = avatar{
+                
+                cell.profilePicture.image = avatar!
+                cell.profilePicture.layer.masksToBounds = true
+            }else{
+                
+                cell.profilePicture.image = UIImage(named:"UserImage.png")
+            }
+        })
+        
+        if selectedIndexes.containsObject(indexPath){
+            cell.accessoryType = .Checkmark
+        }else{
+            cell.accessoryType = .None
+        }
+
+        if PLSharedManager.manager.projectCreatedByUserId == QBSession.currentSession().currentUser?.ID
         {
             cell.disclosureButton.hidden = false
             cell.disclosureButton.addTarget(self, action: #selector(PLProjectAssignmentViewController.loadProfileController(_:)), forControlEvents:UIControlEvents.TouchUpInside)
@@ -190,28 +217,30 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
                 cell.disclosureButton.addTarget(self, action: #selector(PLProjectAssignmentViewController.loadProfileController(_:)), forControlEvents:UIControlEvents.TouchUpInside)
             }          
         }
-        assignementViewModel.contributorImageRowAtIndexPath(indexPath.row, completion: { (avatar) in
-            
-            if let _ = avatar{
-                
-                cell.profilePicture.image = avatar!
-                cell.profilePicture.layer.masksToBounds = true
-            }else{
-                
-                cell.profilePicture.image = UIImage(named:"UserImage.png")
-            }
-        })
-        
-        if selectedIndexes.containsObject(indexPath){
-            cell.accessoryType = .Checkmark
-        }else{
-            cell.accessoryType = .None
-        }
-        
+
         if assignementViewModel.selectedAssignment == nil{
             cell.statueField.text = ""
-        }
+        
+        }else{
+            let assigneeStatus = assignementViewModel.assigneeStatus(indexPath.row)
+            if assigneeStatus == "0"{
+                cell.statueField.text = "In Progress"
+                cell.statueField.textColor = enableButtonColor
+            }else if assigneeStatus == "1"{
+                cell.statueField.text = "Completed"
+                cell.statueField.textColor = UIColor(colorLiteralRed: 89/255, green: 181/255, blue: 50/255, alpha: 1)
+            }else{
+                cell.statueField.text = "Closed"
+            }
+            
+            loggedInUserStatus = assignementViewModel.assigneeStatus(0)
+            if loggedInUserStatus == "1"{
+                headerColor = UIColor(colorLiteralRed: 89/255, green: 181/255, blue: 50/255, alpha: 0.5)
+                assignmentStatus.enabled = false
+            }
+         }
    
+        
         return cell
      
     }
@@ -237,25 +266,31 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
     
     
     func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-       footerView  = UIView(frame:CGRectMake(0,0,self.view.frame.size.width,20))
+        
+        headerView  = UIView(frame:CGRectMake(0,0,self.view.frame.size.width,20))
         if section == 1
         {
+            
             if assignementViewModel.selectedAssignment != nil{
-                
-                footerView.backgroundColor = UIColor(colorLiteralRed: 89/255, green: 181/255, blue: 50/255, alpha: 1)
-                footerView.layer.cornerRadius = 15
-                footerView.clipsToBounds = true
+                if loggedInUserStatus == "0"{
+                    headerView.backgroundColor = UIColor(colorLiteralRed: 89/255, green: 181/255, blue: 50/255, alpha: 1)
+                }else if loggedInUserStatus == "1"{
+                    headerView.backgroundColor = UIColor(colorLiteralRed: 89/255, green: 181/255, blue: 50/255, alpha: 0.5)
+                }
+              
+                headerView.layer.cornerRadius = 15
+                headerView.clipsToBounds = true
                 
                 let userId = QBSession.currentSession().currentUser?.ID
                 if userId! == PLSharedManager.manager.projectCreatedByUserId{
                     
-                    self.addButtonForTableViewFooterOnView(footerView, title: "Close", tag: -1)
+                    self.addButtonForTableViewFooterOnView(headerView, title: "Close", tag: -1)
                     
                 }else{
                     
                     if assignementViewModel.isLoggedInUserPartOfAssignment()
                     {
-                        self.addButtonForTableViewFooterOnView(footerView, title: "Completed ?", tag: 1)
+                        self.addButtonForTableViewFooterOnView(headerView, title: "Completed ?", tag: 1)
                     }
                     else{
                         return nil
@@ -263,7 +298,13 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
                 }
 
         }
-        return footerView
+            
+            if assignementViewModel.isUserCreatorOfAssignment(){
+              headerView.backgroundColor = UIColor(colorLiteralRed: 89/255, green: 181/255, blue: 50/255, alpha: 1)
+              assignmentStatus.enabled = true
+            }
+            
+            return headerView
     }
     return nil
     }
@@ -310,11 +351,12 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
             assignementViewModel.updateAssigmentStatusOfLoggedInUser(1){res in
                 if res{
                     
-                  self.footerView.backgroundColor =  UIColor(colorLiteralRed: 89/255, green: 181/255, blue: 50/255, alpha: 0.5)
-                    self.assignmentStatus.setTitle("Status Updated", forState:.Normal)
+                  self.headerView.backgroundColor =  UIColor(colorLiteralRed: 89/255, green: 181/255, blue: 50/255, alpha: 0.5)
+                    self.assignmentStatus.setTitle("Completed", forState:.Normal)
                     self.assignmentStatus.enabled = false
-                    let userCell = self.assignementViewModel.selectedAssigneeList[0]
-                    print(userCell.fullName)
+                    self.loggedInUserStatus = "1"
+                    self.headerView.backgroundColor = UIColor(colorLiteralRed: 89/255, green: 181/255, blue: 50/255, alpha:0.5)
+
                     self.assigneeListTableView.reloadRowsAtIndexPaths([NSIndexPath(forRow:0, inSection:0)], withRowAnimation: UITableViewRowAnimation.Automatic)
                     }
             }
@@ -323,8 +365,7 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
             
             assignementViewModel.updateAssigmentStatusOfLoggedInUser(-1){res in
                 if res{
-                    
-                    self.footerView.backgroundColor =  UIColor(colorLiteralRed: 89/255, green: 181/255, blue: 50/255, alpha: 0.5)
+                    self.headerView.backgroundColor =  UIColor(colorLiteralRed: 89/255, green: 181/255, blue: 50/255, alpha: 0.5)
                     self.assignmentStatus.setTitle("Task Closed", forState:.Normal)
                     self.assignmentStatus.enabled = false
                    }
@@ -359,6 +400,7 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
     {
         profileViewController = self.storyboard?.instantiateViewControllerWithIdentifier("PLUserProfileInfoTableViewController") as? PLUserProfileInfoTableViewController
         profileViewController.disablingBtn = false
+        refreshFlag = false
         profileViewController.userProfileModel = PLUserProfileInfoViewModel()
         let userId = assignementViewModel.getSelectedAssigneeUserId(sender.tag)
         profileViewController.fetchingUserDetails(userId)

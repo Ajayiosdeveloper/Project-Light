@@ -363,6 +363,7 @@ class PLProjectDetailTableViewController: UITableViewController,EKEventEditViewD
             assignmentViewController = self.storyboard?.instantiateViewControllerWithIdentifier("PLProjectAssignmentViewController") as! PLProjectAssignmentViewController
         }
         assignmentViewController.projectId = projectId
+        assignmentViewController.refreshFlag = true
         assignmentViewController.assignementViewModel = PLProjectAssignmentViewModel(assignees: projectDetailViewModel.getProjectContributorsList())
         self.navigationController?.pushViewController(assignmentViewController, animated: true)
     

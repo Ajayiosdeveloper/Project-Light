@@ -320,6 +320,7 @@ class PLQuickbloxHttpClient
              customObjectTwo.fields?.setValue(each.memberUserId, forKey: "assigneeUserId")
              customObjectTwo.fields?.setValue(each.memberEmail, forKey: "assigneeEmail")
              customObjectTwo.fields?.setValue(0, forKey: "assigneeStatus")
+             customObjectTwo.fields?.setValue(each.avatar, forKey: "Avatar")
              customObjectTwo.fields?.setValue(PLSharedManager.manager.projectName, forKey: "projectName")
              customObjectTwo.fields?.setValue(object?.ID!, forKey:"_parent_id")
              
@@ -1082,15 +1083,19 @@ class PLQuickbloxHttpClient
     }
     
     
-    func updateRemoteAssigmentStatus(id:String,status:Int,completion:(Bool)->Void){ // remove Remote
+    func updateRemoteAssigmentStatus(id:String?,status:Int,completion:(Bool)->Void){ // remove Remote
         
         print("updateRemoteAssigmentStatus\(id)")
         
+        if status == -1{
+         
+            print("Close the assignment")
+        }
+        else{
         let userId = QBSession.currentSession().currentUser?.ID
         let customObject = QBCOCustomObject()
         customObject.className = "PLProjectAssignmentMember"
-        customObject.ID = "5746a46ea28f9a8dd7000078"
-        customObject.fields?.setObject(id, forKey: "_parent_id")
+        customObject.ID = id
         customObject.fields?.setObject(status, forKey: "assigneeStatus")
         customObject.fields?.setObject(userId!, forKey:"assigneeUserId")
         QBRequest.updateObject(customObject, successBlock: { (_, _) in
@@ -1100,7 +1105,26 @@ class PLQuickbloxHttpClient
             }) { (_) in
                 
         }
+        }
+    }
+    
+    func getAssignmentMembersForAssignmentId(id:String,completion:([QBCOCustomObject]?)->Void){
         
+        let extendedReq = NSMutableDictionary()
+        extendedReq.setValue(id, forKey: "_parent_id")
+        
+        QBRequest.objectsWithClassName("PLProjectAssignmentMember", extendedRequest:extendedReq, successBlock: { (_, objects, _) in
+        
+            if let _ = objects{
+                
+                completion(objects!)
+            }
+            
+            
+            }) { (_) in
+                
+              completion(nil)
+        }
     }
     
 }
