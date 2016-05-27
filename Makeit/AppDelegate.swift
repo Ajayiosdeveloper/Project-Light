@@ -34,7 +34,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate,QBChatDelegate {
         //Checking Newtwork Reachability and observing Newtork changes with observer
         
         reachability = Reachability.reachabilityForInternetConnection()
-        NSNotificationCenter.defaultCenter().addObserver(self, selector:#selector(AppDelegate.handleNewtorkChanges), name:kReachabilityChangedNotification, object:nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector:#selector(AppDelegate.handleNetworkChanges), name:kReachabilityChangedNotification, object:nil)
         reachability.startNotifier()
         
             
@@ -69,7 +69,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate,QBChatDelegate {
         
     }
 
-    func handleNewtorkChanges(){ //correct the spelling
+    func handleNetworkChanges(){ //correct the spelling
         
         let remoteHost = reachability.currentReachabilityStatus() as NetworkStatus
         if remoteHost == NotReachable

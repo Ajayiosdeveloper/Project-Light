@@ -73,8 +73,10 @@ class PLAddProjectViewModel: NSObject {
                     
                     let addedProject = PLProject(projectName: name, subTitle:description)
                     addedProject.projectId = projectId
+                    addedProject.createdAt = NSDate()
                     addedProject.createdBy = (QBSession.currentSession().currentUser?.ID)!
                     completion(addedProject)
+                    print("Added Project \(addedProject.projectId)")
 
                }
             }

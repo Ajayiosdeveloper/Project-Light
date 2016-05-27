@@ -26,7 +26,7 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.title = assignementViewModel.assignmentName()
+       
         print(assignementViewModel.assigneeList)
         self.assigneeListTableView.registerNib(UINib(nibName:"PLAssigneeTableViewCell", bundle:NSBundle.mainBundle()), forCellReuseIdentifier: "Cell")
         addDoneBarButtonItem()
@@ -42,14 +42,15 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
     }
     
     override func viewWillAppear(animated: Bool) {
-        super.viewWillAppear(animated)
+            super.viewWillAppear(animated)
         if let _ = assignementViewModel, _ = assignementViewModel.assigneeList{
             
             assigneeListTableView.reloadData()
         }
         
         if let _ = assignementViewModel.selectedAssignment{
-                print("view ll appear if part")
+             self.title = assignementViewModel.assignmentName()
+
                 assignmentNameTextFiled.text = assignementViewModel.assignmentName()
                 assignmentStartDateTextField.text = assignementViewModel.assignmentStartDate()
                 assignmenttargetDateTextField.text = assignementViewModel.assignmentTargetDate()

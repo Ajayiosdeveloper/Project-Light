@@ -178,78 +178,48 @@ class PLSidebarViewModel: NSObject {
     
     func titleOfRowAtIndexPath(row:Int)->String
     {
-      var taskList = [AnyObject]()
-       
-       for title in commitments
-       {
-        taskList.append(title.name)
-       }
-       return taskList[row] as! String
+        let commitment = commitments[row]
+        return commitment.name
     }
     
     func projectTitleOfRowAtIndexPath(row:Int)->String
     {
-        var taskList = [AnyObject]()
-        
-        for title in commitments
-        {
-            taskList.append(title.projectName)
-        }
-        return taskList[row] as! String
+        let commitment = commitments[row]
+        return commitment.projectName
     }
     
     func commitmentDetails(row:Int)->String
     {
-        var taskDetails = [AnyObject]()
-        for projectName in commitments
-        {
-            taskDetails.append(projectName.details)
-        }
-        return taskDetails[row] as! String
+        let commitment = commitments[row]
+        return commitment.details
     }
     
     func startTaskDate(row : Int) -> String
     {
-        var taskDetail = [AnyObject]()
-        for endTime in commitments
-        {
-            let time = stringDate(endTime.startDate)
-            taskDetail.append(time)
-        }
-        return taskDetail[row] as! String
+        let commitment = commitments[row]
+        let startTime =  stringDate(commitment.startDate)
+        return startTime
     }
     
     func endTaskDate(row : Int) -> String
     {
-        var taskDetail = [AnyObject]()
-        for endTime in commitments
-        {
-            let time = stringDate(endTime.targetDate)
-            taskDetail.append(time)
-        }
-        return taskDetail[row] as! String
+        let commitment = commitments[row]
+        let targetTime =  stringDate(commitment.targetDate)
+        return targetTime
     }
     
     func startTimeOfTask(row: Int) -> String
     {
-        var taskDetail = [AnyObject]()
-        for startTime in commitments
-        {
-            let time = timeFormats(startTime.startDate)
-            taskDetail.append(time)
-        }
-        return taskDetail[row] as! String
+        let commitment = commitments[row]
+        let startTime =  timeFormats(commitment.startDate)
+        return startTime
     }
     
     func endTimeOfTask(row:Int) -> String
     {
-        var taskDetail = [AnyObject]()
-        for endTime in commitments
-        {
-            let time = timeFormats(endTime.targetDate)
-            taskDetail.append(time)
-        }
-        return taskDetail[row] as! String
+        let commitment = commitments[row]
+        let targetTime =  timeFormats(commitment.targetDate)
+        return targetTime
     }
     
     func stringDate(dateTime : String) -> String

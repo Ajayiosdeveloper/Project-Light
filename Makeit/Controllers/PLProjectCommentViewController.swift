@@ -32,8 +32,9 @@ class PLProjectCommentViewController: UITableViewController,EKEventEditViewDeleg
     var targetDatecommitmentDatePicker:UIDatePicker!
     
     override func viewDidLoad() {
+
         super.viewDidLoad()
-        self.title = commitmentViewModel.commitmentName()
+       
         self.pickerView?.delegate = self
         self.pickerView?.dataSource = self
         commitmentPriorityTextField.inputView = pickerView
@@ -52,9 +53,10 @@ class PLProjectCommentViewController: UITableViewController,EKEventEditViewDeleg
       override func viewWillAppear(animated: Bool) {
         
         super.viewWillAppear(animated)
-
+    
         if let _ = commitmentViewModel.commitment
         {
+            self.title = commitmentViewModel.commitmentName()
             if PLSharedManager.manager.isCalendarAccess{
                 
                 print("Cander Access is there")

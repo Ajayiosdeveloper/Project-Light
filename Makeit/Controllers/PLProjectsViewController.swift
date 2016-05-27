@@ -53,12 +53,19 @@ class PLProjectsViewController: UITableViewController,UIImagePickerControllerDel
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        projectViewModel.addObserver(self, forKeyPath:"createdProjectList", options: NSKeyValueObservingOptions.New, context:&observerContext)
+        print("Proj view ll appear")
+       
         if fetchDataFlag == false
         {
-        projectViewModel.fetchProjectsFromRemote()
+          projectViewModel.addObserver(self, forKeyPath:"createdProjectList", options: NSKeyValueObservingOptions.New, context:&observerContext)
+          addActivityIndicatorView()
+          projectViewModel.fetchProjectsFromRemote()
         }
-        addActivityIndicatorView()
+        else
+        { print("Count is \(projectViewModel.contributingProjectList.count ) And \(projectViewModel.createdProjectList.count)")
+        
+        }
+      
       }
     
     func  addActivityIndicatorView() {
@@ -378,11 +385,14 @@ class PLProjectsViewController: UITableViewController,UIImagePickerControllerDel
   
     func addProjectToDataSource(project: PLProject) {
         
-       
-        
-        projectViewModel.addNewProjectToCreatedProjectList(project){[weak self] res in
+       print("delegate methd")
+        print(project.name)
+        print(project.projectId)
+        print(project.subTitle)
+        print(project.createdBy)
+        projectViewModel.addNewProjectToCreatedProjectList(project){ res in
             
-            self!.projectTableView.reloadData()
+          self.projectTableView.reloadData()
         }
         
        

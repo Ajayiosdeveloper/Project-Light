@@ -950,7 +950,7 @@ class PLQuickbloxHttpClient
 
     }
     
-    func contOfPendingTasks(completion:(UInt)->Void){ // check spelling of method
+    func countOfPendingTasks(completion:(UInt)->Void){ // check spelling of method
         let timeInterval = Int(convertdateToTimeinterval(NSDate(),dateFormat: "dd-MM-yyyy"))
         let extendedReq = NSMutableDictionary()
         extendedReq.setValue(timeInterval, forKey: "targetDate[lt]")
@@ -1082,7 +1082,7 @@ class PLQuickbloxHttpClient
     }
     
     
-    func updateRemoteAssigmentStatus(id:String){ // remove Remote
+    func updateAssigmentStatus(id:String){ // remove Remote
         
         print("updateRemoteAssigmentStatus\(id)")
         

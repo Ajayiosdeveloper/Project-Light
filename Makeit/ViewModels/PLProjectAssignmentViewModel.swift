@@ -262,6 +262,6 @@ class PLProjectAssignmentViewModel: NSObject {
     
     func updateAssigmentStatusOfLoggedInUser(){
         
-        qbClient.updateRemoteAssigmentStatus(selectedAssignment!.assignmentId)
+        qbClient.updateAssigmentStatus(selectedAssignment!.assignmentId)
     }
 }
