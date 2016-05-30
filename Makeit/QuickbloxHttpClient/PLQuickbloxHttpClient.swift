@@ -1120,6 +1120,80 @@ class PLQuickbloxHttpClient
         }
     }
     
+    
+    func countOfTodayAssignments(completion:(UInt)->Void){
+        
+        let extendedReq = NSMutableDictionary()
+        
+        
+        let timeInterval = Int(convertdateToTimeinterval(NSDate(),dateFormat: "dd-MM-yyyy"))
+        extendedReq.setValue(timeInterval, forKey: "startDate")
+        extendedReq.setValue(QBSession.currentSession().currentUser?.ID, forKey: "user_id")
+        QBRequest.countObjectsWithClassName("PLProjectAssignment", extendedRequest: extendedReq, successBlock: { (res, count) in
+            completion(count)
+            
+        }) { (res) in completion(0)
+        }
+    }
+    
+    func countOfUpComingAssignments(completion:(UInt)->Void){
+        let timeInterval = Int(convertdateToTimeinterval(NSDate(),dateFormat: "dd-MM-yyyy"))
+        let extendedReq = NSMutableDictionary()
+        extendedReq.setValue(timeInterval, forKey: "startDate[gt]")
+        extendedReq.setValue(QBSession.currentSession().currentUser?.ID, forKey: "user_id")
+        QBRequest.countObjectsWithClassName("PLProjectAssignment", extendedRequest: extendedReq, successBlock: { (_, count) in
+            
+            completion(count)
+            
+            }) { (error) in
+                
+                completion(0)
+                print("got error")
+           }
+    }
+    
+    func countOfPendingAssignments(completion : (UInt) -> Void)
+    {
+        let timeInterval = Int(convertdateToTimeinterval(NSDate(),dateFormat: "dd-MM-yyyy"))
+        let extendedReq = NSMutableDictionary()
+        extendedReq.setValue(timeInterval, forKey: "targetDate[lt]")
+        extendedReq.setValue(QBSession.currentSession().currentUser?.ID, forKey: "user_id")
+        extendedReq.setValue(0, forKey: "isCompleted")
+        QBRequest.countObjectsWithClassName("PLProjectAssignment", extendedRequest: extendedReq, successBlock: { (_, count) in
+            
+            
+            completion(count)
+            
+        }){ (res) in // rethink on the error scenarios
+            
+            completion(0)
+            
+        }
+        
+    }
+
+    func assignmentsWithType(type : String, completion:([QBCOCustomObject]?)->Void){
+        
+        print("Im assignments array") 
+        let extendedReq = NSMutableDictionary()
+        let taskLimit =  Int(convertdateToTimeinterval(NSDate(),dateFormat: "dd-MM-yyyy"))
+        if type == "targetDate[lt]"
+        {
+            extendedReq.setValue(0, forKey: "status")
+        }
+        extendedReq.setValue(taskLimit, forKey: type)
+        extendedReq.setValue(QBSession.currentSession().currentUser?.ID, forKey: "user_id")
+        QBRequest.objectsWithClassName("PLProjectAssignment", extendedRequest: extendedReq, successBlock: { (_, objects, _) in
+            
+            completion(objects)
+           
+        }) { (res) in
+           
+            completion(nil)
+        }
+    }
+ 
+    
     func closeAssignment(id:String,completion:(Bool)->Void){
         
         print("Coming in")
@@ -1136,11 +1210,11 @@ class PLQuickbloxHttpClient
             
             completion(true)
             
-            }) { (error) in
-                
-                completion(false)
-                print("got error")
-           }
+        }) { (error) in
+            
+            completion(false)
+            print("got error")
+        }
     }
-    
+
 }
