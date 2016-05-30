@@ -157,7 +157,7 @@ class PLTaskViewController: UIViewController,UITableViewDelegate,UITableViewData
             let cell = self.tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! PLTasksViewCell
             
             cell.taskNameField.text = "Task:  " + sidebarViewModel.assignmentTitle(indexPath.row)
-          // cell.projectNameField.text =  "Project: " + sidebarViewModel.projectTitle(indexPath.row)
+           cell.projectNameField.text =  "Project: " + sidebarViewModel.getProjectNameOfAssignment(indexPath.row)
             cell.detailsField.text = "Detail: " + sidebarViewModel.assignmentDetails(indexPath.row)
             if selectedType == 4
             {
@@ -170,7 +170,6 @@ class PLTaskViewController: UIViewController,UITableViewDelegate,UITableViewData
                 cell.taskStartTime.text  = "Start: " + sidebarViewModel.startDateOfAssignment(indexPath.row)
                 cell.taskEndTime.text = "End: " + sidebarViewModel.endDateOfAssignment(indexPath.row)
             }
-            cell.accessoryType = .DisclosureIndicator
             return cell
         }
         else{
@@ -264,7 +263,7 @@ class PLTaskViewController: UIViewController,UITableViewDelegate,UITableViewData
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath)
     {
-        if selectedType != 3
+        if selectedType <= 2
         {
         let commitmentViewController = self.storyboard?.instantiateViewControllerWithIdentifier("PLProjectCommentViewController") as! PLProjectCommentViewController
         commitmentViewController.commitmentViewModel = PLProjectCommentViewModel()
@@ -275,5 +274,4 @@ class PLTaskViewController: UIViewController,UITableViewDelegate,UITableViewData
         commitmentViewController.addBackBarButtonItem()
         }
     }
-    
 }

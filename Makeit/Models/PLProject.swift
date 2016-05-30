@@ -76,6 +76,7 @@ class PLAssignment: NSObject {
     
     var name:String = ""
     var details: String = ""
+    var projectName = ""
     var assignmentId:String = ""
     var targetDate:String = ""
     var startDate:String = ""

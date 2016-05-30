@@ -301,6 +301,7 @@ class PLSidebarViewModel: NSObject {
                 let assignment = PLAssignment()
                 assignment.name = each.fields?.objectForKey("name") as! String
                 assignment.details = each.fields?.objectForKey("description") as! String
+                assignment.projectName = (each.fields?.objectForKey("projectName"))! as! String
                 let startDate = each.fields?.objectForKey("startDate") as! NSTimeInterval
                 let targetDate = each.fields?.objectForKey("targetDate") as! NSTimeInterval
                 var startTime  = (each.fields?.objectForKey("startTime"))! as! String
@@ -313,12 +314,17 @@ class PLSidebarViewModel: NSObject {
                 assignment.targetDate += " \(endTime)"
                 assignmentsArray.append(assignment)
             }
-            print("assignments array \(assignmentsArray)")
             completion(assignmentsArray)
         }
         
     }
    
+    func getProjectNameOfAssignment(row : Int) -> String
+    {
+        let assignment = self.assignments[row]
+        return assignment.projectName
+    }
+    
     func getTodayAssignments(completion:(Bool)-> Void)
     {
         let type = "startDate"
@@ -366,7 +372,6 @@ class PLSidebarViewModel: NSObject {
     
     func numberOfRowsForAssignment()->Int
     {
-        print("Assignment Row Count : \(assignments.count)")
         if assignments.count > 0
         {
             return assignments.count
