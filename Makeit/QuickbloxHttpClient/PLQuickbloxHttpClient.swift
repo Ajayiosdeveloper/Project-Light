@@ -1153,7 +1153,8 @@ class PLQuickbloxHttpClient
         
     }
     
-    func countOfPendingAssignments(completion:(UInt)->Void){
+    func countOfPendingAssignments(completion : (UInt) -> Void)
+    {
         let timeInterval = Int(convertdateToTimeinterval(NSDate(),dateFormat: "dd-MM-yyyy"))
         let extendedReq = NSMutableDictionary()
         extendedReq.setValue(timeInterval, forKey: "targetDate[lt]")
@@ -1174,21 +1175,21 @@ class PLQuickbloxHttpClient
 
     func assignmentsWithType(type : String, completion:([QBCOCustomObject]?)->Void){
         
-        
+        print("Im assignments array") 
         let extendedReq = NSMutableDictionary()
         let taskLimit =  Int(convertdateToTimeinterval(NSDate(),dateFormat: "dd-MM-yyyy"))
-//        if type == "targetDate[lt]"
-//        {
-//            extendedReq.setValue(0, forKey: "assigneeStatus")
-//        }
+        if type == "targetDate[lt]"
+        {
+            extendedReq.setValue(0, forKey: "status")
+        }
         extendedReq.setValue(taskLimit, forKey: type)
         extendedReq.setValue(QBSession.currentSession().currentUser?.ID, forKey: "user_id")
         QBRequest.objectsWithClassName("PLProjectAssignment", extendedRequest: extendedReq, successBlock: { (_, objects, _) in
             
             completion(objects)
-            print("assignments array \(objects)")
+           
         }) { (res) in
-            
+           
             completion(nil)
         }
     }

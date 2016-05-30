@@ -69,6 +69,7 @@ class PLTaskViewController: UIViewController,UITableViewDelegate,UITableViewData
             }
             
         case 4:
+            print("case 4")
             self.title = "Today Assignments"
             sidebarViewModel.getTodayAssignments({ (res) in
                 
@@ -76,6 +77,8 @@ class PLTaskViewController: UIViewController,UITableViewDelegate,UITableViewData
                 
             })
         case 5:
+            print("case 5")
+
             self.title = "Upcoming Assignments"
             sidebarViewModel.getUpcomingAssignments({ (res) in
                 self.tableView!.reloadData()
@@ -164,8 +167,8 @@ class PLTaskViewController: UIViewController,UITableViewDelegate,UITableViewData
             else if selectedType == 5 || selectedType == 6
             {
                 
-                cell.taskStartTime.text  = "Start: " + sidebarViewModel.startTaskDateOfAssignment(indexPath.row)
-                cell.taskEndTime.text = "End: " + sidebarViewModel.endTaskDateOfAssignment(indexPath.row)
+                cell.taskStartTime.text  = "Start: " + sidebarViewModel.startDateOfAssignment(indexPath.row)
+                cell.taskEndTime.text = "End: " + sidebarViewModel.endDateOfAssignment(indexPath.row)
             }
             cell.accessoryType = .DisclosureIndicator
             return cell

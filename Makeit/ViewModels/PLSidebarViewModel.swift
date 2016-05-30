@@ -291,7 +291,6 @@ class PLSidebarViewModel: NSObject {
     
     func getAssignmentArray(objects : [QBCOCustomObject], completion: ([PLAssignment])->Void)
     {
-        print("assignments array")
         var assignmentsArray = [PLAssignment]()
         
         if objects.count > 0
@@ -339,7 +338,7 @@ class PLSidebarViewModel: NSObject {
     func getUpcomingAssignments(completion:(Bool)-> Void)
     {
         let type = "startDate[gt]"
-        qbClient.tasksWithType(type) {[weak self] (tasks) in
+        qbClient.assignmentsWithType(type) {[weak self] (tasks) in
             if let _ = tasks
             {
                 self!.assignments.removeAll(keepCapacity: true)
@@ -353,7 +352,7 @@ class PLSidebarViewModel: NSObject {
     func getPendingAssignments(completion:(Bool)-> Void)
     {
         let type = "targetDate[lt]"
-        qbClient.tasksWithType(type) {[weak self] (tasks) in
+        qbClient.assignmentsWithType(type) {[weak self] (tasks) in
             if let _ = tasks
             {
                 self!.assignments.removeAll(keepCapacity: true)
@@ -387,30 +386,31 @@ class PLSidebarViewModel: NSObject {
         return assignment.details
     }
     
-    func startTaskDateOfAssignment(row : Int) -> String
+    func startDateOfAssignment(row : Int) -> String
     {
         let assignment = assignments[row]
         let startTime =  stringDate(assignment.startDate)
+         print(startTime)
         return startTime
     }
     
-    func endTaskDateOfAssignment(row : Int) -> String
+    func endDateOfAssignment(row : Int) -> String
     {
-        let assignment = commitments[row]
+        let assignment = assignments[row]
         let targetTime =  stringDate(assignment.targetDate)
         return targetTime
     }
     
     func startTimeOfAssignment(row: Int) -> String
     {
-        let assignment = commitments[row]
+        let assignment = assignments[row]
         let startTime =  timeFormats(assignment.startDate)
         return startTime
     }
     
     func endTimeOfAssignment(row:Int) -> String
     {
-        let assignment = commitments[row]
+        let assignment = assignments[row]
         let targetTime =  timeFormats(assignment.targetDate)
         return targetTime
     }
