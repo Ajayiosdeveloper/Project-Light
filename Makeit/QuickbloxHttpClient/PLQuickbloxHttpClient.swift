@@ -1128,7 +1128,7 @@ class PLQuickbloxHttpClient
         
         let timeInterval = Int(convertdateToTimeinterval(NSDate(),dateFormat: "dd-MM-yyyy"))
         extendedReq.setValue(timeInterval, forKey: "startDate")
-        extendedReq.setValue(QBSession.currentSession().currentUser?.ID, forKey: "user_id")
+        extendedReq.setValue(QBSession.currentSession().currentUser?.ID, forKey: "assigneeUserId[or]")
         QBRequest.countObjectsWithClassName("PLProjectAssignment", extendedRequest: extendedReq, successBlock: { (res, count) in
             completion(count)
             
@@ -1140,7 +1140,7 @@ class PLQuickbloxHttpClient
         let timeInterval = Int(convertdateToTimeinterval(NSDate(),dateFormat: "dd-MM-yyyy"))
         let extendedReq = NSMutableDictionary()
         extendedReq.setValue(timeInterval, forKey: "startDate[gt]")
-        extendedReq.setValue(QBSession.currentSession().currentUser?.ID, forKey: "user_id")
+        extendedReq.setValue(QBSession.currentSession().currentUser?.ID, forKey: "assigneeUserId[or]")
         QBRequest.countObjectsWithClassName("PLProjectAssignment", extendedRequest: extendedReq, successBlock: { (_, count) in
             
             completion(count)
@@ -1157,7 +1157,7 @@ class PLQuickbloxHttpClient
         let timeInterval = Int(convertdateToTimeinterval(NSDate(),dateFormat: "dd-MM-yyyy"))
         let extendedReq = NSMutableDictionary()
         extendedReq.setValue(timeInterval, forKey: "targetDate[lt]")
-        extendedReq.setValue(QBSession.currentSession().currentUser?.ID, forKey: "user_id")
+        extendedReq.setValue(QBSession.currentSession().currentUser?.ID, forKey: "assigneeUserId[or]")
         extendedReq.setValue(0, forKey: "status")
         QBRequest.countObjectsWithClassName("PLProjectAssignment", extendedRequest: extendedReq, successBlock: { (_, count) in
             
@@ -1181,7 +1181,7 @@ class PLQuickbloxHttpClient
             extendedReq.setValue(0, forKey: "status")
         }
         extendedReq.setValue(taskLimit, forKey: type)
-        extendedReq.setValue(QBSession.currentSession().currentUser?.ID, forKey: "user_id")
+        extendedReq.setValue(QBSession.currentSession().currentUser?.ID, forKey: "assigneeUserId[or]")
         QBRequest.objectsWithClassName("PLProjectAssignment", extendedRequest: extendedReq, successBlock: { (_, objects, _) in
             
             completion(objects)

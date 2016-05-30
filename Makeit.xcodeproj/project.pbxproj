@@ -36,7 +36,6 @@
 		805EFB5F1CD239200066B4CB /* PLTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 805EFB5D1CD239200066B4CB /* PLTableViewCell.swift */; };
 		805EFB601CD239200066B4CB /* PLTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 805EFB5E1CD239200066B4CB /* PLTableViewCell.xib */; };
 		8063065E1CFC259B0093DC28 /* completed.png in Resources */ = {isa = PBXBuildFile; fileRef = 8063065C1CFC259B0093DC28 /* completed.png */; };
-		8063065F1CFC259B0093DC28 /* progress.png in Resources */ = {isa = PBXBuildFile; fileRef = 8063065D1CFC259B0093DC28 /* progress.png */; };
 		8066356D1CE0BAD900D21103 /* PLUserProfileInfoTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8066356C1CE0BAD900D21103 /* PLUserProfileInfoTableViewController.swift */; };
 		8066356F1CE0BB0400D21103 /* PLUserProfileInfoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8066356E1CE0BB0400D21103 /* PLUserProfileInfoViewModel.swift */; };
 		806B1E0F1CD8A7D60018B026 /* audio.png in Resources */ = {isa = PBXBuildFile; fileRef = 806B1E0C1CD8A7D60018B026 /* audio.png */; };
@@ -106,6 +105,7 @@
 		809F96D51CBCC35000DD1FE9 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 809F96D31CBCC35000DD1FE9 /* LaunchScreen.storyboard */; };
 		809F96E01CBCC35000DD1FE9 /* MakeitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 809F96DF1CBCC35000DD1FE9 /* MakeitTests.swift */; };
 		809F96EB1CBCC35000DD1FE9 /* MakeitUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 809F96EA1CBCC35000DD1FE9 /* MakeitUITests.swift */; };
+		809FFFBA1CFC4CCA00F0D391 /* progress.png in Resources */ = {isa = PBXBuildFile; fileRef = 809FFFB91CFC4CCA00F0D391 /* progress.png */; };
 		80AB251A1CE74BE7008B20C3 /* logout.png in Resources */ = {isa = PBXBuildFile; fileRef = 80AB25191CE74BE7008B20C3 /* logout.png */; };
 		80AB251E1CE74CCA008B20C3 /* pendingTask.png in Resources */ = {isa = PBXBuildFile; fileRef = 80AB251B1CE74CCA008B20C3 /* pendingTask.png */; };
 		80AB251F1CE74CCA008B20C3 /* upcomingTask.png in Resources */ = {isa = PBXBuildFile; fileRef = 80AB251C1CE74CCA008B20C3 /* upcomingTask.png */; };
@@ -233,7 +233,6 @@
 		805EFB5D1CD239200066B4CB /* PLTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLTableViewCell.swift; sourceTree = "<group>"; };
 		805EFB5E1CD239200066B4CB /* PLTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PLTableViewCell.xib; sourceTree = "<group>"; };
 		8063065C1CFC259B0093DC28 /* completed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = completed.png; sourceTree = "<group>"; };
-		8063065D1CFC259B0093DC28 /* progress.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = progress.png; sourceTree = "<group>"; };
 		8066356C1CE0BAD900D21103 /* PLUserProfileInfoTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLUserProfileInfoTableViewController.swift; sourceTree = "<group>"; };
 		8066356E1CE0BB0400D21103 /* PLUserProfileInfoViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLUserProfileInfoViewModel.swift; sourceTree = "<group>"; };
 		806B1E0C1CD8A7D60018B026 /* audio.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = audio.png; sourceTree = "<group>"; };
@@ -334,6 +333,7 @@
 		809F96E61CBCC35000DD1FE9 /* MakeitUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MakeitUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		809F96EA1CBCC35000DD1FE9 /* MakeitUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MakeitUITests.swift; sourceTree = "<group>"; };
 		809F96EC1CBCC35000DD1FE9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		809FFFB91CFC4CCA00F0D391 /* progress.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = progress.png; sourceTree = "<group>"; };
 		80AB25191CE74BE7008B20C3 /* logout.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logout.png; sourceTree = "<group>"; };
 		80AB251B1CE74CCA008B20C3 /* pendingTask.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pendingTask.png; sourceTree = "<group>"; };
 		80AB251C1CE74CCA008B20C3 /* upcomingTask.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = upcomingTask.png; sourceTree = "<group>"; };
@@ -509,8 +509,8 @@
 		806B1E0B1CD8A7070018B026 /* SupportingFiles */ = {
 			isa = PBXGroup;
 			children = (
+				809FFFB91CFC4CCA00F0D391 /* progress.png */,
 				8063065C1CFC259B0093DC28 /* completed.png */,
-				8063065D1CFC259B0093DC28 /* progress.png */,
 				9442B3E31CF320E7002FEF3F /* assignment.png */,
 				80AB25211CE7503A008B20C3 /* Birthday.png */,
 				80AB25191CE74BE7008B20C3 /* logout.png */,
@@ -1049,7 +1049,6 @@
 				948382D91CE3310100B51BA6 /* bar.png in Resources */,
 				809F96D21CBCC35000DD1FE9 /* Assets.xcassets in Resources */,
 				80AB251F1CE74CCA008B20C3 /* upcomingTask.png in Resources */,
-				8063065F1CFC259B0093DC28 /* progress.png in Resources */,
 				946DA8331CE3474100FF7AB9 /* close.png in Resources */,
 				806B1E111CD8A7D60018B026 /* video.png in Resources */,
 				804889681CED90F800484284 /* PLTasksViewCell.xib in Resources */,
@@ -1058,6 +1057,7 @@
 				80ED65A61CE0B36900C61090 /* emptyMessages.png in Resources */,
 				946DA8341CE3474100FF7AB9 /* close@2x.png in Resources */,
 				805EFB601CD239200066B4CB /* PLTableViewCell.xib in Resources */,
+				809FFFBA1CFC4CCA00F0D391 /* progress.png in Resources */,
 				809F96D01CBCC35000DD1FE9 /* Main.storyboard in Resources */,
 				80AB251A1CE74BE7008B20C3 /* logout.png in Resources */,
 				80C4A0181CDCBB500073B6E2 /* JSQMessagesCollectionViewCellOutgoing.xib in Resources */,
