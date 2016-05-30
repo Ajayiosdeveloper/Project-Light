@@ -188,7 +188,7 @@ class PLProjectAssignmentViewModel: NSObject {
         
         print("Assignment Id is \(selectedAssignment?.assignmentId)")
         
-        if qbClient == nil{ qbClient = PLQuickbloxHttpClient()}
+       if qbClient == nil{ qbClient = PLQuickbloxHttpClient()}
 
         
         selectedAssigneeList = [PLTeamMember]()
@@ -217,10 +217,11 @@ class PLProjectAssignmentViewModel: NSObject {
                     }
                 }
                 completion(true)
+                print("Completion is true")
             }else{
                 completion(false)
             }
-            
+        
             
         }
         
@@ -230,7 +231,7 @@ class PLProjectAssignmentViewModel: NSObject {
         {
             if result!
             {
-                let user = PLTeamMember(name: "", id: 0)
+                let user = PLAssignmentMember(name: "", id: 0)
                 user.fullName = "Me"
                 user.memberEmail = (QBSession.currentSession().currentUser?.email)!
                 user.memberUserId = (QBSession.currentSession().currentUser?.ID)!

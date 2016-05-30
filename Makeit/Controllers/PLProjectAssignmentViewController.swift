@@ -171,6 +171,8 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
     
       func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
+        print("Came inside")
+        
         let cell = tableView.dequeueReusableCellWithIdentifier("Cell") as! PLAssigneeTableViewCell
         cell.nameLabel.text = assignementViewModel.memberName(indexPath.row)
         cell.mailIdField.text = assignementViewModel.memberEmail(indexPath.row)
