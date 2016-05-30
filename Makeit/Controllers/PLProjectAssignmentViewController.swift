@@ -319,6 +319,7 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
               headerView.backgroundColor = UIColor(colorLiteralRed: 89/255, green: 181/255, blue: 50/255, alpha: 1)
               assignmentStatus.enabled = true
             }
+            
             if let _ = assignementViewModel.selectedAssignment{
             if assignementViewModel.selectedAssignmentStatus() != 0{
                 
@@ -332,14 +333,12 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
                     assignmentStatus.enabled = true
                 
                 }
-
             }
-         }
-            return headerView
+        }
+       return headerView
     }
-    return nil
-    }
-    
+        return nil
+  }
     func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 40
     }
