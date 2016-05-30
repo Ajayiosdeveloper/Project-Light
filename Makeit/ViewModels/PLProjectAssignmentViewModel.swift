@@ -305,7 +305,7 @@ class PLProjectAssignmentViewModel: NSObject {
         
         
         
-        qbClient.updateRemoteAssigmentStatus(assignmentRecordId,status: status){ res in
+        qbClient.updateAssigmentStatus(assignmentRecordId,status: status){ res in
             let userAssignment = self.selectedAssigneeList[0] as! PLAssignmentMember
             userAssignment.assigneeStatus = 1
             completion(res)

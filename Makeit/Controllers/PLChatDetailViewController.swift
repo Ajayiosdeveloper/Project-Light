@@ -311,26 +311,26 @@ class PLChatDetailViewController: JSQMessagesViewController, UIActionSheetDelega
     
     func chatRoomDidReceiveMessage(message: QBChatMessage, fromDialogID dialogID: String) {
         
-        if dialogID == self.chatDetailViewModel.selectedChatGroup.chatGroupId{
-            
-            if self.senderID == String(message.senderID){
-                
-                print("Do not show message")
-            }
-            else{
-                
-                print("Show Message")
-                JSQSystemSoundPlayer.jsq_playMessageSentSound()
-                let localMessage = JSQMessage(senderId:String(message.senderID), senderDisplayName:"Immanual", date:message.dateSent!, text:message.text!)
-                self.chatDetailViewModel.groupChatMessages.append(localMessage)
-                self.finishSendingMessage()
-            }
-        }
-        else{
-            
-            print("Message came from other Chat Group")
-            
-        }
+//        if dialogID == self.chatDetailViewModel.selectedChatGroup.chatGroupId{
+//            
+//            if self.senderID == String(message.senderID){
+//                
+//                print("Do not show message")
+//            }
+//            else{
+//                
+//                print("Show Message")
+//                JSQSystemSoundPlayer.jsq_playMessageSentSound()
+//                let localMessage = JSQMessage(senderId:String(message.senderID), senderDisplayName:"Immanual", date:message.dateSent!, text:message.text!)
+//                self.chatDetailViewModel.groupChatMessages.append(localMessage)
+//                self.finishSendingMessage()
+//            }
+//        }
+//        else{
+//            
+//            print("Message came from other Chat Group")
+//            
+//        }
  }
     
     func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {

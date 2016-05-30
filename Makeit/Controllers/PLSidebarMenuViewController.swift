@@ -23,6 +23,7 @@ class PLSidebarMenuViewController: UIViewController,UIImagePickerControllerDeleg
     var taskListImage = [String]()
     var settingsList = [String]()
     var birthdayList = [String]()
+    var assignmentsList = [String]()
     
     override func viewDidLoad()
     {
@@ -36,7 +37,6 @@ class PLSidebarMenuViewController: UIViewController,UIImagePickerControllerDeleg
         birthdayList.append("Today")
         birthdayList.append("Upcoming")
         settingsList.append("Logout")
-        imagePicker.delegate = self
         tapGestureRecognizer = UITapGestureRecognizer.init(target: self, action: #selector(PLSidebarMenuViewController.editUserProfilePicture))
         self.userProfilePic.userInteractionEnabled = true
         self.userProfilePic.addGestureRecognizer(tapGestureRecognizer!)
@@ -74,7 +74,7 @@ class PLSidebarMenuViewController: UIViewController,UIImagePickerControllerDeleg
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int
     {
-        return 3
+        return 4
     }
     
     func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
@@ -85,6 +85,10 @@ class PLSidebarMenuViewController: UIViewController,UIImagePickerControllerDeleg
         else if section == 1
         {
             return "Birthdays"
+        }
+        else if section == 2
+        {
+            return "Assignments"
         }
         else
         {
@@ -100,6 +104,10 @@ class PLSidebarMenuViewController: UIViewController,UIImagePickerControllerDeleg
         else if section == 1
         {
             return birthdayList.count
+        }
+        else if section == 2
+        {
+            return taskList.count
         }
         else
         {
@@ -163,7 +171,39 @@ class PLSidebarMenuViewController: UIViewController,UIImagePickerControllerDeleg
             }
             
         }
-        else if indexPath.section == 2{
+        else if indexPath.section == 2
+        {
+            cell.nameLabel?.text = taskList[indexPath.row]
+            cell.imageIcon?.image = UIImage(named: taskListImage[indexPath.row])
+            
+            switch indexPath.row
+            {
+            case 0:
+            
+            projectViewModel.getTodayAssignmentsCount({ (countString) in
+            cell.countLabel.text = countString
+            })
+            
+            case 1:
+            
+            projectViewModel.getUpcomingAssignmentsCount({ (countString) in
+            
+            cell.countLabel.text = countString
+            })
+            
+            case 2:
+            
+            projectViewModel.getPendingAssignmentsCount({ (countString) in
+            
+            cell.countLabel.text = countString
+            })
+            
+            default: print("")
+            }
+        
+        }
+
+        else if indexPath.section == 3{
             
             cell.nameLabel?.text = settingsList[indexPath.row]
             
@@ -229,6 +269,31 @@ class PLSidebarMenuViewController: UIViewController,UIImagePickerControllerDeleg
             
         }
         else if indexPath.section == 2
+        {
+            if taskViewController == nil{
+                taskViewController = self.storyboard?.instantiateViewControllerWithIdentifier("TaskViewController") as? PLTaskViewController
+            }
+            let nav = UINavigationController(rootViewController: taskViewController!)
+            self.presentViewController(nav, animated: true, completion: nil)
+            
+            switch indexPath.row
+            {
+                
+            case 0:
+                taskViewController!.selectedType = 4
+                
+            case 1:
+                
+                taskViewController!.selectedType = 5
+            case 2:
+                
+                taskViewController!.selectedType = 6
+            default: print("")
+                
+            }
+
+        }
+        else if indexPath.section == 3
         {
     
             var signUpViewController : PLUserLoginViewController? = self.storyboard?.instantiateViewControllerWithIdentifier("PLUserSignupAndLoginViewController") as? PLUserLoginViewController

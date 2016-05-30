@@ -590,7 +590,7 @@ class PLQuickbloxHttpClient
         chatDialog.name = "\(name) \(PLSharedManager.manager.projectId)"
         chatDialog.occupantIDs = membersIds
         QBRequest.createDialog(chatDialog, successBlock: { (response: QBResponse?, createdDialog : QBChatDialog?) -> Void in
-            let chatGroup = PLChatGroup()
+            var chatGroup = PLChatGroup()
             chatGroup.name = name
             chatGroup.opponents = (createdDialog?.occupantIDs)!
             chatGroup.chatGroupId = (createdDialog?.roomJID)!
@@ -640,7 +640,7 @@ class PLQuickbloxHttpClient
                 
                 for eachGroup in dialogs!{
                     
-                    let chatGroup =  PLChatGroup()
+                    var chatGroup =  PLChatGroup()
                     chatGroup.name = self!.removeProjectIdFromChatGroupName((eachGroup.name)!)
                     chatGroup.chatGroupId = (eachGroup.ID)!
                     chatGroup.lastMessage = eachGroup.lastMessageText
@@ -1075,7 +1075,7 @@ class PLQuickbloxHttpClient
     }
     
     
-    func updateRemoteAssigmentStatus(id:String?,status:Int,completion:(Bool)->Void){ // remove Remote
+    func updateAssigmentStatus(id:String?,status:Int,completion:(Bool)->Void){ // remove Remote
         
         print("updateRemoteAssigmentStatus\(id)")
         
@@ -1119,4 +1119,78 @@ class PLQuickbloxHttpClient
         }
     }
     
+    
+    func countOfTodayAssignments(completion:(UInt)->Void){
+        
+        let extendedReq = NSMutableDictionary()
+        
+        
+        let timeInterval = Int(convertdateToTimeinterval(NSDate(),dateFormat: "dd-MM-yyyy"))
+        extendedReq.setValue(timeInterval, forKey: "startDate")
+        extendedReq.setValue(QBSession.currentSession().currentUser?.ID, forKey: "user_id")
+        QBRequest.countObjectsWithClassName("PLProjectAssignment", extendedRequest: extendedReq, successBlock: { (res, count) in
+            completion(count)
+            
+        }) { (res) in completion(0)
+        }
+    }
+    
+    func countOfUpComingAssignments(completion:(UInt)->Void){
+        let timeInterval = Int(convertdateToTimeinterval(NSDate(),dateFormat: "dd-MM-yyyy"))
+        let extendedReq = NSMutableDictionary()
+        extendedReq.setValue(timeInterval, forKey: "startDate[gt]")
+        extendedReq.setValue(QBSession.currentSession().currentUser?.ID, forKey: "user_id")
+        QBRequest.countObjectsWithClassName("PLProjectAssignment", extendedRequest: extendedReq, successBlock: { (_, count) in
+            
+            completion(count)
+            
+            
+        }){ (res) in // rethink on the error scenarios
+            
+            completion(0)
+            
+        }
+        
+    }
+    
+    func countOfPendingAssignments(completion:(UInt)->Void){
+        let timeInterval = Int(convertdateToTimeinterval(NSDate(),dateFormat: "dd-MM-yyyy"))
+        let extendedReq = NSMutableDictionary()
+        extendedReq.setValue(timeInterval, forKey: "targetDate[lt]")
+        extendedReq.setValue(QBSession.currentSession().currentUser?.ID, forKey: "user_id")
+        extendedReq.setValue(0, forKey: "isCompleted")
+        QBRequest.countObjectsWithClassName("PLProjectAssignment", extendedRequest: extendedReq, successBlock: { (_, count) in
+            
+            
+            completion(count)
+            
+        }){ (res) in // rethink on the error scenarios
+            
+            completion(0)
+            
+        }
+        
+    }
+
+    func assignmentsWithType(type : String, completion:([QBCOCustomObject]?)->Void){
+        
+        
+        let extendedReq = NSMutableDictionary()
+        let taskLimit =  Int(convertdateToTimeinterval(NSDate(),dateFormat: "dd-MM-yyyy"))
+//        if type == "targetDate[lt]"
+//        {
+//            extendedReq.setValue(0, forKey: "assigneeStatus")
+//        }
+        extendedReq.setValue(taskLimit, forKey: type)
+        extendedReq.setValue(QBSession.currentSession().currentUser?.ID, forKey: "user_id")
+        QBRequest.objectsWithClassName("PLProjectAssignment", extendedRequest: extendedReq, successBlock: { (_, objects, _) in
+            
+            completion(objects)
+            print("assignments array \(objects)")
+        }) { (res) in
+            
+            completion(nil)
+        }
+    }
+ 
 }
