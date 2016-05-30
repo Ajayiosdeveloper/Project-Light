@@ -31,7 +31,7 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
     
     override func viewDidLoad() {
         super.viewDidLoad()
-       
+      
         print(assignementViewModel.assigneeList)
         self.assigneeListTableView.registerNib(UINib(nibName:"PLAssigneeTableViewCell", bundle:NSBundle.mainBundle()), forCellReuseIdentifier: "Cell")
         addDoneBarButtonItem()
@@ -48,6 +48,7 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
     
     override func viewWillAppear(animated: Bool) {
             super.viewWillAppear(animated)
+      
         if let _ = assignementViewModel, _ = assignementViewModel.assigneeList{
             
             assigneeListTableView.reloadData()
@@ -73,7 +74,9 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
              }
             
           }
-           else {self.navigationItem.rightBarButtonItem?.enabled = true ;
+           else {
+           
+            self.navigationItem.rightBarButtonItem?.enabled = true ;
                 self.navigationItem.rightBarButtonItem?.tintColor = nil;
                 assigneeListTableView.allowsSelection = true
                clearFields()
@@ -319,12 +322,17 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
             if let _ = assignementViewModel.selectedAssignment{
             if assignementViewModel.selectedAssignmentStatus() != 0{
                 
-                headerView.backgroundColor = UIColor(colorLiteralRed: 235/255, green: 35/255, blue: 38/255, alpha: 0.5)
-                assignmentStatus.setTitle("Closed", forState: UIControlState.Normal)
-                assignmentStatus.enabled = false
+             if assignementViewModel.selectedAssignmentStatus() != 0{
+                
+                    headerView.backgroundColor = UIColor(colorLiteralRed: 235/255, green: 35/255, blue: 38/255, alpha: 0.5)
+                    assignmentStatus.setTitle("Closed", forState: UIControlState.Normal)
+                    assignmentStatus.enabled = false
             }else{
-                assignmentStatus.setTitle("Close", forState: UIControlState.Normal)
-                assignmentStatus.enabled = true
+                    assignmentStatus.setTitle("Close", forState: UIControlState.Normal)
+                    assignmentStatus.enabled = true
+                
+                }
+
             }
          }
             return headerView
