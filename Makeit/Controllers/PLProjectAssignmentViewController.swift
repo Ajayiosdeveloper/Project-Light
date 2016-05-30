@@ -316,7 +316,7 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
               headerView.backgroundColor = UIColor(colorLiteralRed: 89/255, green: 181/255, blue: 50/255, alpha: 1)
               assignmentStatus.enabled = true
             }
-            
+            if let _ = assignementViewModel.selectedAssignment{
             if assignementViewModel.selectedAssignmentStatus() != 0{
                 
                 headerView.backgroundColor = UIColor(colorLiteralRed: 235/255, green: 35/255, blue: 38/255, alpha: 0.5)
@@ -326,7 +326,7 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
                 assignmentStatus.setTitle("Close", forState: UIControlState.Normal)
                 assignmentStatus.enabled = true
             }
-            
+         }
             return headerView
     }
     return nil
