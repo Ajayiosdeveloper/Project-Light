@@ -59,7 +59,7 @@ class PLProjectsViewController: UITableViewController,UIImagePickerControllerDel
         {
           projectViewModel.addObserver(self, forKeyPath:"createdProjectList", options: NSKeyValueObservingOptions.New, context:&observerContext)
           addActivityIndicatorView()
-          projectViewModel.fetchProjectsFromRemote()
+          projectViewModel.fetchProjectsFromServer()
         }
       
       }
