@@ -300,6 +300,7 @@ class PLQuickbloxHttpClient
         customObject.fields?.setValue(endTime, forKey: "endTime")
         customObject.fields?.setValue(assignees, forKey: "assignees")
         customObject.fields?.setValue(assigneeUserIds, forKey: "assigneeUserId")
+        customObject.fields?.setValue(0, forKey: "status")
         customObject.fields?.setValue(id, forKey:"_parent_id")
         var assigneeStatus:[String] = [String]()
         for status in assigneeUserIds{
@@ -1117,6 +1118,29 @@ class PLQuickbloxHttpClient
                 
               completion(nil)
         }
+    }
+    
+    func closeAssignment(id:String,completion:(Bool)->Void){
+        
+        print("Coming in")
+        
+        let assignment = QBCOCustomObject()
+        assignment.className = "PLProjectAssignment"
+        assignment.parentID = PLSharedManager.manager.projectId
+        assignment.ID = id
+        assignment.fields?.setObject(-1, forKey: "status")
+        print(id)
+        QBRequest.updateObject(assignment, successBlock: { (_, _) in
+            
+            print("closed succesfully")
+            
+            completion(true)
+            
+            }) { (error) in
+                
+                completion(false)
+                print("got error")
+           }
     }
     
 }

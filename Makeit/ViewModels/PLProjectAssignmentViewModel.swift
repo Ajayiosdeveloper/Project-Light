@@ -183,7 +183,6 @@ class PLProjectAssignmentViewModel: NSObject {
         return selectedAssignment!.details
     }
     
-    
     func responsibleForAssigniment(completion:(Bool)->Void)  {
         
         print("Assignment Id is \(selectedAssignment?.assignmentId)")
@@ -287,14 +286,43 @@ class PLProjectAssignmentViewModel: NSObject {
         return member.memberUserId
     }
     
+    func selectedAssignmentStatus() -> Int {
+        
+        return self.selectedAssignment!.assignmentStatus
+    }
+    
     func updateAssigmentStatusOfLoggedInUser(status:Int,completion:(Bool)->Void){
         
+        if status == -1{
+            
+            for member in selectedAssigneeList{
+                
+                let assignmentMember = member as! PLAssignmentMember
+                
+                if assignmentMember.assigneeStatus == 0{
+                   print("Not completed")
+                   completion(false)
+                   return
+                }
+            }
+            
+            qbClient.closeAssignment(selectedAssignment!.assignmentId){ res in
+                if res{
+                    self.selectedAssignment!.assignmentStatus = -1
+                    completion(res)
+                }else{
+                    print("Handle error")
+                }
+                
+            }
+            
+            }else{
         
-        
-        qbClient.updateRemoteAssigmentStatus(assignmentRecordId,status: status){ res in
+           qbClient.updateRemoteAssigmentStatus(assignmentRecordId,status: status){ res in
             let userAssignment = self.selectedAssigneeList[0] as! PLAssignmentMember
             userAssignment.assigneeStatus = 1
             completion(res)
         }
     }
+  }
 }

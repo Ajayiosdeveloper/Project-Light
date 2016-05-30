@@ -224,23 +224,34 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
             cell.statueField.text = ""
         
         }else{
-            let assigneeStatus = assignementViewModel.assigneeStatus(indexPath.row)
-            if assigneeStatus == "0"{
-                cell.statueField.text = "In Progress"
-                cell.statueField.textColor = enableButtonColor
-            }else if assigneeStatus == "1"{
-                cell.statueField.text = "Completed"
-                cell.statueField.textColor = UIColor(colorLiteralRed: 89/255, green: 181/255, blue: 50/255, alpha: 1)
-            }else{
+            
+            if assignementViewModel.selectedAssignmentStatus() == 0{
+                
+                let assigneeStatus = assignementViewModel.assigneeStatus(indexPath.row)
+                if assigneeStatus == "0"{
+                    cell.statueField.text = "In Progress"
+                    cell.statueField.textColor = enableButtonColor
+                }else if assigneeStatus == "1"{
+                    cell.statueField.text = "Completed"
+                    cell.statueField.textColor = UIColor(colorLiteralRed: 89/255, green: 181/255, blue: 50/255, alpha: 1)
+                }else{
+                    cell.statueField.text = "Closed"
+                }
+                
+                loggedInUserStatus = assignementViewModel.assigneeStatus(0)
+                if loggedInUserStatus == "1"{
+                    headerColor = UIColor(colorLiteralRed: 89/255, green: 181/255, blue: 50/255, alpha: 0.5)
+                    assignmentStatus.setTitle("Closed", forState: .Normal)
+                    assignmentStatus.enabled = false
+                }
+            }
+            else{
+                
                 cell.statueField.text = "Closed"
+                cell.statueField.textColor = UIColor.redColor()
             }
             
-            loggedInUserStatus = assignementViewModel.assigneeStatus(0)
-            if loggedInUserStatus == "1"{
-                headerColor = UIColor(colorLiteralRed: 89/255, green: 181/255, blue: 50/255, alpha: 0.5)
-                assignmentStatus.enabled = false
-            }
-         }
+        }
    
         
         return cell
@@ -306,6 +317,16 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
               assignmentStatus.enabled = true
             }
             
+            if assignementViewModel.selectedAssignmentStatus() != 0{
+                
+                headerView.backgroundColor = UIColor(colorLiteralRed: 235/255, green: 35/255, blue: 38/255, alpha: 0.5)
+                assignmentStatus.setTitle("Closed", forState: UIControlState.Normal)
+                assignmentStatus.enabled = false
+            }else{
+                assignmentStatus.setTitle("Close", forState: UIControlState.Normal)
+                assignmentStatus.enabled = true
+            }
+            
             return headerView
     }
     return nil
@@ -366,12 +387,13 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
         }
         else{
             
-            assignementViewModel.updateAssigmentStatusOfLoggedInUser(-1){res in
+            assignementViewModel.updateAssigmentStatusOfLoggedInUser(-1){[weak self]res in
                 if res{
-                    self.headerView.backgroundColor =  UIColor(colorLiteralRed: 89/255, green: 181/255, blue: 50/255, alpha: 0.5)
-                    self.assignmentStatus.setTitle("Task Closed", forState:.Normal)
-                    self.assignmentStatus.enabled = false
-                   }
+                    self!.assigneeListTableView.reloadData()
+                }else{
+                    
+                   self!.showAlertWithMessage("Can not Close", message: "Assignment is still in progress by some assignees")
+                }
             }
 
         }
@@ -418,6 +440,25 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
     
     func selectedAssignment(assignment: PLAssignment) {
        assignementViewModel.selectedAssignment = assignment
+    }
+    
+    func showAlertWithMessage(title:String,message:String)
+    {
+        if #available(iOS 8.0, *) {
+            let alertController = UIAlertController(title:title, message:message, preferredStyle: UIAlertControllerStyle.Alert)
+            let action = UIAlertAction(title:"Ok", style: UIAlertActionStyle.Default, handler: { (action) -> Void in
+            })
+            alertController.addAction(action)
+            self.presentViewController(alertController, animated:true, completion:nil)
+            
+        } else {
+            let alert = UIAlertView(title: title, message: message, delegate:nil, cancelButtonTitle:nil, otherButtonTitles:"Ok") as UIAlertView
+            alert.show()
+            
+            // Fallback on earlier versions
+        }
+        
+        
     }
     
     override func viewWillDisappear(animated: Bool) {

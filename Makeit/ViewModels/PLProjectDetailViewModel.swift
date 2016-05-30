@@ -224,20 +224,10 @@ class PLProjectDetailViewModel: NSObject {
                 assignment.startDate = self.dateFormat(startDate)
                 assignment.startDate += " \(startTime)"
                 assignment.targetDate += " \(endTime)"
-
+                assignment.assignmentStatus = (each.fields?.objectForKey("status"))! as! Int
                 assignment.assineesUserIds = (each.fields?.objectForKey("assigneeUserId"))! as! [UInt]
-                let assignementStatus = (each.fields?.objectForKey("assigneeStatus"))! as! [String]
                 
-                    var membersStatus = [UInt]()
-                    
-                    for status in assignementStatus{
-                     
-                        let fields = status.componentsSeparatedByString("@@@")
-                        let memberStatus = UInt(fields.last!)
-                        membersStatus.append(memberStatus!)
-                    }
-                    assignment.assigneeStatus = membersStatus
-                    self.assignments.append(assignment)
+                self.assignments.append(assignment)
               }
                 completion(true)
 
@@ -266,6 +256,12 @@ class PLProjectDetailViewModel: NSObject {
     func selectedContributor(row:Int)->PLTeamMember{
         
         return contributors[row]
+    }
+    
+    func assignmentStatus(row:Int)->Int{
+        
+        let assignment = assignments[row]
+        return assignment.assignmentStatus
     }
     
 }

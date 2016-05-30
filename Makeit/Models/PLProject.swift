@@ -80,9 +80,9 @@ class PLAssignment: NSObject {
     var targetDate:String = ""
     var startDate:String = ""
     var creatorId:UInt = 0
+    var assignmentStatus:Int = 0
     var assignees:[String] = [String]()
     var assineesUserIds:[UInt] = [UInt]()
-    var assigneeStatus:[UInt] = [UInt]()
 }
 
 class PLChatGroup:NSObject{

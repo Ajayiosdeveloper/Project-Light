@@ -162,6 +162,9 @@ class PLProjectDetailTableViewController: UITableViewController,EKEventEditViewD
                 cell.textLabel?.text = projectDetailViewModel.communicationType(indexPath.row)
                 cell.detailTextLabel?.text = ""
                 cell.textLabel?.textColor = enableButtonColor
+                cell.accessoryType = .DisclosureIndicator
+                cell.accessoryView = nil
+
                 return cell
             }
             
@@ -213,7 +216,14 @@ class PLProjectDetailTableViewController: UITableViewController,EKEventEditViewD
             cell.accessoryView = UIImageView(image: UIImage(named: "assignment"))
         }
         else{
-          cell.accessoryType = .DisclosureIndicator
+            
+            if projectDetailViewModel.assignmentStatus(row) == 0{
+                cell.accessoryView = UIImageView(image: UIImage(named: "progress"))
+ 
+            }else{
+                cell.accessoryView = UIImageView(image: UIImage(named: "completed"))
+
+            }
         }
     }
     
