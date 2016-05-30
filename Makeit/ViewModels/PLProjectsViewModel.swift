@@ -380,7 +380,45 @@ class PLProjectsViewModel: NSObject {
                 completion(String(count))
             }
         }
-        
     }
+    
+    func getTodayAssignmentsCount(completion:(String)->Void){
+        
+        quickBloxClient.countOfTodayAssignments(){ count in
+            
+            if count == 0{
+                completion(String(0))
+            }else{
+                
+                completion(String(count))
+            }
+        }
+    }
+    
+    func getUpcomingAssignmentsCount(completion:(String)->Void){
+        
+        quickBloxClient.countOfUpComingAssignments()
+            { count in
+                if count == 0{
+                    completion(String(0))
+                }else{
+                    
+                    completion(String(count))
+                }
+        }
+    }
+    
+    func getPendingAssignmentsCount(completion:(String)->Void){
+        
+        quickBloxClient.countOfPendingAssignments(){ count in
+            if count == 0{
+                completion(String(0))
+            }else{
+                
+                completion(String(count))
+            }
+        }
+    }
+
     
 }

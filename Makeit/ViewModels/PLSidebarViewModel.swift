@@ -13,6 +13,7 @@ class PLSidebarViewModel: NSObject {
 
     var qbClient = PLQuickbloxHttpClient()
     var commitments = [PLCommitment]()
+    var assignments = [PLAssignment]()
     var teamMembersForBitrhday = [PLTeamMember]()
     
     func getTodayTasks(completion:(Bool)-> Void)
@@ -167,7 +168,7 @@ class PLSidebarViewModel: NSObject {
         return commitment.projectId
     }
     
-    func numbersOfRows()->Int
+    func numberOfRows()->Int
     {
         if commitments.count > 0
         {
@@ -288,4 +289,130 @@ class PLSidebarViewModel: NSObject {
         }
     }
     
-}
+    func getAssignmentArray(objects : [QBCOCustomObject], completion: ([PLAssignment])->Void)
+    {
+        var assignmentsArray = [PLAssignment]()
+        
+        if objects.count > 0
+        {
+            print(objects.count)
+            for each in objects
+            {
+                let assignment = PLAssignment()
+                assignment.name = each.fields?.objectForKey("name") as! String
+                assignment.details = each.fields?.objectForKey("description") as! String
+                let startDate = each.fields?.objectForKey("startDate") as! NSTimeInterval
+                let targetDate = each.fields?.objectForKey("targetDate") as! NSTimeInterval
+                var startTime  = (each.fields?.objectForKey("startTime"))! as! String
+                var endTime  = (each.fields?.objectForKey("endTime"))! as! String
+                startTime = self.timeFormat(startTime)
+                endTime = self.timeFormat(endTime)
+                assignment.targetDate = self.dateFormat( targetDate)
+                assignment.startDate = self.dateFormat( startDate)
+                assignment.startDate += " \(startTime)"
+                assignment.targetDate += " \(endTime)"
+                assignmentsArray.append(assignment)
+            }
+            print("assignments array \(assignmentsArray)")
+            completion(assignmentsArray)
+        }
+        
+    }
+   
+    func getTodayAssignments(completion:(Bool)-> Void)
+    {
+        let type = "startDate"
+        qbClient.assignmentsWithType(type) { [weak self] (tasks) in
+            if let _ = tasks
+            {
+                self!.assignments.removeAll(keepCapacity: true)
+                
+                self!.getAssignmentArray(tasks!, completion: { (todayTasks) in
+                    self!.assignments = todayTasks
+                    completion(true)
+                })
+           }
+        }
+    }
+    
+    func getUpcomingAssignments(completion:(Bool)-> Void)
+    {
+        let type = "startDate[gt]"
+        qbClient.assignmentsWithType(type) {[weak self] (tasks) in
+            if let _ = tasks
+            {
+                self!.assignments.removeAll(keepCapacity: true)
+                self!.getAssignmentArray(tasks!, completion: { (upComingTasks) in
+                    self!.assignments = upComingTasks
+                    completion(true)
+                })
+            }
+        }
+    }
+    func getPendingAssignments(completion:(Bool)-> Void)
+    {
+        let type = "targetDate[lt]"
+        qbClient.assignmentsWithType(type) {[weak self] (tasks) in
+            if let _ = tasks
+            {
+                self!.assignments.removeAll(keepCapacity: true)
+                self!.getAssignmentArray(tasks!, completion: { (pendingTasks) in
+                    self!.assignments = pendingTasks
+                    completion(true)
+                })
+            }
+        }
+    }
+    
+    func numberOfRowsForAssignment()->Int
+    {
+        print("Assignment Row Count : \(assignments.count)")
+        if assignments.count > 0
+        {
+            return assignments.count
+        }
+        return 0
+    }
+    
+    func assignmentTitle(row:Int)->String
+    {
+        let assignment = assignments[row]
+        return assignment.name
+    }
+
+    func assignmentDetails(row:Int)->String
+    {
+        let assignment = assignments[row]
+        return assignment.details
+    }
+    
+    func startDateOfAssignment(row : Int) -> String
+    {
+        let assignment = assignments[row]
+        let startTime =  stringDate(assignment.startDate)
+         print(startTime)
+        return startTime
+    }
+    
+    func endDateOfAssignment(row : Int) -> String
+    {
+        let assignment = assignments[row]
+        let targetTime =  stringDate(assignment.targetDate)
+        return targetTime
+    }
+    
+    func startTimeOfAssignment(row: Int) -> String
+    {
+        let assignment = assignments[row]
+        let startTime =  timeFormats(assignment.startDate)
+        return startTime
+    }
+    
+    func endTimeOfAssignment(row:Int) -> String
+    {
+        let assignment = assignments[row]
+        let targetTime =  timeFormats(assignment.targetDate)
+        return targetTime
+    }
+
+ }

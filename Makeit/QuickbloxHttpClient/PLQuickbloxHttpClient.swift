@@ -591,7 +591,7 @@ class PLQuickbloxHttpClient
         chatDialog.name = "\(name) \(PLSharedManager.manager.projectId)"
         chatDialog.occupantIDs = membersIds
         QBRequest.createDialog(chatDialog, successBlock: { (response: QBResponse?, createdDialog : QBChatDialog?) -> Void in
-            let chatGroup = PLChatGroup()
+            var chatGroup = PLChatGroup()
             chatGroup.name = name
             chatGroup.opponents = (createdDialog?.occupantIDs)!
             chatGroup.chatGroupId = (createdDialog?.roomJID)!
@@ -641,7 +641,7 @@ class PLQuickbloxHttpClient
                 
                 for eachGroup in dialogs!{
                     
-                    let chatGroup =  PLChatGroup()
+                    var chatGroup =  PLChatGroup()
                     chatGroup.name = self!.removeProjectIdFromChatGroupName((eachGroup.name)!)
                     chatGroup.chatGroupId = (eachGroup.ID)!
                     chatGroup.lastMessage = eachGroup.lastMessageText
@@ -1076,7 +1076,7 @@ class PLQuickbloxHttpClient
     }
     
     
-    func updateRemoteAssigmentStatus(id:String?,status:Int,completion:(Bool)->Void){ // remove Remote
+    func updateAssigmentStatus(id:String?,status:Int,completion:(Bool)->Void){ // remove Remote
         
         print("updateRemoteAssigmentStatus\(id)")
         

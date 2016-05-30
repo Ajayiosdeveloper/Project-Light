@@ -51,8 +51,7 @@ class PLTaskViewController: UIViewController,UITableViewDelegate,UITableViewData
                 self.tableView!.reloadData()
             })
         case 3:
-            print("PRAISE THE LORD")
-          
+            
             if birthdayRange == 0
             {
                   self.title = "Today Birthdays"
@@ -68,6 +67,29 @@ class PLTaskViewController: UIViewController,UITableViewDelegate,UITableViewData
                         self.tableView.reloadData()
                 })
             }
+            
+        case 4:
+            print("case 4")
+            self.title = "Today Assignments"
+            sidebarViewModel.getTodayAssignments({ (res) in
+                
+                self.tableView!.reloadData()
+                
+            })
+        case 5:
+            print("case 5")
+
+            self.title = "Upcoming Assignments"
+            sidebarViewModel.getUpcomingAssignments({ (res) in
+                self.tableView!.reloadData()
+                
+            })
+        case 6:
+            self.title = "Pending Assignments"
+            sidebarViewModel.getPendingAssignments({ (res) in
+                
+                self.tableView!.reloadData()
+            })
             
         default: print("")
         }
@@ -100,12 +122,17 @@ class PLTaskViewController: UIViewController,UITableViewDelegate,UITableViewData
         if selectedType == 3{
         return sidebarViewModel.numberOfBirthdayRows()
         }
-        return sidebarViewModel.numbersOfRows()
+        if selectedType >= 4
+        {
+            return sidebarViewModel.numberOfRowsForAssignment()
+        }
+        return sidebarViewModel.numberOfRows()
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell
     {
-        if selectedType != 3 {
+        if selectedType <= 2
+        {
         let cell = self.tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! PLTasksViewCell
             
             cell.taskNameField.text = "Task:  " + sidebarViewModel.commitmentTitle(indexPath.row)
@@ -121,6 +148,27 @@ class PLTaskViewController: UIViewController,UITableViewDelegate,UITableViewData
                 
                 cell.taskStartTime.text  = "Start: " + sidebarViewModel.startTaskDate(indexPath.row)
                 cell.taskEndTime.text = "End: " + sidebarViewModel.endTaskDate(indexPath.row)
+            }
+            cell.accessoryType = .DisclosureIndicator
+            return cell
+        }
+       else if selectedType >= 4
+        {
+            let cell = self.tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! PLTasksViewCell
+            
+            cell.taskNameField.text = "Task:  " + sidebarViewModel.assignmentTitle(indexPath.row)
+          // cell.projectNameField.text =  "Project: " + sidebarViewModel.projectTitle(indexPath.row)
+            cell.detailsField.text = "Detail: " + sidebarViewModel.assignmentDetails(indexPath.row)
+            if selectedType == 4
+            {
+                cell.taskStartTime.text = "StartTime: " + sidebarViewModel.startTimeOfAssignment(indexPath.row)
+                cell.taskEndTime.text =  "EndTime: " + sidebarViewModel.endTimeOfAssignment(indexPath.row)
+            }
+            else if selectedType == 5 || selectedType == 6
+            {
+                
+                cell.taskStartTime.text  = "Start: " + sidebarViewModel.startDateOfAssignment(indexPath.row)
+                cell.taskEndTime.text = "End: " + sidebarViewModel.endDateOfAssignment(indexPath.row)
             }
             cell.accessoryType = .DisclosureIndicator
             return cell

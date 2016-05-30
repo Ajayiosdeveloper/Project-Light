@@ -85,7 +85,7 @@ class PLAssignment: NSObject {
     var assineesUserIds:[UInt] = [UInt]()
 }
 
-class PLChatGroup:NSObject{
+struct PLChatGroup{
     
     var name:String = ""
     var opponents:[NSNumber] = [NSNumber]()
