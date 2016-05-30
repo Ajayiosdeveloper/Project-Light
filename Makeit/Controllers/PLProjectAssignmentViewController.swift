@@ -93,9 +93,6 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
 
     func performDone()
     {
-       
-        print("JESUS LOVES you")
-        
         do{
             
             try assignementViewModel.assignmentValidations(assignmentNameTextFiled.text!,startDate:startDatecommitmentDatePicker.date ,targetDate: targetDatecommitmentDatePicker.date,description: assignmentDescriptionTextView.text,projectId: projectId,assignees:assignementViewModel.getSelectedAssigneeList())
@@ -173,8 +170,6 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
     
     
       func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        
-        print("Came inside")
         
         let cell = tableView.dequeueReusableCellWithIdentifier("Cell") as! PLAssigneeTableViewCell
         cell.nameLabel.text = assignementViewModel.memberName(indexPath.row)

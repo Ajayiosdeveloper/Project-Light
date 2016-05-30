@@ -30,12 +30,8 @@ class PLProjectAssignmentViewModel: NSObject {
     func assignmentValidations(name:String,startDate:NSDate, targetDate:NSDate,description:String,projectId:String,assignees:[PLTeamMember]) throws->Bool {
         
         if name.characters.count == 0 { throw AssignmentValidation.NameEmpty}
-        let today = NSDate()
-        if (targetDate.earlierDate(today).isEqualToDate(targetDate)){
-            
-            throw AssignmentValidation.InvalidDate
-        }
-        if (startDate.earlierDate(today).isEqualToDate(startDate)){
+        
+        if targetDate.isEqualToDate(startDate){
             
             throw AssignmentValidation.InvalidDate
         }
