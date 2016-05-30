@@ -225,20 +225,6 @@ class PLProjectAssignmentViewModel: NSObject {
             
         }
         
-        let loggedInUserid = QBSession.currentSession().currentUser?.ID
-        let result = selectedAssignment?.assineesUserIds.contains(loggedInUserid!)
-        if let _ = result
-        {
-            if result!
-            {
-                let user = PLAssignmentMember(name: "", id: 0)
-                user.fullName = "Me"
-                user.memberEmail = (QBSession.currentSession().currentUser?.email)!
-                user.memberUserId = (QBSession.currentSession().currentUser?.ID)!
-                user.profilePicture = (QBSession.currentSession().currentUser?.customData)!
-                selectedAssigneeList.insert(user, atIndex: 0)
-            }
-        }
     }
     
     func isLoggedInUserPartOfAssignment() -> Bool {
