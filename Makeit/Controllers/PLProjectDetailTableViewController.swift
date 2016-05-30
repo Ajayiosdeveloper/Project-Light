@@ -38,6 +38,7 @@ class PLProjectDetailTableViewController: UITableViewController,EKEventEditViewD
     {
         super.viewDidLoad()
         self.projectDetailsTableView.registerNib(UINib(nibName:"PLTableViewCell", bundle:NSBundle.mainBundle()), forCellReuseIdentifier: "Cell")
+        self.projectDetailsTableView.registerNib(UINib(nibName:"PLAssignmentTableViewCell", bundle:NSBundle.mainBundle()), forCellReuseIdentifier: "AssignmentCell")
         self.projectDetailsTableView.registerClass(UITableViewCell.self, forCellReuseIdentifier:"DefaultCell")
         
           commitmentViewModel.isAccessGranted(){res in
@@ -152,7 +153,7 @@ class PLProjectDetailTableViewController: UITableViewController,EKEventEditViewD
                 return cell
             }
             if indexPath.section == 2{
-                let cell = UITableViewCell(style: .Subtitle, reuseIdentifier: "DefaultCell")
+                let cell = tableView.dequeueReusableCellWithIdentifier("AssignmentCell", forIndexPath: indexPath) as! PLAssignmentTableViewCell
                  self.configureAssignmentCell(cell, row: indexPath.row)
                 return cell
                 
@@ -172,7 +173,7 @@ class PLProjectDetailTableViewController: UITableViewController,EKEventEditViewD
             
             if indexPath.section == 1
             {
-                let cell = UITableViewCell(style: .Subtitle, reuseIdentifier: "DefaultCell")
+                let cell = tableView.dequeueReusableCellWithIdentifier("AssignmentCell", forIndexPath: indexPath) as! PLAssignmentTableViewCell
                 self.configureAssignmentCell(cell, row: indexPath.row)
                 return cell
             }
@@ -203,29 +204,12 @@ class PLProjectDetailTableViewController: UITableViewController,EKEventEditViewD
 
     }
     
-    func configureAssignmentCell(cell:UITableViewCell,row:Int){
-        
-        cell.textLabel?.font = UIFont.boldSystemFontOfSize(17)
-          cell.textLabel?.text = projectDetailViewModel.assignmentTitleForRowAtIndexPath(row)
-        cell.detailTextLabel?.font = UIFont.systemFontOfSize(17)
-        cell.detailTextLabel?.textColor = UIColor.darkGrayColor()
-        cell.detailTextLabel?.text = projectDetailViewModel.assignmentSubTitleForRowAtIndexPath(row)
-        
-        if projectDetailViewModel.isUserAssignedToAssignment(row)
-        {
-            cell.accessoryView = UIImageView(image: UIImage(named: "assignment"))
-        }
-        else{
-            
-            if projectDetailViewModel.assignmentStatus(row) == 0{
-                cell.accessoryView = UIImageView(image: UIImage(named: "progress"))
- 
-            }else{
-                cell.accessoryView = UIImageView(image: UIImage(named: "completed"))
-
-            }
-        }
-    }
+    func configureAssignmentCell(cell:PLAssignmentTableViewCell,row:Int){
+        cell.assignmentTitle.text = projectDetailViewModel.assignmentTitleForRowAtIndexPath(row)
+        cell.asssignmentSubtitle.text = projectDetailViewModel.assignmentSubTitleForRowAtIndexPath(row)
+        cell.assignmentStatusView.backgroundColor = UIColor.blueColor()
+        cell.accessoryType = .DisclosureIndicator
+ }
     
     override func tableView(tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         
@@ -378,7 +362,7 @@ class PLProjectDetailTableViewController: UITableViewController,EKEventEditViewD
         }
         assignmentViewController.projectId = projectId
         assignmentViewController.refreshFlag = true
-        assignmentViewController.assignementViewModel = PLProjectAssignmentViewModel(assignees: projectDetailViewModel.getProjectContributorsList())
+        assignmentViewController.assignmentViewModel = PLProjectAssignmentViewModel(assignees: projectDetailViewModel.getProjectContributorsList())
         self.navigationController?.pushViewController(assignmentViewController, animated: true)
     
     }
@@ -448,7 +432,7 @@ class PLProjectDetailTableViewController: UITableViewController,EKEventEditViewD
             else if indexPath.section == 2
             {
                 showAssignmentViewController()
-                assignmentViewController.assignementViewModel.selectedAssignment = projectDetailViewModel.selectedAssignment(indexPath.row)
+                assignmentViewController.assignmentViewModel.selectedAssignment = projectDetailViewModel.selectedAssignment(indexPath.row)
             }
                 
             else if indexPath.section == 3{
@@ -479,7 +463,7 @@ class PLProjectDetailTableViewController: UITableViewController,EKEventEditViewD
             else if indexPath.section == 1
             {
                 showAssignmentViewController()
-                assignmentViewController.assignementViewModel.selectedAssignment = projectDetailViewModel.selectedAssignment(indexPath.row)
+                assignmentViewController.assignmentViewModel.selectedAssignment = projectDetailViewModel.selectedAssignment(indexPath.row)
             }
                 
             else if indexPath.section == 2{

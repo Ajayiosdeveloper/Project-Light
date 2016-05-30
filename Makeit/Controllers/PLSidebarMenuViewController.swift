@@ -84,11 +84,11 @@ class PLSidebarMenuViewController: UIViewController,UIImagePickerControllerDeleg
         }
         else if section == 1
         {
-            return "Birthdays"
+            return "Assignments"
         }
         else if section == 2
         {
-            return "Assignments"
+            return "Birthdays"
         }
         else
         {
@@ -103,11 +103,11 @@ class PLSidebarMenuViewController: UIViewController,UIImagePickerControllerDeleg
         }
         else if section == 1
         {
-            return birthdayList.count
+            return taskList.count
         }
         else if section == 2
         {
-            return taskList.count
+            return birthdayList.count
         }
         else
         {
@@ -149,7 +149,7 @@ class PLSidebarMenuViewController: UIViewController,UIImagePickerControllerDeleg
                 print("")
             }
         }
-        else if indexPath.section == 1
+        else if indexPath.section == 2
         {
           cell.nameLabel?.text = birthdayList[indexPath.row]
           cell.imageIcon?.image = UIImage(named:"Birthday.png")
@@ -171,7 +171,7 @@ class PLSidebarMenuViewController: UIViewController,UIImagePickerControllerDeleg
             }
             
         }
-        else if indexPath.section == 2
+        else if indexPath.section == 1
         {
             cell.nameLabel?.text = taskList[indexPath.row]
             cell.imageIcon?.image = UIImage(named: taskListImage[indexPath.row])
@@ -245,7 +245,7 @@ class PLSidebarMenuViewController: UIViewController,UIImagePickerControllerDeleg
            
             }
         }
-        else if indexPath.section == 1{
+        else if indexPath.section == 2{
             
             if taskViewController == nil{
                 taskViewController = self.storyboard?.instantiateViewControllerWithIdentifier("TaskViewController") as? PLTaskViewController
@@ -268,7 +268,7 @@ class PLSidebarMenuViewController: UIViewController,UIImagePickerControllerDeleg
             self.presentViewController(nav, animated: true, completion: nil)
             
         }
-        else if indexPath.section == 2
+        else if indexPath.section == 1
         {
             if taskViewController == nil{
                 taskViewController = self.storyboard?.instantiateViewControllerWithIdentifier("TaskViewController") as? PLTaskViewController
