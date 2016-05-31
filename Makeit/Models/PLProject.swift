@@ -57,6 +57,7 @@ class PLAssignmentMember:PLTeamMember{
     
     var assignmentRecordId:String = ""
     var assigneeStatus: UInt = 0
+    var percentageCompleted:Int = 0
    
 }
 

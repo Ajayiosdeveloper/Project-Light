@@ -207,7 +207,6 @@ class PLProjectDetailTableViewController: UITableViewController,EKEventEditViewD
     func configureAssignmentCell(cell:PLAssignmentTableViewCell,row:Int){
         cell.assignmentTitle.text = projectDetailViewModel.assignmentTitleForRowAtIndexPath(row)
         cell.asssignmentSubtitle.text = projectDetailViewModel.assignmentSubTitleForRowAtIndexPath(row)
-        cell.assignmentStatusView.backgroundColor = UIColor.blueColor()
         cell.accessoryType = .DisclosureIndicator
  }
     
@@ -282,7 +281,10 @@ class PLProjectDetailTableViewController: UITableViewController,EKEventEditViewD
     }
     
    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        
+    
+    if indexPath.section == 0{
+        return 55
+    }
         return 65
     }
     

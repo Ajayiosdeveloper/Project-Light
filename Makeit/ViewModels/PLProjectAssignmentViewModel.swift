@@ -199,7 +199,8 @@ class PLProjectAssignmentViewModel: NSObject {
                  assignmentMember.memberUserId = member.fields?.objectForKey("assigneeUserId") as! UInt
                  assignmentMember.assigneeStatus = member.fields?.objectForKey("assigneeStatus") as! UInt
                  assignmentMember.profilePicture = member.fields?.objectForKey("Avatar") as! String
-                    assignmentMember.memberEmail = member.fields?.objectForKey("assigneeEmail") as! String
+                 assignmentMember.memberEmail = member.fields?.objectForKey("assigneeEmail") as! String
+                 assignmentMember.percentageCompleted = member.fields?.objectForKey("percentageCompleted") as! Int
                  assignmentMember.assignmentRecordId = member.ID!
                   if assignmentMember.memberUserId == QBSession.currentSession().currentUser?.ID{
                     
@@ -238,6 +239,12 @@ class PLProjectAssignmentViewModel: NSObject {
             }
         }
         return false
+    }
+    
+    func showPercentageCompletedInSlider()->Int{
+        
+        let member = selectedAssigneeList[0] as! PLAssignmentMember
+        return member.percentageCompleted
     }
     
     func numberOfAssigneesCompletedAssignment()->Int{
@@ -338,4 +345,10 @@ class PLProjectAssignmentViewModel: NSObject {
         }
     }
   }
+    
+    func updateAssignmentPercentage(value:Int){
+        
+        qbClient.updateAssignmentPercentage(assignmentRecordId,value: value)
+       
+    }
 }

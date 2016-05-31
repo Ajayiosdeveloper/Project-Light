@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
-        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -15,42 +13,29 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="64"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Dux-Gl-337">
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Dux-Gl-337">
                         <rect key="frame" x="13" y="4" width="255" height="26"/>
-                        <constraints>
-                            <constraint firstAttribute="height" constant="26" id="U7W-Pj-zWc"/>
-                        </constraints>
                         <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="39c-Jv-Dkg">
+                    <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="39c-Jv-Dkg">
                         <rect key="frame" x="276" y="14" width="36" height="36"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstAttribute="height" constant="36" id="Sko-xG-MsJ"/>
-                            <constraint firstAttribute="width" constant="36" id="xPl-TM-sZ6"/>
-                        </constraints>
+                        <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="number" keyPath="value">
+                                <real key="value" value="50"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
                     </view>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="q88-Zy-Blh">
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="q88-Zy-Blh">
                         <rect key="frame" x="13" y="34" width="255" height="21"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
                     </label>
                 </subviews>
-                <constraints>
-                    <constraint firstItem="39c-Jv-Dkg" firstAttribute="trailing" secondItem="H2p-sc-9uM" secondAttribute="trailingMargin" id="8eX-de-yu3"/>
-                    <constraint firstItem="39c-Jv-Dkg" firstAttribute="leading" secondItem="Dux-Gl-337" secondAttribute="trailing" constant="8" id="EmK-qB-OyZ"/>
-                    <constraint firstItem="Dux-Gl-337" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="5" id="GFK-8J-dDF"/>
-                    <constraint firstItem="Dux-Gl-337" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="-4" id="MSG-B4-mYQ"/>
-                    <constraint firstItem="q88-Zy-Blh" firstAttribute="leading" secondItem="Dux-Gl-337" secondAttribute="leading" id="c9M-Gx-Xkg"/>
-                    <constraint firstItem="39c-Jv-Dkg" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="6" id="h7x-xQ-k20"/>
-                    <constraint firstItem="39c-Jv-Dkg" firstAttribute="leading" secondItem="q88-Zy-Blh" secondAttribute="trailing" constant="8" symbolic="YES" id="oBX-9k-PAf"/>
-                    <constraint firstAttribute="bottomMargin" secondItem="39c-Jv-Dkg" secondAttribute="bottom" constant="6" id="sZi-jw-YhL"/>
-                    <constraint firstAttribute="bottomMargin" secondItem="q88-Zy-Blh" secondAttribute="bottom" constant="1" id="tbx-CL-sfx"/>
-                    <constraint firstItem="q88-Zy-Blh" firstAttribute="top" secondItem="Dux-Gl-337" secondAttribute="bottom" constant="4" id="zpP-q8-4vu"/>
-                </constraints>
             </tableViewCellContentView>
             <connections>
                 <outlet property="assignmentStatusView" destination="39c-Jv-Dkg" id="jfj-5u-0ic"/>
