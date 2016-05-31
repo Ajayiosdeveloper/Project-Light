@@ -74,7 +74,7 @@ class PLTeamMemberModelView: NSObject {
     }
     
     
-    func contributorImageRow(row:Int, completion:(UIImage?)->Void) {
+    func contributorImageRow(row:Int, completion:(UIImage?,ServerErrorHandling?)->Void) {
         
         if qbClient == nil{ qbClient = PLQuickbloxHttpClient()}
         
@@ -82,19 +82,19 @@ class PLTeamMemberModelView: NSObject {
         let avatar = member.profilePicture
         if avatar == "Avatar"
         {
-            completion(nil)
+            completion(nil, nil)
         }
         else{
             
-            qbClient.downloadTeamMemberAvatar(avatar){result in
+            qbClient.downloadTeamMemberAvatar(avatar){result,err in
                 
                 if result != nil{
                     
-                    completion(result)
+                    completion(result, nil)
                 }
                 else{
                     
-                    completion(nil)
+                    completion(nil, err)
                 }
             }
         }

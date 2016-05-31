@@ -46,7 +46,7 @@ class PLProjectAssignmentViewModel: NSObject {
         return true
     }
     
-    func createAssignmentForProject(id:String,name:String,startDate : NSDate?, targetDate:NSDate?,description:String,assignees:[PLTeamMember],completion:(Bool)->Void)
+    func createAssignmentForProject(id:String,name:String,startDate : NSDate?, targetDate:NSDate?,description:String,assignees:[PLTeamMember],completion:(Bool, ServerErrorHandling?)->Void)
     {
         
         var asigneeIds:[String] = [String]()
@@ -64,9 +64,15 @@ class PLProjectAssignmentViewModel: NSObject {
         let targetTimeOfCommitment = timeFormat(targetDate!)
         
         qbClient = PLQuickbloxHttpClient()
-        qbClient.createAssignmentForProject(id,startDate: Int(startDateOfCommitment), targetDate: Int(targetDateOfCommitment), name:name, description: description, assignees:asigneeIds,assigneeUserIds:assigneeUserIds,startTime: startTimeOfCommitment, endTime: targetTimeOfCommitment,members: assignees) { (res) in
-            
-            completion(res)
+        qbClient.createAssignmentForProject(id,startDate: Int(startDateOfCommitment), targetDate: Int(targetDateOfCommitment), name:name, description: description, assignees:asigneeIds,assigneeUserIds:assigneeUserIds,startTime: startTimeOfCommitment, endTime: targetTimeOfCommitment,members: assignees) { (res,ServerErrorHandling) in
+            if !res
+            {
+               completion(false,ServerErrorHandling)
+            }
+            else
+            {
+            completion(res,nil)
+            }
         }
     }
     
@@ -179,7 +185,8 @@ class PLProjectAssignmentViewModel: NSObject {
         return selectedAssignment!.details
     }
     
-    func responsibleForAssigniment(completion:(Bool)->Void)  {
+    func responsibleForAssigniment(completion:(Bool, ServerErrorHandling?) -> Void)
+    {
         
         print("Assignment Id is \(selectedAssignment?.assignmentId)")
         
@@ -188,7 +195,7 @@ class PLProjectAssignmentViewModel: NSObject {
         
         selectedAssigneeList = [PLTeamMember]()
         
-        qbClient.getAssignmentMembersForAssignmentId(selectedAssignment!.assignmentId){ members in
+        qbClient.getAssignmentMembersForAssignmentId(selectedAssignment!.assignmentId){ members,err in
             
             if let _ = members{
                 
@@ -211,15 +218,12 @@ class PLProjectAssignmentViewModel: NSObject {
                       self.selectedAssigneeList.append(assignmentMember)
                     }
                 }
-                completion(true)
+                completion(true, nil)
                 print("Completion is true")
             }else{
-                completion(false)
+                completion(false, err)
             }
-        
-            
         }
-        
     }
     
     func isLoggedInUserPartOfAssignment() -> Bool {
@@ -279,7 +283,8 @@ class PLProjectAssignmentViewModel: NSObject {
         }
         else{
             
-            qbClient.downloadTeamMemberAvatar(avatar){result in
+            qbClient.downloadTeamMemberAvatar(avatar)
+            {  result,err in
                 
                 if result != nil{
                     
@@ -304,7 +309,7 @@ class PLProjectAssignmentViewModel: NSObject {
         return self.selectedAssignment!.assignmentStatus
     }
     
-    func updateAssigmentStatusOfLoggedInUser(status:Int,completion:(Bool)->Void){
+    func updateAssigmentStatusOfLoggedInUser(status:Int,completion:(Bool, ServerErrorHandling?)->Void){
         
         if status == -1{
             
@@ -314,16 +319,17 @@ class PLProjectAssignmentViewModel: NSObject {
                 
                 if assignmentMember.assigneeStatus == 0{
                    print("Not completed")
-                   completion(false)
+                   completion(false, nil)
                    return
                 }
             }
             
-            qbClient.closeAssignment(selectedAssignment!.assignmentId){ res in
+            qbClient.closeAssignment(selectedAssignment!.assignmentId){ res,err in
                 if res{
                     self.selectedAssignment!.assignmentStatus = -1
-                    completion(res)
+                    completion(res, nil)
                 }else{
+                    completion(false, err)
                     print("Handle error")
                 }
                 

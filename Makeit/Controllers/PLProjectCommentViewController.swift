@@ -100,10 +100,11 @@ class PLProjectCommentViewController: UITableViewController,EKEventEditViewDeleg
 
         if sender.on
         {
-            commitmentViewModel.updateCommitmentStatus(){(res) in
+            commitmentViewModel.updateCommitmentStatus(){(res,err) in
                 if res{
                     self.isTaskCompleted.enabled = false
                 }
+        
             }
         }
     }
@@ -167,12 +168,10 @@ class PLProjectCommentViewController: UITableViewController,EKEventEditViewDeleg
             
             try commitmentViewModel.commitmentValidations(commitmentNameTextField.text!, startDate:startDatecommitmentDatePicker.date ,targetDate:targetDatecommitmentDatePicker.date, description: commitmentDescriptionTextView.text)
             if commitmentViewModel.commitment == nil{
-            commitmentViewModel.createCommitmentWith(commitmentNameTextField.text!,startDate:startDatecommitmentDatePicker.date,targetDate: targetDatecommitmentDatePicker.date, description: commitmentDescriptionTextView.text,projectId: projectId){ result in
+            commitmentViewModel.createCommitmentWith(commitmentNameTextField.text!,startDate:startDatecommitmentDatePicker.date,targetDate: targetDatecommitmentDatePicker.date, description: commitmentDescriptionTextView.text,projectId: projectId){ result,err in
             
                 if result{
                     self.navigationController?.popViewControllerAnimated(true)
-                }else {
-                    print("Handle Error")
                 }
             }
             }else{

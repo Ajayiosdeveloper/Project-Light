@@ -24,12 +24,14 @@ class PLProjectsViewModel: NSObject {
     func fetchProjectsFromServer() {
         createdProjectList.removeAll(keepCapacity: true)
         contributingProjectList.removeAll(keepCapacity: true)
-        quickBloxClient.fetchContributingProjectsOfUser{(res) in
+        
+        quickBloxClient.fetchContributingProjectsOfUser{(res, serverError) in
             
-            if let _ = res{
+            if let _ = res
+            {
                 self.fillContributionProjectsListArray(res!)
                 
-                self.quickBloxClient.fetchProjectsOfUserWith{(result) in
+                self.quickBloxClient.fetchProjectsOfUserWith{(result, serverError) in
                     
                     if let _ = result{
                         
@@ -38,6 +40,10 @@ class PLProjectsViewModel: NSObject {
                         self.fillProjectListArrayWithContents(objects)
                     }
                 }
+            }
+            if (serverError != nil)
+            {
+                
             }
        }
        
@@ -193,21 +199,25 @@ class PLProjectsViewModel: NSObject {
         createdProjectList.removeAll()
     }
     
-    func deleteProjectInParticularRow(row : Int, completion:(Bool)->Void) {
+    func deleteProjectInParticularRow(row : Int, completion:(Bool, ServerErrorHandling?)->Void) {
         
         let project = self.createdProjectList[row]
-        quickBloxClient.deleteProjectWithId(project.projectId!){result in
+        quickBloxClient.deleteProjectWithId(project.projectId!){result,serverError in
             
-            if result { completion(true) }
-            else { completion(false) }
+            if result {
+                completion(true,nil)
+            }
+            else {
+                completion(false, serverError)
+            }
     }
   }
     
     
-    func getProjectMembersList(projectId:String,completion:([PLTeamMember]?)->Void) {
+    func getProjectMembersList(projectId:String,completion:([PLTeamMember]?, ServerErrorHandling?)->Void) {
         
         var teamMembers:[PLTeamMember] = [PLTeamMember]()
-        quickBloxClient.fetchTeamMembersOfProjectId(projectId){ members in
+        quickBloxClient.fetchTeamMembersOfProjectId(projectId){ members, serverError in
             
             if let _ = members{
                 
@@ -260,164 +270,166 @@ class PLProjectsViewModel: NSObject {
                     teamMembers.insert(creator, atIndex: 0)
                 }
                 
-                  completion(teamMembers)
+                  completion(teamMembers, nil)
                 
             }
-        
+          else
+            {
+                completion(nil, serverError)
+            }
         }
         
     }
     
    
-        func uploadUserProfilePicture(image:UIImage,completion:(Bool)->Void)
+        func uploadUserProfilePicture(image:UIImage,completion:(Bool,ServerErrorHandling?)->Void)
         {
-        quickBloxClient.uploadProfilePicture(image){ res, blobId in
-                
-                if res
+        quickBloxClient.uploadProfilePicture(image){ res, blobId, error in
+            
+            
+                if !res
                 {
-                    completion(true)
+                    completion(false,error)
                 }
                 else{
-                    completion(false)
-        }
+                    completion(true, nil)
+              }
         }
    
     }
     
     
     
-    func fetchUserProfilePicture(completion:(UIImage?)->Void) {
+    func fetchUserProfilePicture(completion:(UIImage?, ServerErrorHandling?)->Void) {
         
       
         
-        quickBloxClient.fetchUserProfilePictureWithBlobId() { result in
+        quickBloxClient.fetchUserProfilePictureWithBlobId() { result,error in
         
         if result != nil {
         
         let image = UIImage(data:result!)
         
-        completion(image)
+        completion(image,nil)
         }
-        else { completion(nil) }
+        else { completion(nil, error) }
      
        }
         
     }
     
     
-    func updateUserProfilePicture(image:UIImage,completion:(Bool)->Void) {
+    func updateUserProfilePicture(image:UIImage,completion:(Bool, ServerErrorHandling?)->Void) {
         
-     quickBloxClient.updateUserProfilePictureWithBlobId(image) { result in
+     quickBloxClient.updateUserProfilePictureWithBlobId(image) { result, error in
             
             if result {
                 
-                completion(true)
+                completion(true, nil)
             }
-            else{completion(false)
+            else{completion(false, error)
             
             }
         }
      }
     
-    func getTodayTasksCount(completion:(String)->Void){
+    func getTodayTasksCount(completion:(String,ServerErrorHandling?)->Void){
         
-        quickBloxClient.countOfTodayCommitments(){ count in
+        quickBloxClient.countOfTodayCommitments(){ count,error in
             
             if count == 0{
-                completion(String(0))
+                completion(String(0),error)
             }else{
                 
-                completion(String(count))
+                completion(String(count), nil)
             }
          }
      }
     
-    func getUpcomingTasksCount(completion:(String)->Void){
+    func getUpcomingTasksCount(completion:(String, ServerErrorHandling?)->Void){
         
         quickBloxClient.countOfUpComingCommitments()
-        { count in
+        { count, error in
             if count == 0{
-                completion(String(0))
+                completion(String(0), error)
             }else{
                 
-                completion(String(count))
+                completion(String(count), nil)
             }
         }
     }
     
-    func getPendingTasksCount(completion:(String)->Void){
+    func getPendingTasksCount(completion:(String, ServerErrorHandling?)->Void){
         
-        quickBloxClient.countOfPendingTasks(){ count in
+        quickBloxClient.countOfPendingTasks(){ count, error in
             if count == 0{
-                completion(String(0))
+                completion(String(0), error)
             }else{
                 
-                completion(String(count))
+                completion(String(count), nil)
             }
         }
     }
     
-    func getUpcoimgBirthdaysCount(completion:(String)-> Void)
+    func getUpcoimgBirthdaysCount(completion:(String,ServerErrorHandling?)-> Void)
     {
-        quickBloxClient.upcomingBirthdays() { count in
+        quickBloxClient.upcomingBirthdays() { count, error  in
             if count == 0
             {
-                completion(String(0))
+                completion(String(0), error)
             }
             else{
-                completion(String(count))
+                completion(String(count), nil)
             }
         }
     }
     
     
-    func getBirthdaysCount(completion:(String)->Void){
+    func getBirthdaysCount(completion:(String, ServerErrorHandling?)->Void){
         
-        quickBloxClient.findBirthdays(){ count in
+        quickBloxClient.findBirthdays(){ count ,error  in
             
             if count == 0{
-                completion(String(0))
+                completion(String(0), error)
             }else{
-                completion(String(count))
+                completion(String(count), nil)
             }
         }
     }
     
-    func getTodayAssignmentsCount(completion:(String)->Void){
+    func getTodayAssignmentsCount(completion:(String, ServerErrorHandling?)->Void){
         
-        quickBloxClient.countOfTodayAssignments(){ count in
+        quickBloxClient.countOfTodayAssignments(){ count,error in
             
             if count == 0{
-                completion(String(0))
+                completion(String(0), error)
             }else{
-                
-                completion(String(count))
+                completion(String(count), nil)
             }
         }
     }
     
-    func getUpcomingAssignmentsCount(completion:(String)->Void){
+    func getUpcomingAssignmentsCount(completion:(String, ServerErrorHandling?)->Void){
         
         quickBloxClient.countOfUpComingAssignments()
-            { count in
+            { count,error in
                 if count == 0{
-                    completion(String(0))
+                    completion(String(0), error)
                 }else{
-                    
-                    completion(String(count))
+                    completion(String(count), nil)
                 }
         }
     }
     
-    func getPendingAssignmentsCount(completion:(String)->Void){
+    func getPendingAssignmentsCount(completion:(String, ServerErrorHandling?)->Void){
         
-        quickBloxClient.countOfPendingAssignments(){ count in
+        quickBloxClient.countOfPendingAssignments(){ count,error in
             if count == 0{
-                completion(String(0))
+                completion(String(0), error)
             }else{
-                
-                completion(String(count))
+                completion(String(count), nil)
             }
+
         }
     }
 

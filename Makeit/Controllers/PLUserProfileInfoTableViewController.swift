@@ -61,7 +61,7 @@ class PLUserProfileInfoTableViewController: UITableViewController,UITextFieldDel
     
     func fetchingUserDetails(userId : UInt)
      {
-       userProfileModel.getUserProfileDetail(userId) { dict in
+       userProfileModel.getUserProfileDetail(userId) { dict,err in
       
      
       if let _ = dict{
@@ -112,7 +112,7 @@ class PLUserProfileInfoTableViewController: UITableViewController,UITextFieldDel
     @IBAction func updateUserProfile(sender: AnyObject)
     {
        
-        userProfileModel.createUSerProfileWith(dobPicker.date, companyName: companyName.text, technology: technology.text, experience: self.experience.text , designation: designation.text, emailId : emailId.text) { (result) in
+        userProfileModel.createUSerProfileWith(dobPicker.date, companyName: companyName.text, technology: technology.text, experience: self.experience.text , designation: designation.text, emailId : emailId.text) { (result,err) in
             if result
             {
                 self.navigationController?.popViewControllerAnimated(true)

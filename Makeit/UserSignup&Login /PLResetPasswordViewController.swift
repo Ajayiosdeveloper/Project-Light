@@ -35,17 +35,30 @@ class PLResetPasswordViewController: UIViewController,UIAlertViewDelegate {
             alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default) { (action : UIAlertAction) in
                 let email = self.emailIdField.text
                 let finalEmail = email!.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
-                self.userAccountViewModel.sendForgotPasswordLinkToeMail(finalEmail)
+                self.userAccountViewModel.sendForgotPasswordLinkToeMail(finalEmail, completion: { (err) in
+                    
+                       PLSharedManager.showAlertIn(self, error: err!, title: "Email is not matching with registered mail", message: "")
+                    
+                })
+              //  self.userAccountViewModel.sendForgotPasswordLinkToeMail(finalEmail)
                 let loginViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("PLUserSignupAndLoginViewController")
                 self.presentViewController(loginViewController, animated: true, completion: nil)
                 })
+            
             self.presentViewController(alert, animated: true, completion: nil)
 
         } else {
             // Fallback on earlier versions
-            let alertView = UIAlertView(title: "Reset Password link will be sent to the registered email", message: "", delegate: self, cancelButtonTitle: nil, otherButtonTitles: "Ok")
-            alertView.tag = 1
-            alertView.show()
+            let email = self.emailIdField.text
+            let finalEmail = email!.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
+            self.userAccountViewModel.sendForgotPasswordLinkToeMail(finalEmail, completion: { (err) in
+                
+                PLSharedManager.showAlertIn(self, error: err!, title: "Email is not matching with registered mail", message: "")
+            })
+
+//            let alertView = UIAlertView(title: "Reset Password link will be sent to the registered email", message: "", delegate: self, cancelButtonTitle: nil, otherButtonTitles: "Ok")
+//            alertView.tag = 1
+//            alertView.show()
         }
             
      }
@@ -65,7 +78,15 @@ class PLResetPasswordViewController: UIViewController,UIAlertViewDelegate {
                 print("Ok")
                 let email = self.emailIdField.text
                 let finalEmail = email!.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
-                self.userAccountViewModel.sendForgotPasswordLinkToeMail(finalEmail)
+                
+                
+                self.userAccountViewModel.sendForgotPasswordLinkToeMail(finalEmail, completion: { (err) in
+                    if err != nil
+                    {
+                        PLSharedManager.showAlertIn(self, error: err!, title: "Email is not matching with registered mail", message: "")
+                    }
+                })
+               // self.userAccountViewModel.sendForgotPasswordLinkToeMail(finalEmail)
                 let loginViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("PLUserSignupAndLoginViewController")
                 self.presentViewController(loginViewController, animated: true, completion: nil)
             

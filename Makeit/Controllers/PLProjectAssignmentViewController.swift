@@ -12,9 +12,7 @@ import Quickblox
 class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,UITableViewDelegate,DataTransform {
 
     @IBOutlet var completeStatusLabel: UILabel!
-    
     @IBOutlet var assignmentStatusSlider: UISlider!
-    
     @IBOutlet var assignmentNameTextFiled: UITextField!
     @IBOutlet var assignmenttargetDateTextField: UITextField!
     @IBOutlet var assigneeListTableView: UITableView!
@@ -77,12 +75,16 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
                 self.navigationItem.rightBarButtonItem?.enabled = false
                 self.navigationItem.rightBarButtonItem?.tintColor = UIColor.clearColor()
               if refreshFlag{
-              assignmentViewModel.responsibleForAssigniment(){[weak self]result in
+              assignmentViewModel.responsibleForAssigniment(){[weak self]result,err in
                 
                 if result{
                     self!.assigneeListTableView.reloadData()
                     self!.assigneeListTableView.allowsSelection = false
                   }
+                else
+                {
+                    PLSharedManager.showAlertIn(self!, error: err!, title: "Assignee list not avaliable", message: "")
+                }
                 }
              }
             
@@ -110,7 +112,7 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
             
             try assignmentViewModel.assignmentValidations(assignmentNameTextFiled.text!,startDate:startDatecommitmentDatePicker.date ,targetDate: targetDatecommitmentDatePicker.date,description: assignmentDescriptionTextView.text,projectId: projectId,assignees:assignmentViewModel.getSelectedAssigneeList())
             
-            assignmentViewModel.createAssignmentForProject(projectId, name:assignmentNameTextFiled.text! ,startDate: startDatecommitmentDatePicker.date, targetDate: targetDatecommitmentDatePicker.date, description: assignmentDescriptionTextView.text, assignees:assignmentViewModel.getSelectedAssigneeList()){result in
+            assignmentViewModel.createAssignmentForProject(projectId, name:assignmentNameTextFiled.text! ,startDate: startDatecommitmentDatePicker.date, targetDate: targetDatecommitmentDatePicker.date, description: assignmentDescriptionTextView.text, assignees:assignmentViewModel.getSelectedAssigneeList()){result,err in
                 if result{
                   dispatch_async(dispatch_get_main_queue(), {
                         
@@ -119,7 +121,7 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
                     
                 }
                 else {
-                
+                    PLSharedManager.showAlertIn(self, error: err!, title: "Error Occured", message: err.debugDescription)
                 }
             }
         }
@@ -399,23 +401,27 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
     {
         print(sender.tag)
         if sender.tag == 1{
-            assignmentViewModel.updateAssigmentStatusOfLoggedInUser(1){res in
+            assignmentViewModel.updateAssigmentStatusOfLoggedInUser(1){res,err in
                 if res{
                     self.assignmentStatus.setTitle("Completed", forState:.Normal)
                     self.assignmentStatus.enabled = false
                     self.loggedInUserStatus = "1"
                     self.assigneeListTableView.reloadRowsAtIndexPaths([NSIndexPath(forRow:0, inSection:0)], withRowAnimation: UITableViewRowAnimation.Automatic)
                     }
+                else
+                {
+                    PLSharedManager.showAlertIn(self, error: err!, title: "Error Occured while updating the assignment", message: err.debugDescription)
+                }
             }
         }
         else if sender.tag == -1{
             
-            assignmentViewModel.updateAssigmentStatusOfLoggedInUser(-1){[weak self]res in
+            assignmentViewModel.updateAssigmentStatusOfLoggedInUser(-1){ [weak self] res,err in
                 if res{
                     self!.assigneeListTableView.reloadData()
                 }else{
-                    
-                   self!.showAlertWithMessage("Can not Close", message: "Assignment is still in progress by some assignees")
+                    //self!.showAlertWithMessage("Cannot Close", message: "Assignment is still in progress by some assignees")
+                    PLSharedManager.showAlertIn(self!, error: err!, title: "Cannot Close - Assignment is still in progress by some assignees", message: err.debugDescription)
                 }
             }
 

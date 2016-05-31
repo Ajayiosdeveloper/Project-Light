@@ -33,19 +33,20 @@ class PLAddProjectViewModel: NSObject {
         
         if self.selectedContributors.count == 0 {
             
-            quickBloxClient.createNewProjectWith(name, description: description){result,projectId in
+            quickBloxClient.createNewProjectWith(name, description: description){result,projectId,error in
                 if result{
                 let addedProject = PLProject(projectName: name, subTitle:description)
                 addedProject.projectId = projectId
                 addedProject.createdBy = (QBSession.currentSession().currentUser?.ID)!
                 completion(addedProject)
-                }else{completion(nil)}
+                }
+                else{completion(nil)}
 
             }
         }
         else{
             
-            quickBloxClient.createNewProjectWith(name, description: description){[weak self]result,projectId in
+            quickBloxClient.createNewProjectWith(name, description: description){[weak self]result,projectId,error in
                 
                 var qbObjects:[QBCOCustomObject] = [QBCOCustomObject]()
                 
@@ -129,7 +130,7 @@ class PLAddProjectViewModel: NSObject {
         
         var teamMembers:[PLTeamMember] = [PLTeamMember]()
         
-        quickBloxClient.getListOfUsersWithName(name){ users in
+        quickBloxClient.getListOfUsersWithName(name){ users,error in
             
               if let _ = users{
                 
@@ -194,25 +195,25 @@ class PLAddProjectViewModel: NSObject {
         self.selectedContributors.removeAtIndex(row)
     }
     
-    func contributorImage(row:Int, completion:(UIImage?)->Void) {
+    func contributorImage(row:Int, completion:(UIImage?, ServerErrorHandling?)->Void) {
         
         let member = selectedContributors[row]
         let avatar = member.profilePicture
         if avatar == "Avatar"
         {
-            completion(nil)
+            completion(nil, nil)
         }
         else{
             
-            quickBloxClient.downloadTeamMemberAvatar(avatar){result in
+            quickBloxClient.downloadTeamMemberAvatar(avatar){result,err in
                 
                 if result != nil{
                     
-                    completion(result)
+                    completion(result, nil)
                 }
                 else{
                     
-                    completion(nil)
+                    completion(nil, err)
                 }
             }
         }

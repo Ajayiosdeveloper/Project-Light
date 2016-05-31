@@ -96,7 +96,7 @@ class PLTeamCommunicationViewController: UIViewController,UITableViewDelegate,UI
         
         cell.memberName.text = communicationViewModel.contributorTitle(indexPath.row)
         cell.memberDetail.text = communicationViewModel.contributorEmail(indexPath.row)
-        communicationViewModel.contributorImage(indexPath.row, completion: { (avatar) in
+        communicationViewModel.contributorImage(indexPath.row, completion: { (avatar,err) in
             
             if let _ = avatar{
                 
@@ -183,7 +183,7 @@ class PLTeamCommunicationViewController: UIViewController,UITableViewDelegate,UI
             let alertViewController = UIAlertController.init(title: "Enter Group Name", message: nil, preferredStyle: .Alert)
             let okAction = UIAlertAction.init(title: "Ok", style: .Default) {[weak self] (action) -> Void in
                 
-                self!.communicationViewModel.createProjectGroup(self!.textFld.text!){[weak self] resu, chatGroup in
+                self!.communicationViewModel.createProjectGroup(self!.textFld.text!){[weak self] resu, chatGroup,err in
                     if resu{
                         self!.teamChatViewController.projectTeamChatViewModel.addChatGroup(chatGroup!)
                         self?.navigationController?.popViewControllerAnimated(true)
@@ -215,7 +215,7 @@ class PLTeamCommunicationViewController: UIViewController,UITableViewDelegate,UI
         if buttonIndex == 0{
         
             let text = alertView.textFieldAtIndex(0)! as UITextField
-                self.communicationViewModel.createProjectGroup(text.text!){[weak self] resu, chatGroup in
+                self.communicationViewModel.createProjectGroup(text.text!){[weak self] resu, chatGroup,err in
                     if resu{
                         self!.teamChatViewController.projectTeamChatViewModel.addChatGroup(chatGroup!)
                         self?.navigationController?.popViewControllerAnimated(true)

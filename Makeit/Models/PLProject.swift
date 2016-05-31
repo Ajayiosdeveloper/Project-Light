@@ -111,9 +111,59 @@ class PLSharedManager:NSObject{
     var priorityType:String = ""
     var isCalendarAccess = false
     
+    class func showAlertIn(controller : UIViewController, error :ServerErrorHandling,title : String,message: String)
+    {
+        switch error {
+        case .BadRequest:
+            print("1")
+              showAlertWithMessage(title, message: message, controller: controller)
+        case .ServerError:
+             print("2")
+              showAlertWithMessage(title, message: message, controller: controller)
+        case .StatusCodeValidationFailed:
+            print("3")
+            showAlertWithMessage(title, message: message, controller: controller)
+        case .UnAuthorized:
+             print("4")
+              showAlertWithMessage(title, message: message, controller: controller)
+        default:
+              showAlertWithMessage(title, message: message, controller: controller)
+             print("5")
+        }
+    }
+  
+   class func showAlertWithMessage(title:String,message:String,controller : UIViewController)
+    {
+        if #available(iOS 8.0, *) {
+            let alertController = UIAlertController(title:title, message:message, preferredStyle: UIAlertControllerStyle.Alert)
+            let action = UIAlertAction(title:"Ok", style: UIAlertActionStyle.Default, handler: { (action) -> Void in
+            })
+            alertController.addAction(action)
+            controller.presentViewController(alertController, animated: true, completion: nil)
+            
+        } else {
+            let alert = UIAlertView(title: title, message: message, delegate:nil, cancelButtonTitle:"Ok", otherButtonTitles:"") as UIAlertView
+            alert.show()
+            
+            // Fallback on earlier versions
+        }
+    }
+    
 }
 
 func ==(lhs:PLTeamMember,rhs:PLTeamMember) -> Bool {
     
     return (lhs.fullName == rhs.fullName && lhs.memberId == rhs.memberId)
+}
+
+//To handle ServerSide Errors
+
+
+public enum ServerErrorHandling
+{
+    case  BadRequest
+    case ServerError
+    case UnAuthorized
+    case StatusCodeValidationFailed
+    case Other
 }

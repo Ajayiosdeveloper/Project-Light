@@ -25,14 +25,21 @@ class PLUserSignupAndLoginViewModel : NSObject
     
     dynamic var loginResultNotifier:Bool = false
     
-    func validateUserLoginCredentials(withUserName:String,password:String)  -> Bool
+    func validateUserLoginCredentials(withUserName:String,password:String,completion: (ServerErrorHandling?) -> Void)
     {
-        do { try startProcessingUserLogin(withUserName, password: password) }
-        catch RemoteValidations.Failed{ return false}
-        catch RemoteValidations.Success {return true}
+        do {
+            try startProcessingUserLogin(withUserName, password: password, completion: { (err) in
+                if err != nil
+                {
+                    completion(err)
+                }
+                })
+        }
+        catch RemoteValidations.Failed{}
+        catch RemoteValidations.Success{}
         catch {print("Other")}
-        return true
-    }
+     }
+ 
     
     func validateUserSignupCredentials(withUserName:String,password:String,confirmPassword:String) throws -> Bool
     {
@@ -87,24 +94,44 @@ class PLUserSignupAndLoginViewModel : NSObject
 //        return theme;
 //    }
     
-    private  func startProcessingUserLogin(withUserName:String,password:String) throws ->Void
+    private  func startProcessingUserLogin(withUserName:String,password:String,completion:(ServerErrorHandling?)-> Void) throws ->Void
     {
         //if quickBloxClient == nil{ quickBloxClient = PLQuickbloxHttpClient() }
         
-        quickBloxClient.initiateUserLogin(withUserName, password: password) {[weak self] (result) -> Void in
-            
+        quickBloxClient.initiateUserLogin(withUserName, password: password) {[weak self] (result,error) -> Void in
+            if error == nil
+            {
             self!.loginResultNotifier = result
+             completion(nil)
+            }
+            else
+            {
+                print("Login error")
+                print(error)
+                completion(error)
+            }
         }
     }
     
-    func startProcessingUserSignup(withUserName:String,password:String,email:String,completion:(Bool)->Void)
+    func startProcessingUserSignup(withUserName:String,password:String,email:String,completion:(Bool,ServerErrorHandling?)->Void)
     {
         //if quickBloxClient == nil{ quickBloxClient = PLQuickbloxHttpClient() }
         
-        quickBloxClient.createNewUserWith(withUserName, password:password,email: email){result in
-           
-           completion(result)
+        quickBloxClient.createNewUserWith(withUserName, password: password, email: email) { (result, ServerErrorHandling) in
+            if !result
+            {
+                completion(false,ServerErrorHandling)
+            }
+            else{
+                completion(result,nil)
+
+            }
         }
+        
+//        quickBloxClient.createNewUserWith(withUserName, password:password,email: email){result in
+//           
+//           completion(result,nil)
+//        }
         
     }
     
@@ -139,10 +166,24 @@ class PLUserSignupAndLoginViewModel : NSObject
         return false
     }
     
-    func sendForgotPasswordLinkToeMail(mailId : String)
+
+    
+    func sendForgotPasswordLinkToeMail(mailId : String, completion:(ServerErrorHandling?)-> Void)
     {
-        quickBloxClient.sendforgotPasswordLinkToEmail(mailId)
+        quickBloxClient.sendforgotPasswordLinkToEmail(mailId) { (err) in
+            if let _ = err
+            {
+                print("Errrrrror ")
+                completion(err)
+            }
+            else{
+                print("Errrrrror No")
+                completion(nil)
+            }
+        }
     }
+    
+
     func isValidEmail(email : String) -> Bool
     {
         let emailRegEx = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}"

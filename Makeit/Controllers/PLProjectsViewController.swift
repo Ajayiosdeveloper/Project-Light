@@ -253,13 +253,17 @@ class PLProjectsViewController: UITableViewController,UIImagePickerControllerDel
         selectedProejctCreatorId = selected.createdBy
         selectedSection = indexPath.section
         PLSharedManager.manager.projectCreatedByUserId = selected.createdBy
-        projectViewModel.getProjectMembersList(selectedProjectId!){ resultedMembers in
+        projectViewModel.getProjectMembersList(selectedProjectId!){ resultedMembers,err in
             
             print(resultedMembers)
             
             if let _ = resultedMembers{
                 
               self.performSegueWithIdentifier("toProjectDetails", sender: resultedMembers)
+            }
+            else
+            {
+                PLSharedManager.showAlertIn(self, error: err!, title: "Error occured while fetching project member list", message: err.debugDescription)
             }
         }
      }
@@ -271,12 +275,16 @@ class PLProjectsViewController: UITableViewController,UIImagePickerControllerDel
             
             activityIndicatorView.startAnimating()
             self.projectTableView.backgroundColor = UIColor(red:235/255, green: 235/255, blue: 241/255, alpha: 1)
-            projectViewModel.deleteProjectInParticularRow(indexPath.row){[weak self] result in
+            projectViewModel.deleteProjectInParticularRow(indexPath.row){[weak self] result,err in
                 
                 if result{
                     self!.activityIndicatorView.stopAnimating()
                     self!.projectViewModel.createdProjectList.removeAtIndex(indexPath.row)
                     self!.projectTableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Bottom)
+                }
+                else
+                {
+                    PLSharedManager.showAlertIn(self!, error: err!, title: "Error occured while deleting the project in a particulare row", message: err.debugDescription)
                 }
                 
             }

@@ -130,7 +130,7 @@ class PLProjectDetailTableViewController: UITableViewController,EKEventEditViewD
         cell.memberName.text = projectDetailViewModel.contributorTitle(indexPath.row)
         cell.memberDetail.text = projectDetailViewModel.contributorEmail(indexPath.row)
         cell.accessoryType = .DisclosureIndicator
-        projectDetailViewModel.contributorImage(indexPath.row, completion: { (profilePicture) in
+        projectDetailViewModel.contributorImage(indexPath.row, completion: { (profilePicture,err) in
             
             if let _ = profilePicture{
                 
@@ -485,9 +485,9 @@ class PLProjectDetailTableViewController: UITableViewController,EKEventEditViewD
         
         projectDetailViewModel.assignments = []
         projectDetailViewModel.commitments = []
-        projectDetailViewModel.getCommitmentsFromServer(projectId){[weak self]result in
+        projectDetailViewModel.getCommitmentsFromServer(projectId){[weak self]result,err in
             
-            if result{  self!.projectDetailViewModel.getAssignmentsFromRemote(self!.projectId){result in
+            if result{  self!.projectDetailViewModel.getAssignmentsFromRemote(self!.projectId){result,err in
                 
                 if result{
                     self?.projectDetailsTableView.reloadData()
@@ -567,13 +567,15 @@ class PLProjectDetailTableViewController: UITableViewController,EKEventEditViewD
             try commitmentViewModel.commitmentValidations(title,startDate: startDate,targetDate:targetDate, description:description)
             
               commitmentViewModel.addCommitmentToCalendar(title, date:startDate,endDate: targetDate)
-              commitmentViewModel.createCommitmentWith(title,startDate: startDate,targetDate:targetDate,description:description ,projectId: projectId){ result in
+              commitmentViewModel.createCommitmentWith(title,startDate: startDate,targetDate:targetDate,description:description ,projectId: projectId){ result,err in
                 
                 if result{
                     
                     completion(true)
                     
-                }else {print("Handle Error")}
+                }else {
+                    PLSharedManager.showAlertIn(self, error: err!, title: "Create Commitment Failed", message: "Error occrued while creating the Commitment")
+                    print("Handle Error")}
             }
         }
         catch CommitValidation.NameEmpty{print("Empty Name")}
