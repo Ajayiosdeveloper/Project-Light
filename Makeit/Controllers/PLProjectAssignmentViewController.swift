@@ -21,7 +21,7 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
     var projectId:String!
     var startDatecommitmentDatePicker:UIDatePicker!
     var targetDatecommitmentDatePicker:UIDatePicker!
-    var assignementViewModel:PLProjectAssignmentViewModel!
+    var assignmentViewModel:PLProjectAssignmentViewModel!
     var profileViewController:PLUserProfileInfoTableViewController!
     var assignmentStatus:UIButton!
     var headerView:UIView!
@@ -32,7 +32,7 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
     override func viewDidLoad() {
         super.viewDidLoad()
       
-        print(assignementViewModel.assigneeList)
+        print(assignmentViewModel.assigneeList)
         self.assigneeListTableView.registerNib(UINib(nibName:"PLAssigneeTableViewCell", bundle:NSBundle.mainBundle()), forCellReuseIdentifier: "Cell")
         addDoneBarButtonItem()
         startDatecommitmentDatePicker = UIDatePicker()
@@ -49,22 +49,22 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
     override func viewWillAppear(animated: Bool) {
             super.viewWillAppear(animated)
       
-        if let _ = assignementViewModel, _ = assignementViewModel.assigneeList{
+        if let _ = assignmentViewModel, _ = assignmentViewModel.assigneeList{
             
             assigneeListTableView.reloadData()
             
         }
         
-        if let _ = assignementViewModel.selectedAssignment{
-               self.title = assignementViewModel.assignmentName()
-                assignmentNameTextFiled.text = assignementViewModel.assignmentName()
-                assignmentStartDateTextField.text = assignementViewModel.assignmentStartDate()
-                assignmenttargetDateTextField.text = assignementViewModel.assignmentTargetDate()
-                assignmentDescriptionTextView.text = assignementViewModel.assignmentDescription()
+        if let _ = assignmentViewModel.selectedAssignment{
+               self.title = assignmentViewModel.assignmentName()
+                assignmentNameTextFiled.text = assignmentViewModel.assignmentName()
+                assignmentStartDateTextField.text = assignmentViewModel.assignmentStartDate()
+                assignmenttargetDateTextField.text = assignmentViewModel.assignmentTargetDate()
+                assignmentDescriptionTextView.text = assignmentViewModel.assignmentDescription()
                 self.navigationItem.rightBarButtonItem?.enabled = false
                 self.navigationItem.rightBarButtonItem?.tintColor = UIColor.clearColor()
               if refreshFlag{
-              assignementViewModel.responsibleForAssigniment(){[weak self]result in
+              assignmentViewModel.responsibleForAssigniment(){[weak self]result in
                 
                 if result{
                     self!.assigneeListTableView.reloadData()
@@ -95,9 +95,9 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
     {
         do{
             
-            try assignementViewModel.assignmentValidations(assignmentNameTextFiled.text!,startDate:startDatecommitmentDatePicker.date ,targetDate: targetDatecommitmentDatePicker.date,description: assignmentDescriptionTextView.text,projectId: projectId,assignees:assignementViewModel.getSelectedAssigneeList())
+            try assignmentViewModel.assignmentValidations(assignmentNameTextFiled.text!,startDate:startDatecommitmentDatePicker.date ,targetDate: targetDatecommitmentDatePicker.date,description: assignmentDescriptionTextView.text,projectId: projectId,assignees:assignmentViewModel.getSelectedAssigneeList())
             
-            assignementViewModel.createAssignmentForProject(projectId, name:assignmentNameTextFiled.text! ,startDate: startDatecommitmentDatePicker.date, targetDate: targetDatecommitmentDatePicker.date, description: assignmentDescriptionTextView.text, assignees:assignementViewModel.getSelectedAssigneeList()){result in
+            assignmentViewModel.createAssignmentForProject(projectId, name:assignmentNameTextFiled.text! ,startDate: startDatecommitmentDatePicker.date, targetDate: targetDatecommitmentDatePicker.date, description: assignmentDescriptionTextView.text, assignees:assignmentViewModel.getSelectedAssigneeList()){result in
                 if result{
                   dispatch_async(dispatch_get_main_queue(), {
                         
@@ -163,7 +163,7 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
         
         if section == 0
         {
-        return assignementViewModel.numbersOfRows()
+        return assignmentViewModel.numbersOfRows()
         }
         return 0
     }
@@ -172,10 +172,10 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
       func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCellWithIdentifier("Cell") as! PLAssigneeTableViewCell
-        cell.nameLabel.text = assignementViewModel.memberName(indexPath.row)
-        cell.mailIdField.text = assignementViewModel.memberEmail(indexPath.row)
+        cell.nameLabel.text = assignmentViewModel.memberName(indexPath.row)
+        cell.mailIdField.text = assignmentViewModel.memberEmail(indexPath.row)
         cell.disclosureButton.tag = indexPath.row
-        assignementViewModel.contributorImageRowAtIndexPath(indexPath.row, completion: { (avatar) in
+        assignmentViewModel.contributorImageRowAtIndexPath(indexPath.row, completion: { (avatar) in
             
             if let _ = avatar{
                 
@@ -200,7 +200,7 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
         }
         else
         {
-            if assignementViewModel.isLoggedInUserPartOfAssignment()
+            if assignmentViewModel.isLoggedInUserPartOfAssignment()
             {
                 if indexPath.row == 0
                 {
@@ -218,14 +218,14 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
             }          
         }
 
-        if assignementViewModel.selectedAssignment == nil{
+        if assignmentViewModel.selectedAssignment == nil{
             cell.statueField.text = ""
         
         }else{
             
-            if assignementViewModel.selectedAssignmentStatus() == 0{
+            if assignmentViewModel.selectedAssignmentStatus() == 0{
                 
-                let assigneeStatus = assignementViewModel.assigneeStatus(indexPath.row)
+                let assigneeStatus = assignmentViewModel.assigneeStatus(indexPath.row)
                 if assigneeStatus == "0"{
                     cell.statueField.text = "In Progress"
                     cell.statueField.textColor = enableButtonColor
@@ -236,7 +236,7 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
                     cell.statueField.text = "Closed"
                 }
                 
-                loggedInUserStatus = assignementViewModel.assigneeStatus(0)
+                loggedInUserStatus = assignmentViewModel.assigneeStatus(0)
                 if loggedInUserStatus == "1"{
                     headerColor = UIColor(colorLiteralRed: 89/255, green: 181/255, blue: 50/255, alpha: 0.5)
                     assignmentStatus.setTitle("Closed", forState: .Normal)
@@ -265,7 +265,7 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
         
         if section == 0
         {
-        if assignementViewModel.selectedAssignment != nil
+        if assignmentViewModel.selectedAssignment != nil
         {
             return "ASSIGNED TO"
         }
@@ -286,7 +286,7 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
         if section == 1
         {
             
-            if assignementViewModel.selectedAssignment != nil{
+            if assignmentViewModel.selectedAssignment != nil{
                 if loggedInUserStatus == "0"{
                     headerView.backgroundColor = UIColor(colorLiteralRed: 89/255, green: 181/255, blue: 50/255, alpha: 1)
                 }else if loggedInUserStatus == "1"{
@@ -301,7 +301,7 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
                     
                 }else{
                     
-                    if assignementViewModel.isLoggedInUserPartOfAssignment()
+                    if assignmentViewModel.isLoggedInUserPartOfAssignment()
                     {
                         self.addButtonForTableViewFooterOnView(headerView, title: "Completed ?", tag: 1)
                     }
@@ -312,15 +312,15 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
 
         }
             
-            if assignementViewModel.isUserCreatorOfAssignment(){
+            if assignmentViewModel.isUserCreatorOfAssignment(){
               headerView.backgroundColor = UIColor(colorLiteralRed: 89/255, green: 181/255, blue: 50/255, alpha: 1)
               assignmentStatus.enabled = true
             }
             
-            if let _ = assignementViewModel.selectedAssignment{
-            if assignementViewModel.selectedAssignmentStatus() != 0{
+            if let _ = assignmentViewModel.selectedAssignment{
+            if assignmentViewModel.selectedAssignmentStatus() != 0{
                 
-             if assignementViewModel.selectedAssignmentStatus() != 0{
+             if assignmentViewModel.selectedAssignmentStatus() != 0{
                 
                     headerView.backgroundColor = UIColor(colorLiteralRed: 235/255, green: 35/255, blue: 38/255, alpha: 0.5)
                     assignmentStatus.setTitle("Closed", forState: UIControlState.Normal)
@@ -352,18 +352,18 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
    
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
-        if assignementViewModel.selectedAssignment == nil
+        if assignmentViewModel.selectedAssignment == nil
         {
             
             if selectedIndexes.containsObject(indexPath){
                 
                 selectedIndexes.removeObject(indexPath)
                 tableView.cellForRowAtIndexPath(indexPath)?.accessoryType = .None
-                assignementViewModel.removeAssignee(indexPath.row)
+                assignmentViewModel.removeAssignee(indexPath.row)
             }else{
                 selectedIndexes.addObject(indexPath)
                 tableView.cellForRowAtIndexPath(indexPath)?.accessoryType = .Checkmark
-                assignementViewModel.addAssignee(indexPath.row)
+                assignmentViewModel.addAssignee(indexPath.row)
             }
         }
      }
@@ -386,7 +386,7 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
     {
         print(sender.tag)
         if sender.tag == 1{
-            assignementViewModel.updateAssigmentStatusOfLoggedInUser(1){res in
+            assignmentViewModel.updateAssigmentStatusOfLoggedInUser(1){res in
                 if res{
                     self.assignmentStatus.setTitle("Completed", forState:.Normal)
                     self.assignmentStatus.enabled = false
@@ -397,7 +397,7 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
         }
         else if sender.tag == -1{
             
-            assignementViewModel.updateAssigmentStatusOfLoggedInUser(-1){[weak self]res in
+            assignmentViewModel.updateAssigmentStatusOfLoggedInUser(-1){[weak self]res in
                 if res{
                     self!.assigneeListTableView.reloadData()
                 }else{
@@ -440,19 +440,19 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
         profileViewController.disablingBtn = false
         refreshFlag = false
         profileViewController.userProfileModel = PLUserProfileInfoViewModel()
-        let userId = assignementViewModel.getSelectedAssigneeUserId(sender.tag)
+        let userId = assignmentViewModel.getSelectedAssigneeUserId(sender.tag)
         profileViewController.fetchingUserDetails(userId)
-        profileViewController.userName = assignementViewModel.memberName(sender.tag)
+        profileViewController.userName = assignmentViewModel.memberName(sender.tag)
         profileViewController.delegate = self
-        if assignementViewModel.selectedAssignment != nil
+        if assignmentViewModel.selectedAssignment != nil
         {
-            profileViewController.selectedAssignment = assignementViewModel.selectedAssignment
+            profileViewController.selectedAssignment = assignmentViewModel.selectedAssignment
         }
         self.navigationController!.pushViewController(profileViewController!, animated: true)
     }
     
     func selectedAssignment(assignment: PLAssignment) {
-       assignementViewModel.selectedAssignment = assignment
+       assignmentViewModel.selectedAssignment = assignment
     }
     
     func showAlertWithMessage(title:String,message:String)
@@ -476,7 +476,7 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
     
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
-        assignementViewModel.selectedAssignment = nil
+        assignmentViewModel.selectedAssignment = nil
         selectedIndexes = []
     }
 }

@@ -177,6 +177,8 @@
 		948382D71CE3304000B51BA6 /* PLResetPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948382D61CE3304000B51BA6 /* PLResetPasswordViewController.swift */; };
 		948382D91CE3310100B51BA6 /* bar.png in Resources */ = {isa = PBXBuildFile; fileRef = 948382D81CE3310100B51BA6 /* bar.png */; };
 		948382DF1CE3368400B51BA6 /* PLUserLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948382DE1CE3368400B51BA6 /* PLUserLoginViewController.swift */; };
+		94AF829A1CFC6ED300A040B2 /* PLAssignmentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94AF82981CFC6ED300A040B2 /* PLAssignmentTableViewCell.swift */; };
+		94AF829B1CFC6ED300A040B2 /* PLAssignmentTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 94AF82991CFC6ED300A040B2 /* PLAssignmentTableViewCell.xib */; };
 		94C7A5021CF4646100DECE8A /* PLAssigneeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94C7A5001CF4646100DECE8A /* PLAssigneeTableViewCell.swift */; };
 		94C7A5031CF4646100DECE8A /* PLAssigneeTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 94C7A5011CF4646100DECE8A /* PLAssigneeTableViewCell.xib */; };
 		94C7A5081CF479E500DECE8A /* PLTeamMemberDetailsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94C7A5061CF479E500DECE8A /* PLTeamMemberDetailsTableViewCell.swift */; };
@@ -408,6 +410,8 @@
 		948382D61CE3304000B51BA6 /* PLResetPasswordViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLResetPasswordViewController.swift; sourceTree = "<group>"; };
 		948382D81CE3310100B51BA6 /* bar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bar.png; sourceTree = "<group>"; };
 		948382DE1CE3368400B51BA6 /* PLUserLoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLUserLoginViewController.swift; sourceTree = "<group>"; };
+		94AF82981CFC6ED300A040B2 /* PLAssignmentTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLAssignmentTableViewCell.swift; sourceTree = "<group>"; };
+		94AF82991CFC6ED300A040B2 /* PLAssignmentTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PLAssignmentTableViewCell.xib; sourceTree = "<group>"; };
 		94C7A5001CF4646100DECE8A /* PLAssigneeTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLAssigneeTableViewCell.swift; sourceTree = "<group>"; };
 		94C7A5011CF4646100DECE8A /* PLAssigneeTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PLAssigneeTableViewCell.xib; sourceTree = "<group>"; };
 		94C7A5061CF479E500DECE8A /* PLTeamMemberDetailsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLTeamMemberDetailsTableViewCell.swift; sourceTree = "<group>"; };
@@ -687,6 +691,8 @@
 				94C7A5011CF4646100DECE8A /* PLAssigneeTableViewCell.xib */,
 				94C7A5061CF479E500DECE8A /* PLTeamMemberDetailsTableViewCell.swift */,
 				94C7A5071CF479E500DECE8A /* PLTeamMemberDetailsTableViewCell.xib */,
+				94AF82981CFC6ED300A040B2 /* PLAssignmentTableViewCell.swift */,
+				94AF82991CFC6ED300A040B2 /* PLAssignmentTableViewCell.xib */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -1060,6 +1066,7 @@
 				809FFFBA1CFC4CCA00F0D391 /* progress.png in Resources */,
 				809F96D01CBCC35000DD1FE9 /* Main.storyboard in Resources */,
 				80AB251A1CE74BE7008B20C3 /* logout.png in Resources */,
+				94AF829B1CFC6ED300A040B2 /* PLAssignmentTableViewCell.xib in Resources */,
 				80C4A0181CDCBB500073B6E2 /* JSQMessagesCollectionViewCellOutgoing.xib in Resources */,
 				94C7A5091CF479E500DECE8A /* PLTeamMemberDetailsTableViewCell.xib in Resources */,
 				80AB25201CE74CCA008B20C3 /* todayTask.png in Resources */,
@@ -1234,6 +1241,7 @@
 				80C49FFF1CDCBB500073B6E2 /* JSQMessagesTimestampFormatter.swift in Sources */,
 				806B1E3A1CD8AA080018B026 /* SDWebImageDownloaderOperation.m in Sources */,
 				80711A7E1CE323A700473856 /* DLHamburguerNavigationController.swift in Sources */,
+				94AF829A1CFC6ED300A040B2 /* PLAssignmentTableViewCell.swift in Sources */,
 				80C4A0151CDCBB500073B6E2 /* JSQMessagesCollectionViewCellIncoming.swift in Sources */,
 				80C4A00F1CDCBB500073B6E2 /* JSQMessagesCollectionViewDelegateFlowLayout.swift in Sources */,
 				800318131CCF7D180084514A /* WYPopoverController.m in Sources */,
