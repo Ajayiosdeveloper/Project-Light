@@ -736,29 +736,52 @@
                                 </constraints>
                             </view>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="18" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="19P-fp-elD">
-                                <rect key="frame" x="0.0" y="208" width="600" height="392"/>
+                                <rect key="frame" x="0.0" y="258" width="600" height="342"/>
                                 <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="392" id="9zm-ZS-JbA"/>
+                                    <constraint firstAttribute="height" constant="342" id="9zm-ZS-JbA"/>
                                 </constraints>
                                 <connections>
                                     <outlet property="dataSource" destination="Oui-ZP-5hI" id="0xI-4l-1Ny"/>
                                     <outlet property="delegate" destination="Oui-ZP-5hI" id="jdg-gi-oea"/>
                                 </connections>
                             </tableView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="% Done" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GMb-Ko-ljf">
+                                <rect key="frame" x="20" y="220" width="108" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="21" id="BqB-fX-UXY"/>
+                                    <constraint firstAttribute="width" constant="108" id="Tur-T7-h2N"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="100" translatesAutoresizingMaskIntoConstraints="NO" id="hDJ-Ce-dkO">
+                                <rect key="frame" x="134" y="215" width="448" height="31"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="Lix-nM-V1E"/>
+                                </constraints>
+                                <connections>
+                                    <action selector="didChangeAssignmentProgress:" destination="Oui-ZP-5hI" eventType="valueChanged" id="ICU-gH-9YZ"/>
+                                </connections>
+                            </slider>
                         </subviews>
                         <color key="backgroundColor" red="0.92156862745098034" green="0.92156862745098034" blue="0.94117647058823528" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="FB1-d0-F6c" firstAttribute="top" secondItem="19P-fp-elD" secondAttribute="bottom" id="5Cg-4o-YH3"/>
+                            <constraint firstItem="19P-fp-elD" firstAttribute="top" secondItem="hDJ-Ce-dkO" secondAttribute="bottom" constant="13" id="8lM-CN-uBX"/>
                             <constraint firstItem="19P-fp-elD" firstAttribute="trailing" secondItem="tmp-Zj-d9x" secondAttribute="trailing" id="FZK-KA-LF3"/>
-                            <constraint firstItem="19P-fp-elD" firstAttribute="top" secondItem="tmp-Zj-d9x" secondAttribute="bottom" constant="1" id="GwB-TW-kcV"/>
-                            <constraint firstItem="19P-fp-elD" firstAttribute="top" secondItem="tmp-Zj-d9x" secondAttribute="bottom" constant="1" id="H85-gg-DaN"/>
                             <constraint firstItem="tmp-Zj-d9x" firstAttribute="top" secondItem="1Ih-lL-agy" secondAttribute="bottom" constant="20" id="HJR-Wr-9bI"/>
+                            <constraint firstItem="GMb-Ko-ljf" firstAttribute="leading" secondItem="PCl-v6-xbW" secondAttribute="leadingMargin" id="RVh-W3-yhU"/>
+                            <constraint firstItem="GMb-Ko-ljf" firstAttribute="top" secondItem="tmp-Zj-d9x" secondAttribute="bottom" constant="13" id="RgG-es-Xye"/>
                             <constraint firstItem="19P-fp-elD" firstAttribute="leading" secondItem="tmp-Zj-d9x" secondAttribute="leading" id="Y58-wr-re0"/>
-                            <constraint firstItem="19P-fp-elD" firstAttribute="top" secondItem="tmp-Zj-d9x" secondAttribute="bottom" constant="1" id="YPZ-NO-7Ww"/>
+                            <constraint firstItem="19P-fp-elD" firstAttribute="top" secondItem="tmp-Zj-d9x" secondAttribute="bottom" constant="51" id="YPZ-NO-7Ww"/>
                             <constraint firstItem="tmp-Zj-d9x" firstAttribute="leading" secondItem="PCl-v6-xbW" secondAttribute="leadingMargin" constant="-20" id="c1a-Op-517"/>
+                            <constraint firstItem="hDJ-Ce-dkO" firstAttribute="trailing" secondItem="PCl-v6-xbW" secondAttribute="trailingMargin" id="lBh-7u-mc2"/>
+                            <constraint firstItem="hDJ-Ce-dkO" firstAttribute="leading" secondItem="GMb-Ko-ljf" secondAttribute="trailing" constant="8" id="sUJ-4l-G1c"/>
                             <constraint firstAttribute="trailingMargin" secondItem="tmp-Zj-d9x" secondAttribute="trailing" constant="-20" id="soS-d9-Co8"/>
                             <constraint firstItem="FB1-d0-F6c" firstAttribute="top" secondItem="19P-fp-elD" secondAttribute="bottom" id="xZC-EE-YWV"/>
+                            <constraint firstItem="hDJ-Ce-dkO" firstAttribute="top" secondItem="tmp-Zj-d9x" secondAttribute="bottom" constant="8" id="zbK-ql-UsQ"/>
                         </constraints>
                     </view>
                     <connections>
@@ -766,7 +789,9 @@
                         <outlet property="assignmentDescriptionTextView" destination="BSD-Bn-7f0" id="isb-12-jee"/>
                         <outlet property="assignmentNameTextFiled" destination="sZv-lU-1oL" id="7RF-Tm-1aX"/>
                         <outlet property="assignmentStartDateTextField" destination="FAG-Ww-Ldr" id="7W0-Nh-VgN"/>
+                        <outlet property="assignmentStatusSlider" destination="hDJ-Ce-dkO" id="F4Z-XJ-OVP"/>
                         <outlet property="assignmenttargetDateTextField" destination="N4f-be-Ra4" id="6Aq-EZ-oLU"/>
+                        <outlet property="completeStatusLabel" destination="GMb-Ko-ljf" id="KUb-we-2Yc"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pKG-s2-yoo" userLabel="First Responder" sceneMemberID="firstResponder"/>

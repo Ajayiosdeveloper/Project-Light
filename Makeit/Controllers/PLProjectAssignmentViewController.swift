@@ -11,6 +11,10 @@ import Quickblox
 
 class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,UITableViewDelegate,DataTransform {
 
+    @IBOutlet var completeStatusLabel: UILabel!
+    
+    @IBOutlet var assignmentStatusSlider: UISlider!
+    
     @IBOutlet var assignmentNameTextFiled: UITextField!
     @IBOutlet var assignmenttargetDateTextField: UITextField!
     @IBOutlet var assigneeListTableView: UITableView!
@@ -61,6 +65,15 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
                 assignmentStartDateTextField.text = assignmentViewModel.assignmentStartDate()
                 assignmenttargetDateTextField.text = assignmentViewModel.assignmentTargetDate()
                 assignmentDescriptionTextView.text = assignmentViewModel.assignmentDescription()
+             if PLSharedManager.manager.projectCreatedByUserId == PLSharedManager.manager.loggedInUserId{
+                completeStatusLabel.hidden = true
+                assignmentStatusSlider.hidden = true
+             }else{
+                
+                completeStatusLabel.hidden = false
+                assignmentStatusSlider.hidden = false
+              }
+            
                 self.navigationItem.rightBarButtonItem?.enabled = false
                 self.navigationItem.rightBarButtonItem?.tintColor = UIColor.clearColor()
               if refreshFlag{
@@ -334,7 +347,7 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
         }
        return headerView
         }else if section == 2{
-            if assignementViewModel.numberOfAssigneesCompletedAssignment() > 0 && assignementViewModel.isUserCreatorOfAssignment(){
+            if assignmentViewModel.numberOfAssigneesCompletedAssignment() > 0 && assignmentViewModel.isUserCreatorOfAssignment(){
                 headerView.backgroundColor = UIColor(colorLiteralRed: 89/255, green: 181/255, blue: 50/255, alpha: 1)
                 self.addButtonForTableViewFooterOnView(headerView, title: "Reopen", tag: 2)
             }
@@ -474,6 +487,12 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
         
     }
     
+    @IBAction func didChangeAssignmentProgress(sender: UISlider) {
+        
+      let completed =  Int(sender.value)
+       completeStatusLabel.text = "\(completed) % Done"
+        
+    }
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
         assignmentViewModel.selectedAssignment = nil

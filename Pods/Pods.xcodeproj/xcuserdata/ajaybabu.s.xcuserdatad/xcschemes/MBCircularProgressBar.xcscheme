@@ -14,10 +14,10 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = 'primary'
-               BlueprintIdentifier = '209FF58B97A08B04D3118464'
-               BlueprintName = 'QMServices'
+               BlueprintIdentifier = '4A22EDA625C69B727BCDEE45'
+               BlueprintName = 'MBCircularProgressBar'
                ReferencedContainer = 'container:Pods.xcodeproj'
-               BuildableName = 'libQMServices.a'>
+               BuildableName = 'libMBCircularProgressBar.a'>
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>

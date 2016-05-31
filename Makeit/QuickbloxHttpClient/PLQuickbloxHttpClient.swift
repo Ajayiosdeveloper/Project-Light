@@ -359,11 +359,18 @@ class PLQuickbloxHttpClient
     }
     //Fetching Assignments for Project
     
-    func fetchAssignmentsForProject(id:String,completion:(Bool,[QBCOCustomObject]?)->Void) {
+    func fetchAssignmentsForProject(id:String,isCreator:Bool,completion:(Bool,[QBCOCustomObject]?)->Void) {
         
         let extendedReq = NSMutableDictionary()
         
         extendedReq.setValue(id, forKey:"_parent_id")
+        
+        if !isCreator{
+       
+        let userId = QBSession.currentSession().currentUser?.ID
+        extendedReq.setObject(userId!, forKey:"assigneeUserId[or]")
+        
+        }
         
         QBRequest.objectsWithClassName("PLProjectAssignment", extendedRequest: extendedReq, successBlock: { (res, assignments, page) in
         

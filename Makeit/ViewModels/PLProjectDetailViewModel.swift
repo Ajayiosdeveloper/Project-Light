@@ -201,7 +201,15 @@ class PLProjectDetailViewModel: NSObject {
     
     func getAssignmentsFromRemote(id:String, completion : (Bool) -> Void)
     {
-        qbClient.fetchAssignmentsForProject(id){res,assignments in
+        var isUserProjectCreator = false
+        
+        if PLSharedManager.manager.projectCreatedByUserId == PLSharedManager.manager.loggedInUserId{
+            isUserProjectCreator = true
+        }
+        
+        
+        
+        qbClient.fetchAssignmentsForProject(id,isCreator:isUserProjectCreator){res,assignments in
             
             if let _ = assignments
             {
