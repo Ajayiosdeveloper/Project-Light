@@ -37,9 +37,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate,QBChatDelegate {
         NSNotificationCenter.defaultCenter().addObserver(self, selector:#selector(AppDelegate.handleNetworkChanges), name:kReachabilityChangedNotification, object:nil)
         reachability.startNotifier()
         
-            
-
-        
         return true
     }
 

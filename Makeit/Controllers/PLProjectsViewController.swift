@@ -92,7 +92,7 @@ class PLProjectsViewController: UITableViewController,UIImagePickerControllerDel
         let addProjectButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Add, target: self, action: #selector(PLProjectsViewController.addNewProjectToList))
          editProjectButton = UIBarButtonItem(title: "Edit", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(PLProjectsViewController.deleteProjectInList))
         self.navigationItem.rightBarButtonItems = [addProjectButton,editProjectButton]
-        
+       
     }
     
     func addNewProjectToList()

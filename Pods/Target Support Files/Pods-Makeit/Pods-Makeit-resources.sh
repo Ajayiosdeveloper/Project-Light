@@ -58,11 +58,13 @@ install_resource()
   esac
 }
 if [[ "$CONFIGURATION" == "Debug" ]]; then
+  install_resource "${BUILT_PRODUCTS_DIR}/MBCircularProgressBar.bundle"
   install_resource "${BUILT_PRODUCTS_DIR}/QMChatCacheModel.bundle"
   install_resource "${BUILT_PRODUCTS_DIR}/QMContactListCacheModel.bundle"
   install_resource "${BUILT_PRODUCTS_DIR}/QMUsersCacheModel.bundle"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
+  install_resource "${BUILT_PRODUCTS_DIR}/MBCircularProgressBar.bundle"
   install_resource "${BUILT_PRODUCTS_DIR}/QMChatCacheModel.bundle"
   install_resource "${BUILT_PRODUCTS_DIR}/QMContactListCacheModel.bundle"
   install_resource "${BUILT_PRODUCTS_DIR}/QMUsersCacheModel.bundle"

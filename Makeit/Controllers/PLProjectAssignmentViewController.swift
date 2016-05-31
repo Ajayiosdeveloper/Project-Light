@@ -156,7 +156,7 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
     }
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return 2
+        return 3
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -279,6 +279,10 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
     func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         
         headerView  = UIView(frame:CGRectMake(0,0,self.view.frame.size.width,20))
+        headerView.layer.cornerRadius = 15
+        headerView.clipsToBounds = true
+        headerView.backgroundColor = UIColor.clearColor()
+
         if section == 1
         {
             
@@ -289,8 +293,6 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
                     headerView.backgroundColor = UIColor(colorLiteralRed: 89/255, green: 181/255, blue: 50/255, alpha: 0.5)
                 }
               
-                headerView.layer.cornerRadius = 15
-                headerView.clipsToBounds = true
                 
                 let userId = QBSession.currentSession().currentUser?.ID
                 if userId! == PLSharedManager.manager.projectCreatedByUserId{
@@ -331,13 +333,23 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
             }
         }
        return headerView
-    }
+        }else if section == 2{
+            if assignementViewModel.numberOfAssigneesCompletedAssignment() > 0 && assignementViewModel.isUserCreatorOfAssignment(){
+                headerView.backgroundColor = UIColor(colorLiteralRed: 89/255, green: 181/255, blue: 50/255, alpha: 1)
+                self.addButtonForTableViewFooterOnView(headerView, title: "Reopen", tag: 2)
+            }
+           
+            return headerView
+        }
         return nil
   }
+    
+    
+    
     func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 40
     }
-    
+   
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
         if assignementViewModel.selectedAssignment == nil
@@ -376,18 +388,14 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
         if sender.tag == 1{
             assignementViewModel.updateAssigmentStatusOfLoggedInUser(1){res in
                 if res{
-                    
-                  self.headerView.backgroundColor =  UIColor(colorLiteralRed: 89/255, green: 181/255, blue: 50/255, alpha: 0.5)
                     self.assignmentStatus.setTitle("Completed", forState:.Normal)
                     self.assignmentStatus.enabled = false
                     self.loggedInUserStatus = "1"
-                    self.headerView.backgroundColor = UIColor(colorLiteralRed: 89/255, green: 181/255, blue: 50/255, alpha:0.5)
-
                     self.assigneeListTableView.reloadRowsAtIndexPaths([NSIndexPath(forRow:0, inSection:0)], withRowAnimation: UITableViewRowAnimation.Automatic)
                     }
             }
         }
-        else{
+        else if sender.tag == -1{
             
             assignementViewModel.updateAssigmentStatusOfLoggedInUser(-1){[weak self]res in
                 if res{
@@ -398,6 +406,9 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
                 }
             }
 
+        }else{
+            
+            print("Reopen code")
         }
     }
     

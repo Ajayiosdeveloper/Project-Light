@@ -240,6 +240,23 @@ class PLProjectAssignmentViewModel: NSObject {
         return false
     }
     
+    func numberOfAssigneesCompletedAssignment()->Int{
+        
+        var completedCount = 0
+        if let _ = selectedAssignment{
+        for member in selectedAssigneeList{
+            
+            let assignmentMember = member as! PLAssignmentMember
+            
+            if assignmentMember.assigneeStatus != 0{
+            
+               completedCount += 1
+            }
+        }
+      }
+        return completedCount
+    }
+    
     
     func contributorImageRowAtIndexPath(row:Int,completion:(UIImage?)->Void) {
         
