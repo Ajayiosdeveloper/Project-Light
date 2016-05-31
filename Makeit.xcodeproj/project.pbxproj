@@ -164,6 +164,8 @@
 		80C4A0211CDCBB500073B6E2 /* JSQMessagesTypingIndicatorFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80C49FEF1CDCBB500073B6E2 /* JSQMessagesTypingIndicatorFooterView.swift */; };
 		80C4A0221CDCBB500073B6E2 /* JSQMessagesTypingIndicatorFooterView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 80C49FF01CDCBB500073B6E2 /* JSQMessagesTypingIndicatorFooterView.xib */; };
 		80C61B9F1CDB64900022CAFA /* PLChatDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80C61B9E1CDB64900022CAFA /* PLChatDetailViewModel.swift */; };
+		80CED1231CFD9E0200809B37 /* KAProgressLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 80CED1201CFD9E0200809B37 /* KAProgressLabel.m */; };
+		80CED1241CFD9E0200809B37 /* TPPropertyAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = 80CED1221CFD9E0200809B37 /* TPPropertyAnimation.m */; };
 		80DE821D1CC0D87700D5017A /* PLUserSignupAndLoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80DE821C1CC0D87700D5017A /* PLUserSignupAndLoginViewModel.swift */; };
 		80ED65A41CE09F4600C61090 /* AFDropdownNotification.m in Sources */ = {isa = PBXBuildFile; fileRef = 80ED65A31CE09F4600C61090 /* AFDropdownNotification.m */; };
 		80ED65A61CE0B36900C61090 /* emptyMessages.png in Resources */ = {isa = PBXBuildFile; fileRef = 80ED65A51CE0B36900C61090 /* emptyMessages.png */; };
@@ -395,6 +397,10 @@
 		80C49FEF1CDCBB500073B6E2 /* JSQMessagesTypingIndicatorFooterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSQMessagesTypingIndicatorFooterView.swift; sourceTree = "<group>"; };
 		80C49FF01CDCBB500073B6E2 /* JSQMessagesTypingIndicatorFooterView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JSQMessagesTypingIndicatorFooterView.xib; sourceTree = "<group>"; };
 		80C61B9E1CDB64900022CAFA /* PLChatDetailViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLChatDetailViewModel.swift; sourceTree = "<group>"; };
+		80CED11F1CFD9E0200809B37 /* KAProgressLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KAProgressLabel.h; sourceTree = "<group>"; };
+		80CED1201CFD9E0200809B37 /* KAProgressLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KAProgressLabel.m; sourceTree = "<group>"; };
+		80CED1211CFD9E0200809B37 /* TPPropertyAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TPPropertyAnimation.h; sourceTree = "<group>"; };
+		80CED1221CFD9E0200809B37 /* TPPropertyAnimation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TPPropertyAnimation.m; sourceTree = "<group>"; };
 		80DE821C1CC0D87700D5017A /* PLUserSignupAndLoginViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLUserSignupAndLoginViewModel.swift; sourceTree = "<group>"; };
 		80ED65A21CE09F4600C61090 /* AFDropdownNotification.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFDropdownNotification.h; sourceTree = "<group>"; };
 		80ED65A31CE09F4600C61090 /* AFDropdownNotification.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFDropdownNotification.m; sourceTree = "<group>"; };
@@ -597,6 +603,7 @@
 		806D4ADC1CC20FCD0054A9AF /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				80CED11E1CFD9E0200809B37 /* KAProgressLabel */,
 				8074F7341CE4423D00CAADB9 /* PopupView */,
 				80711A791CE323A700473856 /* DLHamburguerMenu */,
 				80ED65A11CE09F4600C61090 /* AFDropdownNotification */,
@@ -900,6 +907,17 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
+		80CED11E1CFD9E0200809B37 /* KAProgressLabel */ = {
+			isa = PBXGroup;
+			children = (
+				80CED11F1CFD9E0200809B37 /* KAProgressLabel.h */,
+				80CED1201CFD9E0200809B37 /* KAProgressLabel.m */,
+				80CED1211CFD9E0200809B37 /* TPPropertyAnimation.h */,
+				80CED1221CFD9E0200809B37 /* TPPropertyAnimation.m */,
+			);
+			path = KAProgressLabel;
+			sourceTree = "<group>";
+		};
 		80DE821B1CC0D77D00D5017A /* UserSignup&Login  */ = {
 			isa = PBXGroup;
 			children = (
@@ -1161,6 +1179,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				80CED1241CFD9E0200809B37 /* TPPropertyAnimation.m in Sources */,
 				80485F081CD4B19700F49209 /* PLTeamCommunicationViewController.swift in Sources */,
 				80C61B9F1CDB64900022CAFA /* PLChatDetailViewModel.swift in Sources */,
 				80C4A00E1CDCBB500073B6E2 /* JSQMessagesCollectionViewDataSource.swift in Sources */,
@@ -1184,6 +1203,7 @@
 				80C4A0131CDCBB500073B6E2 /* JSQMessagesCollectionView.swift in Sources */,
 				80C4A00C1CDCBB500073B6E2 /* JSQMessagesAvatarImage.swift in Sources */,
 				8078A46B1CC88BD1008AC4DD /* PLProjectDetailTableViewController.swift in Sources */,
+				80CED1231CFD9E0200809B37 /* KAProgressLabel.m in Sources */,
 				80C4A0171CDCBB500073B6E2 /* JSQMessagesCollectionViewCellOutgoing.swift in Sources */,
 				805EFB5F1CD239200066B4CB /* PLTableViewCell.swift in Sources */,
 				80DE821D1CC0D87700D5017A /* PLUserSignupAndLoginViewModel.swift in Sources */,
@@ -1366,7 +1386,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -1407,7 +1427,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1430,7 +1450,7 @@
 					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = Makeit/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = (
@@ -1462,7 +1482,7 @@
 					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = Makeit/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = (

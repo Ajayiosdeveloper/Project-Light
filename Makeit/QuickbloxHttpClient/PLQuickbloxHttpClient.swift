@@ -1233,5 +1233,31 @@ class PLQuickbloxHttpClient
             print("got error")
         }
     }
+    
+    func updateAssignmentPercentage(record:String,value:Int){
+    
+        let assignment = QBCOCustomObject()
+        assignment.className = "PLProjectAssignmentMember"
+        assignment.ID = record
+        assignment.fields?.setObject(value, forKey: "percentageCompleted")
+       
+        QBRequest.updateObject(assignment, successBlock: { (_, _) in
+            
+            print("UPdated succesfully")
+            
+           
+            
+        }) { (error) in
+            
+          
+            print("got error")
+        }
 
+    
+    }
+    
+    func findSum(){
+        
+        
+    }
 }

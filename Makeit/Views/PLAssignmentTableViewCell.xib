@@ -16,46 +16,52 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Dux-Gl-337">
-                        <rect key="frame" x="13" y="4" width="255" height="26"/>
+                        <rect key="frame" x="13" y="4" width="236" height="26"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="26" id="U7W-Pj-zWc"/>
+                            <constraint firstAttribute="height" constant="26" id="H0X-m8-SB7"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="39c-Jv-Dkg">
-                        <rect key="frame" x="276" y="14" width="36" height="36"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstAttribute="height" constant="36" id="Sko-xG-MsJ"/>
-                            <constraint firstAttribute="width" constant="36" id="xPl-TM-sZ6"/>
-                        </constraints>
-                    </view>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="q88-Zy-Blh">
-                        <rect key="frame" x="13" y="34" width="255" height="21"/>
+                        <rect key="frame" x="13" y="34" width="236" height="21"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="21" id="aYf-1C-2vI"/>
+                        </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="360" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UGg-6S-PQ2" customClass="KAProgressLabel">
+                        <rect key="frame" x="261" y="4" width="55" height="52"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="55" id="8ch-bn-UiZ"/>
+                            <constraint firstAttribute="height" constant="52" id="yPC-OS-nKr"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="39c-Jv-Dkg" firstAttribute="trailing" secondItem="H2p-sc-9uM" secondAttribute="trailingMargin" id="8eX-de-yu3"/>
-                    <constraint firstItem="39c-Jv-Dkg" firstAttribute="leading" secondItem="Dux-Gl-337" secondAttribute="trailing" constant="8" id="EmK-qB-OyZ"/>
-                    <constraint firstItem="Dux-Gl-337" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="5" id="GFK-8J-dDF"/>
-                    <constraint firstItem="Dux-Gl-337" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="-4" id="MSG-B4-mYQ"/>
-                    <constraint firstItem="q88-Zy-Blh" firstAttribute="leading" secondItem="Dux-Gl-337" secondAttribute="leading" id="c9M-Gx-Xkg"/>
-                    <constraint firstItem="39c-Jv-Dkg" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="6" id="h7x-xQ-k20"/>
-                    <constraint firstItem="39c-Jv-Dkg" firstAttribute="leading" secondItem="q88-Zy-Blh" secondAttribute="trailing" constant="8" symbolic="YES" id="oBX-9k-PAf"/>
-                    <constraint firstAttribute="bottomMargin" secondItem="39c-Jv-Dkg" secondAttribute="bottom" constant="6" id="sZi-jw-YhL"/>
-                    <constraint firstAttribute="bottomMargin" secondItem="q88-Zy-Blh" secondAttribute="bottom" constant="1" id="tbx-CL-sfx"/>
-                    <constraint firstItem="q88-Zy-Blh" firstAttribute="top" secondItem="Dux-Gl-337" secondAttribute="bottom" constant="4" id="zpP-q8-4vu"/>
+                    <constraint firstItem="q88-Zy-Blh" firstAttribute="top" secondItem="Dux-Gl-337" secondAttribute="bottom" constant="4" id="1Rv-5m-FtM"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="UGg-6S-PQ2" secondAttribute="trailing" constant="-4" id="6jT-rs-Re0"/>
+                    <constraint firstItem="Dux-Gl-337" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="-4" id="DAg-do-0JP"/>
+                    <constraint firstItem="UGg-6S-PQ2" firstAttribute="leading" secondItem="q88-Zy-Blh" secondAttribute="trailing" constant="12" id="EeH-6o-lIV"/>
+                    <constraint firstItem="UGg-6S-PQ2" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="-4" id="Fpq-88-b7W"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="q88-Zy-Blh" secondAttribute="bottom" constant="1" id="SxW-Aw-mvl"/>
+                    <constraint firstItem="q88-Zy-Blh" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="5" id="Ubu-4b-sc1"/>
+                    <constraint firstItem="UGg-6S-PQ2" firstAttribute="bottom" secondItem="H2p-sc-9uM" secondAttribute="bottomMargin" id="j2i-cC-JkP"/>
+                    <constraint firstItem="Dux-Gl-337" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="5" id="nJp-fb-3C9"/>
+                    <constraint firstItem="q88-Zy-Blh" firstAttribute="top" secondItem="Dux-Gl-337" secondAttribute="bottom" constant="4" id="yJb-fn-jm6"/>
+                    <constraint firstItem="UGg-6S-PQ2" firstAttribute="leading" secondItem="Dux-Gl-337" secondAttribute="trailing" constant="12" id="zdQ-Ed-IDe"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>
-                <outlet property="assignmentStatusView" destination="39c-Jv-Dkg" id="jfj-5u-0ic"/>
                 <outlet property="assignmentTitle" destination="Dux-Gl-337" id="Tbb-vn-OLK"/>
                 <outlet property="asssignmentSubtitle" destination="q88-Zy-Blh" id="471-Ox-zif"/>
+                <outlet property="progressLabel" destination="UGg-6S-PQ2" id="n0Z-3L-H9J"/>
             </connections>
             <point key="canvasLocation" x="434" y="402.5"/>
         </tableViewCell>

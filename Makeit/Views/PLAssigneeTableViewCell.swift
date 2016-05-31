@@ -10,7 +10,8 @@ import UIKit
 
 class PLAssigneeTableViewCell: UITableViewCell {
 
-    @IBOutlet weak var statueField: UILabel!
+    @IBOutlet var statusField: KAProgressLabel!
+    
     @IBOutlet weak var mailIdField: UILabel!
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet var profilePicture: UIImageView!

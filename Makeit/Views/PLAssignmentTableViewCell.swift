@@ -12,7 +12,9 @@ class PLAssignmentTableViewCell: UITableViewCell {
 
     @IBOutlet var asssignmentSubtitle: UILabel!
     @IBOutlet var assignmentTitle: UILabel!
-    @IBOutlet var assignmentStatusView: UIView!
+   
+    @IBOutlet var progressLabel: KAProgressLabel!
+  
     
     override func awakeFromNib() {
        

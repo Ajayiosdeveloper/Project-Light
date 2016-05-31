@@ -30,6 +30,7 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
     var refreshFlag = true
     var headerColor = UIColor(colorLiteralRed: 89/255, green: 181/255, blue: 50/255, alpha: 1)
     var loggedInUserStatus = "0"
+    var isSliderValueChanged = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -58,6 +59,7 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
         }
         
         if let _ = assignmentViewModel.selectedAssignment{
+            
                self.title = assignmentViewModel.assignmentName()
                 assignmentNameTextFiled.text = assignmentViewModel.assignmentName()
                 assignmentStartDateTextField.text = assignmentViewModel.assignmentStartDate()
@@ -70,6 +72,7 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
                 
                 completeStatusLabel.hidden = false
                 assignmentStatusSlider.hidden = false
+                isSliderValueChanged = false
               }
             
                 self.navigationItem.rightBarButtonItem?.enabled = false
@@ -78,6 +81,8 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
               assignmentViewModel.responsibleForAssigniment(){[weak self]result,err in
                 
                 if result{
+                    self!.completeStatusLabel.text = "\(self!.assignmentViewModel.showPercentageCompletedInSlider()) % Done"
+                    self!.assignmentStatusSlider.value = Float(self!.assignmentViewModel.showPercentageCompletedInSlider())
                     self!.assigneeListTableView.reloadData()
                     self!.assigneeListTableView.allowsSelection = false
                   }
@@ -234,21 +239,25 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
         }
 
         if assignmentViewModel.selectedAssignment == nil{
-            cell.statueField.text = ""
+            cell.statusField.text = ""
         
         }else{
             
             if assignmentViewModel.selectedAssignmentStatus() == 0{
                 
                 let assigneeStatus = assignmentViewModel.assigneeStatus(indexPath.row)
+                cell.statusField.progressColor = UIColor.blueColor()
                 if assigneeStatus == "0"{
-                    cell.statueField.text = "In Progress"
-                    cell.statueField.textColor = enableButtonColor
+                    //cell.statusField.text = "In Progress"
+                    //cell.statusField.textColor = enableButtonColor
+                    cell.statusField.progress = 0.5
                 }else if assigneeStatus == "1"{
-                    cell.statueField.text = "Completed"
-                    cell.statueField.textColor = UIColor(colorLiteralRed: 89/255, green: 181/255, blue: 50/255, alpha: 1)
+                    //cell.statusField.text = "Completed"
+                    //cell.statusField.textColor = UIColor(colorLiteralRed: 89/255, green: 181/255, blue: 50/255, alpha: 1)
+                    cell.statusField.progress = 0.5
                 }else{
-                    cell.statueField.text = "Closed"
+                    //cell.statusField.text = "Closed"
+                    cell.statusField.progress = 0.5
                 }
                 
                 loggedInUserStatus = assignmentViewModel.assigneeStatus(0)
@@ -260,8 +269,10 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
             }
             else{
                 
-                cell.statueField.text = "Closed"
-                cell.statueField.textColor = UIColor.redColor()
+                cell.statusField.text = "Closed"
+                cell.statusField.textColor = UIColor.redColor()
+                cell.statusField.trackWidth = 0
+                cell.statusField.progressWidth = 0
             }
             
         }
@@ -497,11 +508,19 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
         
       let completed =  Int(sender.value)
        completeStatusLabel.text = "\(completed) % Done"
-        
+       isSliderValueChanged = true
     }
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
-        assignmentViewModel.selectedAssignment = nil
-        selectedIndexes = []
+        
+        if !assignmentStatusSlider.hidden{
+            if isSliderValueChanged{
+            assignmentViewModel.updateAssignmentPercentage(Int(assignmentStatusSlider.value))
+            }
+        }
+        
+        //assignmentViewModel.selectedAssignment = nil
+        //selectedIndexes = []
     }
+    
 }
