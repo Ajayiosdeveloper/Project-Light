@@ -237,21 +237,25 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
         }
 
         if assignmentViewModel.selectedAssignment == nil{
-            cell.statueField.text = ""
+            cell.statusField.text = ""
         
         }else{
             
             if assignmentViewModel.selectedAssignmentStatus() == 0{
                 
                 let assigneeStatus = assignmentViewModel.assigneeStatus(indexPath.row)
+                cell.statusField.progressColor = UIColor.blueColor()
                 if assigneeStatus == "0"{
-                    cell.statueField.text = "In Progress"
-                    cell.statueField.textColor = enableButtonColor
+                    //cell.statusField.text = "In Progress"
+                    //cell.statusField.textColor = enableButtonColor
+                    cell.statusField.progress = 0.5
                 }else if assigneeStatus == "1"{
-                    cell.statueField.text = "Completed"
-                    cell.statueField.textColor = UIColor(colorLiteralRed: 89/255, green: 181/255, blue: 50/255, alpha: 1)
+                    //cell.statusField.text = "Completed"
+                    //cell.statusField.textColor = UIColor(colorLiteralRed: 89/255, green: 181/255, blue: 50/255, alpha: 1)
+                    cell.statusField.progress = 0.5
                 }else{
-                    cell.statueField.text = "Closed"
+                    //cell.statusField.text = "Closed"
+                    cell.statusField.progress = 0.5
                 }
                 
                 loggedInUserStatus = assignmentViewModel.assigneeStatus(0)
@@ -263,8 +267,10 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
             }
             else{
                 
-                cell.statueField.text = "Closed"
-                cell.statueField.textColor = UIColor.redColor()
+                cell.statusField.text = "Closed"
+                cell.statusField.textColor = UIColor.redColor()
+                cell.statusField.trackWidth = 0
+                cell.statusField.progressWidth = 0
             }
             
         }

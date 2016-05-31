@@ -18,6 +18,6 @@
 #import "JSQSystemSoundPlayer.h"
 #import "AFDropdownNotification.h"
 #import "Popup.h"
-#import "MBCircularProgressBarView.h"
+#import "KAProgressLabel.h"
 
 
