@@ -599,11 +599,11 @@ class PLQuickbloxHttpClient
     
     //Creating a Chat Group for a Project
     
-    func createChatGroupWitTeamMembers(name :String,  membersIds:[UInt],completion:(Bool,PLChatGroup?,ServerErrorHandling?)->Void)
+    func createChatGroupWitTeamMembers(name :String,  projectId:String,membersIds:[UInt],completion:(Bool,PLChatGroup?,ServerErrorHandling?)->Void)
     {
         
         let chatDialog = QBChatDialog(dialogID: nil, type: QBChatDialogType.Group)
-        chatDialog.name = "\(name) \(PLSharedManager.manager.projectId)"
+        chatDialog.name = "\(name) \(projectId)"
         chatDialog.occupantIDs = membersIds
         QBRequest.createDialog(chatDialog, successBlock: { (response: QBResponse?, createdDialog : QBChatDialog?) -> Void in
             var chatGroup = PLChatGroup()
