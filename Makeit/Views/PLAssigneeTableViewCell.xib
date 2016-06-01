@@ -8,11 +8,11 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell" rowHeight="55" id="KGk-i7-Jjw" customClass="PLAssigneeTableViewCell" customModule="Makeit" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="320" height="55"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell" rowHeight="70" id="KGk-i7-Jjw" customClass="PLAssigneeTableViewCell" customModule="Makeit" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="70"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="320" height="54"/>
+                <rect key="frame" x="0.0" y="0.0" width="320" height="69"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="haa-f7-RgK">
@@ -33,10 +33,10 @@
                         </userDefinedRuntimeAttributes>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="50%" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PDL-EI-6kI" customClass="KAProgressLabel">
-                        <rect key="frame" x="206" y="8" width="76" height="38"/>
+                        <rect key="frame" x="206" y="4" width="76" height="57"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="76" id="CQw-tw-7av"/>
-                            <constraint firstAttribute="height" constant="38" id="QTn-Z8-7Bh"/>
+                            <constraint firstAttribute="height" constant="57" id="QTn-Z8-7Bh"/>
                         </constraints>
                         <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="13"/>
                         <color key="textColor" red="0.31384235780000003" green="0.81444310900000005" blue="0.58439629270000004" alpha="1" colorSpace="calibratedRGB"/>
@@ -67,8 +67,8 @@
                     <constraint firstItem="PDL-EI-6kI" firstAttribute="leading" secondItem="haa-f7-RgK" secondAttribute="trailing" constant="2" id="lk9-to-VNU"/>
                     <constraint firstItem="haa-f7-RgK" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" id="qeO-wJ-V5Z"/>
                     <constraint firstItem="pWm-0N-reJ" firstAttribute="centerY" secondItem="IBQ-6K-M3A" secondAttribute="centerY" constant="-1" id="rbE-JP-RC5"/>
-                    <constraint firstItem="haa-f7-RgK" firstAttribute="top" secondItem="PDL-EI-6kI" secondAttribute="top" id="sKT-SN-KUd"/>
-                    <constraint firstItem="pWm-0N-reJ" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="uuW-2O-n5g"/>
+                    <constraint firstItem="haa-f7-RgK" firstAttribute="top" secondItem="PDL-EI-6kI" secondAttribute="top" constant="4" id="sKT-SN-KUd"/>
+                    <constraint firstItem="pWm-0N-reJ" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" constant="-7.5" id="uuW-2O-n5g"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>
@@ -78,7 +78,7 @@
                 <outlet property="profilePicture" destination="pWm-0N-reJ" id="IPZ-U9-Zv3"/>
                 <outlet property="statusField" destination="PDL-EI-6kI" id="H1z-Sp-Gba"/>
             </connections>
-            <point key="canvasLocation" x="490" y="380.5"/>
+            <point key="canvasLocation" x="490" y="388"/>
         </tableViewCell>
     </objects>
 </document>

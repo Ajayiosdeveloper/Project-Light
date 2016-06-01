@@ -243,9 +243,12 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
             
             if assignmentViewModel.selectedAssignmentStatus() == 0{
                 
-                let assigneeStatus = assignmentViewModel.assigneeStatus(indexPath.row)
+                //let assigneeStatus = assignmentViewModel.assigneeStatus(indexPath.row)
                 cell.statusField.progressColor = UIColor.blueColor()
-                if assigneeStatus == "0"{
+                cell.statusField.progress = assignmentViewModel.percentageCompletedByAssignee(indexPath.row)
+                cell.statusField.text = "\(assignmentViewModel.percentageCompletedByAssignee(indexPath.row) * 100)%"
+                
+                /*if assigneeStatus == "0"{
                     //cell.statusField.text = "In Progress"
                     //cell.statusField.textColor = enableButtonColor
                     cell.statusField.progress = 0.5
@@ -256,7 +259,7 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
                 }else{
                     //cell.statusField.text = "Closed"
                     cell.statusField.progress = 0.5
-                }
+                }*/
                 
                 loggedInUserStatus = assignmentViewModel.assigneeStatus(0)
                 if loggedInUserStatus == "1"{
@@ -282,7 +285,8 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
 
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        return 55.0
+        
+        return 70.0
     }
     
     func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {

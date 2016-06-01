@@ -133,6 +133,11 @@ class PLProjectAssignmentViewModel: NSObject {
         self.selectedAssigneeList.append(self.assigneeList[row])
     }
     
+    func percentageCompletedByAssignee(row:Int)->CGFloat{
+        let member = selectedAssigneeList[row] as! PLAssignmentMember
+        return (CGFloat(member.percentageCompleted) / 100)
+    }
+    
     func removeAssignee(row:Int)  {
         
        let object = self.assigneeList[row]
