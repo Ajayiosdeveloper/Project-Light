@@ -47,7 +47,7 @@ class PLAddProjectViewModel: NSObject {
         else{
             
             quickBloxClient.createNewProjectWith(name, description: description){[weak self]result,projectId,error in
-                
+                var memberIds = [UInt]()
                 var qbObjects:[QBCOCustomObject] = [QBCOCustomObject]()
                 
                 for each in self!.selectedContributors{
@@ -61,7 +61,7 @@ class PLAddProjectViewModel: NSObject {
                    qbCustomObject.fields?.setObject(each.memberEmail, forKey:"memberEmail")
                    qbCustomObject.fields?.setObject(each.memberUserId, forKey: "member_User_Id")
                    qbCustomObject.fields?.setObject(each.birthdayInterval, forKey:"birthday" )
-
+                   memberIds.append(each.memberUserId)
                    qbCustomObject.fields?.setObject(projectId, forKey:"_parent_id")
                    let creatorDetails:[AnyObject] = [(QBSession.currentSession().currentUser?.fullName)!, (QBSession.currentSession().currentUser?.ID)!,(QBSession.currentSession().currentUser?.customData)!,(QBSession.currentSession().currentUser?.email)!]
                    qbCustomObject.fields?.setObject(creatorDetails, forKey:"creatorDetails")
@@ -74,8 +74,16 @@ class PLAddProjectViewModel: NSObject {
                     addedProject.projectId = projectId
                     addedProject.createdAt = NSDate()
                     addedProject.createdBy = (QBSession.currentSession().currentUser?.ID)!
-                    completion(addedProject)
-                    print("Added Project \(addedProject.projectId)")
+                    
+                    self!.quickBloxClient.createChatGroupWitTeamMembers(name,projectId:projectId,membersIds: memberIds, completion: { (res, _, _) in
+                        if res{
+                            completion(addedProject)
+
+                        }
+                        
+                    })
+                    
+             print("Added Project \(addedProject.projectId)")
 
                }
             }
