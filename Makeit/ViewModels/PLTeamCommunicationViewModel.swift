@@ -54,32 +54,32 @@ class PLTeamCommunicationViewModel: NSObject {
         print(self.selectedTeamMembers)
     }
     
-    func contributorImage(row:Int,completion:(UIImage?)->Void) {
+    func contributorImage(row:Int,completion:(UIImage?, ServerErrorHandling?)->Void) {
         
         let member = teamMembersList[row]
         let avatar = member.profilePicture
         if avatar == "Avatar"
         {
-            completion(nil)
+            completion(nil, nil)
         }
         else{
             
-            qbClient.downloadTeamMemberAvatar(avatar){result in
+            qbClient.downloadTeamMemberAvatar(avatar){result,err in
                 
                 if result != nil{
                     
-                    completion(result)
+                    completion(result,nil)
                 }
                 else{
                     
-                    completion(nil)
+                    completion(nil, err)
                 }
             }
         }
     }
     
    
-    func createProjectGroup(name:String,completion:(Bool,PLChatGroup?)->Void){
+    func createProjectGroup(name:String,completion:(Bool,PLChatGroup?,ServerErrorHandling?)->Void){
         
         var membersIds = [UInt]()
         
@@ -91,16 +91,16 @@ class PLTeamCommunicationViewModel: NSObject {
         }
         
         
-        qbClient.createChatGroupWitTeamMembers(name,membersIds: membersIds, completion: { result,chatGroup in
+        qbClient.createChatGroupWitTeamMembers(name,membersIds: membersIds, completion: { result,chatGroup,err in
             
             if result{
                 
-                completion(true,chatGroup)
+                completion(true,chatGroup,nil)
                 
             }
             else{
                 
-                completion(false,nil)
+                completion(false,nil,err)
             }
             
             

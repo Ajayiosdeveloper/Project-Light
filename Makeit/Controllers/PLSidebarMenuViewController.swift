@@ -46,7 +46,7 @@ class PLSidebarMenuViewController: UIViewController,UIImagePickerControllerDeleg
 
         userProfilePic.layer.cornerRadius = 35.0
         userProfilePic.layer.masksToBounds = true
-        projectViewModel.fetchUserProfilePicture(){[weak self] avatar in
+        projectViewModel.fetchUserProfilePicture(){[weak self] avatar,error in
          
          if avatar != nil{
          self!.userProfilePic.image = avatar!
@@ -128,20 +128,20 @@ class PLSidebarMenuViewController: UIViewController,UIImagePickerControllerDeleg
             switch indexPath.row {
             case 0:
             
-                projectViewModel.getTodayTasksCount({ (countString) in
+                projectViewModel.getTodayTasksCount({ (countString,_) in
                     cell.countLabel.text = countString
                 })
                 
             case 1:
                 
-                projectViewModel.getUpcomingTasksCount({ (countString) in
+                projectViewModel.getUpcomingTasksCount({ (countString,_) in
                     
                     cell.countLabel.text = countString
                 })
                 
             case 2:
                 
-                projectViewModel.getPendingTasksCount({ (countString) in
+                projectViewModel.getPendingTasksCount({ (countString,_) in
                     
                     cell.countLabel.text = countString
                 })
@@ -158,13 +158,13 @@ class PLSidebarMenuViewController: UIViewController,UIImagePickerControllerDeleg
             switch indexPath.row
             {
             case 0:
-                projectViewModel.getBirthdaysCount(){ countString in
+                projectViewModel.getBirthdaysCount(){ countString,_ in
                     
                     cell.countLabel.text = countString
                 }
             case 1:
         
-                projectViewModel.getUpcoimgBirthdaysCount(){ countString in
+                projectViewModel.getUpcoimgBirthdaysCount(){ countString,_ in
                     cell.countLabel.text = countString
                 }
                  
@@ -181,20 +181,20 @@ class PLSidebarMenuViewController: UIViewController,UIImagePickerControllerDeleg
             {
             case 0:
             
-            projectViewModel.getTodayAssignmentsCount({ (countString) in
+            projectViewModel.getTodayAssignmentsCount({ (countString,_) in
             cell.countLabel.text = countString
             })
             
             case 1:
             
-            projectViewModel.getUpcomingAssignmentsCount({ (countString) in
+            projectViewModel.getUpcomingAssignmentsCount({ (countString,_) in
             
             cell.countLabel.text = countString
             })
             
             case 2:
             
-            projectViewModel.getPendingAssignmentsCount({ (countString) in
+            projectViewModel.getPendingAssignmentsCount({ (countString,_) in
             
             cell.countLabel.text = countString
             })
@@ -456,12 +456,16 @@ class PLSidebarMenuViewController: UIViewController,UIImagePickerControllerDeleg
         userProfilePic.image = img
         var capturedImage = resizeImage(img, width: 4.0, height: 4.0)
         SVProgressHUD.showWithStatus("Uploading")
-        projectViewModel.updateUserProfilePicture(capturedImage){[weak self] result in
-         if result{SVProgressHUD.dismiss();
+        projectViewModel.updateUserProfilePicture(capturedImage){[weak self] result,error in
+         if result{SVProgressHUD.dismiss()
          capturedImage = self!.resizeImage(capturedImage, width: 4.0, height: 4.0)
         
          }
-         else{print("Error!");SVProgressHUD.dismiss()}
+         else
+         {
+            SVProgressHUD.dismiss()
+            PLSharedManager.showAlertIn(self!, error: error!, title: "Failed to Pick the image", message: "Error happened while picking the image")
+          }
          }
 
         dismissViewControllerAnimated(true, completion: nil)

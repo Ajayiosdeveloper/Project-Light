@@ -67,9 +67,13 @@ class PLUserLoginViewController: UIViewController,UITextFieldDelegate {
      //MARK: Login & Signup Screen Actions
     @IBAction func loginUser(sender: AnyObject) {
         userAccountViewModel.addObserver(self, forKeyPath:"loginResultNotifier", options: NSKeyValueObservingOptions.New, context: nil)
-        userAccountViewModel.validateUserLoginCredentials(loginUserNameTextField.text!,password: loginUserPasswordTextField.text!)
+        userAccountViewModel.validateUserLoginCredentials(loginUserNameTextField.text!, password: loginUserPasswordTextField.text!) { (err) in
+            if err != nil
+            {
+                PLSharedManager.showAlertIn(self, error: err!, title: "Login Failed", message: "Please provide correct details")
+            }
+        }
     }
-    
     
     func showAlertWithMessage(title:String,message:String)
     {

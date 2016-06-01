@@ -22,31 +22,31 @@ class PLChatDetailViewModel: NSObject {
         selectedChatGroup = chatGroup
     }
     
-    func fetchAllGroupMessages(completion:(Bool)->Void){
+    func fetchAllGroupMessages(completion:(Bool, ServerErrorHandling?)->Void){
     
-        qbClient.getMessagesFromChatGroup(selectedChatGroup.chatGroupId){[weak self](res,messages) in
+        qbClient.getMessagesFromChatGroup(selectedChatGroup.chatGroupId){[weak self](res,messages,error) in
             
             if res && messages != nil{
                 
                 self!.groupChatMessages = messages!
-                completion(true)
+                completion(true, nil)
             }
             else{
                 self!.groupChatMessages = [JSQMessage]()
-                completion(false)
+                completion(false, error)
             }
-            
+
         }
     }
     
     
-    func sendMessage(group:QBChatDialog,text:String,attachment:NSData?,completion:(Bool)->Void){
+    func sendMessage(group:QBChatDialog,text:String,attachment:NSData?,completion:(Bool, ServerErrorHandling?)->Void){
         
         if attachment == nil{
             
             qbClient.sendMessageWithoutAttachment(text, group: group){res in
                 
-                completion(res)
+                completion(res, nil)
             }
         }
         else{

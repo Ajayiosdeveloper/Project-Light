@@ -68,7 +68,7 @@ class PLChatDetailViewController: JSQMessagesViewController, UIActionSheetDelega
     
     override func didPressSendButton(button: UIButton, withMessageText text: String, senderId: String, senderDisplayName: String, date: NSDate) {
         
-         chatDetailViewModel.sendMessage(chatGroup, text: text, attachment: attachment) {[weak self] (res) in
+         chatDetailViewModel.sendMessage(chatGroup, text: text, attachment: attachment) {[weak self] (res,err) in
                 
                 if res{
                     
@@ -87,7 +87,7 @@ class PLChatDetailViewController: JSQMessagesViewController, UIActionSheetDelega
     
     func sendMessageWithImageAttachment(type:AttachmentType){
         
-        chatDetailViewModel.sendMessage(chatGroup, text: "Forever and Evermore!", attachment: attachment) {[weak self] (res) in
+        chatDetailViewModel.sendMessage(chatGroup, text: "Forever and Evermore!", attachment: attachment) {[weak self] (res,err) in
             
             if res{
                
@@ -101,6 +101,10 @@ class PLChatDetailViewController: JSQMessagesViewController, UIActionSheetDelega
                 }
                 self!.finishSendingMessage()
                 self!.attachment = nil
+            }
+            else
+            {
+                PLSharedManager.showAlertIn(self!, error: err!, title: "Error occured while attaching the image", message: err.debugDescription)
             }
           }
         }

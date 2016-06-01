@@ -23,12 +23,16 @@ class PLProjectTeamChatViewController: UIViewController,UITableViewDelegate,UITa
         SVProgressHUD.showWithStatus("loading")
         self.chatGroupsListTableView.registerNib(UINib(nibName:"PLTableViewCell", bundle:NSBundle.mainBundle()), forCellReuseIdentifier:"Cell")
         addNewChatBarButton()
-        projectTeamChatViewModel.fetchChatGroups {[weak self] (res) in
+        projectTeamChatViewModel.fetchChatGroups {[weak self] (res,err) in
             
             if res{
                 SVProgressHUD.dismiss()
                 self!.chatGroupsListTableView.reloadData()
               }
+            else
+            {
+                PLSharedManager.showAlertIn(self!, error: err!, title: "Error occured while fetching chat groups", message: err.debugDescription)
+            }
         }
         
     }

@@ -97,15 +97,19 @@ class PLTeamMemberDetailViewModel: NSObject {
     }
 
     
-    func getAssignmentsOfUserForProject(completion:(Bool)->Void) {
+    func getAssignmentsOfUserForProject(completion:(Bool, ServerErrorHandling?)->Void) {
         
-           quickBloxClient.fetchUserAssignmentsForProject(userId,projectId: projectId){ assignments in
+           quickBloxClient.fetchUserAssignmentsForProject(userId,projectId: projectId){ assignments,err in
             if let _ = assignments{
                 print(assignments)
                 self.assignments = assignments!
-                completion(true)
+                completion(true, nil)
             }
-            else{self.assignments = nil; completion(false)}
+            else
+            {
+                self.assignments = nil
+                completion(false, err)
+            }
         }
     }
 

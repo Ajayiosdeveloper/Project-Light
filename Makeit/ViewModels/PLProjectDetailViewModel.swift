@@ -88,25 +88,25 @@ class PLProjectDetailViewModel: NSObject {
         
     }
     
-    func contributorImage(row:Int,completion:(UIImage?)->Void) {
+    func contributorImage(row:Int,completion:(UIImage?, ServerErrorHandling?)->Void) {
         
         let member = contributors[row]
         let avatar = member.profilePicture
         if avatar == "Avatar"
         {
-            completion(nil)
+            completion(nil, nil)
         }
         else{
             
-            qbClient.downloadTeamMemberAvatar(avatar){result in
+            qbClient.downloadTeamMemberAvatar(avatar){result,error in
                 
                 if result != nil{
                     
-                    completion(result)
+                    completion(result, nil)
                 }
                 else{
                     
-                    completion(nil)
+                    completion(nil, error)
                 }
             }
         }
@@ -148,11 +148,11 @@ class PLProjectDetailViewModel: NSObject {
         return contributors
     }
     
-    func getCommitmentsFromServer(id:String,completion:(Bool)->Void)
+    func getCommitmentsFromServer(id:String,completion:(Bool, ServerErrorHandling?)->Void)
     {
         qbClient = PLQuickbloxHttpClient()
         
-        qbClient.fetchCommitmentsForProject(id){res,commitments in
+        qbClient.fetchCommitmentsForProject(id){res,commitments,error in
             
             if let _ = commitments{
                 
@@ -177,8 +177,8 @@ class PLProjectDetailViewModel: NSObject {
                 self.commitments.append(commitment)
                 }
                 
-                completion(true)
-            }else{completion(false)}
+                completion(true, nil)
+            }else{completion(false, error)}
         }
     }
     
@@ -199,7 +199,7 @@ class PLProjectDetailViewModel: NSObject {
         return dateFormatter.stringFromDate(time!)
     }
     
-    func getAssignmentsFromRemote(id:String, completion : (Bool) -> Void)
+    func getAssignmentsFromRemote(id:String, completion : (Bool, ServerErrorHandling?) -> Void)
     {
         var isUserProjectCreator = false
         
@@ -207,9 +207,7 @@ class PLProjectDetailViewModel: NSObject {
             isUserProjectCreator = true
         }
         
-        
-        
-        qbClient.fetchAssignmentsForProject(id,isCreator:isUserProjectCreator){res,assignments in
+        qbClient.fetchAssignmentsForProject(id,isCreator:isUserProjectCreator){res,assignments,error in
             
             if let _ = assignments
             {
@@ -237,9 +235,9 @@ class PLProjectDetailViewModel: NSObject {
                 
                 self.assignments.append(assignment)
               }
-                completion(true)
+                completion(true, nil)
 
-            }else {completion(false)}
+            }else {completion(false, error)}
          }
     }
     

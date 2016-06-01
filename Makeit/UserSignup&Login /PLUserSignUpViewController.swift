@@ -137,13 +137,14 @@ class PLUserSignUpViewController: UIViewController,UITextFieldDelegate
         {
              //self.authenticateWithDigitsBeforeAccountCreation()
          
-            self.userAccountViewModel.startProcessingUserSignup(self.signupUserNameTextField.text!,password: self.signupUserPasswordTextField.text!,email: self.emailIdField.text!){[weak self]res in
+            self.userAccountViewModel.startProcessingUserSignup(self.signupUserNameTextField.text!,password: self.signupUserPasswordTextField.text!,email: self.emailIdField.text!){[weak self]res,error in
                 
-                if res{
-                    
-                    self!.presentProjectsViewController()
+                if !res{
+                    PLSharedManager.showAlertIn(self!, error: error!, title: "Signup failed", message: "")
+                   
                 }else{
-                    self!.showAlertWithMessage("Signup failed!", message:"Please try again!")
+                     self!.presentProjectsViewController()
+                   // self!.showAlertWithMessage("Signup failed!", message:"Please try again!")
                 }
                 
             }

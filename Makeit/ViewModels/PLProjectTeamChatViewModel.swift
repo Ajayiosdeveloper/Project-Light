@@ -59,17 +59,19 @@ class PLProjectTeamChatViewModel: NSObject {
         return projectChatGroupsList[row]
     }
     
-    func fetchChatGroups(completion:(Bool)->Void){
+    func fetchChatGroups(completion:(Bool, ServerErrorHandling?)->Void){
         
-        qbClient.fetchChatGroupsForProject {[weak self] (result, chatGroups) in
+        qbClient.fetchChatGroupsForProject {[weak self] (result, chatGroups,err) in
             
             if result{
                 
                 self!.projectChatGroupsList.appendContentsOf(chatGroups)
                 
-                completion(true)
+                completion(true, nil)
             }
-            
+            else{
+                completion(false, err)
+            }
         }
     }
     

@@ -16,47 +16,59 @@ class PLSidebarViewModel: NSObject {
     var assignments = [PLAssignment]()
     var teamMembersForBitrhday = [PLTeamMember]()
     
-    func getTodayTasks(completion:(Bool)-> Void)
+    func getTodayTasks(completion:(Bool,ServerErrorHandling?)-> Void)
     {
        let type = "startDate"
-       qbClient.tasksWithType(type) { [weak self] (tasks) in
+       qbClient.tasksWithType(type) { [weak self] (tasks,err) in
         if let _ = tasks
         {
             self!.commitments.removeAll(keepCapacity: true)
             
             self!.getCommitmentArray(tasks!, completion: { (todayTasks) in
                self!.commitments = todayTasks
-                completion(true)
+                completion(true, nil)
             })
+        }
+        else
+        {
+            completion(false, err)
         }
         }
     }
     
-    func getUpcomingTasks(completion:(Bool)-> Void)
+    func getUpcomingTasks(completion:(Bool, ServerErrorHandling?)-> Void)
     {
         let type = "startDate[gt]"
-        qbClient.tasksWithType(type) {[weak self] (tasks) in
+        qbClient.tasksWithType(type) {[weak self] (tasks,err) in
             if let _ = tasks
             {
              self!.commitments.removeAll(keepCapacity: true)
                 self!.getCommitmentArray(tasks!, completion: { (upComingTasks) in
                     self!.commitments = upComingTasks
-                    completion(true)
+                    completion(true,nil)
                 })
+            }
+            else
+            {
+                completion(false, err)
             }
         }
     }
-    func getPendingTasks(completion:(Bool)-> Void)
+    func getPendingTasks(completion:(Bool, ServerErrorHandling?)-> Void)
     {
         let type = "targetDate[lt]"
-        qbClient.tasksWithType(type) {[weak self] (tasks) in
+        qbClient.tasksWithType(type) {[weak self] (tasks,err) in
             if let _ = tasks
             {
                 self!.commitments.removeAll(keepCapacity: true)
                 self!.getCommitmentArray(tasks!, completion: { (pendingTasks) in
                     self!.commitments = pendingTasks
-                    completion(true)
+                    completion(true, nil)
                 })
+            }
+            else
+            {
+                completion(false, err)
             }
         }
     }
@@ -68,10 +80,10 @@ class PLSidebarViewModel: NSObject {
         return birthday
     }
     
-    func getTeamMemberBirthdayListForToday(range : Int,completion:(Bool)-> Void){
+    func getTeamMemberBirthdayListForToday(range : Int,completion:(Bool,ServerErrorHandling?)-> Void){
         
         self.teamMembersForBitrhday.removeAll(keepCapacity: true)
-        qbClient.getBirthdayListOfTeamMembers(range){ members in
+        qbClient.getBirthdayListOfTeamMembers(range){ members,err in
             
             var birthdaysOfMembers = [PLTeamMember]()
             
@@ -91,7 +103,11 @@ class PLSidebarViewModel: NSObject {
                 
                 self.teamMembersForBitrhday = birthdaysOfMembers
                 
-                completion(true)
+                completion(true, nil)
+            }
+            else
+            {
+                completion(false, err)
             }
         }
     }
@@ -265,25 +281,25 @@ class PLSidebarViewModel: NSObject {
         return member.memberEmail
     }    
     
-    func contributorImage(row:Int,completion:(UIImage?)->Void) {
+    func contributorImage(row:Int,completion:(UIImage?, ServerErrorHandling?)->Void) {
         
         let member = teamMembersForBitrhday[row]
         let avatar = member.profilePicture
         if avatar == "Avatar"
         {
-            completion(nil)
+            completion(nil,nil)
         }
         else{
             
-            qbClient.downloadTeamMemberAvatar(avatar){result in
+            qbClient.downloadTeamMemberAvatar(avatar){result,err in
                 
                 if result != nil{
                     
-                    completion(result)
+                    completion(result, nil)
                 }
                 else{
                     
-                    completion(nil)
+                    completion(nil, err)
                 }
             }
         }
@@ -325,47 +341,61 @@ class PLSidebarViewModel: NSObject {
         return assignment.projectName
     }
     
-    func getTodayAssignments(completion:(Bool)-> Void)
+    func getTodayAssignments(completion:(Bool, ServerErrorHandling?)-> Void)
     {
         let type = "startDate"
-        qbClient.assignmentsWithType(type) { [weak self] (tasks) in
+        qbClient.assignmentsWithType(type) { [weak self] (tasks,err) in
             if let _ = tasks
             {
                 self!.assignments.removeAll(keepCapacity: true)
                 
                 self!.getAssignmentArray(tasks!, completion: { (todayTasks) in
                     self!.assignments = todayTasks
-                    completion(true)
+                    completion(true, nil)
                 })
            }
+            else{
+                
+                completion(false, err)
+            }
+            
         }
     }
     
-    func getUpcomingAssignments(completion:(Bool)-> Void)
+    func getUpcomingAssignments(completion:(Bool, ServerErrorHandling?)-> Void)
     {
         let type = "startDate[gt]"
-        qbClient.assignmentsWithType(type) {[weak self] (tasks) in
+        qbClient.assignmentsWithType(type) {[weak self] (tasks, err) in
             if let _ = tasks
             {
                 self!.assignments.removeAll(keepCapacity: true)
                 self!.getAssignmentArray(tasks!, completion: { (upComingTasks) in
                     self!.assignments = upComingTasks
-                    completion(true)
+                    completion(true, nil)
                 })
+            }
+            else{
+                
+                completion(false, err)
             }
         }
     }
-    func getPendingAssignments(completion:(Bool)-> Void)
+    
+    func getPendingAssignments(completion:(Bool,ServerErrorHandling?)-> Void)
     {
         let type = "targetDate[lt]"
-        qbClient.assignmentsWithType(type) {[weak self] (tasks) in
+        qbClient.assignmentsWithType(type) {[weak self] (tasks,err) in
             if let _ = tasks
             {
                 self!.assignments.removeAll(keepCapacity: true)
                 self!.getAssignmentArray(tasks!, completion: { (pendingTasks) in
                     self!.assignments = pendingTasks
-                    completion(true)
+                    completion(true, nil)
                 })
+            }
+            else{
+                
+                completion(false, err)
             }
         }
     }

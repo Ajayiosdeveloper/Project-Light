@@ -186,7 +186,7 @@ class PLTaskViewController: UIViewController,UITableViewDelegate,UITableViewData
             {
                 cell.birthdayDate.text = sidebarViewModel.teamMembersBirthday(indexPath.row)
             }
-            sidebarViewModel.contributorImage(indexPath.row, completion: { (avatar) in
+            sidebarViewModel.contributorImage(indexPath.row, completion: { (avatar,err) in
                 
                 if let _ = avatar{
                     

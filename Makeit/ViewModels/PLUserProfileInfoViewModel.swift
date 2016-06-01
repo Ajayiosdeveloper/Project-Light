@@ -18,7 +18,7 @@ class PLUserProfileInfoViewModel: NSObject {
         super.init()
     }
     
-    func createUSerProfileWith(dateOfBirth:NSDate, companyName:String?, technology:String?, experience:String?, designation: String?, emailId: String?, completion:(Bool)->Void)
+    func createUSerProfileWith(dateOfBirth:NSDate, companyName:String?, technology:String?, experience:String?, designation: String?, emailId: String?, completion:(Bool, ServerErrorHandling?) -> Void)
     {
         
         let targetDateString = NSDateFormatter.localizedStringFromDate(dateOfBirth, dateStyle: NSDateFormatterStyle.MediumStyle, timeStyle: NSDateFormatterStyle.NoStyle)
@@ -27,16 +27,28 @@ class PLUserProfileInfoViewModel: NSObject {
            qbClient.saveUserBirthday(UInt(birthdayInterval))
         }
         
-        qbClient.updateProfileOfAnUser(targetDateString, companyName: companyName, technology: technology, experience:experience, designation: designation, emailId: emailId){ result in
-            
-            completion(result)
+        qbClient.updateProfileOfAnUser(targetDateString, companyName: companyName, technology: technology, experience:experience, designation: designation, emailId: emailId){ result,err in
+            if result
+            {
+                completion(result, nil)
+            }
+            else{
+                completion(false, err)
+            }
         }
    }
 
-    func getUserProfileDetail(userId : UInt, completion:([String:AnyObject]?)->Void)
+    func getUserProfileDetail(userId : UInt, completion:([String:AnyObject]?, ServerErrorHandling?)->Void)
     {
-        qbClient.getUserProfileDetails(userId) { res in
-            completion(res)
+        qbClient.getUserProfileDetails(userId) { res,err in
+            if err == nil
+            {
+            completion(res,nil)
+            }
+            else
+            {
+                completion([:],err)
+            }
         }
     }
     

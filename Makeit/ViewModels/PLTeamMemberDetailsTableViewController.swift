@@ -25,9 +25,15 @@ class PLTeamMemberDetailsTableViewController: UITableViewController {
     override func viewWillAppear(animated: Bool) {
       super.viewWillAppear(animated)
       self.title = teamMemberDetailViewModel.getTeamMemberName()
-        teamMemberDetailViewModel.getAssignmentsOfUserForProject(){[weak self] res in
+        teamMemberDetailViewModel.getAssignmentsOfUserForProject(){[weak self] res,err in
             
-            if res{self!.memberDetailsTableview.reloadData()}
+            if res{
+                self!.memberDetailsTableview.reloadData()
+            }
+            else
+            {
+                PLSharedManager.showAlertIn(self!, error: err!, title: "Error occured while fetching user from the server", message: err.debugDescription)
+            }
         }
     }
     

@@ -21,16 +21,23 @@ class PLProjectCommentViewModel: NSObject {
     var qbClient:PLQuickbloxHttpClient = PLQuickbloxHttpClient()
     var commitment:PLCommitment?
     
-    func createCommitmentWith(name:String,startDate:NSDate,targetDate:NSDate, description:String,projectId:String,completion:(Bool)->Void)
+    func createCommitmentWith(name:String,startDate:NSDate,targetDate:NSDate, description:String,projectId:String,completion:(Bool, ServerErrorHandling?)->Void)
     {
         let startDateOfCommitment = dateFormat(startDate)
         let targetDateOfCommitment = dateFormat(targetDate)
         let startTimeOfCommitment = timeFormat(startDate)
         let targetTimeOfCommitment = timeFormat(targetDate)
         
-        qbClient.createCommitmentForProject(projectId,startDate:Int(startDateOfCommitment) , targetDate:Int(targetDateOfCommitment),name: name, description:description, startTime: startTimeOfCommitment, endTime:targetTimeOfCommitment ){ result in
-           
-            completion(result)
+
+        qbClient.createCommitmentForProject(projectId,startDate:Int(startDateOfCommitment) , targetDate:Int(targetDateOfCommitment),name: name, description:description, startTime: startTimeOfCommitment, endTime:targetTimeOfCommitment ){ result,ServerErrorHandling in
+             if !result{
+              completion(false, ServerErrorHandling)
+            }
+            else
+            {
+               completion(result, nil)
+            }
+            
         }
     }
     
@@ -56,11 +63,14 @@ class PLProjectCommentViewModel: NSObject {
         return stringToDate!
     }
     
-    func completedTask(completion:(Bool)->Void)
+    func completedTask(completion:(Bool, ServerErrorHandling?)->Void)
     {
-        print("isCompleted")
-        qbClient.updateCommitmentTask(commitment!) { (result) in
-            completion(result)
+        qbClient.updateCommitmentTask(commitment!) { (result,error) in
+            completion(result, nil)
+            if !result
+            {
+                completion(false, error)
+            }
         }
     }
     
@@ -106,14 +116,19 @@ class PLProjectCommentViewModel: NSObject {
         return true
     }
     
-    func updateCommitmentStatus(completion:(Bool)->Void)
+    func updateCommitmentStatus(completion:(Bool, ServerErrorHandling?)->Void)
     {
        
         commitment?.isCompleted = 1
-        self.completedTask({ (resul) in
-            
-           completion(resul)
-
+        self.completedTask({ (result,error) in
+            if result
+            {
+                completion(result,nil)
+            }
+            else
+            {
+                completion(false,error)
+            }
         })
 
     }
