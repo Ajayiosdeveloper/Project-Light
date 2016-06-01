@@ -18,6 +18,8 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
     @IBOutlet var assigneeListTableView: UITableView!
     @IBOutlet weak var assignmentStartDateTextField: UITextField!
     @IBOutlet var assignmentDescriptionTextView: UITextView!
+    var plPopOverController:WYPopoverController?
+    var  diplayMembersPopover:PLDisplayMembersPopover!
     
     var selectedIndexes = NSMutableArray()
     var projectId:String!
@@ -96,9 +98,11 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
           }
            else {
            
-            self.navigationItem.rightBarButtonItem?.enabled = true ;
+               self.navigationItem.rightBarButtonItem?.enabled = true ;
                 self.navigationItem.rightBarButtonItem?.tintColor = nil;
                 assigneeListTableView.allowsSelection = true
+              completeStatusLabel.hidden = true
+              assignmentStatusSlider.hidden = true
                clearFields()
           }
         
@@ -240,28 +244,22 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
 
         if assignmentViewModel.selectedAssignment == nil{
             cell.statusField.text = ""
+            cell.statusField.hidden = true
         
         }else{
-            
+            cell.statusField.hidden = false
             if assignmentViewModel.selectedAssignmentStatus() == 0{
                 
-                //let assigneeStatus = assignmentViewModel.assigneeStatus(indexPath.row)
+                let assigneeStatus = assignmentViewModel.assigneeStatus(indexPath.row)
                 cell.statusField.progressColor = UIColor.blueColor()
-                cell.statusField.progress = assignmentViewModel.percentageCompletedByAssignee(indexPath.row)
-                cell.statusField.text = "\(assignmentViewModel.percentageCompletedByAssignee(indexPath.row) * 100)%"
-                
-                /*if assigneeStatus == "0"{
-                    //cell.statusField.text = "In Progress"
-                    //cell.statusField.textColor = enableButtonColor
-                    cell.statusField.progress = 0.5
-                }else if assigneeStatus == "1"{
-                    //cell.statusField.text = "Completed"
-                    //cell.statusField.textColor = UIColor(colorLiteralRed: 89/255, green: 181/255, blue: 50/255, alpha: 1)
-                    cell.statusField.progress = 0.5
-                }else{
-                    //cell.statusField.text = "Closed"
-                    cell.statusField.progress = 0.5
-                }*/
+               cell.statusField.progress = assignmentViewModel.percentageCompletedByAssignee(indexPath.row)
+               cell.statusField.text = "\(assignmentViewModel.percentageCompletedByAssignee(indexPath.row) * 100)%"
+                if assigneeStatus == "1"{
+                  cell.statusField.text = "Closed"
+                  cell.statusField.textColor = UIColor.redColor()
+                  cell.statusField.trackWidth = 0
+                  cell.statusField.progressWidth = 0
+                }
                 
                 loggedInUserStatus = assignmentViewModel.assigneeStatus(0)
                 if loggedInUserStatus == "1"{
@@ -276,6 +274,7 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
                 cell.statusField.textColor = UIColor.redColor()
                 cell.statusField.trackWidth = 0
                 cell.statusField.progressWidth = 0
+                
             }
             
         }
@@ -431,18 +430,25 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
         }
         else if sender.tag == -1{
             
-            assignmentViewModel.updateAssigmentStatusOfLoggedInUser(-1){ [weak self] res,err in
+            print("Close issue")
+            
+            /*assignmentViewModel.updateAssigmentStatusOfLoggedInUser(-1){ [weak self] res,err in
                 if res{
                     self!.assigneeListTableView.reloadData()
                 }else{
                     //self!.showAlertWithMessage("Cannot Close", message: "Assignment is still in progress by some assignees")
                     PLSharedManager.showAlertIn(self!, error: err!, title: "Cannot Close - Assignment is still in progress by some assignees", message: err.debugDescription)
                 }
-            }
+            }*/
 
         }else{
             
-            print("Reopen code")
+            if assignmentViewModel.numberOfAssigneesCompletedAssignment() == 1{
+            showAlertWithMessage("Are you sure to reopen?", message:"Reopening issue will notify users to rework on the assignment", cancelNeeded: true)
+            }else{
+                
+                showPopOver(sender)//show popover
+            }
         }
     }
     
@@ -489,13 +495,27 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
        assignmentViewModel.selectedAssignment = assignment
     }
     
-    func showAlertWithMessage(title:String,message:String)
+    func showAlertWithMessage(title:String,message:String,cancelNeeded:Bool)
     {
         if #available(iOS 8.0, *) {
             let alertController = UIAlertController(title:title, message:message, preferredStyle: UIAlertControllerStyle.Alert)
             let action = UIAlertAction(title:"Ok", style: UIAlertActionStyle.Default, handler: { (action) -> Void in
+                
+                if cancelNeeded{
+                    
+                    print("Reopen Issue Alert")
+                }
+              
             })
+            if cancelNeeded{
+                
+                let cancelAction = UIAlertAction(title:"Cancel", style: UIAlertActionStyle.Default, handler: { (action) -> Void in
+                    
+                })
+             alertController.addAction(cancelAction)
+            }
             alertController.addAction(action)
+            
             self.presentViewController(alertController, animated:true, completion:nil)
             
         } else {
@@ -526,5 +546,38 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
         //assignmentViewModel.selectedAssignment = nil
         //selectedIndexes = []
     }
+    
+    
+    func showPopOver(sender:UIButton) {
+        
+        if diplayMembersPopover == nil
+        {
+            diplayMembersPopover = self.storyboard?.instantiateViewControllerWithIdentifier("PLDisplayMembersPopover") as? PLDisplayMembersPopover
+            setUpNavigationBarForPopover()
+        }
+       
+        diplayMembersPopover.teamMemberModelView = PLTeamMemberModelView(searchMembers:assignmentViewModel.membersWithClosedAssignmentStatus());
+        plPopOverController!.popoverLayoutMargins = UIEdgeInsetsMake(10, 10, 10, 10);
+        plPopOverController?.popoverContentSize = CGSizeMake(300, 200)
+        plPopOverController!.wantsDefaultContentAppearance = true;
+        plPopOverController?.presentPopoverFromRect(sender.bounds, inView: sender, permittedArrowDirections: WYPopoverArrowDirection.Any, animated: true)
+    }
+    
+    func setUpNavigationBarForPopover()
+    {
+        diplayMembersPopover.title = "Select members to reopen"
+        diplayMembersPopover.modalInPopover = false
+        diplayMembersPopover.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Done, target:self, action:#selector(PLProjectAssignmentViewController.close))
+        let navigationController = UINavigationController(rootViewController: diplayMembersPopover)
+        plPopOverController = WYPopoverController(contentViewController:navigationController)
+    }
+    
+    func close(){
+        
+       print(diplayMembersPopover.selectedRows)
+        plPopOverController?.dismissPopoverAnimated(true)
+       
+    }
+
     
 }
