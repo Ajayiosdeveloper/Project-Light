@@ -99,7 +99,11 @@ class PLDisplayMembersPopover: UITableViewController {
                 }
             }
     
-   
+           if selectedRows.containsObject(indexPath){
+             selectedRows.removeObject(indexPath)
+           }else{
+            selectedRows.addObject(indexPath)
+           }
    }
     
    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {

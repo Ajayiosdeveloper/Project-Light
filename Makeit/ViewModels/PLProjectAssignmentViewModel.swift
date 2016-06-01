@@ -357,6 +357,28 @@ class PLProjectAssignmentViewModel: NSObject {
     }
   }
     
+    func membersWithClosedAssignmentStatus()->[PLTeamMember]
+    {
+        var closedStatusMembers = [PLTeamMember]()
+        
+        if let _ = selectedAssignment{
+            for member in selectedAssigneeList{
+                
+                let assignmentMember = member as! PLAssignmentMember
+                
+                if assignmentMember.assigneeStatus != 0{
+                    
+                    closedStatusMembers.append(member)
+                    
+                }
+            }
+        }
+        
+        
+        return closedStatusMembers
+    }
+    
+    
     func updateAssignmentPercentage(value:Int){
         
         qbClient.updateAssignmentPercentage(assignmentRecordId,value: value)
