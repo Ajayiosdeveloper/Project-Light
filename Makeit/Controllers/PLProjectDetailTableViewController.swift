@@ -207,12 +207,17 @@ class PLProjectDetailTableViewController: UITableViewController,EKEventEditViewD
     func configureAssignmentCell(cell:PLAssignmentTableViewCell,row:Int){
         cell.assignmentTitle.text = projectDetailViewModel.assignmentTitleForRowAtIndexPath(row)
         cell.asssignmentSubtitle.text = projectDetailViewModel.assignmentSubTitleForRowAtIndexPath(row)
-        cell.progressLabel.text = "50%"
+        cell.progressLabel.text = "\(projectDetailViewModel.assignmentCompletedPercentage(row))%"
         cell.progressLabel.trackWidth = 10
         cell.progressLabel.progressWidth = 10
         cell.progressLabel.roundedCornersWidth  = 10
-        cell.progressLabel.progressColor = UIColor.blueColor()
-        cell.progressLabel.progress = 0.5
+       
+        cell.progressLabel.progress = CGFloat(projectDetailViewModel.assignmentCompletedPercentage(row))
+        if cell.progressLabel.progress == 0{
+            cell.progressLabel.progressColor = UIColor.lightGrayColor()
+        }else{
+             cell.progressLabel.progressColor = UIColor.blueColor()
+        }
         
         cell.accessoryType = .DisclosureIndicator
  }

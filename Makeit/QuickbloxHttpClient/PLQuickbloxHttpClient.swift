@@ -311,6 +311,7 @@ class PLQuickbloxHttpClient
         customObject.fields?.setValue(assignees, forKey: "assignees")
         customObject.fields?.setValue(assigneeUserIds, forKey: "assigneeUserId")
         customObject.fields?.setValue(0, forKey: "status")
+        customObject.fields?.setValue(0, forKey: "percentageCompleted")
         customObject.fields?.setValue(id, forKey:"_parent_id")
         var assigneeStatus:[String] = [String]()
         for status in assigneeUserIds{
@@ -1262,8 +1263,5 @@ class PLQuickbloxHttpClient
     
     }
     
-    func findSum(){
-        
-        
-    }
+   
 }

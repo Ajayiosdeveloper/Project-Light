@@ -83,6 +83,7 @@ class PLAssignment: NSObject {
     var startDate:String = ""
     var creatorId:UInt = 0
     var assignmentStatus:Int = 0
+    var percentageCompleted:Int = 0
     var assignees:[String] = [String]()
     var assineesUserIds:[UInt] = [UInt]()
 }
