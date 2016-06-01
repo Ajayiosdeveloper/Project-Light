@@ -533,6 +533,10 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
       let completed =  Int(sender.value)
        completeStatusLabel.text = "\(completed) % Done"
        isSliderValueChanged = true
+       let cell  = assigneeListTableView.cellForRowAtIndexPath(NSIndexPath(forRow: 0, inSection: 0)) as! PLAssigneeTableViewCell
+        cell.statusField.progress = CGFloat(sender.value/100)
+        cell.statusField.text = "\(sender.value)%"
+        
     }
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
