@@ -1258,6 +1258,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="0Ob-O4-WKs"/>
                     <connections>
+                        <outlet property="forgotPasswordField" destination="EjT-Jx-gn7" id="FFG-6K-7Oe"/>
                         <outlet property="loginUserNameTextField" destination="RdL-Bj-gQ0" id="W8b-O3-lqP"/>
                         <outlet property="loginUserPasswordTextField" destination="Ad5-1H-QWV" id="0S2-Uq-Vbm"/>
                         <outlet property="userLogin" destination="q0A-ur-8LK" id="twW-kj-PlD"/>
