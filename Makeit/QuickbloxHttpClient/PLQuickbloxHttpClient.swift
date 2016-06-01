@@ -334,6 +334,8 @@ class PLQuickbloxHttpClient
              
              QBRequest.createObject(customObjectTwo, successBlock: { (_, _) in
                 
+                 completion(true, nil)
+                
                 }, errorBlock: { (res) in
                     completion(false, self.handleErrors(res))
              })
@@ -387,8 +389,6 @@ class PLQuickbloxHttpClient
             completion(true,assignments,nil)
             
         }) { (res) in
-            
-            print("handle error")
             
             completion(false,nil,self.handleErrors(res))
         }
@@ -544,7 +544,10 @@ class PLQuickbloxHttpClient
                     completion(nil,self.handleErrors(res))
             })
             
-        }else{completion(nil,nil)}
+        }else
+        {
+            completion(nil,nil)
+        }
         
     }
     
@@ -889,6 +892,8 @@ class PLQuickbloxHttpClient
     func sendforgotPasswordLinkToEmail(email : String,completion:(ServerErrorHandling?)->Void)
     {
         QBRequest.resetUserPasswordWithEmail(email, successBlock: { (response) in
+            
+            completion(nil)
             
         }) { (err) in
            

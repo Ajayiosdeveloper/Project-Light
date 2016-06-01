@@ -14,12 +14,15 @@ let kLoginTag = 1
 
 class PLUserLoginViewController: UIViewController,UITextFieldDelegate {
 
+    @IBOutlet var forgotPasswordField: UIButton!
     @IBOutlet weak var loginUserNameTextField: UITextField!
     @IBOutlet weak var userLogin: UIButton!
     @IBOutlet weak var loginUserPasswordTextField: UITextField!
+    
     lazy private var userAccountViewModel:PLUserSignupAndLoginViewModel = {
         return PLUserSignupAndLoginViewModel()
     }()
+    
     var projectsViewController:PLProjectsViewController!
     var sideBarRootViewController:PLSidebarRootViewController!
     
@@ -31,7 +34,7 @@ class PLUserLoginViewController: UIViewController,UITextFieldDelegate {
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         loginUserPasswordTextField.text = ""
-        
+        loginUserNameTextField.becomeFirstResponder()
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -60,7 +63,6 @@ class PLUserLoginViewController: UIViewController,UITextFieldDelegate {
         else {
             userLogin.setTitleColor(UIColor.grayColor(), forState: UIControlState.Normal); userLogin.enabled = false
         }
-        
         return true
     }
 
@@ -68,7 +70,7 @@ class PLUserLoginViewController: UIViewController,UITextFieldDelegate {
     @IBAction func loginUser(sender: AnyObject) {
         userAccountViewModel.addObserver(self, forKeyPath:"loginResultNotifier", options: NSKeyValueObservingOptions.New, context: nil)
         userAccountViewModel.validateUserLoginCredentials(loginUserNameTextField.text!, password: loginUserPasswordTextField.text!) { (err) in
-            if err != nil
+            if let _ = err
             {
                 PLSharedManager.showAlertIn(self, error: err!, title: "Login Failed", message: "Please provide correct details")
             }
@@ -124,29 +126,13 @@ class PLUserLoginViewController: UIViewController,UITextFieldDelegate {
     
     func presentProjectsViewController(){
         
-        if (projectsViewController == nil){
-            
-            //projectsViewController = self.storyboard?.instantiateViewControllerWithIdentifier("projectsViewController") as! PLProjectsViewController
-            
-            sideBarRootViewController = self.storyboard?.instantiateViewControllerWithIdentifier("PLSidebarRootViewController") as! PLSidebarRootViewController
+        if (projectsViewController == nil)
+        {
+                sideBarRootViewController = self.storyboard?.instantiateViewControllerWithIdentifier("PLSidebarRootViewController") as! PLSidebarRootViewController
         }
-        
-        
-        
-        //self.navigationController?.pushViewController(sideBarRootViewController, animated: false)
-        
-        
         self.presentViewController(sideBarRootViewController, animated: true, completion:nil)
-        
-        
-        /* if !(self.navigationController?.topViewController?.isKindOfClass(PLAddProjectViewController))!
-         {
-         
-         self.navigationController?.pushViewController(projectsViewController, animated: false)
-         
-         }*/
-        
     }
+    
     func clearTextfields(){
         self.loginUserNameTextField.text = ""
         
@@ -157,15 +143,13 @@ class PLUserLoginViewController: UIViewController,UITextFieldDelegate {
     }
     
     @IBAction func SignUpUser(sender: AnyObject) {
-        // let signUpViewController : PLUserSignUpViewController = (storyboard?.instantiateViewControllerWithIdentifier("PLUserSignUpViewController") as? PLUserSignUpViewController)!
-        //self.navigationController?.pushViewController(signUpViewController, animated: true)
+    
         let signUpViewController:UIViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("PLUserSignUpViewController")
         self.presentViewController(signUpViewController, animated: true, completion: nil)
     }
     
     @IBAction func forgotPassword(sender: AnyObject) {
-        // let forgotPassword = (storyboard?.instantiateViewControllerWithIdentifier("PLResetPasswordViewController") as? PLResetPasswordViewController)!
-        // self.navigationController?.pushViewController(forgotPassword, animated: true)
+       
         let forgotPassword:UIViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("PLResetPasswordViewController")
         self.presentViewController(forgotPassword, animated: true, completion: nil)
 

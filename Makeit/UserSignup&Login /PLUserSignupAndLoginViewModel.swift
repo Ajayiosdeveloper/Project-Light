@@ -40,7 +40,6 @@ class PLUserSignupAndLoginViewModel : NSObject
         catch {print("Other")}
      }
  
-    
     func validateUserSignupCredentials(withUserName:String,password:String,confirmPassword:String) throws -> Bool
     {
         guard isUserNameWeak(withUserName) else{
@@ -96,8 +95,6 @@ class PLUserSignupAndLoginViewModel : NSObject
     
     private  func startProcessingUserLogin(withUserName:String,password:String,completion:(ServerErrorHandling?)-> Void) throws ->Void
     {
-        //if quickBloxClient == nil{ quickBloxClient = PLQuickbloxHttpClient() }
-        
         quickBloxClient.initiateUserLogin(withUserName, password: password) {[weak self] (result,error) -> Void in
             if error == nil
             {
@@ -106,13 +103,11 @@ class PLUserSignupAndLoginViewModel : NSObject
             }
             else
             {
-                print("Login error")
-                print(error)
                 completion(error)
             }
         }
     }
-    
+     
     func startProcessingUserSignup(withUserName:String,password:String,email:String,completion:(Bool,ServerErrorHandling?)->Void)
     {
         //if quickBloxClient == nil{ quickBloxClient = PLQuickbloxHttpClient() }
@@ -171,13 +166,12 @@ class PLUserSignupAndLoginViewModel : NSObject
     func sendForgotPasswordLinkToeMail(mailId : String, completion:(ServerErrorHandling?)-> Void)
     {
         quickBloxClient.sendforgotPasswordLinkToEmail(mailId) { (err) in
-            if let _ = err
+            if  (err != nil)
             {
-                print("Errrrrror ")
-                completion(err)
+                completion(err!)
+
             }
             else{
-                print("Errrrrror No")
                 completion(nil)
             }
         }
