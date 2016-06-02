@@ -38,12 +38,12 @@
                             <constraint firstAttribute="width" constant="76" id="CQw-tw-7av"/>
                             <constraint firstAttribute="height" constant="57" id="QTn-Z8-7Bh"/>
                         </constraints>
-                        <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="13"/>
+                        <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="15"/>
                         <color key="textColor" red="0.31384235780000003" green="0.81444310900000005" blue="0.58439629270000004" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="detailDisclosure" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IBQ-6K-M3A">
-                        <rect key="frame" x="285" y="17" width="22" height="22"/>
+                        <rect key="frame" x="285" y="21" width="22" height="22"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="22" id="kzg-Dz-a8Q"/>
                         </constraints>
@@ -66,7 +66,7 @@
                     <constraint firstItem="m5j-K2-o18" firstAttribute="top" secondItem="haa-f7-RgK" secondAttribute="bottom" id="gsF-7e-krR"/>
                     <constraint firstItem="PDL-EI-6kI" firstAttribute="leading" secondItem="haa-f7-RgK" secondAttribute="trailing" constant="2" id="lk9-to-VNU"/>
                     <constraint firstItem="haa-f7-RgK" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" id="qeO-wJ-V5Z"/>
-                    <constraint firstItem="pWm-0N-reJ" firstAttribute="centerY" secondItem="IBQ-6K-M3A" secondAttribute="centerY" constant="-1" id="rbE-JP-RC5"/>
+                    <constraint firstItem="pWm-0N-reJ" firstAttribute="centerY" secondItem="IBQ-6K-M3A" secondAttribute="centerY" constant="-5" id="rbE-JP-RC5"/>
                     <constraint firstItem="haa-f7-RgK" firstAttribute="top" secondItem="PDL-EI-6kI" secondAttribute="top" constant="4" id="sKT-SN-KUd"/>
                     <constraint firstItem="pWm-0N-reJ" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" constant="-7.5" id="uuW-2O-n5g"/>
                 </constraints>
