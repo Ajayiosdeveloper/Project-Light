@@ -266,6 +266,8 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
                     headerColor = UIColor(colorLiteralRed: 89/255, green: 181/255, blue: 50/255, alpha: 0.5)
                     assignmentStatus.setTitle("Closed", forState: .Normal)
                     assignmentStatus.enabled = false
+                    completeStatusLabel.hidden = true
+                    assignmentStatusSlider.hidden = true
                 }
             }
             else{
@@ -274,7 +276,8 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
                 cell.statusField.textColor = UIColor.redColor()
                 cell.statusField.trackWidth = 0
                 cell.statusField.progressWidth = 0
-                
+                completeStatusLabel.hidden = true
+                assignmentStatusSlider.hidden = true
             }
             
         }
@@ -534,8 +537,9 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
        completeStatusLabel.text = "\(completed) % Done"
        isSliderValueChanged = true
        let cell  = assigneeListTableView.cellForRowAtIndexPath(NSIndexPath(forRow: 0, inSection: 0)) as! PLAssigneeTableViewCell
+        let value = Int(sender.value)
         cell.statusField.progress = CGFloat(sender.value/100)
-        cell.statusField.text = "\(sender.value)%"
+        cell.statusField.text = "\(value)%"
         
     }
     override func viewWillDisappear(animated: Bool) {

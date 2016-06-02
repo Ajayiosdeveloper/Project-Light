@@ -232,6 +232,9 @@ class PLProjectDetailViewModel: NSObject {
                 assignment.targetDate += " \(endTime)"
                 assignment.assignmentStatus = (each.fields?.objectForKey("status"))! as! Int
                 assignment.assineesUserIds = (each.fields?.objectForKey("assigneeUserId"))! as! [UInt]
+                    
+                assignment.percentageCompleted = each.fields?.objectForKey("percentageCompleted") as! Int
+                assignment.percentageCompleted = assignment.percentageCompleted / assignment.assineesUserIds.count
                 
                 self.assignments.append(assignment)
               }
@@ -239,6 +242,12 @@ class PLProjectDetailViewModel: NSObject {
 
             }else {completion(false, error)}
          }
+    }
+    
+    func assignmentCompletedPercentage(row:Int)->Int{
+        
+        let assignment = assignments[row]
+        return assignment.percentageCompleted
     }
     
     func selectedCommitment(row:Int)->PLCommitment?
