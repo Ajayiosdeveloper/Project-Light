@@ -78,6 +78,55 @@ class PLTeamCommunicationViewModel: NSObject {
         }
     }
     
+    func isMembersSelectedForChatGroup()->Bool{
+        
+        if selectedTeamMembers.count > 0{
+            return true
+        }
+        return false
+    }
+    
+    func isGroupNameExist(name:String,groups:[PLChatGroup])->Bool{
+        
+        for group in groups{
+            
+            print("Name is \(group.name)")
+           
+            if group.name == name{
+                
+                return false
+            }
+        }
+        
+        return true
+    }
+    
+    func isGroupWithSameMembersExist(groups:[PLChatGroup])->Bool{
+    
+        
+        var membersIds = [UInt]()
+        for member in selectedTeamMembers
+        {
+            membersIds.append(member.memberUserId)
+        }
+        
+        membersIds.append(PLSharedManager.manager.loggedInUserId)
+        
+        let selectedMembersSet = NSSet(array:membersIds)
+        
+        for (_,v) in groups.enumerate(){
+            
+          let chatMembersSet = NSSet(array: v.opponents)
+          
+          
+            if chatMembersSet.isEqualToSet(selectedMembersSet as Set<NSObject>){
+                
+                return true
+            }
+        }
+        return false
+    }
+    
    
     func createProjectGroup(name:String,completion:(Bool,PLChatGroup?,ServerErrorHandling?)->Void){
         

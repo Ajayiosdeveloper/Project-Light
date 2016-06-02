@@ -518,6 +518,7 @@ class PLProjectDetailTableViewController: UITableViewController,EKEventEditViewD
             teamCommunicationViewController = self.storyboard?.instantiateViewControllerWithIdentifier("teamCommunicationViewController") as! PLTeamCommunicationViewController
         }
         teamCommunicationViewController.communicationType = type
+        
         teamCommunicationViewController.communicationViewModel = PLTeamCommunicationViewModel(members: projectDetailViewModel.contributors)
         self.navigationController?.pushViewController(teamCommunicationViewController, animated: true)
     }

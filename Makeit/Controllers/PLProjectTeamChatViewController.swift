@@ -61,6 +61,7 @@ class PLProjectTeamChatViewController: UIViewController,UITableViewDelegate,UITa
             
         }
         teamCommunicationViewController.communicationType = 2
+        teamCommunicationViewController.chatGroups = projectTeamChatViewModel.chatGroups()
         teamCommunicationViewController.communicationViewModel = PLTeamCommunicationViewModel(members: projectTeamChatViewModel.projectTeamMembers!)
         teamCommunicationViewController.teamChatViewController = self
         self.navigationController?.pushViewController(teamCommunicationViewController, animated: true)

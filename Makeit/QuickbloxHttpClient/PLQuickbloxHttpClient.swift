@@ -609,7 +609,7 @@ class PLQuickbloxHttpClient
         QBRequest.createDialog(chatDialog, successBlock: { (response: QBResponse?, createdDialog : QBChatDialog?) -> Void in
             var chatGroup = PLChatGroup()
             chatGroup.name = name
-            chatGroup.opponents = (createdDialog?.occupantIDs)!
+            chatGroup.opponents = (createdDialog?.occupantIDs)! as! [UInt]
             chatGroup.chatGroupId = (createdDialog?.roomJID)!
             chatGroup.unReadMessageCount = 0
             completion(true,chatGroup,nil)
@@ -664,7 +664,7 @@ class PLQuickbloxHttpClient
                     if let _ = eachGroup.lastMessageDate{
                         chatGroup.lastMessageDate = NSDateFormatter.localizedStringFromDate(eachGroup.lastMessageDate!, dateStyle: NSDateFormatterStyle.MediumStyle, timeStyle: NSDateFormatterStyle.ShortStyle)
                     }
-                    chatGroup.opponents = eachGroup.occupantIDs!
+                    chatGroup.opponents = eachGroup.occupantIDs! as! [UInt]
                     chatGroups.append(chatGroup)
                 }
             }
