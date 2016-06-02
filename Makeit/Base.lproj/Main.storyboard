@@ -887,7 +887,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="D3R-tf-Tia" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1478" y="1173"/>
+            <point key="canvasLocation" x="1522" y="1173"/>
         </scene>
         <!--Project Team Chat View Controller-->
         <scene sceneID="SoF-pb-MGL">
@@ -944,6 +944,59 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="sBi-fO-FOr" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2462" y="1159"/>
+        </scene>
+        <!--Birthday Greetings View Controller-->
+        <scene sceneID="ibH-D4-N0P">
+            <objects>
+                <viewController storyboardIdentifier="PLBirthdayGreetingsViewController" id="fhc-HT-yPk" customClass="PLBirthdayGreetingsViewController" customModule="Makeit" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="zTz-D8-Q6T"/>
+                        <viewControllerLayoutGuide type="bottom" id="TY7-eT-S8D"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="3CM-oK-lCV">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Yfn-rZ-gAy">
+                                <rect key="frame" x="282" y="562" width="36" height="30"/>
+                                <state key="normal" title="Send"/>
+                                <connections>
+                                    <action selector="sendGreetingsAction:" destination="fhc-HT-yPk" eventType="touchUpInside" id="9a9-Au-v3y"/>
+                                </connections>
+                            </button>
+                            <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="4" translatesAutoresizingMaskIntoConstraints="NO" id="prH-Ab-L8R">
+                                <rect key="frame" x="267" y="525" width="66" height="37"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="66" id="dn5-AF-g6p"/>
+                                </constraints>
+                                <color key="pageIndicatorTintColor" red="0.1215686275" green="0.12941176469999999" blue="0.14117647059999999" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="currentPageIndicatorTintColor" red="1" green="0.40784313729999999" blue="0.3411764706" alpha="1" colorSpace="calibratedRGB"/>
+                            </pageControl>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HOk-CP-a0r">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="555"/>
+                            </scrollView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="HOk-CP-a0r" firstAttribute="top" secondItem="3CM-oK-lCV" secondAttribute="top" id="Zwi-nq-ruz"/>
+                            <constraint firstItem="HOk-CP-a0r" firstAttribute="leading" secondItem="3CM-oK-lCV" secondAttribute="leading" id="eWN-qG-857"/>
+                            <constraint firstAttribute="trailing" secondItem="HOk-CP-a0r" secondAttribute="trailing" id="niP-aU-qcb"/>
+                            <constraint firstItem="Yfn-rZ-gAy" firstAttribute="top" secondItem="HOk-CP-a0r" secondAttribute="bottom" constant="7" id="pBf-Hm-11Q"/>
+                            <constraint firstItem="HOk-CP-a0r" firstAttribute="centerX" secondItem="Yfn-rZ-gAy" secondAttribute="centerX" id="qGW-eG-sXW"/>
+                            <constraint firstItem="prH-Ab-L8R" firstAttribute="centerX" secondItem="Yfn-rZ-gAy" secondAttribute="centerX" id="txU-UA-86Q"/>
+                            <constraint firstAttribute="bottom" secondItem="Yfn-rZ-gAy" secondAttribute="bottom" constant="8" id="u3M-pc-2WO"/>
+                            <constraint firstItem="TY7-eT-S8D" firstAttribute="top" secondItem="prH-Ab-L8R" secondAttribute="bottom" constant="38" id="ugd-Ys-v3u"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="pageControl" destination="prH-Ab-L8R" id="1YW-32-mmE"/>
+                        <outlet property="scrollView" destination="HOk-CP-a0r" id="Jt7-WE-Qm3"/>
+                        <outlet property="sendGreetingCard" destination="Yfn-rZ-gAy" id="9jX-UC-CaF"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="cGQ-Oj-cDT" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3113" y="1076"/>
         </scene>
         <!--User Profile Info Table View Controller-->
         <scene sceneID="FqQ-Rg-99c">

@@ -251,6 +251,8 @@ class PLTaskViewController: UIViewController,UITableViewDelegate,UITableViewData
     
     func sendBirthdayGreetings(sender:UIButton){
         
+        let birthdayGreetingsController = storyboard?.instantiateViewControllerWithIdentifier("PLBirthdayGreetingsViewController") as! PLBirthdayGreetingsViewController
+        self.navigationController?.pushViewController(birthdayGreetingsController, animated: true)
         print(sender.tag)
     }
     

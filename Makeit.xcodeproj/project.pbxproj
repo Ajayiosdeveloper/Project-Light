@@ -179,6 +179,11 @@
 		948382D71CE3304000B51BA6 /* PLResetPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948382D61CE3304000B51BA6 /* PLResetPasswordViewController.swift */; };
 		948382D91CE3310100B51BA6 /* bar.png in Resources */ = {isa = PBXBuildFile; fileRef = 948382D81CE3310100B51BA6 /* bar.png */; };
 		948382DF1CE3368400B51BA6 /* PLUserLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948382DE1CE3368400B51BA6 /* PLUserLoginViewController.swift */; };
+		948A2D351CFEDBC4005C8A67 /* PLBirthdayGreetingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948A2D341CFEDBC4005C8A67 /* PLBirthdayGreetingsViewController.swift */; };
+		94971E621CFEEACD00AB310B /* birthday_1.png in Resources */ = {isa = PBXBuildFile; fileRef = 94971E5E1CFEEACD00AB310B /* birthday_1.png */; };
+		94971E631CFEEACD00AB310B /* birthday_2.png in Resources */ = {isa = PBXBuildFile; fileRef = 94971E5F1CFEEACD00AB310B /* birthday_2.png */; };
+		94971E641CFEEACD00AB310B /* birthday_3.png in Resources */ = {isa = PBXBuildFile; fileRef = 94971E601CFEEACD00AB310B /* birthday_3.png */; };
+		94971E651CFEEACD00AB310B /* birthday_4.png in Resources */ = {isa = PBXBuildFile; fileRef = 94971E611CFEEACD00AB310B /* birthday_4.png */; };
 		94AF829A1CFC6ED300A040B2 /* PLAssignmentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94AF82981CFC6ED300A040B2 /* PLAssignmentTableViewCell.swift */; };
 		94AF829B1CFC6ED300A040B2 /* PLAssignmentTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 94AF82991CFC6ED300A040B2 /* PLAssignmentTableViewCell.xib */; };
 		94C7A5021CF4646100DECE8A /* PLAssigneeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94C7A5001CF4646100DECE8A /* PLAssigneeTableViewCell.swift */; };
@@ -416,6 +421,11 @@
 		948382D61CE3304000B51BA6 /* PLResetPasswordViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLResetPasswordViewController.swift; sourceTree = "<group>"; };
 		948382D81CE3310100B51BA6 /* bar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bar.png; sourceTree = "<group>"; };
 		948382DE1CE3368400B51BA6 /* PLUserLoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLUserLoginViewController.swift; sourceTree = "<group>"; };
+		948A2D341CFEDBC4005C8A67 /* PLBirthdayGreetingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLBirthdayGreetingsViewController.swift; sourceTree = "<group>"; };
+		94971E5E1CFEEACD00AB310B /* birthday_1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = birthday_1.png; sourceTree = "<group>"; };
+		94971E5F1CFEEACD00AB310B /* birthday_2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = birthday_2.png; sourceTree = "<group>"; };
+		94971E601CFEEACD00AB310B /* birthday_3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = birthday_3.png; sourceTree = "<group>"; };
+		94971E611CFEEACD00AB310B /* birthday_4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = birthday_4.png; sourceTree = "<group>"; };
 		94AF82981CFC6ED300A040B2 /* PLAssignmentTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLAssignmentTableViewCell.swift; sourceTree = "<group>"; };
 		94AF82991CFC6ED300A040B2 /* PLAssignmentTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PLAssignmentTableViewCell.xib; sourceTree = "<group>"; };
 		94C7A5001CF4646100DECE8A /* PLAssigneeTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLAssigneeTableViewCell.swift; sourceTree = "<group>"; };
@@ -519,6 +529,10 @@
 		806B1E0B1CD8A7070018B026 /* SupportingFiles */ = {
 			isa = PBXGroup;
 			children = (
+				94971E5E1CFEEACD00AB310B /* birthday_1.png */,
+				94971E5F1CFEEACD00AB310B /* birthday_2.png */,
+				94971E601CFEEACD00AB310B /* birthday_3.png */,
+				94971E611CFEEACD00AB310B /* birthday_4.png */,
 				809FFFB91CFC4CCA00F0D391 /* progress.png */,
 				8063065C1CFC259B0093DC28 /* completed.png */,
 				9442B3E31CF320E7002FEF3F /* assignment.png */,
@@ -650,6 +664,7 @@
 				802468581CDA2F3F00CAE735 /* PLChatDetailViewController.swift */,
 				807FC8791CCB47920094112E /* PLTeamMemberDetailsTableViewController.swift */,
 				9419F5DC1CEC453400A0B341 /* PLTaskViewController.swift */,
+				948A2D341CFEDBC4005C8A67 /* PLBirthdayGreetingsViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -1068,8 +1083,10 @@
 				8063065E1CFC259B0093DC28 /* completed.png in Resources */,
 				80C4A01D1CDCBB500073B6E2 /* JSQMessagesLoadEarlierHeaderView.xib in Resources */,
 				80AB251E1CE74CCA008B20C3 /* pendingTask.png in Resources */,
+				94971E621CFEEACD00AB310B /* birthday_1.png in Resources */,
 				806B1E101CD8A7D60018B026 /* UserImage.png in Resources */,
 				80AB25221CE7503A008B20C3 /* Birthday.png in Resources */,
+				94971E651CFEEACD00AB310B /* birthday_4.png in Resources */,
 				948382D91CE3310100B51BA6 /* bar.png in Resources */,
 				809F96D21CBCC35000DD1FE9 /* Assets.xcassets in Resources */,
 				80AB251F1CE74CCA008B20C3 /* upcomingTask.png in Resources */,
@@ -1080,6 +1097,7 @@
 				8024685B1CDA2FB900CAE735 /* chatGroup.png in Resources */,
 				80ED65A61CE0B36900C61090 /* emptyMessages.png in Resources */,
 				946DA8341CE3474100FF7AB9 /* close@2x.png in Resources */,
+				94971E631CFEEACD00AB310B /* birthday_2.png in Resources */,
 				805EFB601CD239200066B4CB /* PLTableViewCell.xib in Resources */,
 				809FFFBA1CFC4CCA00F0D391 /* progress.png in Resources */,
 				809F96D01CBCC35000DD1FE9 /* Main.storyboard in Resources */,
@@ -1087,6 +1105,7 @@
 				94AF829B1CFC6ED300A040B2 /* PLAssignmentTableViewCell.xib in Resources */,
 				80C4A0181CDCBB500073B6E2 /* JSQMessagesCollectionViewCellOutgoing.xib in Resources */,
 				94C7A5091CF479E500DECE8A /* PLTeamMemberDetailsTableViewCell.xib in Resources */,
+				94971E641CFEEACD00AB310B /* birthday_3.png in Resources */,
 				80AB25201CE74CCA008B20C3 /* todayTask.png in Resources */,
 				8083C0DE1CED831B0051E8AF /* PLBirthdayTableViewCell.xib in Resources */,
 				806D4AEA1CC210910054A9AF /* SVProgressHUD.bundle in Resources */,
@@ -1275,6 +1294,7 @@
 				808A52451CD71CCB0032ED0D /* PLProjectTeamChatViewController.swift in Sources */,
 				80C49FF91CDCBB500073B6E2 /* JSQMessagesKeyboardController.swift in Sources */,
 				806D4AF41CC260080054A9AF /* PLProjectsViewController.swift in Sources */,
+				948A2D351CFEDBC4005C8A67 /* PLBirthdayGreetingsViewController.swift in Sources */,
 				806B1E3D1CD8AA080018B026 /* UIButton+WebCache.m in Sources */,
 				804889671CED90F800484284 /* PLTasksViewCell.swift in Sources */,
 				806D4AE91CC210910054A9AF /* SVProgressAnimatedView.m in Sources */,
