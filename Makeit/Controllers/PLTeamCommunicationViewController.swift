@@ -180,12 +180,7 @@ class PLTeamCommunicationViewController: UIViewController,UITableViewDelegate,UI
     func createNewChatGroupForProject()  {
         
         if communicationViewModel.isMembersSelectedForChatGroup(){
-            
-//            if communicationViewModel.isGroupNameExist(textFld.text!,groups: chatGroups){
-//                
-//                self.showAlertWithMessage("Group Name Creation Error", message: "Already group name exist")
-//                
-//            }else{
+
             
                 if communicationViewModel.isGroupWithSameMembersExist(chatGroups){
                     
@@ -197,23 +192,15 @@ class PLTeamCommunicationViewController: UIViewController,UITableViewDelegate,UI
                     if #available(iOS 8.0, *) {
                             let alertViewController = UIAlertController.init(title: "Enter Group Name", message: nil, preferredStyle: .Alert)
                             let okAction = UIAlertAction.init(title: "Ok", style: .Default) {[weak self] (action) -> Void in
-                                print(self!.textFld.text!)
-                                if self!.communicationViewModel.isGroupNameExist(self!.textFld.text!,groups: self!.chatGroups){
-                                    
-                                    self!.showAlertWithMessage("Group Name Creation Error", message: "Already group name exist")
-                                    print("same name")
-                                }
-                                else
-                                {
-                                    print("not same name")
-                                    self!.communicationViewModel.createProjectGroup(self!.textFld.text!){[weak self] resu, chatGroup,err in
+                            
+                               self!.communicationViewModel.createProjectGroup(self!.textFld.text!){[weak self] resu, chatGroup,err in
                                         if resu
                                         {
                                             self!.teamChatViewController.projectTeamChatViewModel.addChatGroup(chatGroup!)
                                             self?.navigationController?.popViewControllerAnimated(true)
                                         }
                                     }
-                                }
+                                
                                 
                             }
                             

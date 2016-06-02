@@ -86,21 +86,6 @@ class PLTeamCommunicationViewModel: NSObject {
         return false
     }
     
-    func isGroupNameExist(name:String,groups:[PLChatGroup])->Bool{
-        
-        for group in groups{
-            
-            print("Name is \(group.name)")
-           
-            if group.name == name{
-                
-                return false
-            }
-        }
-        
-        return true
-    }
-    
     func isGroupWithSameMembersExist(groups:[PLChatGroup])->Bool{
     
         
