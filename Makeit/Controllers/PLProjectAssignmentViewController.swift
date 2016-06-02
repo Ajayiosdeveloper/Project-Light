@@ -255,7 +255,7 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
                cell.statusField.progress = assignmentViewModel.percentageCompletedByAssignee(indexPath.row)
                cell.statusField.text = "\(assignmentViewModel.percentageCompletedByAssignee(indexPath.row) * 100)%"
                 if assigneeStatus == "1"{
-                  cell.statusField.text = "Closed"
+                  cell.statusField.text = "Submitted"
                   cell.statusField.textColor = UIColor.redColor()
                   cell.statusField.trackWidth = 0
                   cell.statusField.progressWidth = 0
@@ -264,7 +264,7 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
                 loggedInUserStatus = assignmentViewModel.assigneeStatus(0)
                 if loggedInUserStatus == "1"{
                     headerColor = UIColor(colorLiteralRed: 89/255, green: 181/255, blue: 50/255, alpha: 0.5)
-                    assignmentStatus.setTitle("Closed", forState: .Normal)
+                    assignmentStatus.setTitle("Submitted", forState: .Normal)
                     assignmentStatus.enabled = false
                     completeStatusLabel.hidden = true
                     assignmentStatusSlider.hidden = true
@@ -319,14 +319,8 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
         {
             
             if assignmentViewModel.selectedAssignment != nil{
-                if loggedInUserStatus == "0"{
-                    headerView.backgroundColor = UIColor(colorLiteralRed: 89/255, green: 181/255, blue: 50/255, alpha: 1)
-                }else if loggedInUserStatus == "1"{
-                    headerView.backgroundColor = UIColor(colorLiteralRed: 89/255, green: 181/255, blue: 50/255, alpha: 0.5)
-                }
-              
-                
-                let userId = QBSession.currentSession().currentUser?.ID
+               
+               let userId = QBSession.currentSession().currentUser?.ID
                 if userId! == PLSharedManager.manager.projectCreatedByUserId{
                     
                     self.addButtonForTableViewFooterOnView(headerView, title: "Close", tag: -1)
@@ -335,7 +329,16 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
                     
                     if assignmentViewModel.isLoggedInUserPartOfAssignment()
                     {
-                        self.addButtonForTableViewFooterOnView(headerView, title: "Completed ?", tag: 1)
+                        if loggedInUserStatus == "0"{
+                            headerView.backgroundColor = UIColor(colorLiteralRed: 89/255, green: 181/255, blue: 50/255, alpha: 1)
+                            self.addButtonForTableViewFooterOnView(headerView, title: "Completed ?", tag: 1)
+                            assignmentStatus.enabled = true
+                        }else if loggedInUserStatus == "1"{
+                            headerView.backgroundColor = UIColor(colorLiteralRed: 89/255, green: 181/255, blue: 50/255, alpha: 0.5)
+                            self.addButtonForTableViewFooterOnView(headerView, title: "Submitted", tag: 1)
+                            assignmentStatus.enabled = false
+                        }
+                        
                     }
                     else{
                         return nil
@@ -360,7 +363,6 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
             }else{
                     assignmentStatus.setTitle("Close", forState: UIControlState.Normal)
                     assignmentStatus.enabled = true
-                
                 }
             }
         }
@@ -420,7 +422,7 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
         if sender.tag == 1{
             assignmentViewModel.updateAssigmentStatusOfLoggedInUser(1){res,err in
                 if res{
-                    self.assignmentStatus.setTitle("Completed", forState:.Normal)
+                    self.assignmentStatus.setTitle("Submitted", forState:.Normal)
                     self.assignmentStatus.enabled = false
                     self.loggedInUserStatus = "1"
                     self.assigneeListTableView.reloadRowsAtIndexPaths([NSIndexPath(forRow:0, inSection:0)], withRowAnimation: UITableViewRowAnimation.Automatic)
@@ -443,6 +445,14 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
                     PLSharedManager.showAlertIn(self!, error: err!, title: "Cannot Close - Assignment is still in progress by some assignees", message: err.debugDescription)
                 }
             }*/
+            
+            if assignmentViewModel.numberOfAssigneesCompletedAssignment() == 1{
+                showAlertWithMessage("Are you sure to close?", message:"you can also reopen anssignment once after you close if needed", cancelNeeded: true)
+            }else{
+                
+                showPopOver(sender,type: "Close to members")//show popover
+            }
+            
 
         }else{
             
@@ -450,7 +460,7 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
             showAlertWithMessage("Are you sure to reopen?", message:"Reopening issue will notify users to rework on the assignment", cancelNeeded: true)
             }else{
                 
-                showPopOver(sender)//show popover
+                showPopOver(sender,type: "Reopen to membrs")//show popover
             }
         }
     }
@@ -556,7 +566,7 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
     }
     
     
-    func showPopOver(sender:UIButton) {
+    func showPopOver(sender:UIButton,type:String) {
         
         if diplayMembersPopover == nil
         {
@@ -564,6 +574,10 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
             setUpNavigationBarForPopover()
         }
        
+      
+       diplayMembersPopover.title = type
+       
+        
         diplayMembersPopover.teamMemberModelView = PLTeamMemberModelView(searchMembers:assignmentViewModel.membersWithClosedAssignmentStatus());
         plPopOverController!.popoverLayoutMargins = UIEdgeInsetsMake(10, 10, 10, 10);
         plPopOverController?.popoverContentSize = CGSizeMake(300, 200)
@@ -573,7 +587,7 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
     
     func setUpNavigationBarForPopover()
     {
-        diplayMembersPopover.title = "Select members to reopen"
+       
         diplayMembersPopover.modalInPopover = false
         diplayMembersPopover.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Done, target:self, action:#selector(PLProjectAssignmentViewController.close))
         let navigationController = UINavigationController(rootViewController: diplayMembersPopover)
