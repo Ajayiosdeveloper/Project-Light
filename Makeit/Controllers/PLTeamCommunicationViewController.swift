@@ -15,6 +15,7 @@ class PLTeamCommunicationViewController: UIViewController,UITableViewDelegate,UI
     var currentSession:QBRTCSession!
     var communicationViewModel:PLTeamCommunicationViewModel!
     var teamChatViewController:PLProjectTeamChatViewController!
+    var chatGroups:[PLChatGroup]!
     var textFld = UITextField()
     
     @IBOutlet var teamListTableView: UITableView!
@@ -50,8 +51,9 @@ class PLTeamCommunicationViewController: UIViewController,UITableViewDelegate,UI
             self.title = "Audio Conference"
         case 1:
             self.title = "Video Conference"
-        case 1:
+        case 2:
             self.title = "Create Group"
+            
             
         default:
             print("")
@@ -177,38 +179,76 @@ class PLTeamCommunicationViewController: UIViewController,UITableViewDelegate,UI
     
     func createNewChatGroupForProject()  {
         
-        print("Create Chat Group Here")
-        
-        if #available(iOS 8.0, *) {
-            let alertViewController = UIAlertController.init(title: "Enter Group Name", message: nil, preferredStyle: .Alert)
-            let okAction = UIAlertAction.init(title: "Ok", style: .Default) {[weak self] (action) -> Void in
-                
-                self!.communicationViewModel.createProjectGroup(self!.textFld.text!){[weak self] resu, chatGroup,err in
-                    if resu{
-                        self!.teamChatViewController.projectTeamChatViewModel.addChatGroup(chatGroup!)
-                        self?.navigationController?.popViewControllerAnimated(true)
-                    }
-                    else{
-                        print("Failed")
-                    }
-                }
-            }
-            
-            let cancelAction = UIAlertAction(title:"Cancel", style: UIAlertActionStyle.Cancel, handler:nil)
-            alertViewController.addAction(okAction)
-            alertViewController.addAction(cancelAction)
-            alertViewController.addTextFieldWithConfigurationHandler {[weak self] (textField) -> Void in
+        if communicationViewModel.isMembersSelectedForChatGroup(){
 
-                self?.textFld = textField
-            }
-              self.presentViewController(alertViewController, animated: true, completion: nil)
+            
+                if communicationViewModel.isGroupWithSameMembersExist(chatGroups){
+                    
+                    self.showAlertWithMessage("Group Members Existing", message: "Already one group existing with these all selected members")
+                    //Showing alert for existing
+                    
+                }
+                else{
+                    if #available(iOS 8.0, *) {
+                            let alertViewController = UIAlertController.init(title: "Enter Group Name", message: nil, preferredStyle: .Alert)
+                            let okAction = UIAlertAction.init(title: "Ok", style: .Default) {[weak self] (action) -> Void in
+                            
+                               self!.communicationViewModel.createProjectGroup(self!.textFld.text!){[weak self] resu, chatGroup,err in
+                                        if resu
+                                        {
+                                            self!.teamChatViewController.projectTeamChatViewModel.addChatGroup(chatGroup!)
+                                            self?.navigationController?.popViewControllerAnimated(true)
+                                        }
+                                    }
+                                
+                                
+                            }
+                            
+                            let cancelAction = UIAlertAction(title:"Cancel", style: UIAlertActionStyle.Cancel, handler:nil)
+                            alertViewController.addAction(okAction)
+                            alertViewController.addAction(cancelAction)
+                            alertViewController.addTextFieldWithConfigurationHandler {[weak self] (textField) -> Void in
+                                
+                                self?.textFld = textField
+                            }
+                            self.presentViewController(alertViewController, animated: true, completion: nil)
+                        }
+                        else
+                        {
+                            let alertView = UIAlertView(title: "Enter Group Name", message: "", delegate: self, cancelButtonTitle: nil, otherButtonTitles: "Ok", "Cancel")
+                            alertView.alertViewStyle = .PlainTextInput
+                            alertView.show()
+                            // Fallback on earlier versions
+                        }
+                    
+                }
+         
+        
+        }
+            else{
+            
+             self.showAlertWithMessage("No member selected", message: "Please select atleast one member")
+        }
+        
+    }
+    
+    func showAlertWithMessage(title:String,message:String)
+    {
+        if #available(iOS 8.0, *) {
+            let alertController = UIAlertController(title:title, message:message, preferredStyle: UIAlertControllerStyle.Alert)
+            let action = UIAlertAction(title:"Ok", style: UIAlertActionStyle.Default, handler: { (action) -> Void in
+            })
+            alertController.addAction(action)
+            self.presentViewController(alertController, animated: true, completion: nil)
+            
         } else {
-            let alertView = UIAlertView(title: "Enter Group Name", message: "", delegate: self, cancelButtonTitle: nil, otherButtonTitles: "Ok", "Cancel")
-            alertView.alertViewStyle = .PlainTextInput
-            alertView.show()
+            let alert = UIAlertView(title: title, message: message, delegate:nil, cancelButtonTitle:"Ok", otherButtonTitles:"") as UIAlertView
+            alert.show()
+            
             // Fallback on earlier versions
         }
     }
+
     
     func alertView(alertView: UIAlertView, clickedButtonAtIndex buttonIndex: Int) {
         

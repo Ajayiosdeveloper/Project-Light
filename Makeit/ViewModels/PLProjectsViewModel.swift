@@ -109,7 +109,14 @@ class PLProjectsViewModel: NSObject {
     func ProjectTitle(row : NSInteger) -> String { //change indexpath variable name
         
         let project = createdProjectList[row]
-        return project.name
+        
+        if  project.name != "" {
+            
+            return project.name
+        }
+        return ""
+        
+        
     }
     
     func subTitle(row: NSInteger) -> String { //change indexpath variable name

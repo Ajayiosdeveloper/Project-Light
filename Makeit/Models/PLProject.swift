@@ -91,7 +91,7 @@ class PLAssignment: NSObject {
 struct PLChatGroup{
     
     var name:String = ""
-    var opponents:[NSNumber] = [NSNumber]()
+    var opponents:[UInt] = [UInt]()
     var chatGroupId:String = ""
     var lastMessage:String? = ""
     var lastMessageSenderId:UInt? = 0

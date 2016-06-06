@@ -24,6 +24,11 @@ class PLProjectTeamChatViewModel: NSObject {
         projectChatGroupsList.append(group)
     }
     
+    func chatGroups()->[PLChatGroup]{
+    
+        return projectChatGroupsList
+    
+    }
     
     func numberOfRows()->Int{
         
