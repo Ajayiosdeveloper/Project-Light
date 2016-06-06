@@ -260,6 +260,7 @@ class PLProjectDetailViewModel: NSObject {
                             let final : Double =  Double(percentage / 100)
 
                             assignment.percentageCompleted = final
+                             completion(true, nil)
                         }
                         
                         }, errorBlock: { (_) in
@@ -269,15 +270,17 @@ class PLProjectDetailViewModel: NSObject {
                 
                    self.assignments.append(assignment)
                 }
-                completion(true, nil)
-
-            }else {completion(false, error)}
+           }
+            else {completion(false, error)}
          }
-    }
+        
+          }
     
     func assignmentCompletedPercentage(row:Int)->Double{
         
         let assignment = assignments[row]
+         print("assignment.percentageCompleted")
+        print(assignment.percentageCompleted)
         return assignment.percentageCompleted
     }
     
