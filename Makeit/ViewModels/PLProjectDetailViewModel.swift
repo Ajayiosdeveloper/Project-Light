@@ -235,9 +235,24 @@ class PLProjectDetailViewModel: NSObject {
                     
                 assignment.percentageCompleted = each.fields?.objectForKey("percentageCompleted") as! Int
                 assignment.percentageCompleted = assignment.percentageCompleted / assignment.assineesUserIds.count
+                    
+                    let exReq = NSMutableDictionary()
+                    exReq.setValue(assignment.assignmentId, forKey: "_parent_id")
+                    
+                    QBRequest.objectsWithClassName("PLProjectAssignmentMember", aggregationOperator: QBCOAggregationOperator.Summary, forFieldName:"percentageCompleted", groupByFieldName:"_id", extendedRequest: exReq, successBlock: { (_, percentages, _) in
+
+                        if let _ = percentages{
+                            
+                         
+                        }
+                        
+                        }, errorBlock: { (_) in
+                            
+                            print("error came")
+                    })
                 
-                self.assignments.append(assignment)
-              }
+                   self.assignments.append(assignment)
+                }
                 completion(true, nil)
 
             }else {completion(false, error)}

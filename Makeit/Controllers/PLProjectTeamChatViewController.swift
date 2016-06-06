@@ -30,7 +30,7 @@ class PLProjectTeamChatViewController: UIViewController,UITableViewDelegate,UITa
                 self!.chatGroupsListTableView.reloadData()
               }
             else
-            {
+            {    SVProgressHUD.dismiss()
                 PLSharedManager.showAlertIn(self!, error: err!, title: "Error occured while fetching chat groups", message: err.debugDescription)
             }
         }
@@ -130,5 +130,11 @@ class PLProjectTeamChatViewController: UIViewController,UITableViewDelegate,UITa
            let chatDetailViewController = segue.destinationViewController as! PLChatDetailViewController
            chatDetailViewController.chatDetailViewModel = PLChatDetailViewModel(chatGroup: projectTeamChatViewModel.selectedGroup(selectedRow))
     }
+    
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(true)
+        SVProgressHUD.dismiss()
+    }
+    
     
 }
