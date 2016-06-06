@@ -57,7 +57,7 @@ class PLAssignmentMember:PLTeamMember{
     
     var assignmentRecordId:String = ""
     var assigneeStatus: UInt = 0
-    var percentageCompleted:Int = 0
+    var percentageCompleted:Double = 0.0
    
 }
 
@@ -83,7 +83,7 @@ class PLAssignment: NSObject {
     var startDate:String = ""
     var creatorId:UInt = 0
     var assignmentStatus:Int = 0
-    var percentageCompleted:Int = 0
+    var percentageCompleted:Double = 0.0
     var assignees:[String] = [String]()
     var assineesUserIds:[UInt] = [UInt]()
 }

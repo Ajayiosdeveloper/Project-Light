@@ -233,20 +233,33 @@ class PLProjectDetailViewModel: NSObject {
                 assignment.assignmentStatus = (each.fields?.objectForKey("status"))! as! Int
                 assignment.assineesUserIds = (each.fields?.objectForKey("assigneeUserId"))! as! [UInt]
                     
-                assignment.percentageCompleted = each.fields?.objectForKey("percentageCompleted") as! Int
-                assignment.percentageCompleted = assignment.percentageCompleted / assignment.assineesUserIds.count
+               // assignment.percentageCompleted = each.fields?.objectForKey("percentageCompleted") as! Int
+                //assignment.percentageCompleted = assignment.percentageCompleted / assignment.assineesUserIds.count
                     
                     let exReq = NSMutableDictionary()
                     exReq.setValue(assignment.assignmentId, forKey: "_parent_id")
                     
                     QBRequest.objectsWithClassName("PLProjectAssignmentMember", aggregationOperator: QBCOAggregationOperator.Summary, forFieldName:"percentageCompleted", groupByFieldName:"_id", extendedRequest: exReq, successBlock: { (_, percentages, _) in
 
-                        //Crash is http://tech.rishitnandan.com/Posts/7701/NSArray_element_failed_to_match_the_Swift_Array_Element_type
+                         var percentageArray = NSArray()
+                         percentageArray = percentages!
+        
                         
-                        if let _ = percentages{
-                            
-                            
-                            
+                        if percentageArray.count > 0
+                        {
+                            var total = 0
+                            for (i,_) in percentageArray.enumerate()
+                            {
+                                
+                                let member = percentageArray.objectAtIndex(i) as! NSDictionary
+                                
+                                total += member.valueForKey("sum") as! Int
+                            }
+                           
+                            let percentage : Double =  Double(total) / Double((assignment.assineesUserIds.count))
+                            let final : Double =  Double(percentage / 100)
+
+                            assignment.percentageCompleted = final
                         }
                         
                         }, errorBlock: { (_) in
@@ -262,7 +275,7 @@ class PLProjectDetailViewModel: NSObject {
          }
     }
     
-    func assignmentCompletedPercentage(row:Int)->Int{
+    func assignmentCompletedPercentage(row:Int)->Double{
         
         let assignment = assignments[row]
         return assignment.percentageCompleted

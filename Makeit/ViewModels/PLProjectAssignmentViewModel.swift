@@ -212,7 +212,7 @@ class PLProjectAssignmentViewModel: NSObject {
                  assignmentMember.assigneeStatus = member.fields?.objectForKey("assigneeStatus") as! UInt
                  assignmentMember.profilePicture = member.fields?.objectForKey("Avatar") as! String
                  assignmentMember.memberEmail = member.fields?.objectForKey("assigneeEmail") as! String
-                 assignmentMember.percentageCompleted = member.fields?.objectForKey("percentageCompleted") as! Int
+                 assignmentMember.percentageCompleted = Double(member.fields?.objectForKey("percentageCompleted") as! Int)
                  assignmentMember.assignmentRecordId = member.ID!
                   if assignmentMember.memberUserId == QBSession.currentSession().currentUser?.ID{
                     
@@ -250,7 +250,7 @@ class PLProjectAssignmentViewModel: NSObject {
         return false
     }
     
-    func showPercentageCompletedInSlider()->Int{
+    func showPercentageCompletedInSlider()->Double{
         
         let member = selectedAssigneeList[0] as! PLAssignmentMember
         return member.percentageCompleted
