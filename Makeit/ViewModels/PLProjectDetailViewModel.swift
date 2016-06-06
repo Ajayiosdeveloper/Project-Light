@@ -241,9 +241,12 @@ class PLProjectDetailViewModel: NSObject {
                     
                     QBRequest.objectsWithClassName("PLProjectAssignmentMember", aggregationOperator: QBCOAggregationOperator.Summary, forFieldName:"percentageCompleted", groupByFieldName:"_id", extendedRequest: exReq, successBlock: { (_, percentages, _) in
 
+                        //Crash is http://tech.rishitnandan.com/Posts/7701/NSArray_element_failed_to_match_the_Swift_Array_Element_type
+                        
                         if let _ = percentages{
                             
-                         
+                            
+                            
                         }
                         
                         }, errorBlock: { (_) in
