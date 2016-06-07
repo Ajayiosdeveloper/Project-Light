@@ -57,7 +57,7 @@ class PLProjectDetailTableViewController: UITableViewController,EKEventEditViewD
     
         if (fetchDataFlag == false)
         {
-            fetchDataFromRemote()
+            fetchDataFromServer()
         }
         else
         {
@@ -495,13 +495,13 @@ class PLProjectDetailTableViewController: UITableViewController,EKEventEditViewD
         
     }
     
-    func fetchDataFromRemote()  {
+    func fetchDataFromServer()  {
         
         projectDetailViewModel.assignments = []
         projectDetailViewModel.commitments = []
         projectDetailViewModel.getCommitmentsFromServer(projectId){[weak self]result,err in
             
-            if result{  self!.projectDetailViewModel.getAssignmentsFromRemote(self!.projectId){result,err in
+            if result{  self!.projectDetailViewModel.getAssignmentsFromServer(self!.projectId){result,err in
                 
                 if result{
                     self?.projectDetailsTableView.reloadData()
