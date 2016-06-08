@@ -130,6 +130,7 @@ class PLProjectTeamChatViewController: UIViewController,UITableViewDelegate,UITa
         
            let chatDetailViewController = segue.destinationViewController as! PLChatDetailViewController
            chatDetailViewController.chatDetailViewModel = PLChatDetailViewModel(chatGroup: projectTeamChatViewModel.selectedGroup(selectedRow))
+           //chatDetailViewController.selectedChatGroupIndex = selectedRow
     }
     
     override func viewWillDisappear(animated: Bool) {

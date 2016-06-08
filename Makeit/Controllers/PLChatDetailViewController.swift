@@ -22,6 +22,7 @@ class PLChatDetailViewController: JSQMessagesViewController, UIActionSheetDelega
     var imagePickerController:UIImagePickerController!
     var attachment:NSData!
     var notificationBanner:AFDropdownNotification!
+    //var selectedChatGroupIndex:Int = 0
  
     
     override func viewDidLoad() {
@@ -388,7 +389,10 @@ class PLChatDetailViewController: JSQMessagesViewController, UIActionSheetDelega
 
         }
     
-    
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+        chatDetailViewModel.updateChatUnreadMessagesCount()
+    }
     
  
 }

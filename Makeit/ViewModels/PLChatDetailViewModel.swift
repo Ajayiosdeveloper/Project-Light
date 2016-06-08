@@ -58,5 +58,9 @@ class PLChatDetailViewModel: NSObject {
         }
     }
     
+    func updateChatUnreadMessagesCount(){
+      selectedChatGroup.unReadMessageCount = 0
+    }
+    
     
 }
