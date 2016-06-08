@@ -964,7 +964,7 @@ class PLQuickbloxHttpClient
             completion(count, nil)
 
             
-        }){ (res) in // rethink on the error scenarios
+        }){ (res) in
             
             completion(0, self.handleErrors(res))
             
@@ -973,7 +973,7 @@ class PLQuickbloxHttpClient
     }
     
     func countOfPendingTasks(completion:(UInt,ServerErrorHandling?) -> Void)
-    { // check spelling of method
+    {
         let timeInterval = Int(convertdateToTimeinterval(NSDate(),dateFormat: "dd-MM-yyyy"))
         let extendedReq = NSMutableDictionary()
         extendedReq.setValue(timeInterval, forKey: "targetDate[lt]")
@@ -984,7 +984,7 @@ class PLQuickbloxHttpClient
            
             completion(count, nil)
             
-        }){ (res) in // rethink on the error scenarios
+        }){ (res) in
             
             completion(0, self.handleErrors(res))
             
@@ -1005,7 +1005,7 @@ class PLQuickbloxHttpClient
           
         }){ (res) in
             
-          completion(0,self.handleErrors(res)) // rethink on the error scenarios
+          completion(0,self.handleErrors(res))
         }
      }
     
@@ -1023,7 +1023,7 @@ class PLQuickbloxHttpClient
             
         }){ (res) in
             
-            completion(0,self.handleErrors(res)) // rethink on the error scenarios
+            completion(0,self.handleErrors(res))
         }
     }
     
@@ -1032,25 +1032,40 @@ class PLQuickbloxHttpClient
         if range == 0
         {
         timeInterval = Int(convertdateToTimeinterval(NSDate(),dateFormat: "dd-MM"))
+            let extendedReq = NSMutableDictionary()
+            extendedReq.setValue(timeInterval, forKey: "birthday")
+            extendedReq.setValue(QBSession.currentSession().currentUser?.ID, forKey: "user_id")
+            
+            QBRequest.objectsWithClassName("PLProjectMember", extendedRequest: extendedReq, successBlock: { (_, objects, _) in
+                
+                completion(objects,nil)
+                
+            }) { (res) in
+                
+                print("Error is \(res)")
+                completion(nil,self.handleErrors(res))
+            }
+
         }
         else{
-            let tDate = NSDate().dateByAddingTimeInterval(60*60*24)
-            timeInterval = Int(convertdateToTimeinterval(tDate, dateFormat: "dd-MM"))
-        }
-        let extendedReq = NSMutableDictionary()
-        extendedReq.setValue(timeInterval, forKey: "birthday")
-        extendedReq.setValue(QBSession.currentSession().currentUser?.ID, forKey: "user_id")
-     
-        QBRequest.objectsWithClassName("PLProjectMember", extendedRequest: extendedReq, successBlock: { (_, objects, _) in
+            timeInterval = Int(convertdateToTimeinterval(NSDate(), dateFormat: "dd-MM"))
+            let extendedReq = NSMutableDictionary()
+            extendedReq.setValue(timeInterval, forKey: "birthday[gt]")
+            extendedReq.setValue(QBSession.currentSession().currentUser?.ID, forKey: "user_id")
             
-            completion(objects,nil)
-            
-        }) { (res) in
-            
-            print("Error is \(res)") // rethink on the error scenarios
-            completion(nil,self.handleErrors(res))
+            QBRequest.objectsWithClassName("PLProjectMember", extendedRequest: extendedReq, successBlock: { (_, objects, _) in
+                
+                completion(objects,nil)
+                
+            }) { (res) in
+                
+                print("Error is \(res)")
+                completion(nil,self.handleErrors(res))
+            }
+
         }
     }
+    
     func stringToDate(dateTime : String) -> NSDate
     {
         let dateFormatter = NSDateFormatter()
@@ -1105,7 +1120,7 @@ class PLQuickbloxHttpClient
     }
     
     
-    func updateAssigmentStatus(id:String?,status:Int,completion:(Bool, ServerErrorHandling?)->Void){ // remove Remote
+    func updateAssigmentStatus(id:String?,status:Int,completion:(Bool, ServerErrorHandling?)->Void){
         
         print("updateRemoteAssigmentStatus\(id)")
         
@@ -1196,7 +1211,7 @@ class PLQuickbloxHttpClient
             
             completion(count, nil)
             
-        }){ (res) in // rethink on the error scenarios
+        }){ (res) in
             
             completion(0, self.handleErrors(res))
             
@@ -1226,8 +1241,6 @@ class PLQuickbloxHttpClient
  
     
     func closeAssignment(id:String,completion:(Bool, ServerErrorHandling?)->Void){
-        
-        print("Coming in")
         
         let assignment = QBCOCustomObject()
         assignment.className = "PLProjectAssignment"

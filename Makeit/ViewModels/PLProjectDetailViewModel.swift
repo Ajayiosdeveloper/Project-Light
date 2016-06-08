@@ -199,7 +199,7 @@ class PLProjectDetailViewModel: NSObject {
         return dateFormatter.stringFromDate(time!)
     }
     
-    func getAssignmentsFromRemote(id:String, completion : (Bool, ServerErrorHandling?) -> Void)
+    func getAssignmentsFromServer(id:String, completion : (Bool, ServerErrorHandling?) -> Void)
     {
         var isUserProjectCreator = false
         

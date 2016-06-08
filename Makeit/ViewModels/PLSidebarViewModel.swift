@@ -8,27 +8,7 @@
 
 import UIKit
 import Quickblox
-extension Array where Element: Equatable {
-    
-    public func uniq() -> [Element] {
-        var arrayCopy = self
-        arrayCopy.uniqInPlace()
-        return arrayCopy
-    }
-    
-    mutating public func uniqInPlace() {
-        var seen = [Element]()
-        var index = 0
-        for element in self {
-            if seen.contains(element) {
-                removeAtIndex(index)
-            } else {
-                seen.append(element)
-                index += 1
-            }
-        }
-    }
-}
+
 class PLSidebarViewModel: NSObject {
 
     var qbClient = PLQuickbloxHttpClient()
@@ -104,16 +84,10 @@ class PLSidebarViewModel: NSObject {
         
         self.teamMembersForBitrhday.removeAll(keepCapacity: true)
         qbClient.getBirthdayListOfTeamMembers(range){ members,err in
-            
-            let strings = ["Y", "Z", "A", "Y", "B", "Y", "Z"]
-            let uniqStrings = strings.uniq()
-            // uniqStrings is now ["Y", "Z", "A", "B"]
-            
-            let unique = members?.uniq()
-            print("unique \(unique?.count)")
-            
+          
             var birthdaysOfMembers = [PLTeamMember]()
-            
+            print("members")
+            print(members?.count)
             if members?.count > 0{
                 
                 for each in members!{
@@ -289,7 +263,8 @@ class PLSidebarViewModel: NSObject {
     }
     
     func numberOfBirthdayRows() -> Int {
-        
+        print("print")
+        print(teamMembersForBitrhday.count)
         if self.teamMembersForBitrhday.count > 0{
             return self.teamMembersForBitrhday.count
         }
