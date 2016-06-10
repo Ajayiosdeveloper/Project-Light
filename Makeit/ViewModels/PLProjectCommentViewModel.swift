@@ -43,40 +43,18 @@ class PLProjectCommentViewModel: NSObject {
     
     func updateCommitmentWith(name:String,startDate:NSDate,targetDate:NSDate, description:String,projectId:String,completion:(Bool)->Void)
     {
-        print("date start")
-        print(startDate)
-        print(commitment?.name)
-       print(dateToString(startDate))
-        print(dateToString(targetDate))
-        
         commitment?.name = name
         commitment?.startDate = dateToString(startDate)
         commitment?.targetDate = dateToString(targetDate)
         commitment?.details = description
-        
-        print(commitment?.startDate)
-        print(commitment?.targetDate)
+      
         qbClient.updateCommitmentTask(commitment!) { (res,error) in
-            print("Cammmme")
            completion(res)
         }
     }
     
-    
-    func timeIntervalToString(timeInterval : NSTimeInterval) -> String
-    {
-        print("Start** **timeInterval" , timeInterval)
-        let date = NSDate(timeIntervalSince1970: timeInterval)
-        let dateFormatter = NSDateFormatter()
-        dateFormatter.dateFormat = "dd-MM-yyyy"
-        dateFormatter.timeZone = NSTimeZone(forSecondsFromGMT: NSTimeZone.localTimeZone().secondsFromGMT)
-        return dateFormatter.stringFromDate(date)
-    }
-    
-    
     func dateFormat(date : NSDate) -> NSTimeInterval
     {
-        print("Start** **date" , date)
         let dateFormatter = NSDateFormatter()
         dateFormatter.dateFormat = "dd-MM-yyyy"
         dateFormatter.timeZone = NSTimeZone(forSecondsFromGMT: NSTimeZone.localTimeZone().secondsFromGMT)
@@ -199,26 +177,20 @@ class PLProjectCommentViewModel: NSObject {
         return priorityType[row]
       }
     
-    func addCommitmentToCalendar(name:String,date:NSDate,endDate:NSDate,description:String,completion:(String)->Void){
-        
+    func addCommitmentToCalendar(name:String,date:NSDate,endDate:NSDate,description:String,event:EKEvent,completion:(String)->Void){
+        print("Create cal")
          self.isAccessGranted(){[weak self] result in
             
             if result{
-           
-                 let event = EKEvent(eventStore: self!.eventStore!)
-                 event.title = name
-                 event.startDate = date
-                 event.endDate = endDate
-                event.notes = description
-                 event.calendar = self!.eventStore!.defaultCalendarForNewEvents
+  
                 do{
+                    print("Try")
                     try  self!.eventStore?.saveEvent(event, span: .ThisEvent , commit: true)
-                    
+                    print("Event: \(event.eventIdentifier)")
                     completion(event.eventIdentifier)
                 }
                 catch{
-                    
-                    
+                    completion(event.eventIdentifier)
                 }
             }
             else{

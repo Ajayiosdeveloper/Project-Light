@@ -389,14 +389,11 @@ class PLProjectDetailTableViewController: UITableViewController,EKEventEditViewD
     func showEventEditViewController(event:EKEvent?)
     {
         editViewController.editViewDelegate = self
-        if let ev = event{
-           let eve = EKEvent(eventStore:editViewController.eventStore)
-           eve.title = ev.title
-           eve.notes = ev.notes
-           eve.startDate = ev.startDate
-           eve.endDate = ev.endDate
-           eve.location = ev.location
-           editViewController.event = ev
+        if let _ = event{
+            print("Event is there")
+           editViewController.event = event
+        }else{
+            print("No Event")
         }
         self.presentViewController(editViewController, animated: true, completion:nil)
     }
@@ -427,16 +424,27 @@ class PLProjectDetailTableViewController: UITableViewController,EKEventEditViewD
                     commitmentViewModel.commitment = projectDetailViewModel.selectedCommitment(indexPath.row)
                    
                     if commitment?.calendarIdentifier == "NULL"{
-                        //self.editCommitment = false
+                        self.editCommitment = false
                         showCommitmentViewController()
                         commitmentViewController.commitmentViewModel.commitment = commitment
                     
                     }else{
                             fetchEvents((commitment?.calendarIdentifier)!, completion: {[weak self] (event) in
-                            self!.editCommitment = true
-                            self!.event = event
-                            self!.showEventEditViewController(self!.event)
-                        })
+                            
+                                print("Fetch events")
+                                
+                                self!.editCommitment = true
+                                if let _ = event{
+                                    
+                                    var events = EKEvent(eventStore: self!.editViewController.eventStore)
+                                    events = event!
+                                    self!.showEventEditViewController(events)
+                                }else{
+                                    print("Else part fetch")
+                                    self!.showCommitmentViewController()
+                                    self!.commitmentViewController.commitmentViewModel.commitment = self!.projectDetailViewModel.selectedCommitment(indexPath.row)
+                                }
+                            })
                     }
                 }
                 else{
@@ -556,7 +564,7 @@ class PLProjectDetailTableViewController: UITableViewController,EKEventEditViewD
             return
         }
        if action == EKEventEditViewAction.Saved{
-        
+        event = editViewController.event
         if editCommitment
         {
          print("enddate")
@@ -582,10 +590,6 @@ class PLProjectDetailTableViewController: UITableViewController,EKEventEditViewD
                 }) {
                     self.taskPriority = NSUserDefaults.standardUserDefaults().valueForKey("PRIORITY") as! String
                     
-                    var subTitle = ""
-                    if let _ = controller.event?.notes{
-                        subTitle = (controller.event?.notes!)!
-                    }
                     self.performDone((controller.event?.title)!, description: (controller.event?.notes!)!, startDate:(controller.event?.startDate)!, targetDate:(controller.event?.endDate)!){ res in
                         
                         if res
@@ -618,8 +622,8 @@ class PLProjectDetailTableViewController: UITableViewController,EKEventEditViewD
             
             try commitmentViewModel.commitmentValidations(title,startDate: startDate,targetDate:targetDate, description:description)
             
-            commitmentViewModel.addCommitmentToCalendar(title, date:startDate,endDate: targetDate, description: description){[weak self] identifier in
-                
+            commitmentViewModel.addCommitmentToCalendar(title, date:startDate,endDate: targetDate, description: description, event:event!){[weak self] identifier in
+                print("CAME")
                 self!.commitmentViewModel.createCommitmentWith(title,startDate: startDate,targetDate:targetDate,description:description ,projectId: self!.projectId,identifier: identifier){ result,err in
                     
                     if result{

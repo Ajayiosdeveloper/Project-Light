@@ -60,18 +60,20 @@ class PLProjectCommentViewController: UITableViewController,EKEventEditViewDeleg
             if PLSharedManager.manager.isCalendarAccess{
                 
                 if commitmentViewModel.commitment?.calendarIdentifier == "NULL"{
-                
+                   
+                    fillCommitmentData()
+                }
+                else{
+                    print("There identifier")
                     fillCommitmentData()
                 }
                 
-            }else{
-                
-                fillCommitmentData()
             }
-            
+
             self.view.endEditing(true)
         }
         else{
+             print("New")
             self.commitmentNameTextField.becomeFirstResponder()
             self.navigationItem.rightBarButtonItem?.tintColor = nil;
             clearFields()
@@ -80,6 +82,7 @@ class PLProjectCommentViewController: UITableViewController,EKEventEditViewDeleg
             isTaskCompleted.hidden = true
             taskCompletedLabel.hidden = true
         }
+    
     }
     
     func fillCommitmentData(){

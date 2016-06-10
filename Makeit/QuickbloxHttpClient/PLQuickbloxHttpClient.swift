@@ -280,14 +280,9 @@ class PLQuickbloxHttpClient
     {
         let startTime = self.timeFormats(commitment.startDate)
         let endTime = self.timeFormats(commitment.targetDate)
-        print(startTime)
-        print(endTime)
-        
+    
         let startInterval = self.convertdateToTimeinterval(stringToDate(commitment.startDate), dateFormat: "dd-MM-yyyy")
         let endInterval = self.convertdateToTimeinterval(stringToDate(commitment.targetDate),  dateFormat: "dd-MM-yyyy")
-        print(startInterval)
-        print(endInterval)
-        print(commitment.commitmentId)
 
             let updateObject = QBCOCustomObject()
             updateObject.className = "PLProjectCommitment"
