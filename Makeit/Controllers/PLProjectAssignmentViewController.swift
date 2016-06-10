@@ -18,9 +18,9 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
     @IBOutlet var assigneeListTableView: UITableView!
     @IBOutlet weak var assignmentStartDateTextField: UITextField!
     @IBOutlet var assignmentDescriptionTextView: UITextView!
+    
     var plPopOverController:WYPopoverController?
     var  diplayMembersPopover:PLDisplayMembersPopover!
-    
     var selectedIndexes = NSMutableArray()
     var projectId:String!
     var startDatecommitmentDatePicker:UIDatePicker!
@@ -80,7 +80,7 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
                 self.navigationItem.rightBarButtonItem?.enabled = false
                 self.navigationItem.rightBarButtonItem?.tintColor = UIColor.clearColor()
               if refreshFlag{
-              assignmentViewModel.responsibleForAssigniment(){[weak self]result,err in
+              assignmentViewModel.responsibleForAssignment(){[weak self]result,err in
                 
                 if result{
                     self!.completeStatusLabel.text = "\(self!.assignmentViewModel.showPercentageCompletedInSlider()) % Done"
@@ -460,7 +460,7 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
             showAlertWithMessage("Are you sure to reopen?", message:"Reopening issue will notify users to rework on the assignment", cancelNeeded: true)
             }else{
                 
-                showPopOver(sender,type: "Reopen to membrs")//show popover
+                showPopOver(sender,type: "Reopen to members")//show popover
             }
         }
     }

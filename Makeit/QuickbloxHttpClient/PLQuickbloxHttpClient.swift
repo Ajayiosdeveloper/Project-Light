@@ -242,7 +242,7 @@ class PLQuickbloxHttpClient
     
     //Create a Commitment for Project in QuickBlox
     
-    func createCommitmentForProject(id:String,startDate : Int, targetDate:Int, name:String, description:String, startTime : String, endTime: String, completion:(Bool,ServerErrorHandling?)->Void) {
+    func createCommitmentForProject(id:String,startDate : Int, targetDate:Int, name:String, description:String, startTime : String, endTime: String,identifier:String, completion:(Bool,ServerErrorHandling?)->Void) {
         
         let customObject = QBCOCustomObject()
         customObject.className = "PLProjectCommitment"
@@ -255,6 +255,16 @@ class PLQuickbloxHttpClient
         customObject.fields?.setValue(endTime, forKey: "endTime")
         customObject.fields?.setValue(0, forKey: "isCompleted")
         customObject.fields?.setValue(id, forKey:"_parent_id")
+        if identifier == ""{
+            
+            customObject.fields?.setValue("NULL", forKey: "calendarIdentifier")
+            
+        }else{
+            
+            customObject.fields?.setValue(identifier, forKey: "calendarIdentifier")
+        }
+        
+        
         QBRequest.createObject(customObject, successBlock: { (response,object) in
             
             completion(true,nil)
@@ -270,10 +280,15 @@ class PLQuickbloxHttpClient
     {
         let startTime = self.timeFormats(commitment.startDate)
         let endTime = self.timeFormats(commitment.targetDate)
+        print(startTime)
+        print(endTime)
         
         let startInterval = self.convertdateToTimeinterval(stringToDate(commitment.startDate), dateFormat: "dd-MM-yyyy")
         let endInterval = self.convertdateToTimeinterval(stringToDate(commitment.targetDate),  dateFormat: "dd-MM-yyyy")
-    
+        print(startInterval)
+        print(endInterval)
+        print(commitment.commitmentId)
+
             let updateObject = QBCOCustomObject()
             updateObject.className = "PLProjectCommitment"
             updateObject.ID = commitment.commitmentId
