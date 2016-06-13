@@ -174,8 +174,10 @@ class PLProjectDetailViewModel: NSObject {
                 commitment.startDate += " \(startTime)"
                 commitment.targetDate += " \(endTime)"
                 commitment.projectId = each.parentID!
+                commitment.calendarIdentifier = (each.fields?.objectForKey("calendarIdentifier"))! as! String
                 self.commitments.append(commitment)
-                }
+                
+             }
                 
                 completion(true, nil)
             }else{completion(false, error)}

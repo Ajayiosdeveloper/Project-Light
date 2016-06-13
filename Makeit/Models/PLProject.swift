@@ -71,6 +71,7 @@ class PLCommitment: NSObject {
     var isCompleted:Int = 0
     var projectName = ""
     var projectId = ""
+    var calendarIdentifier:String = ""
 }
 
 class PLAssignment: NSObject {

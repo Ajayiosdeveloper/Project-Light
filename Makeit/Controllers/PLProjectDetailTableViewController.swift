@@ -31,12 +31,16 @@ class PLProjectDetailTableViewController: UITableViewController,EKEventEditViewD
     var commitmentViewModel:PLProjectCommentViewModel = PLProjectCommentViewModel()
     var taskPriority:String = ""
     var fetchDataFlag:Bool = false
-    
+    var editCommitment : Bool = false
+    var event : EKEvent?
+    let editViewController = EKEventEditViewController()
+   
     @IBOutlet var projectDetailsTableView: UITableView!
    
     override func viewDidLoad()
     {
         super.viewDidLoad()
+        editViewController.eventStore = EKEventStore()
         self.projectDetailsTableView.registerNib(UINib(nibName:"PLTableViewCell", bundle:NSBundle.mainBundle()), forCellReuseIdentifier: "Cell")
         self.projectDetailsTableView.registerNib(UINib(nibName:"PLAssignmentTableViewCell", bundle:NSBundle.mainBundle()), forCellReuseIdentifier: "AssignmentCell")
         self.projectDetailsTableView.registerClass(UITableViewCell.self, forCellReuseIdentifier:"DefaultCell")
@@ -242,7 +246,7 @@ class PLProjectDetailTableViewController: UITableViewController,EKEventEditViewD
         }
         else if section == 2{
             if projectCreatedBy == QBSession.currentSession().currentUser?.ID{
-            self.addButtonForTableViewFooterOnView(footerView, title:"Add Assigniment", tag:section)
+            self.addButtonForTableViewFooterOnView(footerView, title:"Add Assignment", tag:section)
             }else{footerView = nil}
         }
         else if section == 3
@@ -343,6 +347,7 @@ class PLProjectDetailTableViewController: UITableViewController,EKEventEditViewD
             if PLSharedManager.manager.isCalendarAccess{
                 
                showEventEditViewController(nil)
+               
                 
             }else{
                 
@@ -383,19 +388,13 @@ class PLProjectDetailTableViewController: UITableViewController,EKEventEditViewD
     
     func showEventEditViewController(event:EKEvent?)
     {
-        let editViewController = EKEventEditViewController()
-        editViewController.eventStore = EKEventStore()
         editViewController.editViewDelegate = self
         if let _ = event{
-            
-            let ev = EKEvent(eventStore:EKEventStore())
-            ev.title = event!.title
-            ev.notes = event!.notes
-            print("Coming")
-            print(ev.title)
-            
+            print("Event is there")
+           editViewController.event = event
+        }else{
+            print("No Event")
         }
-       
         self.presentViewController(editViewController, animated: true, completion:nil)
     }
 
@@ -422,18 +421,31 @@ class PLProjectDetailTableViewController: UITableViewController,EKEventEditViewD
                 let commitment = projectDetailViewModel.selectedCommitment(indexPath.row)
                 
                 if PLSharedManager.manager.isCalendarAccess{
+                    commitmentViewModel.commitment = projectDetailViewModel.selectedCommitment(indexPath.row)
+                   
+                    if commitment?.calendarIdentifier == "NULL"{
+                        self.editCommitment = false
+                        showCommitmentViewController()
+                        commitmentViewController.commitmentViewModel.commitment = commitment
                     
-                    print(commitment?.startDate)
-                    print(commitment?.targetDate)
-                    let startDate = getDateForCommitmentUsingString((commitment?.startDate)!)
-                    let endDate = getDateForCommitmentUsingString((commitment?.targetDate)!)
-                    
-                    fetchEvents(startDate, endDate:endDate, completed: { (events) in
-                        
-                        let  event = events.lastObject as! EKEvent
-                        self.showEventEditViewController(event)
-                        
-                    })
+                    }else{
+                            fetchEvents((commitment?.calendarIdentifier)!, completion: {[weak self] (event) in
+                            
+                                print("Fetch events")
+                                
+                                self!.editCommitment = true
+                                if let _ = event{
+                                    
+                                    var events = EKEvent(eventStore: self!.editViewController.eventStore)
+                                    events = event!
+                                    self!.showEventEditViewController(events)
+                                }else{
+                                    print("Else part fetch")
+                                    self!.showCommitmentViewController()
+                                    self!.commitmentViewController.commitmentViewModel.commitment = self!.projectDetailViewModel.selectedCommitment(indexPath.row)
+                                }
+                            })
+                    }
                 }
                 else{
                     
@@ -501,12 +513,16 @@ class PLProjectDetailTableViewController: UITableViewController,EKEventEditViewD
         projectDetailViewModel.commitments = []
         projectDetailViewModel.getCommitmentsFromServer(projectId){[weak self]result,err in
             
-            if result{  self!.projectDetailViewModel.getAssignmentsFromServer(self!.projectId){result,err in
-                
-                if result{
-                    self?.projectDetailsTableView.reloadData()
-                }
-                }
+            if result{
+                self!.projectDetailsTableView.reloadData()
+            }
+            
+        }
+        
+        self.projectDetailViewModel.getAssignmentsFromServer(self.projectId){[weak self]result,err in
+            
+            if result{
+                self!.projectDetailsTableView.reloadData()
             }
         }
     }
@@ -542,14 +558,31 @@ class PLProjectDetailTableViewController: UITableViewController,EKEventEditViewD
     func eventEditViewController(controller: EKEventEditViewController, didCompleteWithAction action: EKEventEditViewAction){
         
         if action == EKEventEditViewAction.Canceled{
-            
+            SVProgressHUD.dismiss()
             self.dismissViewControllerAnimated(true, completion:nil)
             
             return
         }
-        
-        if action == EKEventEditViewAction.Saved{
+       if action == EKEventEditViewAction.Saved{
+        event = editViewController.event
+        if editCommitment
+        {
+         print("enddate")
+         print(controller.event?.endDate)
+            commitmentViewModel.updateCommitmentWith((controller.event?.title)!, startDate:(controller.event?.startDate)! , targetDate: (controller.event?.endDate)!, description:(controller.event?.notes
+                )!, projectId: projectId, completion: { (res) in
             
+                    if res{
+                
+                SVProgressHUD.dismiss()
+                self.dismissViewControllerAnimated(true, completion: nil)
+            }
+        
+          })
+        
+        }
+        else{
+        
             if taskPriority == ""{
                 
                 let pop:Popup = Popup(title: "Set Task Priority", subTitle: "Assigning priority will help categorising your tasks easily", textFieldPlaceholders: ["PRIORITY"], cancelTitle: nil, successTitle: "Add Task", cancelBlock: {
@@ -557,19 +590,27 @@ class PLProjectDetailTableViewController: UITableViewController,EKEventEditViewD
                 }) {
                     self.taskPriority = NSUserDefaults.standardUserDefaults().valueForKey("PRIORITY") as! String
                     
-                    var subTitle = ""
-                    if let _ = controller.event?.notes{
-                        subTitle = (controller.event?.notes!)!
-                    }
-                    self.performDone((controller.event?.title)!, description: subTitle, startDate:(controller.event?.startDate)!, targetDate:(controller.event?.endDate)!){ res in
-                        SVProgressHUD.dismiss()
-                        self.dismissViewControllerAnimated(true, completion: nil)
+                    self.performDone((controller.event?.title)!, description: (controller.event?.notes!)!, startDate:(controller.event?.startDate)!, targetDate:(controller.event?.endDate)!){ res in
+                        
+                        if res
+                        {
+                            SVProgressHUD.dismiss()
+                            self.dismissViewControllerAnimated(true, completion: nil)
+                        }
+                        else
+                        {
+                            SVProgressHUD.dismiss()
+                        }
+                        
                     }
                 }
                 pop.backgroundBlurType = .Dark
                 pop.showPopup()
                 return
             }
+
+        }
+            
         
         }
     }
@@ -581,17 +622,20 @@ class PLProjectDetailTableViewController: UITableViewController,EKEventEditViewD
             
             try commitmentViewModel.commitmentValidations(title,startDate: startDate,targetDate:targetDate, description:description)
             
-              commitmentViewModel.addCommitmentToCalendar(title, date:startDate,endDate: targetDate)
-              commitmentViewModel.createCommitmentWith(title,startDate: startDate,targetDate:targetDate,description:description ,projectId: projectId){ result,err in
-                
-                if result{
+            commitmentViewModel.addCommitmentToCalendar(title, date:startDate,endDate: targetDate, description: description, event:event!){[weak self] identifier in
+                print("CAME")
+                self!.commitmentViewModel.createCommitmentWith(title,startDate: startDate,targetDate:targetDate,description:description ,projectId: self!.projectId,identifier: identifier){ result,err in
                     
-                    completion(true)
-                    
-                }else {
-                    PLSharedManager.showAlertIn(self, error: err!, title: "Create Commitment Failed", message: "Error occrued while creating the Commitment")
-                    print("Handle Error")}
+                    if result{
+                        
+                        completion(true)
+                        
+                    }else {
+                        PLSharedManager.showAlertIn(self!, error: err!, title: "Create Commitment Failed", message: "Error occrued while creating the Commitment")
+                        print("Handle Error")}
+                }
             }
+            
         }
         catch CommitValidation.NameEmpty{print("Empty Name")}
         catch CommitValidation.InvalidDate{print("Earlier date")}
@@ -599,14 +643,18 @@ class PLProjectDetailTableViewController: UITableViewController,EKEventEditViewD
         catch {}
     }
 
-    func fetchEvents(startDate: NSDate,endDate: NSDate,completed: ( NSMutableArray) -> ())
+    func fetchEvents(identifier:String,completion: (EKEvent?) -> ())
     {
-        let eventStore = EKEventStore()
-        let calendar = eventStore.defaultCalendarForNewEvents
+       // let eventStore = EKEventStore()
+        let event = editViewController.eventStore.eventWithIdentifier(identifier)
+       // let event = eventStore.eventWithIdentifier(identifier)
+        if let _ = event{
+            completion(event!)
+        }else{
+            
+            completion(nil)
+        }
        
-        let predicate = eventStore.predicateForEventsWithStartDate(startDate, endDate:endDate, calendars:[calendar])
-        let events = NSMutableArray(array:eventStore.eventsMatchingPredicate(predicate))
-        completed(events)
     }
 
     func showTaskCompletePopup() {

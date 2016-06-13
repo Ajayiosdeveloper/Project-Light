@@ -190,7 +190,7 @@ class PLProjectAssignmentViewModel: NSObject {
         return selectedAssignment!.details
     }
     
-    func responsibleForAssigniment(completion:(Bool, ServerErrorHandling?) -> Void)
+    func responsibleForAssignment(completion:(Bool, ServerErrorHandling?) -> Void)
     {
         
         print("Assignment Id is \(selectedAssignment?.assignmentId)")

@@ -21,7 +21,7 @@ class PLProjectCommentViewModel: NSObject {
     var qbClient:PLQuickbloxHttpClient = PLQuickbloxHttpClient()
     var commitment:PLCommitment?
     
-    func createCommitmentWith(name:String,startDate:NSDate,targetDate:NSDate, description:String,projectId:String,completion:(Bool, ServerErrorHandling?)->Void)
+    func createCommitmentWith(name:String,startDate:NSDate,targetDate:NSDate, description:String,projectId:String,identifier:String,completion:(Bool, ServerErrorHandling?)->Void)
     {
         let startDateOfCommitment = dateFormat(startDate)
         let targetDateOfCommitment = dateFormat(targetDate)
@@ -29,7 +29,7 @@ class PLProjectCommentViewModel: NSObject {
         let targetTimeOfCommitment = timeFormat(targetDate)
         
 
-        qbClient.createCommitmentForProject(projectId,startDate:Int(startDateOfCommitment) , targetDate:Int(targetDateOfCommitment),name: name, description:description, startTime: startTimeOfCommitment, endTime:targetTimeOfCommitment ){ result,ServerErrorHandling in
+        qbClient.createCommitmentForProject(projectId,startDate:Int(startDateOfCommitment) , targetDate:Int(targetDateOfCommitment),name: name, description:description, startTime: startTimeOfCommitment, endTime:targetTimeOfCommitment,identifier: identifier){ result,ServerErrorHandling in
              if !result{
               completion(false, ServerErrorHandling)
             }
@@ -47,10 +47,12 @@ class PLProjectCommentViewModel: NSObject {
         commitment?.startDate = dateToString(startDate)
         commitment?.targetDate = dateToString(targetDate)
         commitment?.details = description
-        qbClient.updateCommitmentTask(commitment!) { (res) in
-    
+      
+        qbClient.updateCommitmentTask(commitment!) { (res,error) in
+           completion(res)
         }
     }
+    
     func dateFormat(date : NSDate) -> NSTimeInterval
     {
         let dateFormatter = NSDateFormatter()
@@ -175,18 +177,21 @@ class PLProjectCommentViewModel: NSObject {
         return priorityType[row]
       }
     
-    func addCommitmentToCalendar(name:String,date:NSDate,endDate:NSDate){
-        
+    func addCommitmentToCalendar(name:String,date:NSDate,endDate:NSDate,description:String,event:EKEvent,completion:(String)->Void){
+        print("Create cal")
          self.isAccessGranted(){[weak self] result in
             
             if result{
-           
-                let event = EKEvent(eventStore: self!.eventStore!)
-                 event.title = name
-                 event.startDate = date
-                 event.endDate = endDate
-                 event.calendar = self!.eventStore!.defaultCalendarForNewEvents
-                 try!  self!.eventStore!.saveEvent(event, span: EKSpan.ThisEvent)
+  
+                do{
+                    print("Try")
+                    try  self!.eventStore?.saveEvent(event, span: .ThisEvent , commit: true)
+                    print("Event: \(event.eventIdentifier)")
+                    completion(event.eventIdentifier)
+                }
+                catch{
+                    completion(event.eventIdentifier)
+                }
             }
             else{
                 
@@ -195,6 +200,12 @@ class PLProjectCommentViewModel: NSObject {
         }
         
     }
+    
+//    func updateCommitmentInCalendar(event:EKEvent){
+//        
+//      try! self.eventStore?.saveEvent(event, span: EKSpan.ThisEvent)
+//    
+//    }
     
     func isAccessGranted(completion:(Bool)->Void){
     

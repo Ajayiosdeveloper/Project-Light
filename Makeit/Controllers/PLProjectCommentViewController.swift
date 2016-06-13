@@ -59,33 +59,21 @@ class PLProjectCommentViewController: UITableViewController,EKEventEditViewDeleg
             self.title = commitmentViewModel.commitmentName()
             if PLSharedManager.manager.isCalendarAccess{
                 
-                print("Cander Access is there")
-                
-            }else{
-                isTaskCompleted.hidden = false
-                taskCompletedLabel.hidden = false
-                commitmentNameTextField.text = commitmentViewModel.commitmentName()
-                commitmentDescriptionTextView.text = commitmentViewModel.commitmentDescription()
-                commitmentTargetDateTextField.text = commitmentViewModel.commitmentStartDate()
-                commitmentEndDateTextField.text = commitmentViewModel.commitmentEndDate()
-                if commitmentViewModel.commitmentStatus() == 0{
-                    isTaskCompleted.enabled = true
-                    isTaskCompleted.on = false
-                    self.doneButton.enabled = true
-                    self.doneButton.width = 0
+                if commitmentViewModel.commitment?.calendarIdentifier == "NULL"{
+                   
+                    fillCommitmentData()
                 }
                 else{
-                    isTaskCompleted.enabled = false
-                    isTaskCompleted.on = true
-                    self.navigationItem.rightBarButtonItem?.enabled = false
-                    self.navigationItem.rightBarButtonItem?.tintColor = UIColor.clearColor()
+                    print("There identifier")
+                    fillCommitmentData()
                 }
                 
             }
-            
+
             self.view.endEditing(true)
         }
         else{
+             print("New")
             self.commitmentNameTextField.becomeFirstResponder()
             self.navigationItem.rightBarButtonItem?.tintColor = nil;
             clearFields()
@@ -94,6 +82,30 @@ class PLProjectCommentViewController: UITableViewController,EKEventEditViewDeleg
             isTaskCompleted.hidden = true
             taskCompletedLabel.hidden = true
         }
+    
+    }
+    
+    func fillCommitmentData(){
+        
+        isTaskCompleted.hidden = false
+        taskCompletedLabel.hidden = false
+        commitmentNameTextField.text = commitmentViewModel.commitmentName()
+        commitmentDescriptionTextView.text = commitmentViewModel.commitmentDescription()
+        commitmentTargetDateTextField.text = commitmentViewModel.commitmentStartDate()
+        commitmentEndDateTextField.text = commitmentViewModel.commitmentEndDate()
+        if commitmentViewModel.commitmentStatus() == 0{
+            isTaskCompleted.enabled = true
+            isTaskCompleted.on = false
+            self.doneButton.enabled = true
+            self.doneButton.width = 0
+        }
+        else{
+            isTaskCompleted.enabled = false
+            isTaskCompleted.on = true
+            self.navigationItem.rightBarButtonItem?.enabled = false
+            self.navigationItem.rightBarButtonItem?.tintColor = UIColor.clearColor()
+        }
+
     }
 
     @IBAction func taskCompletedAction(sender: UISwitch) {
@@ -168,7 +180,7 @@ class PLProjectCommentViewController: UITableViewController,EKEventEditViewDeleg
             
             try commitmentViewModel.commitmentValidations(commitmentNameTextField.text!, startDate:startDatecommitmentDatePicker.date ,targetDate:targetDatecommitmentDatePicker.date, description: commitmentDescriptionTextView.text)
             if commitmentViewModel.commitment == nil{
-            commitmentViewModel.createCommitmentWith(commitmentNameTextField.text!,startDate:startDatecommitmentDatePicker.date,targetDate: targetDatecommitmentDatePicker.date, description: commitmentDescriptionTextView.text,projectId: projectId){ result,err in
+            commitmentViewModel.createCommitmentWith(commitmentNameTextField.text!,startDate:startDatecommitmentDatePicker.date,targetDate: targetDatecommitmentDatePicker.date, description: commitmentDescriptionTextView.text,projectId: projectId,identifier: ""){ result,err in
             
                 if result{
                     self.navigationController?.popViewControllerAnimated(true)
