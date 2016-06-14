@@ -12,17 +12,15 @@ import Quickblox
 class PLProjectNotification: NSObject {
     
     
- static   func sendProjectContributorNotificationToContributors(members:[UInt],projectName:String){
+    static   func sendProjectContributorNotificationToContributors(member:UInt,projectName:String,memberName:String){
     
-    var usersString = ""
+  
     let creator = QBSession.currentSession().currentUser?.fullName
-    let message = "Hi! you've been added to \(projectName) as a contributor by \(creator!)"
+    let message = "Hi \(memberName)! you've been added to \(projectName) Project as a contributor by \(creator!)"
     
-    for each in members{
-        usersString += String(each)
-        usersString += ","
-    }
-    QBRequest.sendPushWithText(message, toUsers: usersString, successBlock: { (_, _) in
+  
+    
+    QBRequest.sendPushWithText(message, toUsers:String(member), successBlock: { (_, _) in
         
         print("Push sent succesfully")
         
@@ -34,17 +32,13 @@ class PLProjectNotification: NSObject {
     }
     
     
- static   func sendAssignmentNotificationToAssignees(members:[UInt],assignmentName:String,projectName:String){
+    static   func sendAssignmentNotificationToAssignees(member:UInt,assignmentName:String,projectName:String, memberName : String){
         
-    var usersString = ""
-    let assigner = QBSession.currentSession().currentUser?.fullName
-    let message = "Hi! you've been assigned to \(assignmentName) in \(projectName) by \(assigner!)"
     
-    for each in members{
-        usersString += String(each)
-        usersString += ","
-    }
-    QBRequest.sendPushWithText(message, toUsers: usersString, successBlock: { (_, _) in
+    let assigner = QBSession.currentSession().currentUser?.fullName
+    let message = "Hi \(memberName)!  you've been assigned to \(assignmentName) in \(projectName) Project by \(assigner!)"
+    
+    QBRequest.sendPushWithText(message, toUsers:String(member), successBlock: { (_, _) in
         
         print("Push sent succesfully")
         

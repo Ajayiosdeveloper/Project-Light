@@ -259,7 +259,7 @@ class PLTaskViewController: UIViewController,UITableViewDelegate,UITableViewData
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
         self.sidebarViewModel.commitments = []
-        self.sidebarViewModel.teamMembersForBitrhday = []
+        self.sidebarViewModel.teamMembersForBirthday = []
         self.tableView.reloadData()
     }
     

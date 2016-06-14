@@ -126,14 +126,7 @@ class PLQuickbloxHttpClient
         
         QBRequest.createObjects(members, className:"PLProjectMember", successBlock: { (response, contributors) in
             
-            var membersIds = [UInt]()
-            for member in members{
-                membersIds += [member.userID]
-            }
-            
-           PLProjectNotification.sendProjectContributorNotificationToContributors(membersIds, projectName:PLSharedManager.manager.projectName)
-           
-            completion(true,nil)
+             completion(true,nil)
             
         }) { (response) in
         
@@ -342,16 +335,19 @@ class PLQuickbloxHttpClient
              customObjectTwo.fields?.setValue(0, forKey: "percentageCompleted")
              customObjectTwo.fields?.setValue(PLSharedManager.manager.projectName, forKey: "projectName")
              customObjectTwo.fields?.setValue(object?.ID!, forKey:"_parent_id")
-             
-             QBRequest.createObject(customObjectTwo, successBlock: { (_, _) in
+            
                 
+             QBRequest.createObject(customObjectTwo, successBlock: { (_, _) in
+               
+                PLProjectNotification.sendAssignmentNotificationToAssignees(UInt(each.memberUserId),assignmentName:name,projectName: PLSharedManager.manager.projectName,memberName: each.fullName)
+
                  completion(true, nil)
                 
                 }, errorBlock: { (res) in
                     completion(false, self.handleErrors(res))
              })
         }
-            PLProjectNotification.sendAssignmentNotificationToAssignees(assigneeUserIds,assignmentName:name,projectName: PLSharedManager.manager.projectName)
+        
             
             completion(true,nil)
             
@@ -617,7 +613,24 @@ class PLQuickbloxHttpClient
         chatDialog.name = "\(name) \(projectId)"
         chatDialog.occupantIDs = membersIds
         QBRequest.createDialog(chatDialog, successBlock: { (response: QBResponse?, createdDialog : QBChatDialog?) -> Void in
-            var chatGroup = PLChatGroup()
+            
+            createdDialog!.occupantIDs?.forEach({ (occupantID) in
+                
+                let inviteMessage: QBChatMessage = self.createChatNotificationForGroupChatCreation(chatDialog)
+                let timestamp: NSTimeInterval = NSDate().timeIntervalSince1970
+                inviteMessage.customParameters?.setValue(timestamp, forKey: "date_sent")
+                inviteMessage.recipientID = occupantID.unsignedLongValue
+                QBChat.instance().sendSystemMessage(inviteMessage) { (error: NSError?) -> Void in
+                    if error == nil{
+                    print("Sent Successfullly")
+                    }
+                    else
+                    {
+                        print(error?.localizedDescription)
+                    }
+                }
+            })
+            let chatGroup = PLChatGroup()
             chatGroup.name = name
             chatGroup.opponents = (createdDialog?.occupantIDs)! as! [UInt]
             chatGroup.chatGroupId = (createdDialog?.roomJID)!

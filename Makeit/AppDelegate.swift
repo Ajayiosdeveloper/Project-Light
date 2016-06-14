@@ -131,7 +131,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate,QBChatDelegate {
     
     func chatDidReceiveSystemMessage(message: QBChatMessage) {
         
-       
+       print("Received system message")
     }
 }
 
