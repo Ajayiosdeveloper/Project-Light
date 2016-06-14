@@ -34,7 +34,8 @@ class PLProjectDetailTableViewController: UITableViewController,EKEventEditViewD
     var editCommitment : Bool = false
     var event : EKEvent?
     let editViewController = EKEventEditViewController()
-   
+    var indexPath : NSIndexPath?
+    
     @IBOutlet var projectDetailsTableView: UITableView!
    
     override func viewDidLoad()
@@ -143,7 +144,7 @@ class PLProjectDetailTableViewController: UITableViewController,EKEventEditViewD
             }
             else{
                     cell.teamMemberProfile.image = UIImage(named:"UserImage.png")
-            }
+                }
             })
         return cell
             
@@ -195,6 +196,217 @@ class PLProjectDetailTableViewController: UITableViewController,EKEventEditViewD
         return UITableViewCell()
     
     }
+    
+    override func tableView(tableView: UITableView, editingStyleForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCellEditingStyle {
+         if projectDetailViewModel.numberOfSectionsInTableView() == 4{
+            
+        if indexPath.section == 1 || indexPath.section == 2
+        {
+            return UITableViewCellEditingStyle.Delete
+        }
+        return UITableViewCellEditingStyle.None
+        }
+        else
+         {
+            if indexPath.section == 1
+            {
+                return UITableViewCellEditingStyle.None
+            }
+
+        }
+        return UITableViewCellEditingStyle.None
+    }
+    
+  
+    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
+        self.indexPath = indexPath
+        if projectDetailViewModel.numberOfSectionsInTableView() == 4{
+            
+        if indexPath.section == 1
+        {
+            if self.commitmentViewModel.commitment?.isCompleted == 1
+            {
+                self.deleteCommitment(indexPath, title: "Do you want to delete commitment")
+                
+            }
+            else
+            {
+                self.deleteCommitment(indexPath, title: "Commitment is not completed yet. Do you want to delete it")
+            }
+        }
+        else if  indexPath.section == 2
+        {
+            let assignmentCreator =  projectDetailViewModel.assignments[indexPath.row]
+            print(assignmentCreator.creatorId)
+            print(QBSession.currentSession().currentUser?.ID)
+            if assignmentCreator.creatorId == QBSession.currentSession().currentUser?.ID
+            {
+                if assignmentCreator.assignmentStatus == 1
+                {
+                  deleteAssignment(indexPath, title: "Do you want to delete assignment")
+                }
+                else
+                {
+                    deleteAssignment(indexPath, title: "Assignment is not completed yet. Do you want to delete it")
+
+                }
+            }
+            else
+            {
+                SVProgressHUD.dismiss()
+                let alertController = UIAlertController(title: nil, message: "You are not creator of this assignment. So you can't delete it", preferredStyle: .ActionSheet)
+                
+                let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel) { (action) in
+                    
+                }
+                alertController.addAction(cancelAction)
+                
+                let OKAction = UIAlertAction(title: "OK", style: .Default) { (action) in
+                    
+                }
+                alertController.addAction(OKAction)
+                self.presentViewController(alertController, animated: true, completion: nil)
+                
+          }
+            
+        }
+        }
+    }
+    
+    
+    func alertView(alertView: UIAlertView, clickedButtonAtIndex buttonIndex: Int) {
+        
+        if alertView.tag == 0
+        {
+            if buttonIndex == 0{
+                self.projectDetailViewModel.commitments.removeAtIndex(self.indexPath!.row)
+                self.projectDetailsTableView.deleteRowsAtIndexPaths([self.indexPath!], withRowAnimation: UITableViewRowAnimation.Bottom)
+              
+            }
+        }
+        else
+        {
+            if buttonIndex == 0{
+                self.projectDetailViewModel.assignments.removeAtIndex(self.indexPath!.row)
+                self.projectDetailsTableView.deleteRowsAtIndexPaths([self.indexPath!], withRowAnimation: UITableViewRowAnimation.Bottom)
+               
+            }
+        }
+    }
+
+    
+    func deleteAssignment(indexPath: NSIndexPath, title: String)
+    {
+      
+        if #available(iOS 8.0, *) {
+            let alertViewController = UIAlertController.init(title: title, message: nil, preferredStyle: .Alert)
+            let okAction = UIAlertAction.init(title: "Ok", style: .Default) {[weak self] (action) -> Void in
+                SVProgressHUD.showWithStatus("Deleting")
+                let assignment = self!.projectDetailViewModel.assignments[indexPath.row]
+                
+                self!.projectDetailViewModel.deleteCommitment(assignment.assignmentId, Completion: { (res, err) in
+                   
+                    if let _ = err
+                    {
+                        SVProgressHUD.dismiss()
+                        PLSharedManager.showAlertIn(self!, error: err!, title: "Error occured while deleting the assignment in a particulare row", message: err.debugDescription)
+                    }
+                    else
+                    {
+                        SVProgressHUD.dismiss()
+                        self!.projectDetailViewModel.assignments.removeAtIndex(indexPath.row)
+                        self!.projectDetailsTableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Bottom)
+                        self!.projectDetailsTableView.reloadData()
+                    }
+                })
+          }
+            
+            let cancelAction = UIAlertAction(title:"Cancel", style: UIAlertActionStyle.Cancel, handler:nil)
+            alertViewController.addAction(okAction)
+            alertViewController.addAction(cancelAction)
+            
+            self.presentViewController(alertViewController, animated: true, completion: nil)
+        }
+        else
+        {
+            let alertView = UIAlertView(title: "Selected assignment is not yet completed. Do you want to delete it?", message: "", delegate: nil, cancelButtonTitle: nil, otherButtonTitles: "Ok", "Cancel")
+            alertView.show()
+            alertView.tag = 1
+            // Fallback on earlier versions
+        }
+    }
+
+    
+    func deleteCommitment(indexPath: NSIndexPath, title: String)
+    {
+        func refresh(){
+            
+            self.projectDetailViewModel.commitments.removeAtIndex(indexPath.row)
+       
+            self.projectDetailsTableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Bottom)
+
+            self.projectDetailsTableView.reloadData()
+        }
+        
+        if #available(iOS 8.0, *) {
+            let alertViewController = UIAlertController.init(title: title, message: nil, preferredStyle: .Alert)
+            let okAction = UIAlertAction.init(title: "Ok", style: .Default) {[weak self] (action) -> Void in
+                SVProgressHUD.showWithStatus("Deleting")
+                let commitment = self!.projectDetailViewModel.commitments[indexPath.row]
+               
+                self!.projectDetailViewModel.deleteCommitment(commitment.commitmentId, Completion: { (res, err) in
+                    print("deleting")
+                    
+                   
+                    if let _ = err
+                    {
+                        SVProgressHUD.dismiss()
+                        PLSharedManager.showAlertIn(self!, error: err!, title: "Error occured while deleting the commitment in a particulare row", message: err.debugDescription)
+                    }
+                    else
+                    {
+                        SVProgressHUD.dismiss()
+                        self!.fetchEvents(commitment.calendarIdentifier, completion: {[weak self] (event) in
+                            
+                            if let _ = event{
+                       
+                                let store = self!.editViewController.eventStore
+                                
+                               try! store.removeEvent(event!, span: EKSpan.ThisEvent, commit: true)
+                                
+                                refresh()
+
+                            }else{
+                               
+                                refresh()
+                            }
+                            
+                            })
+                        
+                    }
+                })
+
+                
+               
+            }
+            
+            let cancelAction = UIAlertAction(title:"Cancel", style: UIAlertActionStyle.Cancel, handler:nil)
+            alertViewController.addAction(okAction)
+            alertViewController.addAction(cancelAction)
+            
+            self.presentViewController(alertViewController, animated: true, completion: nil)
+        }
+        else
+        {
+            let alertView = UIAlertView(title: "Selected commitment is not yet completed. Do you want to delete it?", message: "", delegate: nil, cancelButtonTitle: nil, otherButtonTitles: "Ok", "Cancel")
+            alertView.show()
+            alertView.tag = 0
+            // Fallback on earlier versions
+        }
+        
+  
+        
+   }
     
     
     func configureCommitmentCell(cell:UITableViewCell,row:Int){

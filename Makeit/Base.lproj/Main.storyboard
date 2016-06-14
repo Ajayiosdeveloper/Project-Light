@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="op3-w8-RxG">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="op3-w8-RxG">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -753,7 +753,7 @@
                                     <constraint firstAttribute="width" constant="108" id="Tur-T7-h2N"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="100" translatesAutoresizingMaskIntoConstraints="NO" id="hDJ-Ce-dkO">
@@ -1394,7 +1394,7 @@
                                 </constraints>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Rlb-1F-PzD">
-                                <rect key="frame" x="541" y="43" width="30" height="30"/>
+                                <rect key="frame" x="541" y="45" width="30" height="30"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.59999999999999998" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="30" id="EkL-Ga-kYM"/>
@@ -1415,7 +1415,7 @@
                         <color key="backgroundColor" red="0.31384235780000003" green="0.81444310900000005" blue="0.58439629270000004" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="3Vu-YL-jii" firstAttribute="centerY" secondItem="7ou-Ec-FGy" secondAttribute="centerY" id="CaO-yS-oFD"/>
-                            <constraint firstItem="Rlb-1F-PzD" firstAttribute="top" secondItem="TwO-7N-jqh" secondAttribute="bottom" constant="23" id="MOg-Am-wxO"/>
+                            <constraint firstItem="Rlb-1F-PzD" firstAttribute="top" secondItem="TwO-7N-jqh" secondAttribute="bottom" constant="25" id="MOg-Am-wxO"/>
                             <constraint firstItem="Rlb-1F-PzD" firstAttribute="trailing" secondItem="7ou-Ec-FGy" secondAttribute="trailingMargin" constant="-9" id="NHP-CZ-PS3"/>
                             <constraint firstItem="3Vu-YL-jii" firstAttribute="centerX" secondItem="7ou-Ec-FGy" secondAttribute="centerX" id="v85-WB-gfi"/>
                         </constraints>

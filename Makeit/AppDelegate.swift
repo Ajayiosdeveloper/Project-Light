@@ -30,7 +30,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate,QBChatDelegate {
         
         QBChat.instance().addDelegate(self)
         
-        
         //Checking Newtwork Reachability and observing Newtork changes with observer
         
         reachability = Reachability.reachabilityForInternetConnection()

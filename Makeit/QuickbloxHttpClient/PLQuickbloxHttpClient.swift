@@ -1289,9 +1289,26 @@ class PLQuickbloxHttpClient
           
             print("got error")
         }
-
-    
     }
     
+    func deleteCommitment(id : String, completion:(Bool, ServerErrorHandling?)-> Void)
+    {
+        QBRequest.deleteObjectWithID(id, className: "PLProjectCommitment", successBlock: { (res) in
+            print(res)
+            completion(true,nil)
+            }) { (error) in
+              completion(false,self.handleErrors(error))
+        }
+    }
    
+    func deleteAssignment(id : String, completion:(Bool, ServerErrorHandling?)-> Void)
+    {
+        QBRequest.deleteObjectWithID(id, className: "PLProjectAssignment", successBlock: { (res) in
+            print(res)
+            completion(true,nil)
+        }) { (error) in
+            completion(false,self.handleErrors(error))
+        }
+    }
+    
 }
