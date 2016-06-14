@@ -7,7 +7,7 @@
 //
 
 import UIKit
-
+import Quickblox
 protocol RefreshProjectsDataSource:class{
     
     func addProjectToDataSource(project:PLProject)
@@ -39,7 +39,6 @@ class PLAddProjectViewController: UIViewController,UISearchBarDelegate,UITextFie
         addDoneBarButtonItem()
         projectName.delegate = self
         self.contributorsTableView.registerNib(UINib(nibName:"PLTableViewCell", bundle:NSBundle.mainBundle()), forCellReuseIdentifier: "Cell")
-
         
         // Do any additional setup after loading the view.
     }
