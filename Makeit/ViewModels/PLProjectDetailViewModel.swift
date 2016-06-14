@@ -315,4 +315,33 @@ class PLProjectDetailViewModel: NSObject {
         return assignment.assignmentStatus
     }
     
+    func deleteAssignment(id: String, Completion: (Bool, ServerErrorHandling?) -> Void)
+    {
+       qbClient.deleteAssignment(id) { (res, error) in
+        if res
+        {
+            Completion(true,nil)
+        }
+        else
+        {
+            Completion(false,error)
+        }
+        }
+    }
+
+    func deleteCommitment(id: String, Completion: (Bool, ServerErrorHandling?) -> Void)
+    {
+        qbClient.deleteCommitment(id) { (res, error) in
+            if res
+            {
+                Completion(true,nil)
+            }
+            else
+            {
+                Completion(false,error)
+            }
+        }
+    }
+
+    
 }

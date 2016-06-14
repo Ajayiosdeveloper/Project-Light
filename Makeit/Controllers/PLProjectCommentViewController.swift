@@ -64,16 +64,20 @@ class PLProjectCommentViewController: UITableViewController,EKEventEditViewDeleg
                     fillCommitmentData()
                 }
                 else{
-                    print("There identifier")
+    
                     fillCommitmentData()
                 }
                 
+            }
+            else
+            {
+                fillCommitmentData()
+ 
             }
 
             self.view.endEditing(true)
         }
         else{
-             print("New")
             self.commitmentNameTextField.becomeFirstResponder()
             self.navigationItem.rightBarButtonItem?.tintColor = nil;
             clearFields()
@@ -93,7 +97,8 @@ class PLProjectCommentViewController: UITableViewController,EKEventEditViewDeleg
         commitmentDescriptionTextView.text = commitmentViewModel.commitmentDescription()
         commitmentTargetDateTextField.text = commitmentViewModel.commitmentStartDate()
         commitmentEndDateTextField.text = commitmentViewModel.commitmentEndDate()
-        if commitmentViewModel.commitmentStatus() == 0{
+        if commitmentViewModel.commitmentStatus() == 0
+        {
             isTaskCompleted.enabled = true
             isTaskCompleted.on = false
             self.doneButton.enabled = true

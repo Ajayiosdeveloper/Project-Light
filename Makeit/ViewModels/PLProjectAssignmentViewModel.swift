@@ -384,4 +384,5 @@ class PLProjectAssignmentViewModel: NSObject {
         qbClient.updateAssignmentPercentage(assignmentRecordId,value: value)
        
     }
+
 }

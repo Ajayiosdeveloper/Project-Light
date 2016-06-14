@@ -166,7 +166,7 @@ class PLProjectsViewModel: NSObject {
         let arrayOfColors = [UIColor.redColor(),UIColor.blueColor(),UIColor.orangeColor(),UIColor.purpleColor(),UIColor.cyanColor(),UIColor.greenColor(),UIColor.blackColor(),UIColor.brownColor()]
         
         let i = Int(arc4random_uniform(8))
-        
+
         return arrayOfColors[i]
     }
     
@@ -200,7 +200,7 @@ class PLProjectsViewModel: NSObject {
         createdProjectList.removeAll()
     }
 
-    func logout()  { //Logout
+    func logout()  {
         
         quickBloxClient.logout()
         createdProjectList.removeAll()
@@ -231,7 +231,7 @@ class PLProjectsViewModel: NSObject {
                 if members?.count > 0
                 {
                     let first = members![0]
-                    
+                
                     let creatorDetails = first.fields?.objectForKey("creatorDetails") as! [String]
                     PLTeamMember.creatorDetails = [String:String]()
                     PLTeamMember.creatorDetails!["creatorName"] = creatorDetails[0] as String
