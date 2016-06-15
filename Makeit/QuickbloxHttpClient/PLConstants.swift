@@ -28,3 +28,13 @@ let kLoginResultNotifier  = "loginResultNotifier"
 let backGroundColor = UIColor(red: 63/255, green: 203/255, blue: 129/255, alpha: 1)
 
 let layerColor = UIColor(red: 172/255, green: 234/255, blue: 203/255, alpha: 1)
+
+//Birthday Cards
+
+let birthdayCardOne = 4668729
+
+let birthdayCardTwo = 4668734
+
+let birthdayCardThree = 4668735
+
+let birthdayCardFour =  4668737

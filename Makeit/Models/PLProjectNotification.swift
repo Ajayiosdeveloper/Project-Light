@@ -17,18 +17,36 @@ class PLProjectNotification: NSObject {
   
     let creator = QBSession.currentSession().currentUser?.fullName
     let message = "Hi \(memberName)! you've been added to \(projectName) Project as a contributor by \(creator!)"
+    let payLoad = NSMutableDictionary()
+    let aps = NSMutableDictionary()
+    aps.setObject("default", forKey: QBMPushMessageSoundKey)
+    aps.setObject(message, forKey: QBMPushMessageAlertKey)
+    aps.setObject("PROJECT", forKey: "Type")
+    payLoad.setObject(aps, forKey: QBMPushMessageApsKey)
+        
+    let qbMessage = QBMPushMessage()
+        qbMessage.payloadDict = payLoad
+        QBRequest.sendPush(qbMessage, toUsers: String(member), successBlock: { (_, _) in
+            
+            print("Push sent succesfully")
+            
+            }) { (err) in
+                
+                print(err)
+        }
+        
+        
     
-  
+//    QBRequest.sendPushWithText(message, toUsers:String(member), successBlock: { (_, _) in
+//        
+//        print("Push sent succesfully")
+//        
+//    }) { (error) in
+//        
+//        print("Error occured")
+//        print(error)
+//    }
     
-    QBRequest.sendPushWithText(message, toUsers:String(member), successBlock: { (_, _) in
-        
-        print("Push sent succesfully")
-        
-    }) { (error) in
-        
-        print("Error occured")
-        print(error)
-    }
     }
     
     
@@ -37,16 +55,71 @@ class PLProjectNotification: NSObject {
     
     let assigner = QBSession.currentSession().currentUser?.fullName
     let message = "Hi \(memberName)!  you've been assigned to \(assignmentName) in \(projectName) Project by \(assigner!)"
-    
-    QBRequest.sendPushWithText(message, toUsers:String(member), successBlock: { (_, _) in
         
-        print("Push sent succesfully")
+        let payLoad = NSMutableDictionary()
+        let aps = NSMutableDictionary()
+        aps.setObject("default", forKey: QBMPushMessageSoundKey)
+        aps.setObject(message, forKey: QBMPushMessageAlertKey)
+        aps.setObject("Assignment", forKey: "Type")
+        payLoad.setObject(aps, forKey: QBMPushMessageApsKey)
         
-        }) { (error) in
+        let qbMessage = QBMPushMessage()
+        qbMessage.payloadDict = payLoad
+        QBRequest.sendPush(qbMessage, toUsers: String(member), successBlock: { (_, _) in
             
-          print("Error occured")
-          print(error)
-    }
+            print("Push sent succesfully")
+            
+        }) { (err) in
+            
+            print(err)
+        }
+
+    
+//    QBRequest.sendPushWithText(message, toUsers:String(member), successBlock: { (_, _) in
+//        
+//        print("Push sent succesfully")
+//        
+//        }) { (error) in
+//            
+//          print("Error occured")
+//          print(error)
+//    }
  }
+    
+    func sendBirthdayPushNotification(member:UInt,birthdayCard:Int,message:String){
+    
+        let sender = QBSession.currentSession().currentUser?.fullName
+        let message = "\(message) by \(sender!)"
+        
+        let payLoad = NSMutableDictionary()
+        let aps = NSMutableDictionary()
+        aps.setObject("default", forKey: QBMPushMessageSoundKey)
+        aps.setObject(message, forKey: QBMPushMessageAlertKey)
+        aps.setObject("Birthday", forKey: "Type")
+        
+        switch birthdayCard {
+        case 1:
+            aps.setObject(String(birthdayCardOne), forKey:"birthdayCard")
+        case 2:
+             aps.setObject(String(birthdayCardTwo), forKey:"birthdayCard")
+        case 3:
+             aps.setObject(String(birthdayCardThree), forKey:"birthdayCard")
+        default:
+              aps.setObject(String(birthdayCardFour), forKey:"birthdayCard")
+        }
+        
+       payLoad.setObject(aps, forKey: QBMPushMessageApsKey)
+        let qbMessage = QBMPushMessage()
+        qbMessage.payloadDict = payLoad
+        QBRequest.sendPush(qbMessage, toUsers: String(member), successBlock: { (_, _) in
+            
+            print("Push sent succesfully")
+            
+        }) { (err) in
+            
+            print(err)
+        }
+
+    }
     
 }

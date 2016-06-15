@@ -104,7 +104,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate,QBChatDelegate {
     }
     
     func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject]) {
-        
+       
+      
+    
     }
     
     func chatRoomDidReceiveMessage(message: QBChatMessage, fromDialogID dialogID: String) {
@@ -134,5 +136,33 @@ class AppDelegate: UIResponder, UIApplicationDelegate,QBChatDelegate {
         print(message)
        
     }
+    
+/* Upload image
+ 
+ NSData *file = [NSData dataWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"YellowStar" ofType:@"png"]];
+ [QBContent TUploadFile:file fileName:@"Great Image" contentType:@"image/png" isPublic:YES delegate:self];
+ 
+ - Process the result and send push notification
+ 
+ - (void)completedWithResult:(Result *)result{
+ 
+ // success result
+ if(result.success && [result isKindOfClass:QBCFileUploadTaskResult.class]){
+ QBCFileUploadTaskResult *res = (QBCFileUploadTaskResult *)result;
+ int uploadedFileId = res.uploadedBlob;
+ 
+ // Send push with file ID
+ NSString *mesage = @"Hello man!";
+ 
+ NSMutableDictionary *payload = [NSMutableDictionary dictionary];
+ NSMutableDictionary *aps = [NSMutableDictionary dictionary];
+ [aps setObject:@"default" forKey:QBMPushMessageSoundKey];
+ [aps setObject:mesage forKey:QBMPushMessageAlertKey];
+ [aps setObject:@uploadedFileId forKey:@"file_id"]; // this is file ID
+ [payload setObject:aps forKey:QBMPushMessageApsKey];
+ 
+ QBMPushMessage *message = [[QBMPushMessage alloc] initWithPayload:payload];
+ 
+ [QBMessages TSendPush:message toUsers:@"45288" delegate:self];*/
 }
 
