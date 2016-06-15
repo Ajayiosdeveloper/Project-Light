@@ -105,9 +105,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate,QBChatDelegate {
     
     func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject]) {
        
-      
-    
-    }
+        if UIApplication.sharedApplication().applicationState == UIApplicationState.Background{
+            
+            print("App is in Background")
+        }else if UIApplication.sharedApplication().applicationState == UIApplicationState.Active{
+            
+            print("App is in Active")
+            
+        }else{
+            print("App is inactive")
+        }
+        
+            print(userInfo)
+}
     
     func chatRoomDidReceiveMessage(message: QBChatMessage, fromDialogID dialogID: String) {
         
