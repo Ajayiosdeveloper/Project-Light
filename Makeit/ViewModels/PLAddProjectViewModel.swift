@@ -66,6 +66,8 @@ class PLAddProjectViewModel: NSObject {
                    let creatorDetails:[AnyObject] = [(QBSession.currentSession().currentUser?.fullName)!, (QBSession.currentSession().currentUser?.ID)!,(QBSession.currentSession().currentUser?.customData)!,(QBSession.currentSession().currentUser?.email)!]
                    qbCustomObject.fields?.setObject(creatorDetails, forKey:"creatorDetails")
                    qbObjects.append(qbCustomObject)
+                    
+                    PLProjectNotification.sendProjectContributorNotificationToContributors(each.memberUserId, projectName:name,memberName:each.fullName)
                 }
                 
                 self!.quickBloxClient.createNewProjectWithContributors(qbObjects){result in
@@ -125,6 +127,9 @@ class PLAddProjectViewModel: NSObject {
                 teamMember.profilePicture = each.fields?.objectForKey("avatar") as! String
                 teamMember.memberEmail = each.fields?.objectForKey("memberEmail") as! String
                 members.append(teamMember)
+                
+                PLProjectNotification.sendProjectContributorNotificationToContributors(teamMember.memberUserId, projectName:PLSharedManager.manager.projectName,memberName:name)
+                
             }
             
             completion(members)

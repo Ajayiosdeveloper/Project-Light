@@ -14,7 +14,7 @@ class PLSidebarViewModel: NSObject {
     var qbClient = PLQuickbloxHttpClient()
     var commitments = [PLCommitment]()
     var assignments = [PLAssignment]()
-    var teamMembersForBitrhday = [PLTeamMember]()
+    var teamMembersForBirthday = [PLTeamMember]()
     
     func getTodayTasks(completion:(Bool,ServerErrorHandling?)-> Void)
     {
@@ -75,14 +75,14 @@ class PLSidebarViewModel: NSObject {
     
     func teamMembersBirthday(row: Int) -> String
     {
-        let birthdays = teamMembersForBitrhday[row]
+        let birthdays = teamMembersForBirthday[row]
         let birthday = timeIntervalToString(NSTimeInterval(birthdays.birthdayDate))
         return birthday
     }
     
     func getTeamMemberBirthdayListForToday(range : Int,completion:(Bool,ServerErrorHandling?)-> Void){
         
-        self.teamMembersForBitrhday.removeAll(keepCapacity: true)
+        self.teamMembersForBirthday.removeAll(keepCapacity: true)
         qbClient.getBirthdayListOfTeamMembers(range){ members,err in
           
             var birthdaysOfMembers = [PLTeamMember]()
@@ -102,7 +102,8 @@ class PLSidebarViewModel: NSObject {
                  birthdaysOfMembers.append(member)
                 }
                 
-                self.teamMembersForBitrhday = birthdaysOfMembers
+                birthdaysOfMembers.sortInPlace({ $0.birthdayDate < $1.birthdayDate })
+                self.teamMembersForBirthday = birthdaysOfMembers
                 
                 completion(true, nil)
             }
@@ -263,29 +264,28 @@ class PLSidebarViewModel: NSObject {
     }
     
     func numberOfBirthdayRows() -> Int {
-        print("print")
-        print(teamMembersForBitrhday.count)
-        if self.teamMembersForBitrhday.count > 0{
-            return self.teamMembersForBitrhday.count
+        
+        if self.teamMembersForBirthday.count > 0{
+            return self.teamMembersForBirthday.count
         }
         return 0
     }
     
     func birthdayMemberName(row:Int) -> String {
         
-        let member = self.teamMembersForBitrhday[row]
+        let member = self.teamMembersForBirthday[row]
         return member.fullName
         
     }
     
     func birthdayMemberEmail(row:Int)->String{
-        let member = self.teamMembersForBitrhday[row]
+        let member = self.teamMembersForBirthday[row]
         return member.memberEmail
     }    
     
     func contributorImage(row:Int,completion:(UIImage?, ServerErrorHandling?)->Void) {
         
-        let member = teamMembersForBitrhday[row]
+        let member = teamMembersForBirthday[row]
         let avatar = member.profilePicture
         if avatar == "Avatar"
         {
