@@ -16,7 +16,7 @@ class PLBirthdayGreetingsViewController: UIViewController,UIScrollViewDelegate,U
     @IBOutlet var pageControl: UIPageControl!
     var timer : NSTimer!
     var selectedImage : Int = 0
-    var birthdayField = UITextField()
+    var birthdayField : UITextField!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -76,6 +76,7 @@ class PLBirthdayGreetingsViewController: UIViewController,UIScrollViewDelegate,U
             let okAction: UIAlertAction = UIAlertAction(title: "Ok", style: .Default) { action -> Void in
                 
                 print("Selected Image in ok action \(self.selectedImage)")
+                print(self.birthdayField.text)
             PLProjectNotification.sendBirthdayPushNotification(12892475, birthdayCard: self.selectedImage, message: self.birthdayField.text!)
             }
             let cancelAction: UIAlertAction = UIAlertAction(title: "Cancel", style: .Cancel, handler: nil)
@@ -84,7 +85,8 @@ class PLBirthdayGreetingsViewController: UIViewController,UIScrollViewDelegate,U
             alertController.addAction(cancelAction)
             alertController.addTextFieldWithConfigurationHandler({ (textField) in
                 textField.textColor = UIColor.blackColor()
-                self.birthdayField.text = textField.text
+                self.birthdayField = textField
+
             })
             presentViewController(alertController, animated: true, completion: nil)
         } else {
@@ -92,7 +94,7 @@ class PLBirthdayGreetingsViewController: UIViewController,UIScrollViewDelegate,U
             let alertView = UIAlertView(title: "Enter Text", message: "", delegate: self, cancelButtonTitle: "Cancel", otherButtonTitles: "Ok")
             alertView.alertViewStyle = .PlainTextInput
             let textField = alertView.textFieldAtIndex(0)
-            birthdayField.text = textField?.text
+            birthdayField = textField
             alertView.show()
         }
     }

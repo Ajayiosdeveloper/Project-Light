@@ -36,7 +36,7 @@ class PLProjectNotification: NSObject {
         }
         
         
-    
+//    
 //    QBRequest.sendPushWithText(message, toUsers:String(member), successBlock: { (_, _) in
 //        
 //        print("Push sent succesfully")
