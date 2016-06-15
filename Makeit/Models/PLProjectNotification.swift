@@ -60,7 +60,7 @@ class PLProjectNotification: NSObject {
         let aps = NSMutableDictionary()
         aps.setObject("default", forKey: QBMPushMessageSoundKey)
         aps.setObject(message, forKey: QBMPushMessageAlertKey)
-        aps.setObject("Assignment", forKey: "Type")
+        aps.setObject("ASSIGNMENT", forKey: "Type")
         payLoad.setObject(aps, forKey: QBMPushMessageApsKey)
         
         let qbMessage = QBMPushMessage()
@@ -95,7 +95,7 @@ class PLProjectNotification: NSObject {
         let aps = NSMutableDictionary()
         aps.setObject("default", forKey: QBMPushMessageSoundKey)
         aps.setObject(message, forKey: QBMPushMessageAlertKey)
-        aps.setObject("Birthday", forKey: "Type")
+        aps.setObject("BIRTHDAY", forKey: "Type")
         
         switch birthdayCard {
         case 0:

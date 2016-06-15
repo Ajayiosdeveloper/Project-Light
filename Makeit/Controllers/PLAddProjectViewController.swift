@@ -310,7 +310,7 @@ class PLAddProjectViewController: UIViewController,UISearchBarDelegate,UITextFie
         plPopOverController?.dismissPopoverAnimated(true)
         self.contributorsSearchField.text = ""
     }
-
+ 
     @IBAction func appSharing(sender: AnyObject) {
         
         let textToShare = "Makeit is awesome! Get Ready to download the App!"

@@ -819,6 +819,71 @@
             </objects>
             <point key="canvasLocation" x="2569" y="496"/>
         </scene>
+        <!--Show Birthday Card View Controller-->
+        <scene sceneID="gPg-xa-nhg">
+            <objects>
+                <viewController storyboardIdentifier="PLShowBirthdayCardViewController" id="hM4-jR-T2M" customClass="PLShowBirthdayCardViewController" customModule="Makeit" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="zYY-UI-Wqe"/>
+                        <viewControllerLayoutGuide type="bottom" id="db5-0W-PNY"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="L57-FO-R1v">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Nj1-Ql-Vam">
+                                <rect key="frame" x="0.0" y="20" width="600" height="44"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="wdB-ho-w9a"/>
+                                </constraints>
+                                <items>
+                                    <navigationItem title="Greetings from Sender" id="gFS-0D-2PA">
+                                        <barButtonItem key="leftBarButtonItem" title="Home" id="EbS-NX-0DU">
+                                            <connections>
+                                                <action selector="showHomeViewController:" destination="hM4-jR-T2M" id="A5b-Fe-FAS"/>
+                                            </connections>
+                                        </barButtonItem>
+                                    </navigationItem>
+                                </items>
+                            </navigationBar>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Frh-fs-TqE">
+                                <rect key="frame" x="20" y="80" width="560" height="82"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="82" id="Laa-i7-mgO"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="aJG-Ss-oom">
+                                <rect key="frame" x="20" y="170" width="560" height="422"/>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="Frh-fs-TqE" firstAttribute="top" secondItem="Nj1-Ql-Vam" secondAttribute="bottom" constant="16" id="3Oi-Ef-uh7"/>
+                            <constraint firstItem="aJG-Ss-oom" firstAttribute="top" secondItem="Frh-fs-TqE" secondAttribute="bottom" constant="8" id="Sj4-Qd-iSi"/>
+                            <constraint firstItem="db5-0W-PNY" firstAttribute="top" secondItem="aJG-Ss-oom" secondAttribute="bottom" constant="8" id="a0P-qA-X42"/>
+                            <constraint firstItem="aJG-Ss-oom" firstAttribute="leading" secondItem="L57-FO-R1v" secondAttribute="leadingMargin" id="eYh-le-0xg"/>
+                            <constraint firstItem="Frh-fs-TqE" firstAttribute="trailing" secondItem="L57-FO-R1v" secondAttribute="trailingMargin" id="icf-EE-eIF"/>
+                            <constraint firstItem="Frh-fs-TqE" firstAttribute="leading" secondItem="L57-FO-R1v" secondAttribute="leadingMargin" id="ipO-9C-4ca"/>
+                            <constraint firstItem="aJG-Ss-oom" firstAttribute="trailing" secondItem="L57-FO-R1v" secondAttribute="trailingMargin" id="o2U-Eb-k09"/>
+                            <constraint firstItem="Nj1-Ql-Vam" firstAttribute="top" secondItem="zYY-UI-Wqe" secondAttribute="bottom" id="rek-Rj-0gC"/>
+                            <constraint firstItem="Frh-fs-TqE" firstAttribute="top" secondItem="Nj1-Ql-Vam" secondAttribute="bottom" constant="16" id="tFq-m5-Lco"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="Nj1-Ql-Vam" secondAttribute="trailing" constant="-20" id="xCV-3X-hVw"/>
+                            <constraint firstItem="Nj1-Ql-Vam" firstAttribute="leading" secondItem="L57-FO-R1v" secondAttribute="leadingMargin" constant="-20" id="xMr-eJ-jqX"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="greetingCardImageView" destination="aJG-Ss-oom" id="Iba-Dc-N0F"/>
+                        <outlet property="greetingMessage" destination="Frh-fs-TqE" id="TUz-uZ-WI7"/>
+                        <outlet property="headerBarItem" destination="gFS-0D-2PA" id="QBS-WQ-uWy"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="U0e-0n-ezd" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3203" y="491"/>
+        </scene>
         <!--Task View Controller-->
         <scene sceneID="ZYg-kc-zsY">
             <objects>
@@ -996,7 +1061,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cGQ-Oj-cDT" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3113" y="1076"/>
+            <point key="canvasLocation" x="3103" y="1159"/>
         </scene>
         <!--User Profile Info Table View Controller-->
         <scene sceneID="FqQ-Rg-99c">

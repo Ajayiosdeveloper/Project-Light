@@ -18,7 +18,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate,QBChatDelegate {
     var window: UIWindow?
     var reachability:Reachability!
     var notificationBanner:AFDropdownNotification!
-    
+    var showBirthdayGreeting:PLShowBirthdayCardViewController!
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
        
@@ -104,26 +104,37 @@ class AppDelegate: UIResponder, UIApplicationDelegate,QBChatDelegate {
     }
     
     func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject]) {
-        print("application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject])")
+        
+       let storyBoard = UIStoryboard(name:"Main", bundle: NSBundle.mainBundle())
         
         let badgeCount = UIApplication.sharedApplication().applicationIconBadgeNumber + 1
         
         UIApplication.sharedApplication().applicationIconBadgeNumber = badgeCount
        
-        if UIApplication.sharedApplication().applicationState == UIApplicationState.Background{
-            
-            print("App is in Background")
+        let notificationTypeIdentifier = userInfo["Type"] as! String
         
-        }else if UIApplication.sharedApplication().applicationState == UIApplicationState.Active{
+        if notificationTypeIdentifier == "ASSIGNMENT"{
             
-            print("App is in Active")
-            
-        }else{
-            print("App is inactive")
+            print("Show Assignment View Controller")
         }
-        
-            print(userInfo)
-}
+        else if notificationTypeIdentifier == "BIRTHDAY"{
+           
+            if showBirthdayGreeting == nil{
+             
+                let aps = userInfo["aps"] as! [String:String]
+                let message = aps["alert"]
+                let birthdayCardFileId = userInfo["birthdayCard"] as! String
+                
+               showBirthdayGreeting = storyBoard.instantiateViewControllerWithIdentifier("PLShowBirthdayCardViewController") as! PLShowBirthdayCardViewController
+                showBirthdayGreeting.greetingMessageFromSender = message
+                showBirthdayGreeting.greetingCardId = UInt(birthdayCardFileId)
+                self.window?.rootViewController = showBirthdayGreeting
+                
+            }
+            
+        }
+         print(userInfo)
+    }
     
     func chatRoomDidReceiveMessage(message: QBChatMessage, fromDialogID dialogID: String) {
         print("chatRoomDidReceiveMessage")

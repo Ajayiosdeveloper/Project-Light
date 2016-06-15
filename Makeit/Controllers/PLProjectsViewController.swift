@@ -98,7 +98,9 @@ class PLProjectsViewController: UITableViewController,UIImagePickerControllerDel
     func addNewProjectToList()
     {
         
-       if addProjectViewController == nil{
+   
+        
+    if addProjectViewController == nil{
            addProjectViewController = self.storyboard?.instantiateViewControllerWithIdentifier("PLAddProjectViewController") as? PLAddProjectViewController
         }
         fetchDataFlag = true
