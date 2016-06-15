@@ -104,6 +104,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate,QBChatDelegate {
     }
     
     func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject]) {
+        print("application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject])")
         
         let badgeCount = UIApplication.sharedApplication().applicationIconBadgeNumber + 1
         
@@ -125,7 +126,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate,QBChatDelegate {
 }
     
     func chatRoomDidReceiveMessage(message: QBChatMessage, fromDialogID dialogID: String) {
-        
+        print("chatRoomDidReceiveMessage")
         print("Chat message received")
         
         print("Message is")
@@ -157,7 +158,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate,QBChatDelegate {
     }
     
     func chatDidReceiveSystemMessage(message: QBChatMessage) {
-       
+       print("chatDidReceiveSystemMessage")
         print(message)
        
     }
