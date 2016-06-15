@@ -86,7 +86,7 @@ class PLProjectNotification: NSObject {
 //    }
  }
     
-    func sendBirthdayPushNotification(member:UInt,birthdayCard:Int,message:String){
+   static func sendBirthdayPushNotification(member:UInt,birthdayCard:Int,message:String){
     
         let sender = QBSession.currentSession().currentUser?.fullName
         let message = "\(message) by \(sender!)"
@@ -98,11 +98,11 @@ class PLProjectNotification: NSObject {
         aps.setObject("Birthday", forKey: "Type")
         
         switch birthdayCard {
-        case 1:
+        case 0:
             aps.setObject(String(birthdayCardOne), forKey:"birthdayCard")
-        case 2:
+        case 1:
              aps.setObject(String(birthdayCardTwo), forKey:"birthdayCard")
-        case 3:
+        case 2:
              aps.setObject(String(birthdayCardThree), forKey:"birthdayCard")
         default:
               aps.setObject(String(birthdayCardFour), forKey:"birthdayCard")

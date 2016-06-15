@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Quickblox
 
 class PLBirthdayGreetingsViewController: UIViewController,UIScrollViewDelegate,UIAlertViewDelegate {
 
@@ -15,6 +16,7 @@ class PLBirthdayGreetingsViewController: UIViewController,UIScrollViewDelegate,U
     @IBOutlet var pageControl: UIPageControl!
     var timer : NSTimer!
     var selectedImage : Int = 0
+    var birthdayField = UITextField()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -74,28 +76,35 @@ class PLBirthdayGreetingsViewController: UIViewController,UIScrollViewDelegate,U
             let okAction: UIAlertAction = UIAlertAction(title: "Ok", style: .Default) { action -> Void in
                 
                 print("Selected Image in ok action \(self.selectedImage)")
+            PLProjectNotification.sendBirthdayPushNotification(12892475, birthdayCard: self.selectedImage, message: self.birthdayField.text!)
             }
             let cancelAction: UIAlertAction = UIAlertAction(title: "Cancel", style: .Cancel, handler: nil)
             
             alertController.addAction(okAction)
             alertController.addAction(cancelAction)
             alertController.addTextFieldWithConfigurationHandler({ (textField) in
-                textField.textColor = UIColor.grayColor()
+                textField.textColor = UIColor.blackColor()
+                self.birthdayField.text = textField.text
             })
             presentViewController(alertController, animated: true, completion: nil)
         } else {
             // Fallback on earlier versions
             let alertView = UIAlertView(title: "Enter Text", message: "", delegate: self, cancelButtonTitle: "Cancel", otherButtonTitles: "Ok")
+            alertView.alertViewStyle = .PlainTextInput
+            let textField = alertView.textFieldAtIndex(0)
+            birthdayField.text = textField?.text
             alertView.show()
         }
     }
     
     func alertView(alertView: UIAlertView, clickedButtonAtIndex buttonIndex: Int) {
         print("Selected Image in ok action \(self.selectedImage)")
+        PLProjectNotification.sendBirthdayPushNotification((QBSession.currentSession().currentUser?.ID)!, birthdayCard: selectedImage, message: birthdayField.text!)
     }
     
     
-    func scrollViewWillBeginDecelerating(scrollView: UIScrollView) {
+    func scrollViewWillBeginDecelerating(scrollView: UIScrollView)
+    {
         let pageWidth:CGFloat = CGRectGetWidth(scrollView.frame)
         let currentPage:CGFloat = floor((scrollView.contentOffset.x-pageWidth/2)/pageWidth)+1
         self.pageControl.currentPage = Int(currentPage)
