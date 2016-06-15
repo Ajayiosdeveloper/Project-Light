@@ -39,14 +39,14 @@ class PLAddProjectViewController: UIViewController,UISearchBarDelegate,UITextFie
         addDoneBarButtonItem()
         projectName.delegate = self
         self.contributorsTableView.registerNib(UINib(nibName:"PLTableViewCell", bundle:NSBundle.mainBundle()), forCellReuseIdentifier: "Cell")
-        
+         addActivityIndicatorView()
         // Do any additional setup after loading the view.
     }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(true)
         self.projectName.becomeFirstResponder()
-        addActivityIndicatorView()
+       
         if let _ = projectDetails
         {
             self.projectName.text = projectDetails![1]
@@ -71,6 +71,8 @@ class PLAddProjectViewController: UIViewController,UISearchBarDelegate,UITextFie
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+    
     
     func addDoneBarButtonItem(){
         
@@ -164,10 +166,15 @@ class PLAddProjectViewController: UIViewController,UISearchBarDelegate,UITextFie
         let userEnteredString = textField.text
         let newString = (userEnteredString! as NSString).stringByReplacingCharactersInRange(range, withString: string) as NSString
         contributorsSearchField.prompt = "Add contributors to \(newString)"
-        
-        
-        
-        return true
+       return true
+    }
+    
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        if textField == projectDescription
+        {
+            textField.resignFirstResponder()
+        }
+         return true
     }
     
     
@@ -309,7 +316,11 @@ class PLAddProjectViewController: UIViewController,UISearchBarDelegate,UITextFie
         let textToShare = "Makeit is awesome! Get Ready to download the App!"
         
         if let myWebsite = NSURL(string: "http://makeitiscomingsoon/") {
-            let objectsToShare = [textToShare, myWebsite]
+            
+            let image = UIImage(named:"AppIcon")
+            
+            let objectsToShare = [textToShare, myWebsite, image!]
+          
             let activityVC = UIActivityViewController(activityItems: objectsToShare, applicationActivities: nil)
             activityVC.excludedActivityTypes = [UIActivityTypeAirDrop, UIActivityTypeAddToReadingList,
                                                 UIActivityTypePrint,
@@ -318,6 +329,7 @@ class PLAddProjectViewController: UIViewController,UISearchBarDelegate,UITextFie
                                                 UIActivityTypeAddToReadingList,
                                                 UIActivityTypePostToFlickr,
                                                 UIActivityTypePostToVimeo]
+        
             if UI_USER_INTERFACE_IDIOM() == .Phone
             {
                  self.presentViewController(activityVC, animated: true, completion: nil)

@@ -284,6 +284,7 @@ class PLProjectsViewController: UITableViewController,UIImagePickerControllerDel
                 }
                 else
                 {
+                      self!.activityIndicatorView.stopAnimating()
                     PLSharedManager.showAlertIn(self!, error: err!, title: "Error occured while deleting the project in a particulare row", message: err.debugDescription)
                 }
                 
