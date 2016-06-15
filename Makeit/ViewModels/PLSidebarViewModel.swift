@@ -282,7 +282,13 @@ class PLSidebarViewModel: NSObject {
     func birthdayMemberEmail(row:Int)->String{
         let member = self.teamMembersForBirthday[row]
         return member.memberEmail
-    }    
+    }
+  
+    func birthdayMemberUserId(row:Int)->UInt{
+        let member = self.teamMembersForBirthday[row]
+        return member.memberUserId
+    }
+    
     
     func contributorImage(row:Int,completion:(UIImage?, ServerErrorHandling?)->Void) {
         

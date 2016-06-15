@@ -14,6 +14,7 @@ class PLBirthdayGreetingsViewController: UIViewController,UIScrollViewDelegate,U
     @IBOutlet var scrollView: UIScrollView!
     @IBOutlet var sendGreetingCard: UIButton!
     @IBOutlet var pageControl: UIPageControl!
+    var userId : UInt!
     var timer : NSTimer!
     var selectedImage : Int = 0
     var birthdayField : UITextField!
@@ -77,7 +78,7 @@ class PLBirthdayGreetingsViewController: UIViewController,UIScrollViewDelegate,U
                 
                 print("Selected Image in ok action \(self.selectedImage)")
                 print(self.birthdayField.text)
-            PLProjectNotification.sendBirthdayPushNotification(12892475, birthdayCard: self.selectedImage, message: self.birthdayField.text!)
+            PLProjectNotification.sendBirthdayPushNotification(self.userId, birthdayCard: self.selectedImage, message: self.birthdayField.text!)
             }
             let cancelAction: UIAlertAction = UIAlertAction(title: "Cancel", style: .Cancel, handler: nil)
             
@@ -101,7 +102,7 @@ class PLBirthdayGreetingsViewController: UIViewController,UIScrollViewDelegate,U
     
     func alertView(alertView: UIAlertView, clickedButtonAtIndex buttonIndex: Int) {
         print("Selected Image in ok action \(self.selectedImage)")
-        PLProjectNotification.sendBirthdayPushNotification((QBSession.currentSession().currentUser?.ID)!, birthdayCard: selectedImage, message: birthdayField.text!)
+        PLProjectNotification.sendBirthdayPushNotification(userId, birthdayCard: selectedImage, message: birthdayField.text!)
     }
     
     
