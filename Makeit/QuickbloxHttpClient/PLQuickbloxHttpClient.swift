@@ -614,22 +614,6 @@ class PLQuickbloxHttpClient
         chatDialog.occupantIDs = membersIds
         QBRequest.createDialog(chatDialog, successBlock: { (response: QBResponse?, createdDialog : QBChatDialog?) -> Void in
             
-            createdDialog!.occupantIDs?.forEach({ (occupantID) in
-                
-                let inviteMessage: QBChatMessage = self.createChatNotificationForGroupChatCreation(chatDialog)
-                let timestamp: NSTimeInterval = NSDate().timeIntervalSince1970
-                inviteMessage.customParameters?.setValue(timestamp, forKey: "date_sent")
-                inviteMessage.recipientID = occupantID.unsignedLongValue
-                QBChat.instance().sendSystemMessage(inviteMessage) { (error: NSError?) -> Void in
-                    if error == nil{
-                    print("Sent Successfullly")
-                    }
-                    else
-                    {
-                        print(error?.localizedDescription)
-                    }
-                }
-            })
             let chatGroup = PLChatGroup()
             chatGroup.name = name
             chatGroup.opponents = (createdDialog?.occupantIDs)! as! [UInt]
@@ -1324,4 +1308,23 @@ class PLQuickbloxHttpClient
         }
     }
     
+    //sending group craeation invitation
+    
+/*createdDialog!.occupantIDs?.forEach({ (occupantID) in
+ 
+ let inviteMessage: QBChatMessage = self.createChatNotificationForGroupChatCreation(chatDialog)
+ let timestamp: NSTimeInterval = NSDate().timeIntervalSince1970
+ inviteMessage.customParameters?.setValue(timestamp, forKey: "date_sent")
+ inviteMessage.recipientID = occupantID.unsignedLongValue
+ QBChat.instance().sendSystemMessage(inviteMessage) { (error: NSError?) -> Void in
+ if error == nil{
+ print("Sent Successfullly")
+ }
+ else
+ {
+ print(error?.localizedDescription)
+ }
+ }
+ })*/
+ 
 }

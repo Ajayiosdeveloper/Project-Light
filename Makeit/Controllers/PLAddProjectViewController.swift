@@ -13,7 +13,7 @@ protocol RefreshProjectsDataSource:class{
     func addProjectToDataSource(project:PLProject)
 }
 
-class PLAddProjectViewController: UIViewController,UISearchBarDelegate,UITextFieldDelegate,UITableViewDelegate,UITableViewDataSource,PLContributorTableViewDelegate,ProjectDetailsDelegate {
+class PLAddProjectViewController: UIViewController,UISearchBarDelegate,UITextFieldDelegate,UITableViewDelegate,UITableViewDataSource,PLContributorTableViewDelegate,ProjectDetailsDelegate,UIAlertViewDelegate {
     
     @IBOutlet var projectName: UITextField!
     @IBOutlet var projectDescription: UITextField!
@@ -153,7 +153,7 @@ class PLAddProjectViewController: UIViewController,UISearchBarDelegate,UITextFie
             self.presentViewController(alertController, animated:true, completion:nil)
         }
         else{
-            let alert = UIAlertView(title: title, message: message, delegate:nil, cancelButtonTitle:nil, otherButtonTitles:"Ok") as UIAlertView
+            let alert = UIAlertView(title: title, message: message, delegate:self, cancelButtonTitle:nil, otherButtonTitles:"Ok") as UIAlertView
             alert.show()
         }
         

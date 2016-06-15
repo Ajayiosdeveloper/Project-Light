@@ -8,12 +8,14 @@
 
 import UIKit
 
-class PLBirthdayGreetingsViewController: UIViewController,UIScrollViewDelegate {
+class PLBirthdayGreetingsViewController: UIViewController,UIScrollViewDelegate,UIAlertViewDelegate {
 
     @IBOutlet var scrollView: UIScrollView!
     @IBOutlet var sendGreetingCard: UIButton!
     @IBOutlet var pageControl: UIPageControl!
-  
+    var timer : NSTimer!
+    var selectedImage : Int = 0
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -41,7 +43,7 @@ class PLBirthdayGreetingsViewController: UIViewController,UIScrollViewDelegate {
         self.scrollView.delegate = self
         self.pageControl.currentPage = 0
         
-       // NSTimer.scheduledTimerWithTimeInterval(2, target: self, selector: #selector(PLBirthdayGreetingsViewController.moveToNextPage), userInfo: nil, repeats: true)
+       //timer = NSTimer.scheduledTimerWithTimeInterval(2, target: self, selector: #selector(PLBirthdayGreetingsViewController.moveToNextPage), userInfo: nil, repeats: true)
     }
    
     override func didReceiveMemoryWarning() {
@@ -65,15 +67,42 @@ class PLBirthdayGreetingsViewController: UIViewController,UIScrollViewDelegate {
     
     @IBAction func sendGreetingsAction(sender: AnyObject) {
         
+      //  timer.invalidate()
+        if #available(iOS 8.0, *) {
+            let alertController: UIAlertController = UIAlertController(title: "Enter Text", message:"", preferredStyle: .Alert)
+            
+            let okAction: UIAlertAction = UIAlertAction(title: "Ok", style: .Default) { action -> Void in
+                
+                print("Selected Image in ok action \(self.selectedImage)")
+            }
+            let cancelAction: UIAlertAction = UIAlertAction(title: "Cancel", style: .Cancel, handler: nil)
+            
+            alertController.addAction(okAction)
+            alertController.addAction(cancelAction)
+            alertController.addTextFieldWithConfigurationHandler({ (textField) in
+                textField.textColor = UIColor.grayColor()
+            })
+            presentViewController(alertController, animated: true, completion: nil)
+        } else {
+            // Fallback on earlier versions
+            let alertView = UIAlertView(title: "Enter Text", message: "", delegate: self, cancelButtonTitle: "Cancel", otherButtonTitles: "Ok")
+            alertView.show()
+        }
     }
     
-    func scrollViewDidEndDecelerating(scrollView: UIScrollView){
-       
+    func alertView(alertView: UIAlertView, clickedButtonAtIndex buttonIndex: Int) {
+        print("Selected Image in ok action \(self.selectedImage)")
+    }
+    
+    
+    func scrollViewWillBeginDecelerating(scrollView: UIScrollView) {
         let pageWidth:CGFloat = CGRectGetWidth(scrollView.frame)
         let currentPage:CGFloat = floor((scrollView.contentOffset.x-pageWidth/2)/pageWidth)+1
         self.pageControl.currentPage = Int(currentPage)
+        selectedImage = self.pageControl.currentPage
+        print("Selected Image in Delegate \(selectedImage)")
     }
-    
+
     @IBAction func goForward(sender: AnyObject) {
 
         let pageWidth:CGFloat = CGRectGetWidth(self.scrollView.frame)

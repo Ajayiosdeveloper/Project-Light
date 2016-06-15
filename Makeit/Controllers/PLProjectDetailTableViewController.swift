@@ -15,7 +15,7 @@ protocol ProjectDetailsDelegate:class{
     func check(details:[String],detailViewModel:PLProjectDetailViewModel)
 }
 
-class PLProjectDetailTableViewController: UITableViewController,EKEventEditViewDelegate {
+class PLProjectDetailTableViewController: UITableViewController,EKEventEditViewDelegate,UIAlertViewDelegate {
     weak var delegate:ProjectDetailsDelegate?
     var projectDetailViewModel:PLProjectDetailViewModel!
     var projectName:String!
@@ -251,7 +251,7 @@ class PLProjectDetailTableViewController: UITableViewController,EKEventEditViewD
 
                 }
             }
-            else
+           /* else
             {
                 SVProgressHUD.dismiss()
                 let alertController = UIAlertController(title: nil, message: "You are not creator of this assignment. So you can't delete it", preferredStyle: .ActionSheet)
@@ -267,7 +267,7 @@ class PLProjectDetailTableViewController: UITableViewController,EKEventEditViewD
                 alertController.addAction(OKAction)
                 self.presentViewController(alertController, animated: true, completion: nil)
                 
-          }
+          }*/
             
         }
         }
@@ -329,7 +329,7 @@ class PLProjectDetailTableViewController: UITableViewController,EKEventEditViewD
         }
         else
         {
-            let alertView = UIAlertView(title: "Selected assignment is not yet completed. Do you want to delete it?", message: "", delegate: nil, cancelButtonTitle: nil, otherButtonTitles: "Ok", "Cancel")
+            let alertView = UIAlertView(title: "Selected assignment is not yet completed. Do you want to delete it?", message: "", delegate: self, cancelButtonTitle: nil, otherButtonTitles: "Ok", "Cancel")
             alertView.show()
             alertView.tag = 1
             // Fallback on earlier versions
@@ -398,7 +398,7 @@ class PLProjectDetailTableViewController: UITableViewController,EKEventEditViewD
         }
         else
         {
-            let alertView = UIAlertView(title: "Selected commitment is not yet completed. Do you want to delete it?", message: "", delegate: nil, cancelButtonTitle: nil, otherButtonTitles: "Ok", "Cancel")
+            let alertView = UIAlertView(title: "Selected commitment is not yet completed. Do you want to delete it?", message: "", delegate: self, cancelButtonTitle: nil, otherButtonTitles: "Ok", "Cancel")
             alertView.show()
             alertView.tag = 0
             // Fallback on earlier versions

@@ -101,10 +101,11 @@ class PLSidebarViewModel: NSObject {
                  member.birthdayDate = each.fields?.objectForKey("birthday") as! Int
                  birthdaysOfMembers.append(member)
                 }
+        
                 
                 birthdaysOfMembers.sortInPlace({ $0.birthdayDate < $1.birthdayDate })
                 self.teamMembersForBirthday = birthdaysOfMembers
-                
+            
                 completion(true, nil)
             }
             else
