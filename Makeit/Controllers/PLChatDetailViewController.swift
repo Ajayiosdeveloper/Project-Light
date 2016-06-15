@@ -115,7 +115,8 @@ class PLChatDetailViewController: JSQMessagesViewController, UIActionSheetDelega
     override func didPressAccessoryButton(sender: UIButton) {
         
         let sheet = UIActionSheet(title: "Media messages", delegate: self, cancelButtonTitle: "Cancel", destructiveButtonTitle: nil, otherButtonTitles: "Send photo", "Send video")
-        sheet.showFromToolbar(self.inputToolbar)
+        //sheet.showFromToolbar(self.inputToolbar)
+        sheet.showInView(self.view)
     }
     
    func actionSheet(actionSheet: UIActionSheet, didDismissWithButtonIndex buttonIndex: Int) {
@@ -316,31 +317,33 @@ class PLChatDetailViewController: JSQMessagesViewController, UIActionSheetDelega
     
     func chatRoomDidReceiveMessage(message: QBChatMessage, fromDialogID dialogID: String) {
         
-//        if dialogID == self.chatDetailViewModel.selectedChatGroup.chatGroupId{
-//            
-//            if self.senderID == String(message.senderID){
-//                
-//                print("Do not show message")
-//            }
-//            else{
-//                
-//                print("Show Message")
-//                JSQSystemSoundPlayer.jsq_playMessageSentSound()
-//                let localMessage = JSQMessage(senderId:String(message.senderID), senderDisplayName:"Immanual", date:message.dateSent!, text:message.text!)
-//                self.chatDetailViewModel.groupChatMessages.append(localMessage)
-//                self.finishSendingMessage()
-//            }
-//        }
-//        else{
-//            
-//            print("Message came from other Chat Group")
-//            
-//        }
+        print(message)
+        if dialogID == self.chatDetailViewModel.selectedChatGroup.chatGroupId{
+            
+            if self.senderID == String(message.senderID){
+                
+                print("Do not show message")
+            }
+            else{
+                
+                print("Show Message")
+                let name = message.customParameters?.objectForKey("name") as! String
+                JSQSystemSoundPlayer.jsq_playMessageSentSound()
+                let localMessage = JSQMessage(senderId:String(message.senderID), senderDisplayName:name, date:message.dateSent!, text:message.text!)
+                self.chatDetailViewModel.groupChatMessages.append(localMessage)
+                self.finishSendingMessage()
+            }
+        }
+        else{
+            
+            print("Message came from other Chat Group")
+            
+        }
  }
     
     func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
         
-        let type = info[UIImagePickerControllerMediaType] as! String
+       /* let type = info[UIImagePickerControllerMediaType] as! String
         print(type)
         if type == "public.image"{
             attachment = nil
@@ -362,7 +365,7 @@ class PLChatDetailViewController: JSQMessagesViewController, UIActionSheetDelega
             attachment = nil
             attachment = NSData(contentsOfURL:url)
             sendMessageWithImageAttachment(.Video)
-        }
+        }*/
        self.imagePickerController.dismissViewControllerAnimated(true, completion: nil)
        
     }
@@ -380,7 +383,7 @@ class PLChatDetailViewController: JSQMessagesViewController, UIActionSheetDelega
            
         }else if value == 1{
             
-            self.imagePickerController.mediaTypes = [kUTTypeMP3 as String,kUTTypeMovie as String]
+            self.imagePickerController.mediaTypes = [kUTTypeMP3 as String,kUTTypeMovie as String,kUTTypeQuickTimeMovie as String]
             
             
         }

@@ -229,7 +229,7 @@ class PLTaskViewController: UIViewController,UITableViewDelegate,UITableViewData
     }
     
     func makeCall(sender:UIButton){
-        let callUrl = NSURL(string:"telprompt://")
+        let callUrl = NSURL(string:"telprompt://8904867753")
         if UIApplication.sharedApplication().canOpenURL(callUrl!){
             
             UIApplication.sharedApplication().openURL(callUrl!)
@@ -240,7 +240,7 @@ class PLTaskViewController: UIViewController,UITableViewDelegate,UITableViewData
     
     func sendMessage(sender:UIButton){
         
-        let message = NSURL(string:"sms://")
+        let message = NSURL(string:"sms://8904867753")
         if UIApplication.sharedApplication().canOpenURL(message!){
             
             UIApplication.sharedApplication().openURL(message!)

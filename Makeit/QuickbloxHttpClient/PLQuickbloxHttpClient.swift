@@ -686,7 +686,9 @@ class PLQuickbloxHttpClient
     
     func getMessagesFromChatGroup(groupId:String,completion:(Bool,[JSQMessage]?,ServerErrorHandling?)->Void){
         
-        let page = QBResponsePage(limit: 20, skip: 0)
+        let page = QBResponsePage(limit: 100, skip: 0)
+        
+       
         
         QBRequest.messagesWithDialogID(groupId, extendedRequest:nil, forPage:page, successBlock: { (_, messages, _) in
             

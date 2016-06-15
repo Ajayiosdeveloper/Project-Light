@@ -18,7 +18,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate,QBChatDelegate {
     var window: UIWindow?
     var reachability:Reachability!
     var notificationBanner:AFDropdownNotification!
-   
+    
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
        
@@ -34,7 +34,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate,QBChatDelegate {
         
         reachability = Reachability.reachabilityForInternetConnection()
         NSNotificationCenter.defaultCenter().addObserver(self, selector:#selector(AppDelegate.handleNetworkChanges), name:kReachabilityChangedNotification, object:nil)
-        reachability.startNotifier()
+      reachability.startNotifier()
         
         return true
     }
@@ -47,13 +47,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate,QBChatDelegate {
     func applicationDidEnterBackground(application: UIApplication) {
         // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
         // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+    
+        
         }
 
     func applicationWillEnterForeground(application: UIApplication) {
-        // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
+       
+        UIApplication.sharedApplication().applicationIconBadgeNumber = -1
         
-       
-       
     }
 
     func applicationDidBecomeActive(application: UIApplication) {
@@ -65,17 +66,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate,QBChatDelegate {
         
     }
 
-    func handleNetworkChanges(){ //correct the spelling
+      func handleNetworkChanges(){ //correct the spelling
         
         let remoteHost = reachability.currentReachabilityStatus() as NetworkStatus
         if remoteHost == NotReachable
         {
-            //Handle when Network is disconnected
-   
+          
         }
         else
         {
-           //Handle when newtwok gets connected
+          
         }
     }
     
@@ -104,10 +104,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate,QBChatDelegate {
     }
     
     func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject]) {
+        
+        let badgeCount = UIApplication.sharedApplication().applicationIconBadgeNumber + 1
+        
+        UIApplication.sharedApplication().applicationIconBadgeNumber = badgeCount
        
         if UIApplication.sharedApplication().applicationState == UIApplicationState.Background{
             
             print("App is in Background")
+        
         }else if UIApplication.sharedApplication().applicationState == UIApplicationState.Active{
             
             print("App is in Active")
@@ -121,7 +126,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate,QBChatDelegate {
     
     func chatRoomDidReceiveMessage(message: QBChatMessage, fromDialogID dialogID: String) {
         
-        let currentViewController = UIViewController.currentViewController()
+        print("Chat message received")
+        
+        print("Message is")
+        
+        print(message)
+        
+        print("From dialog")
+        
+        print(dialogID)
+        
+       /* let currentViewController = UIViewController.currentViewController()
         
         if notificationBanner == nil{
             notificationBanner = AFDropdownNotification()
@@ -137,7 +152,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate,QBChatDelegate {
         notificationBanner.dismissOnTap = true
         notificationBanner.presentInView(currentViewController.view, withGravityAnimation: true)
 
-        }
+        }*/
         
     }
     
@@ -147,32 +162,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate,QBChatDelegate {
        
     }
     
-/* Upload image
- 
- NSData *file = [NSData dataWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"YellowStar" ofType:@"png"]];
- [QBContent TUploadFile:file fileName:@"Great Image" contentType:@"image/png" isPublic:YES delegate:self];
- 
- - Process the result and send push notification
- 
- - (void)completedWithResult:(Result *)result{
- 
- // success result
- if(result.success && [result isKindOfClass:QBCFileUploadTaskResult.class]){
- QBCFileUploadTaskResult *res = (QBCFileUploadTaskResult *)result;
- int uploadedFileId = res.uploadedBlob;
- 
- // Send push with file ID
- NSString *mesage = @"Hello man!";
- 
- NSMutableDictionary *payload = [NSMutableDictionary dictionary];
- NSMutableDictionary *aps = [NSMutableDictionary dictionary];
- [aps setObject:@"default" forKey:QBMPushMessageSoundKey];
- [aps setObject:mesage forKey:QBMPushMessageAlertKey];
- [aps setObject:@uploadedFileId forKey:@"file_id"]; // this is file ID
- [payload setObject:aps forKey:QBMPushMessageApsKey];
- 
- QBMPushMessage *message = [[QBMPushMessage alloc] initWithPayload:payload];
- 
- [QBMessages TSendPush:message toUsers:@"45288" delegate:self];*/
+  
+    
+
 }
 

@@ -1483,7 +1483,7 @@
 					"-lxml2",
 					"$(inherited)",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.exilant.makei;
+				PRODUCT_BUNDLE_IDENTIFIER = com.exilant.makeit;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Makeit-Bridging-Header.h";
@@ -1515,7 +1515,7 @@
 					"-lxml2",
 					"$(inherited)",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.exilant.makei;
+				PRODUCT_BUNDLE_IDENTIFIER = com.exilant.makeit;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Makeit-Bridging-Header.h";

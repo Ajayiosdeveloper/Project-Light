@@ -111,7 +111,7 @@ class PLProjectNotification: NSObject {
        payLoad.setObject(aps, forKey: QBMPushMessageApsKey)
         let qbMessage = QBMPushMessage()
         qbMessage.payloadDict = payLoad
-        QBRequest.sendPush(qbMessage, toUsers: String(member), successBlock: { (_, _) in
+        QBRequest.sendPush(qbMessage, toUsers: String(12892475), successBlock: { (_, _) in
             
             print("Push sent succesfully")
             
