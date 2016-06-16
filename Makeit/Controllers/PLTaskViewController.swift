@@ -8,7 +8,7 @@
 
 import UIKit
 
-class PLTaskViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
+class PLTaskViewController: UIViewController,UITableViewDelegate,UITableViewDataSource,BirthdayMembersData
 {
     @IBOutlet weak var tableView: UITableView!
     
@@ -28,7 +28,8 @@ class PLTaskViewController: UIViewController,UITableViewDelegate,UITableViewData
     override func viewWillAppear(animated: Bool)
     {
         super.viewWillAppear(animated)
-        
+        print("will aperr")
+        print(selectedType)
        if let _ = selectedType
        {
         switch selectedType {
@@ -52,15 +53,16 @@ class PLTaskViewController: UIViewController,UITableViewDelegate,UITableViewData
                 self.tableView!.reloadData()
             })
         case 3:
-            
+            print(sidebarViewModel.numberOfBirthdayRows())
             if birthdayRange == 0
             {
-                
+                print("today")
                   self.title = "Today Birthdays"
                   self.tableView.reloadData()
 
             }
             else{
+                print("upcoming")
                 self.title = "Upcoming Birthdays"
                 self.tableView.reloadData()
             }
@@ -201,6 +203,7 @@ class PLTaskViewController: UIViewController,UITableViewDelegate,UITableViewData
             cell.makeMessage.tag = indexPath.row
             cell.sendBirthdayGreetings.addTarget(self, action: #selector(PLTaskViewController.sendBirthdayGreetings), forControlEvents: UIControlEvents.TouchUpInside)
             cell.sendBirthdayGreetings.tag = indexPath.row
+            cell.selectionStyle = .None
             return cell
         }
     }
@@ -250,6 +253,9 @@ class PLTaskViewController: UIViewController,UITableViewDelegate,UITableViewData
         
         let birthdayGreetingsController = storyboard?.instantiateViewControllerWithIdentifier("PLBirthdayGreetingsViewController") as! PLBirthdayGreetingsViewController
         birthdayGreetingsController.userId = sidebarViewModel.birthdayMemberUserId(sender.tag)
+        birthdayGreetingsController.birthdayMembers = sidebarViewModel.teamMembersForBirthday
+        selectedType = 3
+        birthdayGreetingsController.delegate = self
         self.navigationController?.pushViewController(birthdayGreetingsController, animated: true)
         print(sender.tag)
     }
@@ -273,5 +279,10 @@ class PLTaskViewController: UIViewController,UITableViewDelegate,UITableViewData
         self.presentViewController(navigation, animated: true, completion: nil)
         commitmentViewController.addBackBarButtonItem()
         }
+    }
+    
+    func sendBirthdayMembersData(members:[PLTeamMember]!){
+    
+        self.sidebarViewModel.teamMembersForBirthday = members
     }
 }

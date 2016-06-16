@@ -95,7 +95,7 @@ class PLAddProjectViewController: UIViewController,UISearchBarDelegate,UITextFie
     func performDone()
     {
         activityIndicatorView.startAnimating()
-        //addProjectViewModel.addObserver(self, forKeyPath:"isProjectCreated", options: NSKeyValueObservingOptions.New, context:nil)
+        
         if projectDetails == nil{
         if addProjectViewModel.validateProjectDetails(projectName.text!){
             if isAddedContributor()
@@ -110,7 +110,7 @@ class PLAddProjectViewController: UIViewController,UISearchBarDelegate,UITextFie
              }
             }
           }
-        }//else {activityIndicatorView.stopAnimating();showAlertWithMessage("error!", message:"Enter Project name")}
+        }
         else{
             
             addProjectViewModel.addContributorsToExistingProject(projectDetails![0],des: projectDescription.text!){[weak self] members in
@@ -121,29 +121,7 @@ class PLAddProjectViewController: UIViewController,UISearchBarDelegate,UITextFie
             }
         }
     }
-    
-    /*override func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutablePointer<Void>) {
-        
-        if keyPath == "isProjectCreated" {
-        if let _ = change, value = change![NSKeyValueChangeNewKey]{
-            
-            activityIndicatorView.stopAnimating()
-            if value as! NSNumber == 1 {
-            
-              self.navigationController?.popViewControllerAnimated(true)
-              
-             self.cleanUp()
-            
-            }
-            else{ // Handling Alert Messages for Login
-                
-            }
-        }
-         addProjectViewModel.removeObserver(self, forKeyPath:"isProjectCreated")
-      }
-    
-    }
-*/
+   
     func showAlertWithMessage(title:String,message:String)
     {
         if #available(iOS 8, *)

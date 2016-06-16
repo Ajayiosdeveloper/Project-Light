@@ -9,15 +9,23 @@
 import UIKit
 import Quickblox
 
+protocol BirthdayMembersData:class {
+    
+    func sendBirthdayMembersData(members:[PLTeamMember]!)
+}
+
+
 class PLBirthdayGreetingsViewController: UIViewController,UIScrollViewDelegate,UIAlertViewDelegate {
 
     @IBOutlet var scrollView: UIScrollView!
     @IBOutlet var sendGreetingCard: UIButton!
     @IBOutlet var pageControl: UIPageControl!
+    var birthdayMembers:[PLTeamMember]!
     var userId : UInt!
     var timer : NSTimer!
     var selectedImage : Int = 0
     var birthdayField : UITextField!
+    weak var delegate:BirthdayMembersData!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -113,6 +121,15 @@ class PLBirthdayGreetingsViewController: UIViewController,UIScrollViewDelegate,U
         self.pageControl.currentPage = Int(currentPage)
         selectedImage = self.pageControl.currentPage
         print("Selected Image in Delegate \(selectedImage)")
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+        if let _ = delegate{
+            
+             delegate.sendBirthdayMembersData(birthdayMembers)
+        }
+       
     }
 
 }
