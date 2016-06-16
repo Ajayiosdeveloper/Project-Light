@@ -19,7 +19,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate,QBChatDelegate {
     var reachability:Reachability!
     var notificationBanner:AFDropdownNotification!
     var showBirthdayGreeting:PLShowBirthdayCardViewController!
-
+    var projectDetail : PLProjectDetailTableViewController!
+    var projectViewModel:PLProjectsViewModel!
+    var storyBoard:UIStoryboard!
+    
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
        
         //Connecting Client Application with Quickblox API
@@ -103,9 +106,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate,QBChatDelegate {
         NSLog("Failed to get token; error: %@", error)
     }
     
-    func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject]) {
-        
-       let storyBoard = UIStoryboard(name:"Main", bundle: NSBundle.mainBundle())
+    func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject])
+    {
+        storyBoard = UIStoryboard(name:"Main", bundle: NSBundle.mainBundle())
         
         let badgeCount = UIApplication.sharedApplication().applicationIconBadgeNumber + 1
         
@@ -115,7 +118,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate,QBChatDelegate {
         
         if notificationTypeIdentifier == "ASSIGNMENT"{
             
-            print("Show Assignment View Controller")
+            let projectId = userInfo["projectId"] as! String
+            let projectName = userInfo["projectName"] as! String
+
+            presentProjectDetailViewController(projectId,projectName:projectName)
+
         }
         else if notificationTypeIdentifier == "BIRTHDAY"{
            
@@ -132,22 +139,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate,QBChatDelegate {
                 
             }
             
+        }else if notificationTypeIdentifier == "PROJECT"{
+            
         }
+        else{
+            
+            //Chat screen
+            
+            
+        }
+        
          print(userInfo)
     }
     
     func chatRoomDidReceiveMessage(message: QBChatMessage, fromDialogID dialogID: String) {
-        print("chatRoomDidReceiveMessage")
-        print("Chat message received")
-        
-        print("Message is")
-        
-        print(message)
-        
-        print("From dialog")
-        
-        print(dialogID)
-        
+       
        /* let currentViewController = UIViewController.currentViewController()
         
         if notificationBanner == nil{
@@ -174,7 +180,43 @@ class AppDelegate: UIResponder, UIApplicationDelegate,QBChatDelegate {
        
     }
     
-  
+    func presentProjectDetailViewController(selectedProjectId:String,projectName:String){
+    
+    if projectViewModel == nil{
+        projectViewModel = PLProjectsViewModel()
+    }
+    
+    projectViewModel.getProjectMembersList(selectedProjectId){ resultedMembers,err in
+        
+        print(resultedMembers)
+        
+        if let _ = resultedMembers{
+            var navController : UINavigationController!
+        if self.projectDetail == nil
+        {
+             self.projectDetail = self.storyBoard.instantiateViewControllerWithIdentifier("PLProjectDetailTableViewController")  as! PLProjectDetailTableViewController
+             let projectDetailViewModel = PLProjectDetailViewModel(members:resultedMembers!)
+             projectDetailViewModel.numberOfSections = 3
+             self.projectDetail.projectId = selectedProjectId
+             PLSharedManager.manager.projectId = selectedProjectId
+             self.projectDetail.projectName = projectName
+             self.projectDetail.projectDetailViewModel = projectDetailViewModel
+             self.projectDetail.fromNotification = true
+            
+              navController = UINavigationController.init(rootViewController: self.projectDetail)
+             self.window?.rootViewController = navController
+        }
+        else
+        {
+            print("else exe")
+            navController = UINavigationController.init(rootViewController: self.projectDetail)
+            self.window?.rootViewController = navController
+
+        }
+      }
+    }
+    
+}
     
 
 }

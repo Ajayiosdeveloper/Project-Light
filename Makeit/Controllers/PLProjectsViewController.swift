@@ -97,16 +97,15 @@ class PLProjectsViewController: UITableViewController,UIImagePickerControllerDel
     
     func addNewProjectToList()
     {
-        
-   
-        
-    if addProjectViewController == nil{
+       
+        if addProjectViewController == nil{
            addProjectViewController = self.storyboard?.instantiateViewControllerWithIdentifier("PLAddProjectViewController") as? PLAddProjectViewController
         }
         fetchDataFlag = true
         addProjectViewController!.delegate = self
         self.navigationController?.pushViewController(addProjectViewController!, animated: true)
         if observerContext == 0 {projectViewModel.removeObserver(self, forKeyPath:"createdProjectList")}
+        
     }
     
     func deleteProjectInList(){
@@ -360,6 +359,7 @@ class PLProjectsViewController: UITableViewController,UIImagePickerControllerDel
         detailViewController.projectId = selectedProjectId
         detailViewController.projectCreatedBy = selectedProejctCreatorId
         detailViewController.projectDescription = selectedProjectDescription
+        detailViewController.fromNotification = false
         let projectDetailViewModel = PLProjectDetailViewModel(members:resulted)
         if let _ = selectedSection{
             projectDetailViewModel.numberOfSections = selectedSection!

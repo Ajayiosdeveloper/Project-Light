@@ -275,7 +275,7 @@
         <!--Project Detail Table View Controller-->
         <scene sceneID="ywg-rA-lQv">
             <objects>
-                <tableViewController id="8fY-vY-dpV" customClass="PLProjectDetailTableViewController" customModule="Makeit" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="PLProjectDetailTableViewController" id="8fY-vY-dpV" customClass="PLProjectDetailTableViewController" customModule="Makeit" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="18" sectionFooterHeight="18" id="LSX-pw-dOX">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
