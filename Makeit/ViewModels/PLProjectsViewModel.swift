@@ -15,7 +15,8 @@ class PLProjectsViewModel: NSObject {
      var createdProjectList:[PLProject] = [PLProject]()
      var contributingProjectList:[PLProject] = [PLProject]()
      var quickBloxClient:PLQuickbloxHttpClient = PLQuickbloxHttpClient()
-    
+     var todayBirthdays = [PLTeamMember]()
+     var upComingBirthdays = [PLTeamMember]()
    override init() {
         
         super.init()
@@ -380,13 +381,14 @@ class PLProjectsViewModel: NSObject {
     
     func getUpcoimgBirthdaysCount(completion:(String,ServerErrorHandling?)-> Void)
     {
-        quickBloxClient.upcomingBirthdays() { count, error  in
-            if count == 0
+        self.getTeamMemberBirthdayListForToday(1) { (count, err) in
+            if count != 0
             {
-                completion(String(0), error)
+                completion(String(count),nil)
             }
-            else{
-                completion(String(count), nil)
+            else
+            {
+                completion(String(0),err)
             }
         }
     }
@@ -394,12 +396,14 @@ class PLProjectsViewModel: NSObject {
     
     func getBirthdaysCount(completion:(String, ServerErrorHandling?)->Void){
         
-        quickBloxClient.findBirthdays(){ count ,error  in
-            
-            if count == 0{
-                completion(String(0), error)
-            }else{
-                completion(String(count), nil)
+        self.getTeamMemberBirthdayListForToday(0) { (count, err) in
+            if count != 0
+            {
+                completion(String(count),nil)
+            }
+            else
+            {
+                completion(String(0),err)
             }
         }
     }
@@ -437,6 +441,60 @@ class PLProjectsViewModel: NSObject {
                 completion(String(count), nil)
             }
 
+        }
+    }
+
+    func getTeamMemberBirthdayListForToday(range : Int,completion:(Int,ServerErrorHandling?)-> Void){
+        
+        self.todayBirthdays.removeAll()
+        self.upComingBirthdays.removeAll()
+        quickBloxClient.getBirthdayListOfTeamMembers(range){ members,err in
+            
+            var birthdaysOfMembers = [PLTeamMember]()
+           
+            if members?.count > 0{
+                
+                for each in members!{
+                    
+                    let member = PLTeamMember(name:"", id: 0)
+                    member.fullName = each.fields?.objectForKey("name") as! String
+                    member.memberEmail = each.fields?.objectForKey("memberEmail") as! String
+                    member.memberId = String(each.userID)
+                    member.memberUserId = each.fields?.objectForKey("member_User_Id") as! UInt
+                    member.profilePicture = each.fields?.objectForKey("avatar") as! String
+                    member.birthdayDate = each.fields?.objectForKey("birthday") as! Int
+                    birthdaysOfMembers.append(member)
+                }
+                
+                var uniqueArray = [PLTeamMember]()
+                let set = NSMutableSet()
+                for unique in birthdaysOfMembers
+                {
+                    let email = unique.memberEmail
+                    if !set.containsObject(email)
+                    {
+                        uniqueArray.append(unique)
+                        set.addObject(email)
+                    }
+                }
+                uniqueArray.sortInPlace({ $0.birthdayDate < $1.birthdayDate })
+                if range == 0
+                {
+                    self.todayBirthdays = uniqueArray
+ 
+                }
+                else
+                {
+                    self.upComingBirthdays = uniqueArray
+   
+                }
+                
+                completion(uniqueArray.count, nil)
+            }
+            else
+            {
+                completion(0, err)
+            }
         }
     }
 

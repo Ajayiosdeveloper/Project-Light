@@ -18,6 +18,7 @@ class PLSidebarMenuViewController: UIViewController,UIImagePickerControllerDeleg
     
     var projectViewModel:PLProjectsViewModel = PLProjectsViewModel()
     var taskViewController: PLTaskViewController?
+    var sidebarViewModel = PLSidebarViewModel()
     var tapGestureRecognizer : UITapGestureRecognizer?
     var imagePicker = UIImagePickerController()
     var taskList = [String]()
@@ -227,6 +228,7 @@ class PLSidebarMenuViewController: UIViewController,UIImagePickerControllerDeleg
             if taskViewController == nil{
            taskViewController = self.storyboard?.instantiateViewControllerWithIdentifier("TaskViewController") as? PLTaskViewController
             }
+            taskViewController?.sidebarViewModel = sidebarViewModel
             let nav = UINavigationController(rootViewController: taskViewController!)
             self.presentViewController(nav, animated: true, completion: nil)
 
@@ -250,17 +252,21 @@ class PLSidebarMenuViewController: UIViewController,UIImagePickerControllerDeleg
             
             if taskViewController == nil{
                 taskViewController = self.storyboard?.instantiateViewControllerWithIdentifier("TaskViewController") as? PLTaskViewController
+                
             }
+            taskViewController?.sidebarViewModel = sidebarViewModel
             switch indexPath.row
             {
                 
             case 0:
                 taskViewController!.birthdayRange = 0
+                sidebarViewModel.teamMembersForBirthday = projectViewModel.todayBirthdays
                 
             case 1:
                 
                 taskViewController!.birthdayRange = 1
-           
+                sidebarViewModel.teamMembersForBirthday = projectViewModel.upComingBirthdays
+                
             default: print("")
                 
             }
@@ -274,6 +280,7 @@ class PLSidebarMenuViewController: UIViewController,UIImagePickerControllerDeleg
             if taskViewController == nil{
                 taskViewController = self.storyboard?.instantiateViewControllerWithIdentifier("TaskViewController") as? PLTaskViewController
             }
+            taskViewController?.sidebarViewModel = sidebarViewModel
             let nav = UINavigationController(rootViewController: taskViewController!)
             self.presentViewController(nav, animated: true, completion: nil)
             

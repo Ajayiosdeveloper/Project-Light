@@ -13,12 +13,13 @@ class PLTaskViewController: UIViewController,UITableViewDelegate,UITableViewData
     @IBOutlet weak var tableView: UITableView!
     
     var contributors:[PLTeamMember]!
-    var sidebarViewModel:PLSidebarViewModel = PLSidebarViewModel()
+    var sidebarViewModel:PLSidebarViewModel!
     var selectedType : Int!
     var birthdayRange : Int!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        print("loaded")
         tableView.registerNib(UINib(nibName: "PLTasksViewCell",bundle: NSBundle.mainBundle()), forCellReuseIdentifier: "Cell")
         self.tableView.registerNib(UINib(nibName:"PLBirthdayTableViewCell", bundle: NSBundle.mainBundle()), forCellReuseIdentifier: "BirthdayCell")
         addBackBarButtonItem()
@@ -54,18 +55,14 @@ class PLTaskViewController: UIViewController,UITableViewDelegate,UITableViewData
             
             if birthdayRange == 0
             {
+                
                   self.title = "Today Birthdays"
-                sidebarViewModel.getTeamMemberBirthdayListForToday(0
-                    , completion: { (res) in
-                        self.tableView.reloadData()
-                })
+                  self.tableView.reloadData()
+
             }
             else{
                 self.title = "Upcoming Birthdays"
-                sidebarViewModel.getTeamMemberBirthdayListForToday(1
-                    , completion: { (res) in
-                        self.tableView.reloadData()
-                })
+                self.tableView.reloadData()
             }
             
         case 4:

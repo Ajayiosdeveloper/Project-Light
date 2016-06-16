@@ -115,32 +115,4 @@ class PLBirthdayGreetingsViewController: UIViewController,UIScrollViewDelegate,U
         print("Selected Image in Delegate \(selectedImage)")
     }
 
-    @IBAction func goForward(sender: AnyObject) {
-
-        let pageWidth:CGFloat = CGRectGetWidth(self.scrollView.frame)
-        let maxWidth:CGFloat = pageWidth * 4
-        let contentOffset:CGFloat = self.scrollView.contentOffset.x
-        
-        var slideToX = contentOffset + pageWidth
-        
-        if  contentOffset - pageWidth == maxWidth{
-            slideToX = 0
-        }
-        self.scrollView.scrollRectToVisible(CGRectMake(slideToX, 0, pageWidth, CGRectGetHeight(self.scrollView.frame)), animated: true)
-    }
-    
-    @IBAction func goBackward(sender: AnyObject) {
-        let pageWidth:CGFloat = CGRectGetWidth(self.scrollView.frame)
-        let maxWidth:CGFloat = pageWidth * 4
-        let contentOffset:CGFloat = self.scrollView.contentOffset.x
-        
-        var slideToX = contentOffset - pageWidth
-        
-        if  contentOffset - pageWidth == maxWidth{
-            slideToX = 0
-        }
-       self.scrollView.scrollRectToVisible(CGRectMake(slideToX, 0, pageWidth, CGRectGetHeight(self.scrollView.frame)), animated: true)
-
-    }
-  
 }
