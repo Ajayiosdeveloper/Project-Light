@@ -262,6 +262,15 @@ public class JSQMessagesViewController: UIViewController, JSQMessagesCollectionV
         
         self.collectionView.collectionViewLayout.invalidateLayoutWithContext(JSQMessagesCollectionViewFlowLayoutInvalidationContext.context())
         self.collectionView.reloadData()
+       
+       /* let lastcell = self.collectionView.visibleCells().last
+        if let _ = lastcell{
+            let previousIndexPath = self.collectionView.indexPathForCell(lastcell!)
+            let nextIndexPath = NSIndexPath(forRow:(previousIndexPath?.row)! + 1, inSection: 0)
+            self.collectionView.insertItemsAtIndexPaths([nextIndexPath])
+        }else{
+            self.collectionView.insertItemsAtIndexPaths([NSIndexPath(forRow:0,inSection:0)])
+        }*/
         
         if self.automaticallyScrollsToMostRecentMessage && !self.jsq_isMenuVisible() {
             
