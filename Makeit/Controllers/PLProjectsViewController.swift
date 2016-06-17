@@ -303,6 +303,8 @@ class PLProjectsViewController: UITableViewController,UIImagePickerControllerDel
                 }
         }
         
+       
+        
     }
     
     override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
@@ -328,15 +330,6 @@ class PLProjectsViewController: UITableViewController,UIImagePickerControllerDel
         }
     }
     
-    override func tableView(tableView: UITableView, canMoveRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        return true
-    }
-    
-    override func tableView(tableView: UITableView, moveRowAtIndexPath fromIndexPath: NSIndexPath, toIndexPath: NSIndexPath) {
-        
-        print("Came")
-        
-    }
     
     override func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutablePointer<Void>)
     {
@@ -384,24 +377,44 @@ class PLProjectsViewController: UITableViewController,UIImagePickerControllerDel
     //Show Alert Popup
     func presentPopup(delete:()->Void){
         
-        let projectDeletePopup = Popup(title:"Are you sure delete this Project?", subTitle: "Deleting Project will erase all of its data.This data cannot be recovered.", textFieldPlaceholders:[], cancelTitle:"Cancel", successTitle: "Delete", cancelBlock: {
+        
+        if #available(iOS 8, *){
             
-            }, successBlock: {
+            let alertViewController = UIAlertController.init(title: "Are you sure to Delete?", message:"Deleting a Project will permanently erase the data.", preferredStyle: .Alert)
+            let okAction = UIAlertAction.init(title: "Ok", style: .Default) { (action) -> Void in
                 
                 delete()
-        })
-       
-        projectDeletePopup.delegate = self
-        projectDeletePopup.titleColor = UIColor.redColor()
-        projectDeletePopup.backgroundBlurType = .Dark
-        projectDeletePopup.roundedCorners = true
-        projectDeletePopup.tapBackgroundToDismiss = true
-        projectDeletePopup.swipeToDismiss = true
-        projectDeletePopup.successBtnColor = UIColor.redColor()
-        projectDeletePopup.cancelBtnColor = UIColor(red:86/255, green: 102/255, blue: 159/255, alpha: 1)
-        projectDeletePopup.showPopup()
+            }
+            
+            let cancelAction = UIAlertAction(title:"Cancel", style: UIAlertActionStyle.Cancel, handler:nil)
+            alertViewController.addAction(okAction)
+            alertViewController.addAction(cancelAction)
+            self.presentViewController(alertViewController, animated: true, completion: nil)
+            
+        }
+        else{
+           
+            let projectDeletePopup = Popup(title:"Are you sure delete this Project?", subTitle: "Deleting Project will erase all of its data.This data cannot be recovered.", textFieldPlaceholders:[], cancelTitle:"Cancel", successTitle: "Delete", cancelBlock: {
+             
+             }, successBlock: {
+             
+             delete()
+             })
+             
+             projectDeletePopup.delegate = self
+             projectDeletePopup.titleColor = UIColor.redColor()
+             projectDeletePopup.backgroundBlurType = .Dark
+             projectDeletePopup.roundedCorners = true
+             projectDeletePopup.tapBackgroundToDismiss = true
+             projectDeletePopup.swipeToDismiss = true
+             projectDeletePopup.successBtnColor = UIColor.redColor()
+             projectDeletePopup.cancelBtnColor = UIColor(red:86/255, green: 102/255, blue: 159/255, alpha: 1)
+             projectDeletePopup.showPopup()
+
+        }
 
     }
+  
   
     func addProjectToDataSource(project: PLProject)
     {

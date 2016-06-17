@@ -79,6 +79,7 @@ class PLDynamicEngine{
         view.layer.addAnimation(animation, forKey: "shake")
     }
     
+    // Random Animator Generator
     static func randomAnimationGeneratorForProfilePic()->(view:UIView)->Void{
         
         let random = Int(arc4random_uniform(5))
@@ -144,7 +145,8 @@ class PLDynamicEngine{
             index += 1
         }
     }
-  }
-    
-    
+  
+
 }
+    
+    
