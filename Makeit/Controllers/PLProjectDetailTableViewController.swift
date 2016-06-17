@@ -55,13 +55,12 @@ class PLProjectDetailTableViewController: UITableViewController,EKEventEditViewD
                 PLSharedManager.manager.isCalendarAccess = false
             }
         }
-
+       
         print("viewDidLoad")
     }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-    
         if (fetchDataFlag == false)
         {
             fetchDataFromServer()
@@ -72,6 +71,8 @@ class PLProjectDetailTableViewController: UITableViewController,EKEventEditViewD
         }
         self.navigationItem.title = projectName
         projectDetailsTableView.reloadData()
+        animateCell()
+       
         taskPriority = ""
         if fromNotification
         {
@@ -84,6 +85,7 @@ class PLProjectDetailTableViewController: UITableViewController,EKEventEditViewD
         super.didReceiveMemoryWarning()
   
     }
+    
 
     // MARK: - Table view data source
 
@@ -92,6 +94,17 @@ class PLProjectDetailTableViewController: UITableViewController,EKEventEditViewD
     return projectDetailViewModel.numberOfSectionsInTableView()
       
     }
+
+    func animateCell()
+    {
+        for cell in self.projectDetailsTableView.visibleCells
+        {
+            cell.layer.transform = CATransform3DMakeScale(0.1,0.1,1)
+            UIView.animateWithDuration(0.5, animations: {
+                cell.layer.transform = CATransform3DMakeScale(1,1,1)
+            })        }
+    }
+    
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int
     {

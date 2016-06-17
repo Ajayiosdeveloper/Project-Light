@@ -30,6 +30,7 @@ class PLSidebarMenuViewController: UIViewController,UIImagePickerControllerDeleg
     override func viewDidLoad()
     {
         super.viewDidLoad()
+        
         taskList.append("Today")
         taskList.append("Upcoming")
         taskList.append("Pending")
@@ -47,20 +48,28 @@ class PLSidebarMenuViewController: UIViewController,UIImagePickerControllerDeleg
 
         userProfilePic.layer.cornerRadius = 35.0
         userProfilePic.layer.masksToBounds = true
+        
         projectViewModel.fetchUserProfilePicture(){[weak self] avatar,error in
          
          if avatar != nil{
          self!.userProfilePic.image = avatar!
+    
+//            self!.userProfilePic.animationImages = [avatar!]
+//            self!.userProfilePic.animationDuration = 1.0
+//            self?.userProfilePic.startAnimating()
          }
          else{
                self!.userProfilePic.image = UIImage(named:"chatUser.png")
             }
+           
          }
         self.userNameTextfield.text = "\(PLSharedManager.manager.userName.uppercaseString)"
+        
       }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
+        animate()
       
         let selectedrow = self.sideBarTableView.indexPathForSelectedRow
         if let _ = selectedrow{
@@ -72,6 +81,17 @@ class PLSidebarMenuViewController: UIViewController,UIImagePickerControllerDeleg
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    
+    
+    func animate() {
+        for cell in self.sideBarTableView.visibleCells {
+            cell.frame = CGRectMake(self.view.frame.size.width, cell.frame.origin.y, cell.frame.size.width, cell.frame.size.height)
+            UIView.animateWithDuration(0.4) {
+                cell.frame = CGRectMake(0, cell.frame.origin.y, cell.frame.size.width, cell.frame.size.height)
+            }
+        }
     }
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int
@@ -215,6 +235,14 @@ class PLSidebarMenuViewController: UIViewController,UIImagePickerControllerDeleg
         }
        
         return cell
+    }
+    
+    func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+        
+        cell.frame = CGRectMake(self.view.frame.size.width, cell.frame.origin.y, cell.frame.size.width, cell.frame.size.height)
+        UIView.animateWithDuration(0.4) {
+            cell.frame = CGRectMake(0, cell.frame.origin.y, cell.frame.size.width, cell.frame.size.height)
+        }
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
