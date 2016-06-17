@@ -88,6 +88,7 @@
 		807FC8801CCB58430094112E /* VideoToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 807FC87F1CCB58430094112E /* VideoToolbox.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		8083C0DD1CED831B0051E8AF /* PLBirthdayTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8083C0DB1CED831B0051E8AF /* PLBirthdayTableViewCell.swift */; };
 		8083C0DE1CED831B0051E8AF /* PLBirthdayTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8083C0DC1CED831B0051E8AF /* PLBirthdayTableViewCell.xib */; };
+		8085E9151D12634D0020DCB6 /* Makeit.png in Resources */ = {isa = PBXBuildFile; fileRef = 8085E9141D12634D0020DCB6 /* Makeit.png */; };
 		80861A7D1CD9C52F00A2C56C /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 80861A7C1CD9C52F00A2C56C /* UIKit.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		80861A7F1CD9DE4000A2C56C /* EventKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 80861A7E1CD9DE4000A2C56C /* EventKit.framework */; };
 		80861A811CD9DE4700A2C56C /* EventKitUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 80861A801CD9DE4700A2C56C /* EventKitUI.framework */; };
@@ -320,6 +321,7 @@
 		807FC87F1CCB58430094112E /* VideoToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = VideoToolbox.framework; path = System/Library/Frameworks/VideoToolbox.framework; sourceTree = SDKROOT; };
 		8083C0DB1CED831B0051E8AF /* PLBirthdayTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLBirthdayTableViewCell.swift; sourceTree = "<group>"; };
 		8083C0DC1CED831B0051E8AF /* PLBirthdayTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PLBirthdayTableViewCell.xib; sourceTree = "<group>"; };
+		8085E9141D12634D0020DCB6 /* Makeit.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Makeit.png; sourceTree = "<group>"; };
 		80861A7C1CD9C52F00A2C56C /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		80861A7E1CD9DE4000A2C56C /* EventKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = EventKit.framework; path = System/Library/Frameworks/EventKit.framework; sourceTree = SDKROOT; };
 		80861A801CD9DE4700A2C56C /* EventKitUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = EventKitUI.framework; path = System/Library/Frameworks/EventKitUI.framework; sourceTree = SDKROOT; };
@@ -557,6 +559,7 @@
 				806B1E0C1CD8A7D60018B026 /* audio.png */,
 				806B1E0D1CD8A7D60018B026 /* UserImage.png */,
 				806B1E0E1CD8A7D60018B026 /* video.png */,
+				8085E9141D12634D0020DCB6 /* Makeit.png */,
 			);
 			path = SupportingFiles;
 			sourceTree = "<group>";
@@ -1041,7 +1044,7 @@
 				TargetAttributes = {
 					809F96C61CBCC35000DD1FE9 = {
 						CreatedOnToolsVersion = 7.1;
-						DevelopmentTeam = 44XXETDT6W;
+						DevelopmentTeam = 43L66PNJ7D;
 					};
 					809F96DA1CBCC35000DD1FE9 = {
 						CreatedOnToolsVersion = 7.1;
@@ -1101,6 +1104,7 @@
 				806B1E111CD8A7D60018B026 /* video.png in Resources */,
 				804889681CED90F800484284 /* PLTasksViewCell.xib in Resources */,
 				808B04151CE709BA00A8B2CB /* PLProjectViewCell.xib in Resources */,
+				8085E9151D12634D0020DCB6 /* Makeit.png in Resources */,
 				8024685B1CDA2FB900CAE735 /* chatGroup.png in Resources */,
 				80ED65A61CE0B36900C61090 /* emptyMessages.png in Resources */,
 				946DA8341CE3474100FF7AB9 /* close@2x.png in Resources */,
@@ -1478,7 +1482,7 @@
 					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = Makeit/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = (
@@ -1487,7 +1491,7 @@
 					"-lxml2",
 					"$(inherited)",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.exilant.makeit;
+				PRODUCT_BUNDLE_IDENTIFIER = com.exilant.Makeit;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Makeit-Bridging-Header.h";
@@ -1510,7 +1514,7 @@
 					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = Makeit/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = (
@@ -1519,7 +1523,7 @@
 					"-lxml2",
 					"$(inherited)",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.exilant.makeit;
+				PRODUCT_BUNDLE_IDENTIFIER = com.exilant.Makeit;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Makeit-Bridging-Header.h";

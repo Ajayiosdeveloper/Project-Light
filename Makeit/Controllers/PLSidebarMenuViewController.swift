@@ -59,7 +59,7 @@ class PLSidebarMenuViewController: UIViewController,UIImagePickerControllerDeleg
 //            self?.userProfilePic.startAnimating()
          }
          else{
-               self!.userProfilePic.image = UIImage(named:"chatUser.png")
+            self!.userProfilePic.image = UIImage(named:"chatUser.png")
             }
            
          }
@@ -76,6 +76,15 @@ class PLSidebarMenuViewController: UIViewController,UIImagePickerControllerDeleg
             
             self.sideBarTableView.deselectRowAtIndexPath(selectedrow!, animated: true)
         }
+        
+        UIView.animateWithDuration(1.0, animations: {() -> Void in
+            self.userProfilePic.transform = CGAffineTransformMakeScale(0.0, 0.0)
+            }, completion: {(finished: Bool) -> Void in
+                UIView.animateWithDuration(1.0, animations: {() -> Void in
+                    self.userProfilePic.transform = CGAffineTransformMakeScale(1, 1)
+                })
+        })
+
       }
 
     override func didReceiveMemoryWarning() {
