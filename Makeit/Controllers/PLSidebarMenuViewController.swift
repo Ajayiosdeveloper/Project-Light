@@ -53,10 +53,7 @@ class PLSidebarMenuViewController: UIViewController,UIImagePickerControllerDeleg
          
          if avatar != nil{
          self!.userProfilePic.image = avatar!
-    
-//            self!.userProfilePic.animationImages = [avatar!]
-//            self!.userProfilePic.animationDuration = 1.0
-//            self?.userProfilePic.startAnimating()
+ 
          }
          else{
             self!.userProfilePic.image = UIImage(named:"chatUser.png")
@@ -111,10 +108,7 @@ class PLSidebarMenuViewController: UIViewController,UIImagePickerControllerDeleg
     
     func animate() {
         for cell in self.sideBarTableView.visibleCells {
-            cell.frame = CGRectMake(self.view.frame.size.width, cell.frame.origin.y, cell.frame.size.width, cell.frame.size.height)
-            UIView.animateWithDuration(0.4) {
-                cell.frame = CGRectMake(0, cell.frame.origin.y, cell.frame.size.width, cell.frame.size.height)
-            }
+            PLDynamicEngine.bottomToTopAnimationWithBouncing(self.view, cell: cell)
         }
     }
     
@@ -261,12 +255,9 @@ class PLSidebarMenuViewController: UIViewController,UIImagePickerControllerDeleg
         return cell
     }
     
-    func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
-        
-        cell.frame = CGRectMake(self.view.frame.size.width, cell.frame.origin.y, cell.frame.size.width, cell.frame.size.height)
-        UIView.animateWithDuration(0.4) {
-            cell.frame = CGRectMake(0, cell.frame.origin.y, cell.frame.size.width, cell.frame.size.height)
-        }
+    func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath)
+    {
+        PLDynamicEngine.bottomToTopAnimationWithBouncing(self.view, cell: cell)
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
