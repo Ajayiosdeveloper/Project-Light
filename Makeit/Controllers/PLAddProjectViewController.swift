@@ -317,9 +317,9 @@ class PLAddProjectViewController: UIViewController,UISearchBarDelegate,UITextFie
         
         if let myWebsite = NSURL(string: "http://makeitiscomingsoon/") {
             
-            let image = UIImage(named:"AppIcon")
             
-            let objectsToShare = [textToShare, myWebsite, image!]
+            
+            let objectsToShare = [textToShare, myWebsite,UIImage(named:"Makeit.png")!]
           
             let activityVC = UIActivityViewController(activityItems: objectsToShare, applicationActivities: nil)
             activityVC.excludedActivityTypes = [UIActivityTypeAirDrop, UIActivityTypeAddToReadingList,
