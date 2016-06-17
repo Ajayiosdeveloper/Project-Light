@@ -50,16 +50,41 @@ class PLProjectsViewController: UITableViewController,UIImagePickerControllerDel
          }
       }
     }
-    
+    func animateTable() {
+        projectTableView.reloadData()
+        
+        let cells = self.projectTableView.visibleCells
+        let tableHeight: CGFloat = projectTableView.bounds.size.height
+        
+        for i in cells {
+            let cell: UITableViewCell = i as UITableViewCell
+            cell.transform = CGAffineTransformMakeTranslation(0, tableHeight)
+        }
+        
+        var index = 0
+        
+        for a in cells {
+            let cell: UITableViewCell = a as UITableViewCell
+            UIView.animateWithDuration(1.5, delay: 0.05 * Double(index), usingSpringWithDamping: 0.8, initialSpringVelocity: 0, options: .CurveEaseOut, animations: {
+                cell.transform = CGAffineTransformMakeTranslation(0, 0);
+                }, completion: nil)
+            
+            index += 1
+        }
+    }
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
        
-       
+        
         if fetchDataFlag == false
         {
           projectViewModel.addObserver(self, forKeyPath:"createdProjectList", options: NSKeyValueObservingOptions.New, context:&observerContext)
           addActivityIndicatorView()
           projectViewModel.fetchProjectsFromServer()
+        }
+        else
+        {
+            animateTable()
         }
       
       }
@@ -343,6 +368,7 @@ class PLProjectsViewController: UITableViewController,UIImagePickerControllerDel
             for _ in 0...projectViewModel.rowsCount(){ animateCell.append(false)}
             activityIndicatorView.stopAnimating()
             projectTableView.reloadData()
+            animateTable()
             projectViewModel.removeObserver(self, forKeyPath:"createdProjectList")
             observerContext = 1
         } else{ activityIndicatorView.stopAnimating() }
