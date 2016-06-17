@@ -685,6 +685,7 @@
 			children = (
 				80BB3EF51CC4F4BE009FAE11 /* PLProject.swift */,
 				804CDDF81CF029EF00DD7DD2 /* PLProjectNotification.swift */,
+				808AA2EB1CC605DE00685226 /* Dynamics&Animations */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -754,7 +755,8 @@
 			children = (
 				808AA2EC1CC6060800685226 /* PLDynamicEngine.swift */,
 			);
-			path = "Dynamics&Animations";
+			name = "Dynamics&Animations";
+			path = "../Dynamics&Animations";
 			sourceTree = "<group>";
 		};
 		809F96BE1CBCC35000DD1FE9 = {
@@ -785,7 +787,6 @@
 			children = (
 				809F96CA1CBCC35000DD1FE9 /* AppDelegate.swift */,
 				806D4AF01CC25DB50054A9AF /* Models */,
-				808AA2EB1CC605DE00685226 /* Dynamics&Animations */,
 				806D4AF11CC25DB50054A9AF /* ViewModels */,
 				806D4AEF1CC25DB50054A9AF /* Controllers */,
 				806D4AF21CC25DB50054A9AF /* Views */,
