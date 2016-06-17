@@ -35,6 +35,7 @@ class PLProjectDetailTableViewController: UITableViewController,EKEventEditViewD
     var event : EKEvent?
     let editViewController = EKEventEditViewController()
     var indexPath : NSIndexPath?
+    var fromNotification: Bool = false
     
     @IBOutlet var projectDetailsTableView: UITableView!
    
@@ -55,6 +56,7 @@ class PLProjectDetailTableViewController: UITableViewController,EKEventEditViewD
             }
         }
 
+        print("viewDidLoad")
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -68,11 +70,14 @@ class PLProjectDetailTableViewController: UITableViewController,EKEventEditViewD
         {
             print("Dont Fetch")
         }
-        
         self.navigationItem.title = projectName
         projectDetailsTableView.reloadData()
         taskPriority = ""
-       
+        if fromNotification
+        {
+            addHomeButton()
+        }
+        print("view appear")
     }
 
     override func didReceiveMemoryWarning() {
@@ -224,14 +229,15 @@ class PLProjectDetailTableViewController: UITableViewController,EKEventEditViewD
             
         if indexPath.section == 1
         {
-            if self.commitmentViewModel.commitment?.isCompleted == 1
+            
+            if self.projectDetailViewModel.commitmentCompletedStatus(indexPath.row) == 1
             {
-                self.deleteCommitment(indexPath, title: "Do you want to delete commitment")
+                self.deleteCommitment(indexPath, title: "Do you want to delete commitment?")
                 
             }
             else
             {
-                self.deleteCommitment(indexPath, title: "Commitment is not completed yet. Do you want to delete it")
+                self.deleteCommitment(indexPath, title: "Commitment is not completed yet. Do you want to delete it?")
             }
         }
         else if  indexPath.section == 2
@@ -890,4 +896,22 @@ class PLProjectDetailTableViewController: UITableViewController,EKEventEditViewD
     
 }
 
+    func addHomeButton()
+    {
+        let leftHomeBtn = UIBarButtonItem(title: "Home", style:.Plain, target: self, action: #selector(PLProjectDetailTableViewController.performHomeButtonAction))
+        self.navigationItem.leftBarButtonItem = leftHomeBtn
+    }
+    
+    func performHomeButtonAction()
+    {
+        print("Home Btn")
+       
+        presentProjectsViewController()
+    }
+    
+    func presentProjectsViewController(){
+        
+        let sideBarRootViewController = self.storyboard?.instantiateViewControllerWithIdentifier("PLSidebarRootViewController") as! PLSidebarRootViewController
+        self.presentViewController(sideBarRootViewController, animated: true, completion:nil)
+    }
 }

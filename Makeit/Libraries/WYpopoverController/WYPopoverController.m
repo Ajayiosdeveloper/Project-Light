@@ -2546,6 +2546,8 @@ static WYPopoverTheme *defaultTheme_ = nil;
     [self dismissPopoverAnimated:aAnimated
                          options:options
                       completion:nil];
+  
+   
 }
 
 - (void)dismissPopoverAnimated:(BOOL)aAnimated
@@ -2562,10 +2564,12 @@ static WYPopoverTheme *defaultTheme_ = nil;
     [self dismissPopoverAnimated:aAnimated
                          options:aOptions
                       completion:nil];
+    //[self removeObserver:self forKeyPath:<#(nonnull NSString *)#>]
 }
 
 - (void)dismissPopoverAnimated:(BOOL)aAnimated
                        options:(WYPopoverAnimationOptions)aOptions
+
                     completion:(void (^)(void))completion
 {
     [self dismissPopoverAnimated:aAnimated

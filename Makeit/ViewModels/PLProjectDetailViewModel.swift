@@ -125,6 +125,12 @@ class PLProjectDetailViewModel: NSObject {
         return commitment.details
     }
     
+    func commitmentCompletedStatus(row:Int)->Int{
+    
+        let commitment = commitments[row]
+        return commitment.isCompleted
+    }
+    
     func assignmentTitleForRowAtIndexPath(row:Int)->String{
         
         let assignment = assignments[row]

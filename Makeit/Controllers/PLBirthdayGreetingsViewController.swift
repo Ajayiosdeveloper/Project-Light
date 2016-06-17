@@ -9,15 +9,23 @@
 import UIKit
 import Quickblox
 
+protocol BirthdayMembersData:class {
+    
+    func sendBirthdayMembersData(members:[PLTeamMember]!)
+}
+
+
 class PLBirthdayGreetingsViewController: UIViewController,UIScrollViewDelegate,UIAlertViewDelegate {
 
     @IBOutlet var scrollView: UIScrollView!
     @IBOutlet var sendGreetingCard: UIButton!
     @IBOutlet var pageControl: UIPageControl!
+    var birthdayMembers:[PLTeamMember]!
     var userId : UInt!
     var timer : NSTimer!
     var selectedImage : Int = 0
     var birthdayField : UITextField!
+    weak var delegate:BirthdayMembersData!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -114,33 +122,14 @@ class PLBirthdayGreetingsViewController: UIViewController,UIScrollViewDelegate,U
         selectedImage = self.pageControl.currentPage
         print("Selected Image in Delegate \(selectedImage)")
     }
-
-    @IBAction func goForward(sender: AnyObject) {
-
-        let pageWidth:CGFloat = CGRectGetWidth(self.scrollView.frame)
-        let maxWidth:CGFloat = pageWidth * 4
-        let contentOffset:CGFloat = self.scrollView.contentOffset.x
-        
-        var slideToX = contentOffset + pageWidth
-        
-        if  contentOffset - pageWidth == maxWidth{
-            slideToX = 0
-        }
-        self.scrollView.scrollRectToVisible(CGRectMake(slideToX, 0, pageWidth, CGRectGetHeight(self.scrollView.frame)), animated: true)
-    }
     
-    @IBAction func goBackward(sender: AnyObject) {
-        let pageWidth:CGFloat = CGRectGetWidth(self.scrollView.frame)
-        let maxWidth:CGFloat = pageWidth * 4
-        let contentOffset:CGFloat = self.scrollView.contentOffset.x
-        
-        var slideToX = contentOffset - pageWidth
-        
-        if  contentOffset - pageWidth == maxWidth{
-            slideToX = 0
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+        if let _ = delegate{
+            
+             delegate.sendBirthdayMembersData(birthdayMembers)
         }
-       self.scrollView.scrollRectToVisible(CGRectMake(slideToX, 0, pageWidth, CGRectGetHeight(self.scrollView.frame)), animated: true)
-
+       
     }
-  
+
 }

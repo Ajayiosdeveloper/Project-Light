@@ -61,6 +61,8 @@ class PLProjectNotification: NSObject {
         aps.setObject("default", forKey: QBMPushMessageSoundKey)
         aps.setObject(message, forKey: QBMPushMessageAlertKey)
         aps.setObject("ASSIGNMENT", forKey: "Type")
+        aps.setObject(PLSharedManager.manager.projectId, forKey: "projectId")
+        aps.setObject(PLSharedManager.manager.projectName, forKey: "projectName")
         payLoad.setObject(aps, forKey: QBMPushMessageApsKey)
         
         let qbMessage = QBMPushMessage()

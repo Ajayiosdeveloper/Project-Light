@@ -14,7 +14,7 @@ class PLSidebarViewModel: NSObject {
     var qbClient = PLQuickbloxHttpClient()
     var commitments = [PLCommitment]()
     var assignments = [PLAssignment]()
-    var teamMembersForBirthday = [PLTeamMember]()
+    var teamMembersForBirthday : [PLTeamMember]!
     
     func getTodayTasks(completion:(Bool,ServerErrorHandling?)-> Void)
     {
@@ -78,41 +78,6 @@ class PLSidebarViewModel: NSObject {
         let birthdays = teamMembersForBirthday[row]
         let birthday = timeIntervalToString(NSTimeInterval(birthdays.birthdayDate))
         return birthday
-    }
-    
-    func getTeamMemberBirthdayListForToday(range : Int,completion:(Bool,ServerErrorHandling?)-> Void){
-        
-        self.teamMembersForBirthday.removeAll(keepCapacity: true)
-        qbClient.getBirthdayListOfTeamMembers(range){ members,err in
-          
-            var birthdaysOfMembers = [PLTeamMember]()
-            print("members")
-            print(members?.count)
-            if members?.count > 0{
-                
-                for each in members!{
-                    
-                 let member = PLTeamMember(name:"", id: 0)
-                 member.fullName = each.fields?.objectForKey("name") as! String
-                 member.memberEmail = each.fields?.objectForKey("memberEmail") as! String
-                 member.memberId = String(each.userID)
-                 member.memberUserId = each.fields?.objectForKey("member_User_Id") as! UInt
-                 member.profilePicture = each.fields?.objectForKey("avatar") as! String
-                 member.birthdayDate = each.fields?.objectForKey("birthday") as! Int
-                 birthdaysOfMembers.append(member)
-                }
-        
-                
-                birthdaysOfMembers.sortInPlace({ $0.birthdayDate < $1.birthdayDate })
-                self.teamMembersForBirthday = birthdaysOfMembers
-            
-                completion(true, nil)
-            }
-            else
-            {
-                completion(false, err)
-            }
-        }
     }
     
     func timeIntervalToString(timeInterval : NSTimeInterval) -> String
