@@ -69,13 +69,28 @@ class PLSidebarMenuViewController: UIViewController,UIImagePickerControllerDeleg
             self.sideBarTableView.deselectRowAtIndexPath(selectedrow!, animated: true)
         }
         
-        UIView.animateWithDuration(1.0, animations: {() -> Void in
-            self.userProfilePic.transform = CGAffineTransformMakeScale(0.0, 0.0)
-            }, completion: {(finished: Bool) -> Void in
-                UIView.animateWithDuration(1.0, animations: {() -> Void in
-                    self.userProfilePic.transform = CGAffineTransformMakeScale(1, 1)
-                })
-        })
+        PLDynamicEngine.viewGrowingFromShrinkAnimation(self.userProfilePic)
+               
+       /* let origin:CGPoint = self.userProfilePic.center
+        let target:CGPoint = CGPointMake(self.userProfilePic.center.x, self.userProfilePic.center.y+30)
+        let bounce = CABasicAnimation(keyPath: "position.y")
+        bounce.duration = 0.5
+        bounce.fromValue = origin.y
+        bounce.toValue = target.y
+        bounce.repeatCount = 2
+        bounce.autoreverses = true
+        self.userProfilePic.layer.addAnimation(bounce, forKey: "position")*/
+        
+        /*self.userProfilePic.frame = CGRectMake(-50, self.userProfilePic.frame.origin.y, self.userProfilePic.frame.size.width, self.userProfilePic.frame.size.height)
+       
+        UIView.animateWithDuration(0.9, animations: {() -> Void in
+            
+            self.userProfilePic.frame = CGRectMake(20, self.userProfilePic.frame.origin.y, self.userProfilePic.frame.size.width, self.userProfilePic.frame.size.height)
+           
+            
+        })*/
+        
+        
 
       }
 
