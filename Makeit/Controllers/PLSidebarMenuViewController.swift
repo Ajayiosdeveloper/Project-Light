@@ -53,10 +53,7 @@ class PLSidebarMenuViewController: UIViewController,UIImagePickerControllerDeleg
          
          if avatar != nil{
          self!.userProfilePic.image = avatar!
-    
-//            self!.userProfilePic.animationImages = [avatar!]
-//            self!.userProfilePic.animationDuration = 1.0
-//            self?.userProfilePic.startAnimating()
+
          }
          else{
             self!.userProfilePic.image = UIImage(named:"chatUser.png")
@@ -77,28 +74,8 @@ class PLSidebarMenuViewController: UIViewController,UIImagePickerControllerDeleg
             self.sideBarTableView.deselectRowAtIndexPath(selectedrow!, animated: true)
         }
         
-        PLDynamicEngine.viewGrowingFromShrinkAnimation(self.userProfilePic)
-               
-       /* let origin:CGPoint = self.userProfilePic.center
-        let target:CGPoint = CGPointMake(self.userProfilePic.center.x, self.userProfilePic.center.y+30)
-        let bounce = CABasicAnimation(keyPath: "position.y")
-        bounce.duration = 0.5
-        bounce.fromValue = origin.y
-        bounce.toValue = target.y
-        bounce.repeatCount = 2
-        bounce.autoreverses = true
-        self.userProfilePic.layer.addAnimation(bounce, forKey: "position")*/
-        
-        /*self.userProfilePic.frame = CGRectMake(-50, self.userProfilePic.frame.origin.y, self.userProfilePic.frame.size.width, self.userProfilePic.frame.size.height)
-       
-        UIView.animateWithDuration(0.9, animations: {() -> Void in
-            
-            self.userProfilePic.frame = CGRectMake(20, self.userProfilePic.frame.origin.y, self.userProfilePic.frame.size.width, self.userProfilePic.frame.size.height)
-           
-            
-        })*/
-        
-        
+        let randomAnimation = PLDynamicEngine.randomAnimationGeneratorForProfilePic()
+        randomAnimation(view: self.userProfilePic)
 
       }
 

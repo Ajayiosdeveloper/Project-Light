@@ -28,5 +28,74 @@ class PLDynamicEngine{
     }
 
 //2. Profile Pic Bouncing Animatin
+    
+    static func viewBouncingAnimation(view:UIView){
+        
+        let origin:CGPoint = view.center
+        let target:CGPoint = CGPointMake(origin.x, origin.y+30)
+        let bounce = CABasicAnimation(keyPath: "position.y")
+        bounce.duration = 0.5
+        bounce.fromValue = origin.y
+        bounce.toValue = target.y
+        bounce.repeatCount = 2
+        bounce.autoreverses = true
+        view.layer.addAnimation(bounce, forKey: "position")
+    }
+    
+//3. Profile Pic Flip Animation
+    
+    static func flipViewWithAnimation(view:UIView){
+        
+        UIView.transitionWithView(view, duration:2, options: .TransitionFlipFromTop, animations: {() -> Void in
+            //  Set the new image
+            //  Since its done in animation block, the change will be animated
+            
+            }, completion: {(finished: Bool) -> Void in
+                //  Do whatever when the animation is finished
+        })
+    }
+   
+ //4. Profile Pic Animation Appearance from space
+    
+    static func magicAppearanceAnimation(view:UIView){
+        
+        view.frame = CGRectMake(-50, view.frame.origin.y,view.frame.size.width, view.frame.size.height)
+         
+         UIView.animateWithDuration(0.9, animations: {() -> Void in
+         
+         view.frame = CGRectMake(20, view.frame.origin.y, view.frame.size.width, view.frame.size.height)
+         
+       })
+   }
 
+  //5. Profile Pic shake Animation
+    
+    static func shakeViewAnimation(view:UIView){
+        
+        let animation: CAKeyframeAnimation = CAKeyframeAnimation(keyPath: "transform.translation.x")
+        animation.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionLinear)
+        animation.duration = 1.0
+        animation.values = [-20, 20, -20, 20, -10, 10, -5, 5, 0]
+        view.layer.addAnimation(animation, forKey: "shake")
+    }
+    
+    static func randomAnimationGeneratorForProfilePic()->(view:UIView)->Void{
+        
+        let random = Int(arc4random_uniform(5))
+        
+    switch random {
+    case 0:
+        return PLDynamicEngine.viewGrowingFromShrinkAnimation
+    case 1:
+        return PLDynamicEngine.viewBouncingAnimation
+    case 2:
+        return PLDynamicEngine.flipViewWithAnimation
+    case 3:
+        return PLDynamicEngine.shakeViewAnimation
+    default:
+        return PLDynamicEngine.magicAppearanceAnimation
+    }
+  }
+    
+    
 }
