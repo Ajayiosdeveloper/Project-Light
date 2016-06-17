@@ -36,7 +36,6 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
     
     override func viewDidLoad() {
         super.viewDidLoad()
-      
         print(assignmentViewModel.assigneeList)
         self.assigneeListTableView.registerNib(UINib(nibName:"PLAssigneeTableViewCell", bundle:NSBundle.mainBundle()), forCellReuseIdentifier: "Cell")
         addDoneBarButtonItem()
@@ -53,7 +52,7 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
     
     override func viewWillAppear(animated: Bool) {
             super.viewWillAppear(animated)
-      
+       PLDynamicEngine.animateView(self.view, withTransform: PLDynamicEngine.TransformFlip, andDuration: 0.4)
         if let _ = assignmentViewModel, _ = assignmentViewModel.assigneeList{
             
             assigneeListTableView.reloadData()
@@ -378,7 +377,9 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
         return nil
   }
     
-    
+    func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+        PLDynamicEngine.animateCell(cell, withTransform: PLDynamicEngine.TransformFlip, andDuration: 1)
+    }
     
     func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 40

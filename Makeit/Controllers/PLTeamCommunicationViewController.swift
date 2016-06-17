@@ -74,6 +74,10 @@ class PLTeamCommunicationViewController: UIViewController,UITableViewDelegate,UI
         return 0
     }
     
+    func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+        PLDynamicEngine.animateCell(cell, withTransform: PLDynamicEngine.TransformFlip, andDuration:1)
+    }
+    
     func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         
         if communicationType == 2{

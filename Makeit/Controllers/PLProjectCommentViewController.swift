@@ -34,7 +34,6 @@ class PLProjectCommentViewController: UITableViewController,EKEventEditViewDeleg
     override func viewDidLoad() {
 
         super.viewDidLoad()
-       
         self.pickerView?.delegate = self
         self.pickerView?.dataSource = self
         commitmentPriorityTextField.inputView = pickerView
@@ -53,7 +52,7 @@ class PLProjectCommentViewController: UITableViewController,EKEventEditViewDeleg
       override func viewWillAppear(animated: Bool) {
         
         super.viewWillAppear(animated)
-    
+        PLDynamicEngine.animateView(self.view, withTransform: PLDynamicEngine.TransformFlip, andDuration: 1)
         if let _ = commitmentViewModel.commitment
         {
             self.title = commitmentViewModel.commitmentName()
