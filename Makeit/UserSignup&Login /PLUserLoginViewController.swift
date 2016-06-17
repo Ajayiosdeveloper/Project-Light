@@ -31,11 +31,15 @@ class PLUserLoginViewController: UIViewController,UITextFieldDelegate {
         userLogin.enabled = false
         // Do any additional setup after loading the view.
     }
+    
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         loginUserPasswordTextField.text = ""
         loginUserNameTextField.becomeFirstResponder()
+        PLDynamicEngine.animateTextfield(loginUserNameTextField)
+        PLDynamicEngine.animateTextfield(loginUserPasswordTextField)
     }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -67,7 +71,10 @@ class PLUserLoginViewController: UIViewController,UITextFieldDelegate {
     }
 
      //MARK: Login & Signup Screen Actions
-    @IBAction func loginUser(sender: AnyObject) {
+    @IBAction func loginUser(sender: UIButton)
+    {
+        PLDynamicEngine.animateButton(userLogin)
+        
         userAccountViewModel.addObserver(self, forKeyPath:"loginResultNotifier", options: NSKeyValueObservingOptions.New, context: nil)
         userAccountViewModel.validateUserLoginCredentials(loginUserNameTextField.text!, password: loginUserPasswordTextField.text!) { (err) in
             if let _ = err

@@ -11,6 +11,7 @@ import UIKit
 class PLResetPasswordViewController: UIViewController,UIAlertViewDelegate {
 
     @IBOutlet weak var emailIdField: UITextField!
+    @IBOutlet var resetPasswordButton: UIButton!
     
     lazy private var userAccountViewModel:PLUserSignupAndLoginViewModel = {
         return PLUserSignupAndLoginViewModel()
@@ -26,9 +27,15 @@ class PLResetPasswordViewController: UIViewController,UIAlertViewDelegate {
         // Dispose of any resources that can be recreated.
     }
     
-
-    @IBAction func resetPassword(sender: AnyObject)
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        PLDynamicEngine.animateTextfield(emailIdField)
+    }
+    
+    
+    @IBAction func resetPassword(sender: UIButton)
     {
+        PLDynamicEngine.animateButton(resetPasswordButton)
       if userAccountViewModel.isValidEmail(emailIdField.text!)
       {
         if #available(iOS 8.0, *) {
@@ -38,7 +45,7 @@ class PLResetPasswordViewController: UIViewController,UIAlertViewDelegate {
                 if (err != nil)
                 {
                 
-                        PLSharedManager.showAlertIn(self, error:err!, title: "Email is not matching with registered mail", message: "")
+                  PLSharedManager.showAlertIn(self, error:err!, title: "Email is not matching with registered mail", message: "")
                    
                 }
                 else
