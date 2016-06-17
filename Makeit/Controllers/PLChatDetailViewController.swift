@@ -42,6 +42,7 @@ class PLChatDetailViewController: JSQMessagesViewController, UIActionSheetDelega
             self.chatDetailViewModel.fetchAllGroupMessages(){res in
             
                 self.collectionView.reloadData()
+           
             }
 
             
@@ -64,7 +65,6 @@ class PLChatDetailViewController: JSQMessagesViewController, UIActionSheetDelega
     }
     
 
-    
     // MARK: - JSQMessagesViewController method overrides
     
     override func didPressSendButton(button: UIButton, withMessageText text: String, senderId: String, senderDisplayName: String, date: NSDate) {
@@ -84,6 +84,10 @@ class PLChatDetailViewController: JSQMessagesViewController, UIActionSheetDelega
                 }
                 
             }
+    }
+    
+    func collectionView(collectionView: UICollectionView, willDisplayCell cell: UICollectionViewCell, forItemAtIndexPath indexPath: NSIndexPath) {
+        PLDynamicEngine.animateCollectionCell(cell, withTransform: PLDynamicEngine.TransformTilt, andDuration: 1)
     }
     
     func sendMessageWithImageAttachment(type:AttachmentType){

@@ -60,6 +60,10 @@ class PLTeamMemberDetailsTableViewController: UITableViewController {
         return 0
     }
 
+    override func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+        PLDynamicEngine.animateCell(cell, withTransform: PLDynamicEngine.TransformCurl, andDuration:1)
+    }
+    
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         if indexPath.section == 0{
         
