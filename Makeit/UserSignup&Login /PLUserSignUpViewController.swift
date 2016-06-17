@@ -15,8 +15,8 @@ class PLUserSignUpViewController: UIViewController,UITextFieldDelegate
     @IBOutlet var signupUserConfirmPasswordTextField: UITextField!
     @IBOutlet var userSignup: UIButton!
     @IBOutlet weak var emailIdField: UITextField!
-    var sideBarRootViewController:PLSidebarRootViewController!
     
+    var sideBarRootViewController:PLSidebarRootViewController!
     var projectsViewController:PLProjectsViewController!
     
     lazy private var userAccountViewModel:PLUserSignupAndLoginViewModel = {
@@ -28,7 +28,13 @@ class PLUserSignUpViewController: UIViewController,UITextFieldDelegate
         userSignup.enabled = false
         // Do any additional setup after loading the view.
     }
-
+    override func viewDidAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        PLDynamicEngine.animateTextfield(signupUserNameTextField)
+        PLDynamicEngine.animateTextfield(signupUserPasswordTextField)
+        PLDynamicEngine.animateTextfield(signupUserConfirmPasswordTextField)
+        PLDynamicEngine.animateTextfield(emailIdField)
+    }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -133,6 +139,7 @@ class PLUserSignUpViewController: UIViewController,UITextFieldDelegate
     
     @IBAction func signupNewUser(sender: AnyObject) {
         
+        PLDynamicEngine.animateButton(userSignup)
         if userAccountViewModel.isValidEmail(self.emailIdField.text!)
         {
              //self.authenticateWithDigitsBeforeAccountCreation()

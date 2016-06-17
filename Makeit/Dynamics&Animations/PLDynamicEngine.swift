@@ -242,7 +242,28 @@ class PLDynamicEngine{
         }
     }
 
-       
+    //6.TextField Animation
+    
+    static func animateTextfield(textField:UITextField)
+    {
+        let animation = CABasicAnimation(keyPath: "position")
+        animation.duration = 0.2
+        animation.repeatCount = 5
+        animation.autoreverses = true
+        animation.fromValue = NSValue(CGPoint: CGPointMake(textField.center.x - 10, textField.center.y))
+        animation.toValue = NSValue(CGPoint: CGPointMake(textField.center.x + 10, textField.center.y))
+        textField.layer.addAnimation(animation, forKey: "position")
+    }
+    
+    //7.Animate Button
+    
+    static func animateButton(button : UIButton)
+    {
+        
+        UIView.animateWithDuration(1.0, delay: 0.0, usingSpringWithDamping: 0.2, initialSpringVelocity: 10, options: UIViewAnimationOptions.BeginFromCurrentState, animations: {
+            button.bounds = CGRect(x: button.bounds.origin.x - 20, y: button.bounds.origin.y, width: button.bounds.size.width + 60, height: button.bounds.size.height)}, completion: nil)
+    }
+    
 }
     
     
