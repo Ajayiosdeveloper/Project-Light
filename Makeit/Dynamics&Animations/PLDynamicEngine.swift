@@ -236,7 +236,7 @@ class PLDynamicEngine{
     {
         let animation = CABasicAnimation(keyPath: "position")
         animation.duration = 0.2
-        animation.repeatCount = 5
+        animation.repeatCount = HUGE
         animation.autoreverses = true
         animation.fromValue = NSValue(CGPoint: CGPointMake(textField.center.x - 10, textField.center.y))
         animation.toValue = NSValue(CGPoint: CGPointMake(textField.center.x + 10, textField.center.y))

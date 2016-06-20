@@ -35,7 +35,8 @@ class PLUserLoginViewController: UIViewController,UITextFieldDelegate {
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         loginUserPasswordTextField.text = ""
-        loginUserNameTextField.becomeFirstResponder()
+        //loginUserNameTextField.becomeFirstResponder()
+        PLDynamicEngine.animateTextfield(loginUserNameTextField)
         PLDynamicEngine.animateTextfield(loginUserPasswordTextField)
     }
     
@@ -55,6 +56,12 @@ class PLUserLoginViewController: UIViewController,UITextFieldDelegate {
         else if loginUserNameTextField.text?.characters.count > 0 && loginUserPasswordTextField.text?.characters.count > 0 {loginUserPasswordTextField.resignFirstResponder()}
         
         return true
+    }
+    
+    func textFieldDidBeginEditing(textField: UITextField) {
+        
+        loginUserNameTextField.layer.removeAllAnimations()
+        loginUserPasswordTextField.layer.removeAllAnimations()
     }
     
     func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
