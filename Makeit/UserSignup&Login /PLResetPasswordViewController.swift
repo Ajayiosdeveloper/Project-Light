@@ -28,18 +28,6 @@ class PLResetPasswordViewController: UIViewController,UIAlertViewDelegate,UIText
         // Dispose of any resources that can be recreated.
     }
     
-    override func viewWillAppear(animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        PLDynamicEngine.animateTextfield(emailIdField)
-    }
-    
-    func textFieldDidBeginEditing(textField: UITextField) {
-        
-        emailIdField.layer.removeAllAnimations()
-    }
-    
-    
     @IBAction func resetPassword(sender: UIButton)
     {
         PLDynamicEngine.animateButton(resetPasswordButton)

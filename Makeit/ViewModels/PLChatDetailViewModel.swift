@@ -22,9 +22,9 @@ class PLChatDetailViewModel: NSObject {
         selectedChatGroup = chatGroup
     }
     
-    func fetchAllGroupMessages(completion:(Bool, ServerErrorHandling?)->Void){
+    func fetchAllGroupMessages(groupID: String, completion:(Bool, ServerErrorHandling?)->Void){
     
-        qbClient.getMessagesFromChatGroup(selectedChatGroup.chatGroupId){[weak self](res,messages,error) in
+        qbClient.getMessagesFromChatGroup(groupID){[weak self](res,messages,error) in
             
             if res && messages != nil{
                 

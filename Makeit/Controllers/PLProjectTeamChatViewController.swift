@@ -16,12 +16,16 @@ class PLProjectTeamChatViewController: UIViewController,UITableViewDelegate,UITa
     var projectTeamChatViewModel:PLProjectTeamChatViewModel!
     var teamCommunicationViewController:PLTeamCommunicationViewController!
     var selectedRow = 0
+    var enbleAndDisable : Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationItem.title = "Team Chat"
         self.chatGroupsListTableView.registerNib(UINib(nibName:"PLTableViewCell", bundle:NSBundle.mainBundle()), forCellReuseIdentifier:"Cell")
+        if enbleAndDisable
+        {
         addNewChatBarButton()
+        }
 }
     
     override func viewWillAppear(animated: Bool) {

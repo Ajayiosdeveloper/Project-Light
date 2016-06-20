@@ -14,6 +14,7 @@ class PLTeamCommunicationViewController: UIViewController,UITableViewDelegate,UI
     var communicationType:Int!
     var currentSession:QBRTCSession!
     var communicationViewModel:PLTeamCommunicationViewModel!
+    var projectDetailViewModel:PLProjectDetailViewModel!
     var teamChatViewController:PLProjectTeamChatViewController!
     var chatGroups:[PLChatGroup]!
     var textFld = UITextField()
@@ -23,7 +24,6 @@ class PLTeamCommunicationViewController: UIViewController,UITableViewDelegate,UI
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         self.teamListTableView.registerNib(UINib(nibName:"PLTableViewCell", bundle:NSBundle.mainBundle()), forCellReuseIdentifier: "Cell")
         teamListTableView.dataSource = self
         teamListTableView.delegate = self
@@ -83,7 +83,8 @@ class PLTeamCommunicationViewController: UIViewController,UITableViewDelegate,UI
     
     func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         
-        if communicationType == 2{
+        if communicationType == 2
+        {
             return "SELECT MEMBERS FOR GROUP"
         }
         
