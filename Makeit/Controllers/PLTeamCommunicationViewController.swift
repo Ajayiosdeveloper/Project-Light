@@ -17,6 +17,7 @@ class PLTeamCommunicationViewController: UIViewController,UITableViewDelegate,UI
     var teamChatViewController:PLProjectTeamChatViewController!
     var chatGroups:[PLChatGroup]!
     var textFld = UITextField()
+    var footerView : UIView!
     
     @IBOutlet var teamListTableView: UITableView!
     
@@ -26,10 +27,12 @@ class PLTeamCommunicationViewController: UIViewController,UITableViewDelegate,UI
         self.teamListTableView.registerNib(UINib(nibName:"PLTableViewCell", bundle:NSBundle.mainBundle()), forCellReuseIdentifier: "Cell")
         teamListTableView.dataSource = self
         teamListTableView.delegate = self
+        footerView = UIView(frame: CGRectMake(0,0,self.view.frame.size.width,50))
     }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
+        PLDynamicEngine.animateView(self.footerView, withTransform: PLDynamicEngine.TransformHelix, andDuration: 1.0)
         if communicationType == 2{
             
             self.navigationItem.rightBarButtonItem = addCreateGroupBarButton()
@@ -154,7 +157,7 @@ class PLTeamCommunicationViewController: UIViewController,UITableViewDelegate,UI
     
     func footerViewForTableView(type:Int)->UIView{
         
-        let footerView = UIView(frame: CGRectMake(0,0,self.view.frame.size.width,50))
+        
         footerView.backgroundColor = UIColor.whiteColor()
         let imageV = UIImageView(frame:CGRectMake(10,10,40,40))
         if type == 0{

@@ -220,7 +220,7 @@ class PLTaskViewController: UIViewController,UITableViewDelegate,UITableViewData
     
     func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
         
-        PLDynamicEngine.animateCell(cell, withTransform: PLDynamicEngine.TransformWave, andDuration:1)
+        PLDynamicEngine.animateCell(cell, withTransform: PLDynamicEngine.TransformWave, andDuration:0.5)
     }
     
     func makeCall(sender:UIButton){
