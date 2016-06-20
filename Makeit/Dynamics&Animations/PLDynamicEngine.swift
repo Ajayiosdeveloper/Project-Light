@@ -159,18 +159,6 @@ class PLDynamicEngine{
         }
     }
     
-    //5. Collectionviewcell Animation
-    class func animateCollectionCell(cell: UICollectionViewCell, withTransform transform: (CALayer) -> CATransform3D, andDuration duration: NSTimeInterval) {
-        
-        let view = cell.contentView
-        view.layer.transform = transform(cell.layer)
-        view.layer.opacity = 0.8
-        
-        UIView.animateWithDuration(duration) {
-            view.layer.transform = CATransform3DIdentity
-            view.layer.opacity = 1
-        }
-    }
     //Various Cell animation properties
     
     static let TransformTipIn = { (layer: CALayer) -> CATransform3D in
@@ -242,7 +230,7 @@ class PLDynamicEngine{
         }
     }
 
-    //6.TextField Animation
+    //5.TextField Animation
     
     static func animateTextfield(textField:UITextField)
     {
@@ -253,9 +241,10 @@ class PLDynamicEngine{
         animation.fromValue = NSValue(CGPoint: CGPointMake(textField.center.x - 10, textField.center.y))
         animation.toValue = NSValue(CGPoint: CGPointMake(textField.center.x + 10, textField.center.y))
         textField.layer.addAnimation(animation, forKey: "position")
+   
     }
     
-    //7.Animate Button
+    //6.Animate Button
     
     static func animateButton(button : UIButton)
     {

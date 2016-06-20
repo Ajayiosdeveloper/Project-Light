@@ -20,22 +20,9 @@ class PLProjectTeamChatViewController: UIViewController,UITableViewDelegate,UITa
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationItem.title = "Team Chat"
-        SVProgressHUD.showWithStatus("loading")
         self.chatGroupsListTableView.registerNib(UINib(nibName:"PLTableViewCell", bundle:NSBundle.mainBundle()), forCellReuseIdentifier:"Cell")
         addNewChatBarButton()
-        projectTeamChatViewModel.fetchChatGroups {[weak self] (res,err) in
-            
-            if res{
-                SVProgressHUD.dismiss()
-                self!.chatGroupsListTableView.reloadData()
-              }
-            else
-            {    SVProgressHUD.dismiss()
-                PLSharedManager.showAlertIn(self!, error: err!, title: "Error occured while fetching chat groups", message: err.debugDescription)
-            }
-        }
-        
-    }
+}
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)

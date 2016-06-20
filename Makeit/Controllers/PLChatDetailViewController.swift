@@ -86,9 +86,6 @@ class PLChatDetailViewController: JSQMessagesViewController, UIActionSheetDelega
             }
     }
     
-    func collectionView(collectionView: UICollectionView, willDisplayCell cell: UICollectionViewCell, forItemAtIndexPath indexPath: NSIndexPath) {
-        PLDynamicEngine.animateCollectionCell(cell, withTransform: PLDynamicEngine.TransformTilt, andDuration: 1)
-    }
     
     func sendMessageWithImageAttachment(type:AttachmentType){
         

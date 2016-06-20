@@ -14,6 +14,10 @@ class PLProjectTeamChatViewModel: NSObject {
     var projectChatGroupsList:[PLChatGroup] = [PLChatGroup]()
     var qbClient = PLQuickbloxHttpClient()
     
+    override init() {
+        
+    }
+    
     init(teamMembers:[PLTeamMember]?) {
         
         projectTeamMembers = teamMembers

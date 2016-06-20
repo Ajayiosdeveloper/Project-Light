@@ -765,13 +765,26 @@ class PLProjectDetailTableViewController: UITableViewController,EKEventEditViewD
     
     if projectTeamChatViewController == nil{
         projectTeamChatViewController = self.storyboard?.instantiateViewControllerWithIdentifier("PLProjectTeamChatViewController") as! PLProjectTeamChatViewController
+       
+        projectTeamChatViewController.projectTeamChatViewModel = PLProjectTeamChatViewModel(teamMembers: projectDetailViewModel.contributors)
+        SVProgressHUD.showWithStatus("Loading")
+        projectTeamChatViewController.projectTeamChatViewModel.fetchChatGroups {[weak self] (res,err) in
+            
+            if res{
+                
+                SVProgressHUD.dismiss()
+                self!.navigationController?.pushViewController(self!.projectTeamChatViewController, animated: true)
+            }
+            else
+            {
+                SVProgressHUD.dismiss()
+            }
+    }
+    }else{
+        self.navigationController?.pushViewController(projectTeamChatViewController, animated: true)
+
     }
     
-     projectTeamChatViewController.projectTeamChatViewModel = PLProjectTeamChatViewModel(teamMembers: projectDetailViewModel.contributors)
-    
-    
-     self.navigationController?.pushViewController(projectTeamChatViewController, animated: true)
-   
     }
     
 
