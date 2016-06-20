@@ -8,7 +8,7 @@
 
 import UIKit
 
-class PLResetPasswordViewController: UIViewController,UIAlertViewDelegate {
+class PLResetPasswordViewController: UIViewController,UIAlertViewDelegate,UITextFieldDelegate {
 
     @IBOutlet weak var emailIdField: UITextField!
     @IBOutlet var resetPasswordButton: UIButton!
@@ -20,6 +20,7 @@ class PLResetPasswordViewController: UIViewController,UIAlertViewDelegate {
     override func viewDidLoad()
     {
         super.viewDidLoad()
+        emailIdField.delegate = self
     }
 
     override func didReceiveMemoryWarning() {
@@ -29,7 +30,13 @@ class PLResetPasswordViewController: UIViewController,UIAlertViewDelegate {
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
+        
         PLDynamicEngine.animateTextfield(emailIdField)
+    }
+    
+    func textFieldDidBeginEditing(textField: UITextField) {
+        
+        emailIdField.layer.removeAllAnimations()
     }
     
     

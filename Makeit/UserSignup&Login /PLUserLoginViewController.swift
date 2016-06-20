@@ -35,7 +35,6 @@ class PLUserLoginViewController: UIViewController,UITextFieldDelegate {
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         loginUserPasswordTextField.text = ""
-        //loginUserNameTextField.becomeFirstResponder()
         PLDynamicEngine.animateTextfield(loginUserNameTextField)
         PLDynamicEngine.animateTextfield(loginUserPasswordTextField)
     }
