@@ -385,7 +385,7 @@ class PLProjectAssignmentViewModel: NSObject {
        
     }
     
-    func closeAssignmentForMembers(members:[Int],completion:(Bool)->Void){
+    func updateAssignmentForMembers(members:[Int],type:Int,completion:(Bool)->Void){
         
         var recordIds = [String]()
         var userIds = [UInt]()
@@ -398,25 +398,49 @@ class PLProjectAssignmentViewModel: NSObject {
          userIds.append(member.memberUserId)
         }
         
-        qbClient.updateAssignmentStatusForMembers(2,recordIds: recordIds,userIds: userIds){res in
+        if type == 2{
             
-            if res{
+            qbClient.updateAssignmentStatusForMembers(2,recordIds: recordIds,userIds: userIds){res in
                 
-                for member in members{
-                  
-                    let memberToUpdate = self.selectedAssigneeList[member] as! PLAssignmentMember
-                    memberToUpdate.assigneeStatus = 2
+                if res{
                     
+                    for member in members{
+                        
+                        let memberToUpdate = self.selectedAssigneeList[member] as! PLAssignmentMember
+                        memberToUpdate.assigneeStatus = 2
+                        
+                    }
+                    
+                    completion(true)
                 }
                 
-                completion(true)
             }
             
         }
+        else{
+            
+            qbClient.updateAssignmentStatusForMembers(0,recordIds: recordIds,userIds: userIds){res in
+                
+                if res{
+                    
+                    for member in members{
+                        
+                        let memberToUpdate = self.selectedAssigneeList[member] as! PLAssignmentMember
+                        memberToUpdate.assigneeStatus = 0
+                        
+                    }
+                    
+                    completion(true)
+                    
+                }
+                
+            }
+        }
+        
         
     }
     
-    func reopenAssignmentForMembers(members:[Int],completion:(Bool)->Void){
+    /*func reopenAssignmentForMembers(members:[Int],completion:(Bool)->Void){
        
         var recordIds = [String]()
         var userIds = [UInt]()
@@ -446,6 +470,6 @@ class PLProjectAssignmentViewModel: NSObject {
             
         }
 
-    }
+    }*/
 
 }

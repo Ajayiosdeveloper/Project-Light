@@ -615,27 +615,35 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
     
     func close(){
         
-        if diplayMembersPopover.title == "Close to members"{
+        if diplayMembersPopover.selectedRows.count > 0{
+        
+            var memberIds = [UInt]()
+            for indexPath in diplayMembersPopover.selectedRows{
+                
+                let path = indexPath as! NSIndexPath
+                let member = diplayMembersPopover.teamMemberModelView.searchList[path.row]
+                memberIds.append(member.memberUserId)
+            }
             
-            print("Closing")
-            print(diplayMembersPopover.selectedRows)
-
             
-        }else{
-            print("Reopening")
-            print(diplayMembersPopover.selectedRows)
-
             
-        }
-       
-       //print(diplayMembersPopover.selectedRows)
+            if diplayMembersPopover.title == "Close to members"{
+                
+                updateAssignmentStatusForMembers(memberIds,type:2)
+                
+            }else{
+             
+                updateAssignmentStatusForMembers(memberIds,type:0)
+            }
+     }
+        
         plPopOverController?.dismissPopoverAnimated(true)
        
     }
 
     func closeAssignmentForMemeber(selectedRows:[Int])
     {
-        assignmentViewModel.closeAssignmentForMembers(selectedRows){_ in
+        assignmentViewModel.updateAssignmentForMembers(selectedRows,type:2){_ in
             
             self.assigneeListTableView.reloadData()
         }
@@ -644,10 +652,47 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
     
     func reopenAssignmentForMember(selectedRows:[Int]) {
         
-        assignmentViewModel.reopenAssignmentForMembers(selectedRows){_ in
+        assignmentViewModel.updateAssignmentForMembers(selectedRows,type:0){_ in
             
             self.assigneeListTableView.reloadData()
         }
+    }
+    
+    func updateAssignmentStatusForMembers(memberIds:[UInt],type:Int){
+      
+       var rows = [Int]()
+       
+        for userId in memberIds{
+            
+            for member in assignmentViewModel.selectedAssigneeList{
+                
+                if member.memberUserId == userId{
+                    
+                    print("Member name is")
+                    print(member.fullName)
+                    let row = assignmentViewModel.selectedAssigneeList.indexOf(member)
+                    rows.append(row!)
+                    print(assignmentViewModel.selectedAssigneeList.count)
+                }
+            }
+        }
+        
+        
+        
+        if type == 2{
+            
+            assignmentViewModel.updateAssignmentForMembers(rows,type:2){_ in
+                
+                self.assigneeListTableView.reloadData()
+            }
+        }else{
+            
+            assignmentViewModel.updateAssignmentForMembers(rows,type:0){_ in
+                
+                self.assigneeListTableView.reloadData()
+            }
+        }
+        
     }
     
 }

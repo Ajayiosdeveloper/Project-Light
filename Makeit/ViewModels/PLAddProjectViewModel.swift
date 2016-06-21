@@ -77,7 +77,7 @@ class PLAddProjectViewModel: NSObject {
                     addedProject.createdAt = NSDate()
                     addedProject.createdBy = (QBSession.currentSession().currentUser?.ID)!
                     
-                    self!.quickBloxClient.createChatGroupWitTeamMembers(name,projectId:projectId,membersIds: memberIds, completion: { (res, _, _) in
+                    self!.quickBloxClient.createChatGroupWitTeamMembers(name,projectId:projectId,membersIds: memberIds,type: 0, completion: { (res, _, _) in
                         if res{
                             completion(addedProject)
 

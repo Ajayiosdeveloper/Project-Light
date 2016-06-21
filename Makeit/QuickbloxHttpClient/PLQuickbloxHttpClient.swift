@@ -606,11 +606,19 @@ class PLQuickbloxHttpClient
     
     //Creating a Chat Group for a Project
     
-    func createChatGroupWitTeamMembers(name :String,  projectId:String,membersIds:[UInt],completion:(Bool,PLChatGroup?,ServerErrorHandling?)->Void)
+    func createChatGroupWitTeamMembers(name :String,  projectId:String,membersIds:[UInt],type:Int,completion:(Bool,PLChatGroup?,ServerErrorHandling?)->Void)
     {
-        
-        let chatDialog = QBChatDialog(dialogID: nil, type: QBChatDialogType.Group)
+        var chatDialog:QBChatDialog!
+        if type == 0{
+              chatDialog = QBChatDialog(dialogID: nil, type: QBChatDialogType.Group)
+        }else{
+              chatDialog = QBChatDialog(dialogID: nil, type: QBChatDialogType.Private)
+        }
+       
         chatDialog.name = "\(name) \(projectId)"
+        chatDialog.data = ["chatName":chatDialog.name!]
+        print(chatDialog.name)
+        
         chatDialog.occupantIDs = membersIds
         QBRequest.createDialog(chatDialog, successBlock: { (response: QBResponse?, createdDialog : QBChatDialog?) -> Void in
             
@@ -623,9 +631,9 @@ class PLQuickbloxHttpClient
             
         }) { (res) -> Void in
          completion(false,nil,self.handleErrors(res))
-        }
+ 
     }
-    
+    }
     
     func createChatNotificationForGroupChatCreation(dialog: QBChatDialog) -> QBChatMessage {
         let inviteMessage: QBChatMessage = QBChatMessage()
@@ -652,8 +660,9 @@ class PLQuickbloxHttpClient
         let searchString = PLSharedManager.manager.projectId
         
         let extendedRequest = ["name[ctn]" : searchString]
-        
-        let page = QBResponsePage(limit: 20, skip: 0)
+
+       
+       let page = QBResponsePage(limit: 20, skip: 0)
         
         QBRequest.dialogsForPage(page, extendedRequest:extendedRequest, successBlock: {[weak self] (response: QBResponse, dialogs: [QBChatDialog]?, dialogsUsersIDs: Set<NSNumber>?, page: QBResponsePage?) -> Void in
             

@@ -125,7 +125,7 @@ class PLTeamCommunicationViewModel: NSObject {
         }
         
         
-        qbClient.createChatGroupWitTeamMembers(name,projectId: PLSharedManager.manager.projectId,membersIds: membersIds, completion: { result,chatGroup,err in
+        qbClient.createChatGroupWitTeamMembers(name,projectId: PLSharedManager.manager.projectId,membersIds: membersIds,type: 0, completion: { result,chatGroup,err in
             
             if result{
                 

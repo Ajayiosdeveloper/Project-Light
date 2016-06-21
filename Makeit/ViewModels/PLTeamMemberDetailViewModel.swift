@@ -117,7 +117,7 @@ class PLTeamMemberDetailViewModel: NSObject {
     func createGroupWithMember(id: UInt,memberName : String, completion:(Bool,group: PLChatGroup)-> Void)
     {
         let loggedInUserName = (QBSession.currentSession().currentUser!.fullName)!
-        quickBloxClient.createChatGroupWitTeamMembers("\(loggedInUserName) & \(memberName)", projectId: PLSharedManager.manager.projectId, membersIds: [id]) { (res, chatGroup, err) in
+        quickBloxClient.createChatGroupWitTeamMembers("\(loggedInUserName) & \(memberName)", projectId: PLSharedManager.manager.projectId, membersIds: [id],type: 1) { (res, chatGroup, err) in
             if res
             {
                 print("Successfully group created")
