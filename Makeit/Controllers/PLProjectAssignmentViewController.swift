@@ -452,13 +452,26 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
             print("Close issue")
             
               if assignmentViewModel.numberOfAssigneesCompletedAssignment() == 1{
-                showAlertWithMessage("Are you sure to close for \(assignmentViewModel.memberName(0))?", message:"\(assignmentViewModel.memberName(0)) will be updated about this status.", cancelNeeded: true)
-            }else if assignmentViewModel.numberOfAssigneesCompletedAssignment() > 1{
+                
+                if assignmentViewModel.selectedAssigneeList.count == 1{
+                    
+                    showAlertWithMessage("Are you sure to close for \(assignmentViewModel.memberName(0))?", message:"\(assignmentViewModel.memberName(0)) will be updated about this status.", cancelNeeded: true,memberRow: 0)
+                }else{
+                    
+                    let memberDetails = assignmentViewModel.assignmentSubmittedMemberName(0)
+                
+                    showAlertWithMessage("Are you sure to close for \(memberDetails.0)?", message:"\(memberDetails.0) will be updated about this status.", cancelNeeded: true,memberRow: memberDetails.1)
+                
+                }
+                
+              
+            
+              }else if assignmentViewModel.numberOfAssigneesCompletedAssignment() > 1{
                 
                 showPopOver(sender,type: "Close to members")//show popover
             }else{
                 
-                showAlertWithMessage("Can not close assignment", message:"you can not close until the assignee submitted the assignment.", cancelNeeded: false)
+                showAlertWithMessage("Can not close assignment", message:"you can not close until the assignee submitted the assignment.", cancelNeeded: false,memberRow:0)
             }
             
             
@@ -466,14 +479,21 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
         }else{
             
             if assignmentViewModel.numberOfAssigneesCompletedAssignment() == 1{
-            showAlertWithMessage("Are you sure to reopen for \(assignmentViewModel.memberName(0))?", message:"\(assignmentViewModel.memberName(0)) will be updated about this status.", cancelNeeded: true)
+                
+                if assignmentViewModel.selectedAssigneeList.count == 1{
+                    
+                   showAlertWithMessage("Are you sure to reopen for \(assignmentViewModel.memberName(0))?", message:"\(assignmentViewModel.memberName(0)) will be updated about this status.", cancelNeeded: true,memberRow: 0)
+                }else{
+                   
+                    let memberDetails = assignmentViewModel.assignmentSubmittedMemberName(1)
+                    
+                    showAlertWithMessage("Are you sure to reopen for \(memberDetails.0)?", message:"\(memberDetails.0) will be updated about this status.", cancelNeeded: true,memberRow: memberDetails.1)
+                }
+                
             }else if assignmentViewModel.numberOfAssigneesCompletedAssignment() > 1{
                 
                 showPopOver(sender,type: "Reopen to members")//show popover
-            }/*else{
-                
-                showAlertWithMessage("Can not reopen assignment", message:"you can not close until the assignee submitted the assignment.", cancelNeeded: false)
-            }*/
+            }
         }
     }
     
@@ -520,7 +540,7 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
        assignmentViewModel.selectedAssignment = assignment
     }
     
-    func showAlertWithMessage(title:String,message:String,cancelNeeded:Bool)
+    func showAlertWithMessage(title:String,message:String,cancelNeeded:Bool,memberRow:Int)
     {
         if #available(iOS 8.0, *) {
             let alertController = UIAlertController(title:title, message:message, preferredStyle: UIAlertControllerStyle.Alert)
@@ -529,11 +549,10 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
                 if cancelNeeded{
                     
                     if title.containsString("close"){
-                       
-                        self.closeAssignmentForMemeber([0])
+                       self.closeAssignmentForMemeber([memberRow])
                     }else{
                         
-                        self.reopenAssignmentForMember([0])
+                        self.reopenAssignmentForMember([memberRow])
                     }
                     
                 }

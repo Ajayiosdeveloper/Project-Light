@@ -321,6 +321,31 @@ class PLProjectAssignmentViewModel: NSObject {
         return self.selectedAssignment!.assignmentStatus
     }
     
+    func assignmentSubmittedMemberName(type:Int)->(String,Int){
+       
+        var memberDetails = ("",0)
+        
+        for (i,x) in selectedAssigneeList.enumerate(){
+            
+            let member = x as! PLAssignmentMember
+            if type == 0{
+            if member.assigneeStatus == 1{
+                memberDetails.0 = member.fullName
+                memberDetails.1 = i
+            }
+            }else{
+                
+                if member.assigneeStatus == 2{
+                    memberDetails.0 = member.fullName
+                    memberDetails.1 = i
+                }
+                
+            }
+        }
+        
+        return memberDetails
+    }
+    
     func updateAssigmentStatusOfLoggedInUser(status:Int,completion:(Bool, ServerErrorHandling?)->Void){
         
         if status == -1{
@@ -440,36 +465,6 @@ class PLProjectAssignmentViewModel: NSObject {
         
     }
     
-    /*func reopenAssignmentForMembers(members:[Int],completion:(Bool)->Void){
-       
-        var recordIds = [String]()
-        var userIds = [UInt]()
-        
-        for row in members{
-            
-            let member = self.selectedAssigneeList[row] as! PLAssignmentMember
-            
-            recordIds.append(member.assignmentRecordId)
-            userIds.append(member.memberUserId)
-        }
-        
-        qbClient.updateAssignmentStatusForMembers(0,recordIds: recordIds,userIds: userIds){res in
-            
-            if res{
-                
-                for member in members{
-                    
-                    let memberToUpdate = self.selectedAssigneeList[member] as! PLAssignmentMember
-                    memberToUpdate.assigneeStatus = 0
-                    
-                }
-                
-                completion(true)
-                
-            }
-            
-        }
-
-    }*/
+   
 
 }
