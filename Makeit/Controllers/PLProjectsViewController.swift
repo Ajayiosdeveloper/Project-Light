@@ -31,7 +31,7 @@ class PLProjectsViewController: UITableViewController,UIImagePickerControllerDel
 
   override func viewDidLoad() {
         super.viewDidLoad()
-    
+    print("Came here!")
     self.projectTableView.registerNib(UINib(nibName:"PLProjectViewCell", bundle:NSBundle.mainBundle()), forCellReuseIdentifier: "ProjectCell")
          self.projectTableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "Cell")
          self.navigationItem.title = "Projects"

@@ -21,6 +21,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate,QBChatDelegate {
     var showBirthdayGreeting:PLShowBirthdayCardViewController!
     var projectDetail : PLProjectDetailTableViewController!
     var projectViewModel:PLProjectsViewModel!
+    var sideBarRootViewController:PLSidebarRootViewController!
     var storyBoard:UIStoryboard!
     
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
@@ -38,6 +39,28 @@ class AppDelegate: UIResponder, UIApplicationDelegate,QBChatDelegate {
         reachability = Reachability.reachabilityForInternetConnection()
         NSNotificationCenter.defaultCenter().addObserver(self, selector:#selector(AppDelegate.handleNetworkChanges), name:kReachabilityChangedNotification, object:nil)
       reachability.startNotifier()
+        
+        let defaults = NSUserDefaults.standardUserDefaults()
+        if let value = defaults.valueForKey("isLoggedIn")
+        {
+           let isLoggedIn = value as! Bool
+           
+            if isLoggedIn{
+                
+                if sideBarRootViewController == nil
+                {
+                 storyBoard = UIStoryboard(name:"Main", bundle: NSBundle.mainBundle())
+                 sideBarRootViewController = storyBoard.instantiateViewControllerWithIdentifier("PLSidebarRootViewController") as! PLSidebarRootViewController
+                }
+                self.window?.rootViewController = sideBarRootViewController
+                
+            }else{
+                
+                print("Not Logged In")
+            }
+        }
+        
+        
         
         return true
     }

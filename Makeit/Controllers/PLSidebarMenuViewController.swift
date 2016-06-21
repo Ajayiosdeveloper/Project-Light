@@ -60,7 +60,8 @@ class PLSidebarMenuViewController: UIViewController,UIImagePickerControllerDeleg
             }
            
          }
-        self.userNameTextfield.text = "\(PLSharedManager.manager.userName.uppercaseString)"
+        let name = NSUserDefaults.standardUserDefaults().valueForKey("USER_NAME") as! String
+        self.userNameTextfield.text = name.uppercaseString
         
       }
     

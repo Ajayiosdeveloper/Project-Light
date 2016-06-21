@@ -61,6 +61,8 @@ class PLQuickbloxHttpClient
         SVProgressHUD.showWithStatus("Logging in")
         QBRequest.logInWithUserLogin(name, password: password, successBlock: { (response, retrievedUser) -> Void in
             NSUserDefaults.standardUserDefaults().setValue(retrievedUser?.ID, forKey:"USER_ID")
+            NSUserDefaults.standardUserDefaults().setBool(true, forKey: "isLoggedIn")
+            NSUserDefaults.standardUserDefaults().setValue(name, forKey: "USER_NAME")
             PLSharedManager.manager.userName = name
             PLSharedManager.manager.userPassword = password
             PLSharedManager.manager.loggedInUserId = (retrievedUser?.ID)!
@@ -178,7 +180,10 @@ class PLQuickbloxHttpClient
     
     func logout() {
         
+        NSUserDefaults.standardUserDefaults().setBool(false, forKey: "isLoggedIn")
+        
         QBRequest.logOutWithSuccessBlock({ (response) in
+            
             
             }, errorBlock:nil)
     }
