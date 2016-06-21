@@ -53,6 +53,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate,QBChatDelegate {
                  sideBarRootViewController = storyBoard.instantiateViewControllerWithIdentifier("PLSidebarRootViewController") as! PLSidebarRootViewController
                 }
                 self.window?.rootViewController = sideBarRootViewController
+               let  name = NSUserDefaults.standardUserDefaults().valueForKey("USER_NAME")
+               let password = NSUserDefaults.standardUserDefaults().valueForKey("USER_PASSWORD")
+                
+                QBRequest.logInWithUserLogin(name! as! String, password: password! as! String, successBlock: { (_, _) in
+               
+                    }, errorBlock: { (_) in
+                })
                 
             }else{
                 

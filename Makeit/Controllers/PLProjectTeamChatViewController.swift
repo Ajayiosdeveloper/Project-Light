@@ -105,7 +105,7 @@ class PLProjectTeamChatViewController: UIViewController,UITableViewDelegate,UITa
        selectedRow = indexPath.row
         let user = QBUUser()
         user.ID = (QBSession.currentSession().currentUser?.ID)!
-        user.password = PLSharedManager.manager.userPassword
+        user.password = NSUserDefaults.standardUserDefaults().valueForKey("USER_PASSWORD")! as? String
         
         if QBChat.instance().isConnected(){
              self.performSegueWithIdentifier("showChatDetail", sender: self)

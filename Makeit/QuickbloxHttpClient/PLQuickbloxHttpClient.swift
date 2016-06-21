@@ -58,11 +58,12 @@ class PLQuickbloxHttpClient
     
     func initiateUserLogin(name:String,password:String,completion:(Bool,ServerErrorHandling?)->Void){
         
+        NSUserDefaults.standardUserDefaults().setValue(name, forKey: "USER_NAME")
+        NSUserDefaults.standardUserDefaults().setValue(password, forKey: "USER_PASSWORD")
         SVProgressHUD.showWithStatus("Logging in")
         QBRequest.logInWithUserLogin(name, password: password, successBlock: { (response, retrievedUser) -> Void in
             NSUserDefaults.standardUserDefaults().setValue(retrievedUser?.ID, forKey:"USER_ID")
             NSUserDefaults.standardUserDefaults().setBool(true, forKey: "isLoggedIn")
-            NSUserDefaults.standardUserDefaults().setValue(name, forKey: "USER_NAME")
             PLSharedManager.manager.userName = name
             PLSharedManager.manager.userPassword = password
             PLSharedManager.manager.loggedInUserId = (retrievedUser?.ID)!
@@ -614,16 +615,9 @@ class PLQuickbloxHttpClient
     func createChatGroupWitTeamMembers(name :String,  projectId:String,membersIds:[UInt],type:Int,completion:(Bool,PLChatGroup?,ServerErrorHandling?)->Void)
     {
         var chatDialog:QBChatDialog!
-        if type == 0{
-              chatDialog = QBChatDialog(dialogID: nil, type: QBChatDialogType.Group)
-        }else{
-              chatDialog = QBChatDialog(dialogID: nil, type: QBChatDialogType.Private)
-        }
-       
-        chatDialog.name = "\(name) \(projectId)"
-        chatDialog.data = ["chatName":chatDialog.name!]
-        print(chatDialog.name)
         
+        chatDialog = QBChatDialog(dialogID: nil, type: QBChatDialogType.Group)
+        chatDialog.name = "\(name) \(projectId)"
         chatDialog.occupantIDs = membersIds
         QBRequest.createDialog(chatDialog, successBlock: { (response: QBResponse?, createdDialog : QBChatDialog?) -> Void in
             
@@ -693,6 +687,7 @@ class PLQuickbloxHttpClient
             completion(true,chatGroups,nil)
             
         }) { (response) -> Void in
+           
             completion(false,[],self.handleErrors(response))
         }
         
