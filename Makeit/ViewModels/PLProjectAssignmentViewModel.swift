@@ -349,7 +349,7 @@ class PLProjectAssignmentViewModel: NSObject {
             
             }else{
         
-           qbClient.updateAssigmentStatus(assignmentRecordId,status: status){ res in
+            qbClient.updateAssigmentStatus(assignmentRecordId,status: status){ res in
             let userAssignment = self.selectedAssigneeList[0] as! PLAssignmentMember
             userAssignment.assigneeStatus = 1
             completion(res)
@@ -383,6 +383,69 @@ class PLProjectAssignmentViewModel: NSObject {
         
         qbClient.updateAssignmentPercentage(assignmentRecordId,value: value)
        
+    }
+    
+    func closeAssignmentForMembers(members:[Int],completion:(Bool)->Void){
+        
+        var recordIds = [String]()
+        var userIds = [UInt]()
+        
+        for row in members{
+            
+        let member = self.selectedAssigneeList[row] as! PLAssignmentMember
+            
+         recordIds.append(member.assignmentRecordId)
+         userIds.append(member.memberUserId)
+        }
+        
+        qbClient.updateAssignmentStatusForMembers(2,recordIds: recordIds,userIds: userIds){res in
+            
+            if res{
+                
+                for member in members{
+                  
+                    let memberToUpdate = self.selectedAssigneeList[member] as! PLAssignmentMember
+                    memberToUpdate.assigneeStatus = 2
+                    
+                }
+                
+                completion(true)
+            }
+            
+        }
+        
+    }
+    
+    func reopenAssignmentForMembers(members:[Int],completion:(Bool)->Void){
+       
+        var recordIds = [String]()
+        var userIds = [UInt]()
+        
+        for row in members{
+            
+            let member = self.selectedAssigneeList[row] as! PLAssignmentMember
+            
+            recordIds.append(member.assignmentRecordId)
+            userIds.append(member.memberUserId)
+        }
+        
+        qbClient.updateAssignmentStatusForMembers(0,recordIds: recordIds,userIds: userIds){res in
+            
+            if res{
+                
+                for member in members{
+                    
+                    let memberToUpdate = self.selectedAssigneeList[member] as! PLAssignmentMember
+                    memberToUpdate.assigneeStatus = 0
+                    
+                }
+                
+                completion(true)
+                
+            }
+            
+        }
+
     }
 
 }

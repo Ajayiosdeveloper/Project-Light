@@ -1154,6 +1154,33 @@ class PLQuickbloxHttpClient
         }
     }
     
+    func updateAssignmentStatusForMembers(status:Int,recordIds:[String],userIds:[UInt],completion:(Bool)->Void){
+        
+        var updateObjects = [QBCOCustomObject]()
+        
+        for (i,each) in recordIds.enumerate(){
+            let customObject = QBCOCustomObject()
+            customObject.className = "PLProjectAssignmentMember"
+            customObject.ID = each
+            customObject.fields?.setObject(status, forKey: "assigneeStatus")
+            customObject.fields?.setObject(userIds[i], forKey:"assigneeUserId")
+            updateObjects.append(customObject)
+        }
+        
+        QBRequest.updateObjects(updateObjects, className: "PLProjectAssignmentMember", successBlock: { (_, objects, _) in
+            
+            completion(true)
+            print("Updated succesfully")
+            
+            }) { (_) in
+              
+                completion(false)
+                print("error occured")
+        }
+    }
+    
+    
+    
     func getAssignmentMembersForAssignmentId(id:String,completion:([QBCOCustomObject]?,ServerErrorHandling?) -> Void)
     {
         

@@ -73,10 +73,7 @@ class PLSidebarMenuViewController: UIViewController,UIImagePickerControllerDeleg
             
             self.sideBarTableView.deselectRowAtIndexPath(selectedrow!, animated: true)
         }
-        
-        let randomAnimation = PLDynamicEngine.randomAnimationGeneratorForProfilePic()
-        randomAnimation(view: self.userProfilePic)
-
+        PLDynamicEngine.magicAppearanceAnimation(self.userProfilePic)
       }
 
     override func didReceiveMemoryWarning() {

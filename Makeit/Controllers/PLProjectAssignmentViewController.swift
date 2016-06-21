@@ -258,6 +258,19 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
                   cell.statusField.textColor = UIColor.redColor()
                   cell.statusField.trackWidth = 0
                   cell.statusField.progressWidth = 0
+                }else if assigneeStatus == "2"{
+                   
+                    cell.statusField.text = "Closed"
+                    cell.statusField.textColor = UIColor.greenColor()
+                    cell.statusField.trackWidth = 0
+                    cell.statusField.progressWidth = 0
+                    completeStatusLabel.hidden = true
+                    assignmentStatusSlider.hidden = true
+                }else{
+                    
+                    cell.statusField.trackWidth = 10
+                    cell.statusField.progressWidth = 10
+                    cell.statusField.textColor = UIColor.greenColor()
                 }
                 
                 loggedInUserStatus = assignmentViewModel.assigneeStatus(0)
@@ -427,7 +440,7 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
                     self.assignmentStatus.enabled = false
                     self.loggedInUserStatus = "1"
                     self.assigneeListTableView.reloadRowsAtIndexPaths([NSIndexPath(forRow:0, inSection:0)], withRowAnimation: UITableViewRowAnimation.Automatic)
-                    }
+                 }
                 else
                 {
                     PLSharedManager.showAlertIn(self, error: err!, title: "Error Occured while updating the assignment", message: err.debugDescription)
@@ -438,31 +451,29 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
             
             print("Close issue")
             
-            /*assignmentViewModel.updateAssigmentStatusOfLoggedInUser(-1){ [weak self] res,err in
-                if res{
-                    self!.assigneeListTableView.reloadData()
-                }else{
-                    //self!.showAlertWithMessage("Cannot Close", message: "Assignment is still in progress by some assignees")
-                    PLSharedManager.showAlertIn(self!, error: err!, title: "Cannot Close - Assignment is still in progress by some assignees", message: err.debugDescription)
-                }
-            }*/
-            
-            if assignmentViewModel.numberOfAssigneesCompletedAssignment() == 1{
-                showAlertWithMessage("Are you sure to close?", message:"you can also reopen anssignment once after you close if needed", cancelNeeded: true)
-            }else{
+              if assignmentViewModel.numberOfAssigneesCompletedAssignment() == 1{
+                showAlertWithMessage("Are you sure to close for \(assignmentViewModel.memberName(0))?", message:"\(assignmentViewModel.memberName(0)) will be updated about this status.", cancelNeeded: true)
+            }else if assignmentViewModel.numberOfAssigneesCompletedAssignment() > 1{
                 
                 showPopOver(sender,type: "Close to members")//show popover
+            }else{
+                
+                showAlertWithMessage("Can not close assignment", message:"you can not close until the assignee submitted the assignment.", cancelNeeded: false)
             }
+            
             
 
         }else{
             
             if assignmentViewModel.numberOfAssigneesCompletedAssignment() == 1{
-            showAlertWithMessage("Are you sure to reopen?", message:"Reopening issue will notify users to rework on the assignment", cancelNeeded: true)
-            }else{
+            showAlertWithMessage("Are you sure to reopen for \(assignmentViewModel.memberName(0))?", message:"\(assignmentViewModel.memberName(0)) will be updated about this status.", cancelNeeded: true)
+            }else if assignmentViewModel.numberOfAssigneesCompletedAssignment() > 1{
                 
                 showPopOver(sender,type: "Reopen to members")//show popover
-            }
+            }/*else{
+                
+                showAlertWithMessage("Can not reopen assignment", message:"you can not close until the assignee submitted the assignment.", cancelNeeded: false)
+            }*/
         }
     }
     
@@ -517,7 +528,14 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
                 
                 if cancelNeeded{
                     
-                    print("Reopen Issue Alert")
+                    if title.containsString("close"){
+                       
+                        self.closeAssignmentForMemeber([0])
+                    }else{
+                        
+                        self.reopenAssignmentForMember([0])
+                    }
+                    
                 }
               
             })
@@ -577,7 +595,7 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
        
       
        diplayMembersPopover.title = type
-       
+       diplayMembersPopover.selectedRows.removeAllObjects()
         
         diplayMembersPopover.teamMemberModelView = PLTeamMemberModelView(searchMembers:assignmentViewModel.membersWithClosedAssignmentStatus());
         plPopOverController!.popoverLayoutMargins = UIEdgeInsetsMake(10, 10, 10, 10);
@@ -597,10 +615,39 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
     
     func close(){
         
-       print(diplayMembersPopover.selectedRows)
+        if diplayMembersPopover.title == "Close to members"{
+            
+            print("Closing")
+            print(diplayMembersPopover.selectedRows)
+
+            
+        }else{
+            print("Reopening")
+            print(diplayMembersPopover.selectedRows)
+
+            
+        }
+       
+       //print(diplayMembersPopover.selectedRows)
         plPopOverController?.dismissPopoverAnimated(true)
        
     }
 
+    func closeAssignmentForMemeber(selectedRows:[Int])
+    {
+        assignmentViewModel.closeAssignmentForMembers(selectedRows){_ in
+            
+            self.assigneeListTableView.reloadData()
+        }
+        
+    }
+    
+    func reopenAssignmentForMember(selectedRows:[Int]) {
+        
+        assignmentViewModel.reopenAssignmentForMembers(selectedRows){_ in
+            
+            self.assigneeListTableView.reloadData()
+        }
+    }
     
 }
