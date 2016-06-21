@@ -458,7 +458,7 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
                     showAlertWithMessage("Are you sure to close for \(assignmentViewModel.memberName(0))?", message:"\(assignmentViewModel.memberName(0)) will be updated about this status.", cancelNeeded: true,memberRow: 0)
                 }else{
                     
-                    let memberDetails = assignmentViewModel.assignmentSubmittedMemberName(0)
+                    let memberDetails = assignmentViewModel.assignmentSubmittedMemberName()
                 
                     showAlertWithMessage("Are you sure to close for \(memberDetails.0)?", message:"\(memberDetails.0) will be updated about this status.", cancelNeeded: true,memberRow: memberDetails.1)
                 
@@ -485,7 +485,7 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
                    showAlertWithMessage("Are you sure to reopen for \(assignmentViewModel.memberName(0))?", message:"\(assignmentViewModel.memberName(0)) will be updated about this status.", cancelNeeded: true,memberRow: 0)
                 }else{
                    
-                    let memberDetails = assignmentViewModel.assignmentSubmittedMemberName(1)
+                    let memberDetails = assignmentViewModel.assignmentSubmittedMemberName()
                     
                     showAlertWithMessage("Are you sure to reopen for \(memberDetails.0)?", message:"\(memberDetails.0) will be updated about this status.", cancelNeeded: true,memberRow: memberDetails.1)
                 }

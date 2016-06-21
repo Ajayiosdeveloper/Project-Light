@@ -321,26 +321,19 @@ class PLProjectAssignmentViewModel: NSObject {
         return self.selectedAssignment!.assignmentStatus
     }
     
-    func assignmentSubmittedMemberName(type:Int)->(String,Int){
+    func assignmentSubmittedMemberName()->(String,Int){
        
         var memberDetails = ("",0)
         
         for (i,x) in selectedAssigneeList.enumerate(){
             
             let member = x as! PLAssignmentMember
-            if type == 0{
-            if member.assigneeStatus == 1{
+         
+            if member.assigneeStatus == 1 || member.assigneeStatus == 2{
                 memberDetails.0 = member.fullName
                 memberDetails.1 = i
             }
-            }else{
-                
-                if member.assigneeStatus == 2{
-                    memberDetails.0 = member.fullName
-                    memberDetails.1 = i
-                }
-                
-            }
+
         }
         
         return memberDetails
