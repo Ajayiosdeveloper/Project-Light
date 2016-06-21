@@ -52,7 +52,7 @@ class PLProjectCommentViewController: UITableViewController,EKEventEditViewDeleg
       override func viewWillAppear(animated: Bool) {
         
         super.viewWillAppear(animated)
-        PLDynamicEngine.animateView(self.view, withTransform: PLDynamicEngine.TransformFlip, andDuration: 1)
+        PLDynamicEngine.animateView(self.view, withTransform: PLDynamicEngine.TransformFlip, andDuration: 0.4)
         if let _ = commitmentViewModel.commitment
         {
             self.title = commitmentViewModel.commitmentName()

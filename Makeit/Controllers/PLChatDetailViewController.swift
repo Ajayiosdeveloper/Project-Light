@@ -29,6 +29,9 @@ class PLChatDetailViewController: JSQMessagesViewController, UIActionSheetDelega
         
         super.viewDidLoad()
         QBChat.instance().addDelegate(self)
+        print("ome")
+        print(self.chatDetailViewModel.selectedChatGroup.name)
+        print(self.chatDetailViewModel.selectedChatGroup.chatGroupId)
         self.chatGroup = QBChatDialog(dialogID:self.chatDetailViewModel.selectedChatGroup.chatGroupId, type: QBChatDialogType.Group)
         self.chatGroup.occupantIDs = self.chatDetailViewModel.selectedChatGroup.opponents
         self.chatGroup.joinWithCompletionBlock { (err) in
@@ -38,12 +41,10 @@ class PLChatDetailViewController: JSQMessagesViewController, UIActionSheetDelega
         self.title = self.chatDetailViewModel.selectedChatGroup.name
         self.senderID = String((QBSession.currentSession().currentUser?.ID)!)
         self.senderDisplayName = "You"
-        
-            self.chatDetailViewModel.fetchAllGroupMessages(){res in
+        self.chatDetailViewModel.fetchAllGroupMessages(self.chatDetailViewModel.selectedChatGroup.chatGroupId){res in
             
                 self.collectionView.reloadData()
-           
-            }
+           }
 
             
             self.collectionView.messagesCollectionViewLayout.incomingAvatarViewSize = CGSizeMake(30, 30)

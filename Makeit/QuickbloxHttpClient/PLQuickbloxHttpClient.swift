@@ -617,7 +617,7 @@ class PLQuickbloxHttpClient
             let chatGroup = PLChatGroup()
             chatGroup.name = name
             chatGroup.opponents = (createdDialog?.occupantIDs)! as! [UInt]
-            chatGroup.chatGroupId = (createdDialog?.roomJID)!
+            chatGroup.chatGroupId = (createdDialog?.ID)!
             chatGroup.unReadMessageCount = 0
             completion(true,chatGroup,nil)
             
@@ -663,7 +663,7 @@ class PLQuickbloxHttpClient
                 
                 for eachGroup in dialogs!{
                     
-                    var chatGroup =  PLChatGroup()
+                    let chatGroup =  PLChatGroup()
                     chatGroup.name = self!.removeProjectIdFromChatGroupName((eachGroup.name)!)
                     chatGroup.chatGroupId = (eachGroup.ID)!
                     chatGroup.lastMessage = eachGroup.lastMessageText

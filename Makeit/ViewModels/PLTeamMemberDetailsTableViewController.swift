@@ -11,11 +11,16 @@ import Quickblox
 
 class PLTeamMemberDetailsTableViewController: UITableViewController {
     
-    var teamMemberDetailViewModel:PLTeamMemberDetailViewModel!
-    
     @IBOutlet var memberDetailsTableview: UITableView!
-    override func viewDidLoad() {
-        
+    
+    var teamMemberDetailViewModel:PLTeamMemberDetailViewModel!
+    var projectDetailViewModel:PLProjectDetailViewModel!
+    var projectTeamChatViewController:PLProjectTeamChatViewController!
+    var teamCommunicationViewController:PLTeamCommunicationViewController!
+    var selectedMember : PLTeamMember!
+    
+    override func viewDidLoad()
+    {
         super.viewDidLoad()
         
         self.memberDetailsTableview.registerNib(UINib(nibName: "PLTeamMemberDetailsTableViewCell",bundle: NSBundle.mainBundle()), forCellReuseIdentifier: "Cells")
@@ -112,4 +117,116 @@ class PLTeamMemberDetailsTableViewController: UITableViewController {
         }
         return 0
     }
+    
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath)
+    {
+        if indexPath.section == 1
+        {
+            if indexPath.row == 0 {
+                startConference(0)
+            }
+            else if indexPath.row == 1 {
+                startConference(1)
+            }
+            else {
+                print("present")
+                print(projectDetailViewModel)
+                
+                presentProjectTeamChatViewController()
+            }
+        }
+        
+    }
+    
+  
+    func startConference(communicationType: Int)
+    {
+        if communicationType == 0{
+            
+            // self.callWithConferenceType(.Audio)
+        }
+        else if communicationType == 1{
+            
+            //self.callWithConferenceType(.Video)
+        }
+        
+    }
+    
+    /* func callWithConferenceType(type:QBRTCConferenceType){
+     
+     if  communicationViewModel.isAnymemberSelected(){
+     
+     QBRTCClient.initializeRTC()
+     QBRTCClient.instance().addDelegate(self)
+     let opponentsIds =  communicationViewModel.selectedMembersUserIdsForConference()
+     let session = QBRTCClient.instance().createNewSessionWithOpponents(opponentsIds, withConferenceType: type)
+     if (session != nil){
+     currentSession = session
+     currentSession.startCall(nil)
+     }
+     else{
+     
+     print("Session Not Created Please login first")
+     
+     }
+     
+     }else{
+     
+     print("No Member Selected for Conference")
+     }
+     
+     }
+     
+     
+     func didReceiveNewSession(session: QBRTCSession!, userInfo: [NSObject : AnyObject]!) {
+     
+     if self.currentSession != nil{
+     
+     var info = Dictionary<String,String>()
+     info["Key"] = "Busy"
+     session.rejectCall(info)
+     return
+     }
+     self.currentSession = session
+     }
+     
+     func session(session: QBRTCSession!, acceptedByUser userID: NSNumber!, userInfo: [NSObject : AnyObject]!) {
+     
+     print("Accepted by User \(userID)")
+     self.currentSession.acceptCall(userInfo)
+     }
+     
+     func session(session: QBRTCSession!, rejectedByUser userID: NSNumber!, userInfo: [NSObject : AnyObject]!) {
+     
+     print("Rejected By User \(userID)")
+     self.currentSession.rejectCall(userInfo)
+     }*/
+    
+    func presentProjectTeamChatViewController()
+    {
+        if projectTeamChatViewController == nil
+        {
+            projectTeamChatViewController = self.storyboard?.instantiateViewControllerWithIdentifier("PLProjectTeamChatViewController") as! PLProjectTeamChatViewController
+            projectTeamChatViewController.enbleAndDisable = false
+            
+            SVProgressHUD.showWithStatus("Loading")
+            
+            
+            
+            teamMemberDetailViewModel.createGroupWithMember(selectedMember.memberUserId, memberName: selectedMember.fullName, completion: { (res,group) in
+            SVProgressHUD.dismiss()
+            self.projectTeamChatViewController.projectTeamChatViewModel = PLProjectTeamChatViewModel()
+            self.projectTeamChatViewController.projectTeamChatViewModel.addChatGroup(group)
+                
+                
+            self.navigationController?.pushViewController(self.projectTeamChatViewController, animated: true)
+
+            })
+            
+          }
+            else
+            {
+                self.navigationController?.pushViewController(projectTeamChatViewController, animated: true)
+            }
+        }
 }

@@ -634,6 +634,9 @@ class PLProjectDetailTableViewController: UITableViewController,EKEventEditViewD
                     teamMemberDetailViewController = self.storyboard?.instantiateViewControllerWithIdentifier("PLTeamMemberDetailsTableViewController") as! PLTeamMemberDetailsTableViewController
                 }
                 teamMemberDetailViewController.teamMemberDetailViewModel = PLTeamMemberDetailViewModel(withMemberName: selectedMember.fullName,userId: selectedMember.memberUserId,projectId: selectedMember.projectId)
+                teamMemberDetailViewController.selectedMember = projectDetailViewModel.selectedContributor(indexPath.row)
+                teamMemberDetailViewController.projectDetailViewModel = projectDetailViewModel
+                teamMemberDetailViewController.projectDetailViewModel.contributors = projectDetailViewModel.contributors
                 self.navigationController?.pushViewController(teamMemberDetailViewController, animated:true)
                 
             }
@@ -702,8 +705,11 @@ class PLProjectDetailTableViewController: UITableViewController,EKEventEditViewD
                 if teamMemberDetailViewController == nil{
                     
                     teamMemberDetailViewController = self.storyboard?.instantiateViewControllerWithIdentifier("PLTeamMemberDetailsTableViewController") as! PLTeamMemberDetailsTableViewController
+                    
                 }
                 teamMemberDetailViewController.teamMemberDetailViewModel = PLTeamMemberDetailViewModel(withMemberName: selectedMember.fullName,userId: selectedMember.memberUserId,projectId: selectedMember.projectId)
+                teamMemberDetailViewController.projectDetailViewModel = projectDetailViewModel
+                teamMemberDetailViewController.projectDetailViewModel.contributors = projectDetailViewModel.contributors
                 self.navigationController?.pushViewController(teamMemberDetailViewController, animated:true)
                 
             }
@@ -755,8 +761,10 @@ class PLProjectDetailTableViewController: UITableViewController,EKEventEditViewD
             teamCommunicationViewController = self.storyboard?.instantiateViewControllerWithIdentifier("teamCommunicationViewController") as! PLTeamCommunicationViewController
         }
         teamCommunicationViewController.communicationType = type
-        
+        teamCommunicationViewController.projectDetailViewModel = projectDetailViewModel
+        teamCommunicationViewController.projectDetailViewModel.contributors = projectDetailViewModel.contributors
         teamCommunicationViewController.communicationViewModel = PLTeamCommunicationViewModel(members: projectDetailViewModel.contributors)
+    
         self.navigationController?.pushViewController(teamCommunicationViewController, animated: true)
     }
     
@@ -765,13 +773,16 @@ class PLProjectDetailTableViewController: UITableViewController,EKEventEditViewD
     
     if projectTeamChatViewController == nil{
         projectTeamChatViewController = self.storyboard?.instantiateViewControllerWithIdentifier("PLProjectTeamChatViewController") as! PLProjectTeamChatViewController
-       
+         print("Contributors")
+        projectTeamChatViewController.enbleAndDisable = true
         projectTeamChatViewController.projectTeamChatViewModel = PLProjectTeamChatViewModel(teamMembers: projectDetailViewModel.contributors)
+        print("Contributors")
+        print(projectDetailViewModel.contributors)
         SVProgressHUD.showWithStatus("Loading")
         projectTeamChatViewController.projectTeamChatViewModel.fetchChatGroups {[weak self] (res,err) in
             
-            if res{
-                
+            if res
+            {
                 SVProgressHUD.dismiss()
                 self!.navigationController?.pushViewController(self!.projectTeamChatViewController, animated: true)
             }
@@ -779,15 +790,15 @@ class PLProjectDetailTableViewController: UITableViewController,EKEventEditViewD
             {
                 SVProgressHUD.dismiss()
             }
+        }
     }
-    }else{
+    else
+    {
         self.navigationController?.pushViewController(projectTeamChatViewController, animated: true)
 
     }
     
     }
-    
-
     
     func eventEditViewController(controller: EKEventEditViewController, didCompleteWithAction action: EKEventEditViewAction){
         
@@ -801,8 +812,6 @@ class PLProjectDetailTableViewController: UITableViewController,EKEventEditViewD
         event = editViewController.event
         if editCommitment
         {
-         print("enddate")
-         print(controller.event?.endDate)
             commitmentViewModel.updateCommitmentWith((controller.event?.title)!, startDate:(controller.event?.startDate)! , targetDate: (controller.event?.endDate)!, description:(controller.event?.notes
                 )!, projectId: projectId, completion: { (res) in
             
@@ -857,7 +866,6 @@ class PLProjectDetailTableViewController: UITableViewController,EKEventEditViewD
             try commitmentViewModel.commitmentValidations(title,startDate: startDate,targetDate:targetDate, description:description)
             
             commitmentViewModel.addCommitmentToCalendar(title, date:startDate,endDate: targetDate, description: description, event:event!){[weak self] identifier in
-                print("CAME")
                 self!.commitmentViewModel.createCommitmentWith(title,startDate: startDate,targetDate:targetDate,description:description ,projectId: self!.projectId,identifier: identifier){ result,err in
                     
                     if result{
@@ -879,9 +887,7 @@ class PLProjectDetailTableViewController: UITableViewController,EKEventEditViewD
 
     func fetchEvents(identifier:String,completion: (EKEvent?) -> ())
     {
-       // let eventStore = EKEventStore()
         let event = editViewController.eventStore.eventWithIdentifier(identifier)
-       // let event = eventStore.eventWithIdentifier(identifier)
         if let _ = event{
             completion(event!)
         }else{

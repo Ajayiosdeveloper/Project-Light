@@ -26,19 +26,13 @@ class PLUserSignUpViewController: UIViewController,UITextFieldDelegate
     override func viewDidLoad() {
         super.viewDidLoad()
         userSignup.enabled = false
-        // Do any additional setup after loading the view.
     }
-    override func viewWillAppear(animated: Bool) {
-        super.viewWillAppear(animated)
-        PLDynamicEngine.animateTextfield(signupUserNameTextField)
-        PLDynamicEngine.animateTextfield(signupUserPasswordTextField)
-        PLDynamicEngine.animateTextfield(signupUserConfirmPasswordTextField)
-        PLDynamicEngine.animateTextfield(emailIdField)
-    }
+   
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+        
     }
+    
     //MARK: UITextfield Delegate
     
     func textFieldShouldReturn(textField: UITextField) -> Bool {
@@ -60,14 +54,6 @@ class PLUserSignUpViewController: UIViewController,UITextFieldDelegate
         return true
     }
     
-    func textFieldDidBeginEditing(textField: UITextField) {
-        
-        signupUserNameTextField.layer.removeAllAnimations()
-        signupUserPasswordTextField.layer.removeAllAnimations()
-        signupUserConfirmPasswordTextField.layer.removeAllAnimations()
-        emailIdField.layer.removeAllAnimations()
-    }
-
 
     func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool
     {

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Quickblox
 
 class PLTeamMemberDetailViewModel: NSObject {
     
@@ -109,6 +110,18 @@ class PLTeamMemberDetailViewModel: NSObject {
             {
                 self.assignments = nil
                 completion(false, err)
+            }
+        }
+    }
+    
+    func createGroupWithMember(id: UInt,memberName : String, completion:(Bool,group: PLChatGroup)-> Void)
+    {
+        let loggedInUserName = (QBSession.currentSession().currentUser!.fullName)!
+        quickBloxClient.createChatGroupWitTeamMembers("\(loggedInUserName) & \(memberName)", projectId: PLSharedManager.manager.projectId, membersIds: [id]) { (res, chatGroup, err) in
+            if res
+            {
+                print("Successfully group created")
+                completion(true,group: chatGroup!)
             }
         }
     }
