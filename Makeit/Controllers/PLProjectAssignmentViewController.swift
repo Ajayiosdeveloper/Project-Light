@@ -264,8 +264,8 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
                     cell.statusField.textColor = UIColor.greenColor()
                     cell.statusField.trackWidth = 0
                     cell.statusField.progressWidth = 0
-                    completeStatusLabel.hidden = true
-                    assignmentStatusSlider.hidden = true
+                    //completeStatusLabel.hidden = true
+                    //assignmentStatusSlider.hidden = true
                 }else{
                     
                     cell.statusField.trackWidth = 10
