@@ -33,6 +33,7 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
     var headerColor = UIColor(colorLiteralRed: 89/255, green: 181/255, blue: 50/255, alpha: 1)
     var loggedInUserStatus = "0"
     var isSliderValueChanged = false
+    var flag = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -334,6 +335,8 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
     
     func addButtonForTableViewFooterOnView(addOnView:UIView,title:String,tag:Int)
     {
+        print("Title")
+        print(title)
         assignmentStatus = UIButton(type:.Custom)
         assignmentStatus.tag = tag
         assignmentStatus.setTitle(title, forState: UIControlState.Normal)
@@ -359,22 +362,16 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
         {
             if completed == 100
             {
+                flag = true
                 headerView.alpha = 1
-                headerView.backgroundColor = UIColor(colorLiteralRed: 89/255, green: 181/255, blue: 50/255, alpha: 1)
-                self.addButtonForTableViewFooterOnView(headerView, title: "Completed ?", tag: 1)
-                assignmentStatus.alpha = 1
-                assignmentStatus.enabled = true
+                assigneeListTableView.reloadData()
             }
-                
             else
             {
-                print("Execccc")
+                flag = false
                 headerView.alpha = 0
-                headerView.backgroundColor = UIColor(colorLiteralRed: 89/255, green: 181/255, blue: 50/255, alpha: 0)
-                self.addButtonForTableViewFooterOnView(headerView, title: "", tag: 1)
-                assignmentStatus.alpha = 0
-                assignmentStatus.enabled = false
-            }
+                assigneeListTableView.reloadData()
+           }
         }
 
     }
@@ -388,9 +385,8 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
 
         if section == 1
         {
-            
-            if assignmentViewModel.selectedAssignment != nil{
-               
+          if assignmentViewModel.selectedAssignment != nil
+          {
                let userId = QBSession.currentSession().currentUser?.ID
                 if userId! == PLSharedManager.manager.projectCreatedByUserId{
                     
@@ -401,9 +397,22 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
                     if assignmentViewModel.isLoggedInUserPartOfAssignment()
                     {
                         if loggedInUserStatus == "0"{
-                            headerView.backgroundColor = UIColor(colorLiteralRed: 89/255, green: 181/255, blue: 50/255, alpha: 0)
-                            self.addButtonForTableViewFooterOnView(headerView, title: "", tag: 1)
-                                                    
+                            if flag == false
+                            {
+                                headerView.backgroundColor = UIColor(colorLiteralRed: 89/255, green: 181/255, blue: 50/255, alpha: 0)
+                                self.addButtonForTableViewFooterOnView(headerView, title: "Completed ?", tag: 1)
+                                assignmentStatus.alpha = 0
+                                for view in headerView.subviews{
+                                    view.removeFromSuperview()
+                                }
+                            }
+                            else
+                            {
+                                headerView.backgroundColor = UIColor(colorLiteralRed: 89/255, green: 181/255, blue: 50/255, alpha: 1)
+                                self.addButtonForTableViewFooterOnView(headerView, title: "Completed ?", tag: 1)
+                                 self.assignmentStatus.alpha = 1
+                            }
+                            
                         }
                         else if loggedInUserStatus == "1"{
                             headerView.backgroundColor = UIColor(colorLiteralRed: 89/255, green: 181/255, blue: 50/255, alpha: 0.5)
@@ -511,18 +520,14 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
                 
                 }
                 
-              
-            
               }else if assignmentViewModel.numberOfAssigneesCompletedAssignment() > 1{
                 
                 showPopOver(sender,type: "Close to members")//show popover
             }else{
                 
-                showAlertWithMessage("Can not close assignment", message:"you can not close until the assignee submitted the assignment.", cancelNeeded: false,memberRow:0)
+                showAlertWithMessage("Cannot close assignment", message:"you cannot close until the assignee submitted the assignment.", cancelNeeded: false,memberRow:0)
             }
-            
-            
-
+      
         }else{
             
             if assignmentViewModel.numberOfAssigneesCompletedAssignment() == 1{
