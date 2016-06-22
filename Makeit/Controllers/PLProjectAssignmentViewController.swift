@@ -33,11 +33,10 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
     var headerColor = UIColor(colorLiteralRed: 89/255, green: 181/255, blue: 50/255, alpha: 1)
     var loggedInUserStatus = "0"
     var isSliderValueChanged = false
-    var flag = false
     
-    override func viewDidLoad() {
+    override func viewDidLoad()
+    {
         super.viewDidLoad()
-       
         print(assignmentViewModel.assigneeList)
         self.assigneeListTableView.registerNib(UINib(nibName:"PLAssigneeTableViewCell", bundle:NSBundle.mainBundle()), forCellReuseIdentifier: "Cell")
         addDoneBarButtonItem()
@@ -52,8 +51,9 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
         targetDateDoneButtonToDatePicker()
     }
     
-    override func viewWillAppear(animated: Bool) {
-            super.viewWillAppear(animated)
+    override func viewWillAppear(animated: Bool)
+    {
+       super.viewWillAppear(animated)
        PLDynamicEngine.animateView(self.view, withTransform: PLDynamicEngine.TransformFlip, andDuration: 0.4)
         if let _ = assignmentViewModel, _ = assignmentViewModel.assigneeList{
             
@@ -140,8 +140,6 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
         catch AssignmentValidation.DescriptionEmpty{print("Empty Description")}
         catch AssignmentValidation.NoAssignee{print("No Assignee")}
         catch {}
-        
-      
     }
 
     func startDateDoneButtonToDatePicker()
@@ -335,8 +333,6 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
     
     func addButtonForTableViewFooterOnView(addOnView:UIView,title:String,tag:Int)
     {
-        print("Title")
-        print(title)
         assignmentStatus = UIButton(type:.Custom)
         assignmentStatus.tag = tag
         assignmentStatus.setTitle(title, forState: UIControlState.Normal)
@@ -397,19 +393,10 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
                     if assignmentViewModel.isLoggedInUserPartOfAssignment()
                     {
                         if loggedInUserStatus == "0"{
-                            if flag == false
-                            {
-                                headerView.backgroundColor = UIColor(colorLiteralRed: 89/255, green: 181/255, blue: 50/255, alpha: 0)
-                                self.addButtonForTableViewFooterOnView(headerView, title: "Completed ?", tag: 1)
-                                assignmentStatus.alpha = 0
-                            }
-                            else
-                            {
+                            
                                 headerView.backgroundColor = UIColor(colorLiteralRed: 89/255, green: 181/255, blue: 50/255, alpha: 1)
                                 self.addButtonForTableViewFooterOnView(headerView, title: "Completed ?", tag: 1)
-                                 self.assignmentStatus.alpha = 1
-                            }
-                            
+                                 self.assignmentStatus.enabled = true
                         }
                         else if loggedInUserStatus == "1"
                         {
@@ -457,11 +444,11 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
         return nil
   }
     
-   // func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+    func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
        
-       // PLDynamicEngine.animateCell(cell, withTransform: PLDynamicEngine.TransformFlip, andDuration: 1)
+        PLDynamicEngine.animateCell(cell, withTransform: PLDynamicEngine.TransformFlip, andDuration: 1)
         
-   // }
+    }
     
     func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 40
@@ -492,6 +479,7 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
         if sender.tag == 1{
             assignmentViewModel.updateAssigmentStatusOfLoggedInUser(1){res,err in
                 if res{
+                    self.assignmentViewModel.updateAssignmentPercentage(Int(self.assignmentStatusSlider.value))
                     self.assignmentStatus.setTitle("Submitted", forState:.Normal)
                     self.assignmentStatus.enabled = false
                     self.loggedInUserStatus = "1"
