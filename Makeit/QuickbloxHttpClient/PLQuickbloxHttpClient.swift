@@ -617,9 +617,10 @@ class PLQuickbloxHttpClient
         var chatDialog:QBChatDialog!
         chatDialog = QBChatDialog(dialogID: nil, type: QBChatDialogType.Group)
         if type == 0 {
-            chatDialog.name = "\(name) \(projectId)"
+            chatDialog.name = "\(name) \("****")\(projectId)"
         }else{
-            chatDialog.name = "\(name) \("Private")"
+            chatDialog.name = "\(name) \("@@@@") \(projectId)"
+            
         }
         
         chatDialog.occupantIDs = membersIds
@@ -660,7 +661,7 @@ class PLQuickbloxHttpClient
     
     func fetchChatGroupsForProject(completion:(Bool,[PLChatGroup],[PLChatGroup],ServerErrorHandling?)->Void){
         
-        let searchString = PLSharedManager.manager.projectId
+        let searchString = "**** " + PLSharedManager.manager.projectId
         
         let extendedRequest = ["name[ctn]" : searchString]
 
@@ -688,10 +689,8 @@ class PLQuickbloxHttpClient
                 }
                 
                 
-                let creatorName = PLSharedManager.manager.projectCreatedByName
-                let userName = (QBSession.currentSession().currentUser?.fullName)!
                 
-                let searchString2 = "\(creatorName) &"
+                let searchString2 = "@@@@ \(PLSharedManager.manager.projectId)"
                 
                 print("Search String 2 is \(searchString2)")
                 
@@ -718,11 +717,8 @@ class PLQuickbloxHttpClient
                             personalChatGroups.append(chatGroup)
                         }
                         
-                        
+                       completion(true,chatGroups,personalChatGroups,nil)
                     }
-                    
-                    completion(true,chatGroups,personalChatGroups,nil)
-
                     
                 }) { (response) -> Void in
                     

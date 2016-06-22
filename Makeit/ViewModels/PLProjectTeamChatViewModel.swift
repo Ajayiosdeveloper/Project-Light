@@ -104,6 +104,9 @@ class PLProjectTeamChatViewModel: NSObject {
                 
                 self!.projectChatGroupsList.appendContentsOf(chatGroups)
                 self!.personalChatGroupList.appendContentsOf(personalChatGroups)
+                print("Total chats count are")
+                print(chatGroups.count)
+                print(personalChatGroups.count)
                 
                 completion(true, nil)
             }
