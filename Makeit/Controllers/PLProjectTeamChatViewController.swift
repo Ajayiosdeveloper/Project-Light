@@ -60,12 +60,14 @@ class PLProjectTeamChatViewController: UIViewController,UITableViewDelegate,UITa
     
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return 1
+        return 2
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
+        if section == 0{
         return projectTeamChatViewModel.numberOfRows()
+        }
+        return 0
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
@@ -120,6 +122,15 @@ class PLProjectTeamChatViewController: UIViewController,UITableViewDelegate,UITa
         }
       }
     }
+    
+    func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        if section == 0{
+            return "Team Chat Groups"
+        }else{
+            return "Personal Chat Groups"
+        }
+    }
+    
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         

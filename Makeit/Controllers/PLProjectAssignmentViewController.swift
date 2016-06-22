@@ -477,7 +477,7 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
             
 
         }else{
-            
+
             if assignmentViewModel.numberOfAssigneesCompletedAssignment() == 1{
                 
                 if assignmentViewModel.selectedAssigneeList.count == 1{

@@ -12,6 +12,7 @@ class PLProjectTeamChatViewModel: NSObject {
     
     var projectTeamMembers:[PLTeamMember]?
     var projectChatGroupsList:[PLChatGroup] = [PLChatGroup]()
+    var personalChatGroupList:[PLChatGroup] = [PLChatGroup]()
     var qbClient = PLQuickbloxHttpClient()
     
     override init() {
@@ -70,7 +71,7 @@ class PLProjectTeamChatViewModel: NSObject {
     
     func fetchChatGroups(completion:(Bool, ServerErrorHandling?)->Void){
         
-        qbClient.fetchChatGroupsForProject {[weak self] (result, chatGroups,err) in
+        qbClient.fetchChatGroupsForProject {[weak self] (result, chatGroups,personalChatGroups,err) in
             
             if result{
                 

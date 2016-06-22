@@ -322,7 +322,7 @@ class PLChatDetailViewController: JSQMessagesViewController, UIActionSheetDelega
         print(message)
         if dialogID == self.chatDetailViewModel.selectedChatGroup.chatGroupId{
             
-            if self.senderID == String(message.senderID){
+            if self.senderID == (message.customParameters?.valueForKey("messageSenderId"))! as! String{
                 
                 print("Do not show message")
             }

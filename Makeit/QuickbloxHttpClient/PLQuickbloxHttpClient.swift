@@ -615,9 +615,13 @@ class PLQuickbloxHttpClient
     func createChatGroupWitTeamMembers(name :String,  projectId:String,membersIds:[UInt],type:Int,completion:(Bool,PLChatGroup?,ServerErrorHandling?)->Void)
     {
         var chatDialog:QBChatDialog!
-        
         chatDialog = QBChatDialog(dialogID: nil, type: QBChatDialogType.Group)
-        chatDialog.name = "\(name) \(projectId)"
+        if type == 0 {
+            chatDialog.name = "\(name) \(projectId)"
+        }else{
+            chatDialog.name = "\(name) \("Private") \(projectId)"
+        }
+        
         chatDialog.occupantIDs = membersIds
         QBRequest.createDialog(chatDialog, successBlock: { (response: QBResponse?, createdDialog : QBChatDialog?) -> Void in
             
@@ -654,7 +658,7 @@ class PLQuickbloxHttpClient
     }
     
     
-    func fetchChatGroupsForProject(completion:(Bool,[PLChatGroup],ServerErrorHandling?)->Void){
+    func fetchChatGroupsForProject(completion:(Bool,[PLChatGroup],[PLChatGroup],ServerErrorHandling?)->Void){
         
         let searchString = PLSharedManager.manager.projectId
         
@@ -682,13 +686,52 @@ class PLQuickbloxHttpClient
                     chatGroup.opponents = eachGroup.occupantIDs! as! [UInt]
                     chatGroups.append(chatGroup)
                 }
+                
+                
+                
+                let searchString2 = "Private \(PLSharedManager.manager.projectId)"
+                
+                let extendedRequest2 = ["name[ctn]" : searchString2]
+ 
+                QBRequest.dialogsForPage(page, extendedRequest:extendedRequest2, successBlock: {[weak self] (response: QBResponse, dialogs: [QBChatDialog]?, dialogsUsersIDs: Set<NSNumber>?, page: QBResponsePage?) -> Void in
+                    var personalChatGroups:[PLChatGroup] = [PLChatGroup]()
+                    
+                    if let _ = dialogs{
+                        
+                        var personalChatGroups:[PLChatGroup] = [PLChatGroup]()
+                        
+                        for eachGroup in dialogs!{
+                            
+                            let chatGroup =  PLChatGroup()
+                            chatGroup.name = self!.removeProjectIdFromChatGroupName((eachGroup.name)!)
+                            chatGroup.chatGroupId = (eachGroup.ID)!
+                            chatGroup.lastMessage = eachGroup.lastMessageText
+                            chatGroup.unReadMessageCount = eachGroup.unreadMessagesCount
+                            if let _ = eachGroup.lastMessageDate{
+                                chatGroup.lastMessageDate = NSDateFormatter.localizedStringFromDate(eachGroup.lastMessageDate!, dateStyle: NSDateFormatterStyle.MediumStyle, timeStyle: NSDateFormatterStyle.ShortStyle)
+                            }
+                            chatGroup.opponents = eachGroup.occupantIDs! as! [UInt]
+                            personalChatGroups.append(chatGroup)
+                        }
+                        
+                        
+                    }
+                    
+                    completion(true,chatGroups,personalChatGroups,nil)
+
+                    
+                }) { (response) -> Void in
+                    
+                
+                }
+                
             }
             
-            completion(true,chatGroups,nil)
+            //completion(true,chatGroups,nil)
             
         }) { (response) -> Void in
            
-            completion(false,[],self.handleErrors(response))
+            completion(false,[],[],self.handleErrors(response))
         }
         
     }
