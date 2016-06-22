@@ -36,6 +36,7 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
     
     override func viewDidLoad() {
         super.viewDidLoad()
+       
         print(assignmentViewModel.assigneeList)
         self.assigneeListTableView.registerNib(UINib(nibName:"PLAssigneeTableViewCell", bundle:NSBundle.mainBundle()), forCellReuseIdentifier: "Cell")
         addDoneBarButtonItem()
@@ -264,8 +265,8 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
                     cell.statusField.textColor = UIColor.greenColor()
                     cell.statusField.trackWidth = 0
                     cell.statusField.progressWidth = 0
-                    //completeStatusLabel.hidden = true
-                    //assignmentStatusSlider.hidden = true
+                    completeStatusLabel.hidden = true
+                    assignmentStatusSlider.hidden = true
                 }else{
                     
                     cell.statusField.trackWidth = 10
@@ -274,12 +275,19 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
                 }
                 
                 loggedInUserStatus = assignmentViewModel.assigneeStatus(0)
-                if loggedInUserStatus == "1"{
+                if loggedInUserStatus == "1" || loggedInUserStatus == "2"
+                {
                     headerColor = UIColor(colorLiteralRed: 89/255, green: 181/255, blue: 50/255, alpha: 0.5)
                     assignmentStatus.setTitle("Submitted", forState: .Normal)
                     assignmentStatus.enabled = false
                     completeStatusLabel.hidden = true
                     assignmentStatusSlider.hidden = true
+                }
+                else if loggedInUserStatus == "0"
+                {
+                    completeStatusLabel.hidden = false
+                    assignmentStatusSlider.hidden = false
+
                 }
             }
             else{
@@ -294,6 +302,11 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
             
         }
    
+        if PLSharedManager.manager.projectCreatedByUserId == QBSession.currentSession().currentUser?.ID
+        {
+            completeStatusLabel.hidden = true
+            assignmentStatusSlider.hidden = true
+        }
         
         return cell
      
@@ -319,6 +332,52 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
         return nil
     }
     
+    func addButtonForTableViewFooterOnView(addOnView:UIView,title:String,tag:Int)
+    {
+        assignmentStatus = UIButton(type:.Custom)
+        assignmentStatus.tag = tag
+        assignmentStatus.setTitle(title, forState: UIControlState.Normal)
+        assignmentStatus.titleLabel?.font = UIFont(name:"Avenir Next Demi Bold ", size: 24)
+        assignmentStatus.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
+        assignmentStatus.addTarget(self, action:#selector(PLProjectAssignmentViewController.performButtonActionOfFooterView), forControlEvents: UIControlEvents.TouchUpInside)
+        assignmentStatus.frame = CGRectMake(0, 0, self.view.frame.size.width, 40)
+        assignmentStatus.contentHorizontalAlignment = .Center
+        assignmentStatus.contentEdgeInsets = UIEdgeInsetsMake(0, 0, 0, 0)
+        addOnView.addSubview(assignmentStatus)
+    }
+    
+    @IBAction func didChangeAssignmentProgress(sender: UISlider) {
+        
+        let completed =  Int(sender.value)
+        completeStatusLabel.text = "\(completed) % Done"
+        isSliderValueChanged = true
+        let cell  = assigneeListTableView.cellForRowAtIndexPath(NSIndexPath(forRow: 0, inSection: 0)) as! PLAssigneeTableViewCell
+        let value = Int(sender.value)
+        cell.statusField.progress = CGFloat(sender.value/100)
+        cell.statusField.text = "\(value)%"
+        if loggedInUserStatus == "0"
+        {
+            if completed == 100
+            {
+                headerView.alpha = 1
+                headerView.backgroundColor = UIColor(colorLiteralRed: 89/255, green: 181/255, blue: 50/255, alpha: 1)
+                self.addButtonForTableViewFooterOnView(headerView, title: "Completed ?", tag: 1)
+                assignmentStatus.alpha = 1
+                assignmentStatus.enabled = true
+            }
+                
+            else
+            {
+                print("Execccc")
+                headerView.alpha = 0
+                headerView.backgroundColor = UIColor(colorLiteralRed: 89/255, green: 181/255, blue: 50/255, alpha: 0)
+                self.addButtonForTableViewFooterOnView(headerView, title: "", tag: 1)
+                assignmentStatus.alpha = 0
+                assignmentStatus.enabled = false
+            }
+        }
+
+    }
     
     func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         
@@ -342,10 +401,11 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
                     if assignmentViewModel.isLoggedInUserPartOfAssignment()
                     {
                         if loggedInUserStatus == "0"{
-                            headerView.backgroundColor = UIColor(colorLiteralRed: 89/255, green: 181/255, blue: 50/255, alpha: 1)
-                            self.addButtonForTableViewFooterOnView(headerView, title: "Completed ?", tag: 1)
-                            assignmentStatus.enabled = true
-                        }else if loggedInUserStatus == "1"{
+                            headerView.backgroundColor = UIColor(colorLiteralRed: 89/255, green: 181/255, blue: 50/255, alpha: 0)
+                            self.addButtonForTableViewFooterOnView(headerView, title: "", tag: 1)
+                                                    
+                        }
+                        else if loggedInUserStatus == "1"{
                             headerView.backgroundColor = UIColor(colorLiteralRed: 89/255, green: 181/255, blue: 50/255, alpha: 0.5)
                             self.addButtonForTableViewFooterOnView(headerView, title: "Submitted", tag: 1)
                             assignmentStatus.enabled = false
@@ -416,20 +476,7 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
         }
      }
     
-    func addButtonForTableViewFooterOnView(addOnView:UIView,title:String,tag:Int)
-    {
-         assignmentStatus = UIButton(type:.Custom)
-        assignmentStatus.tag = tag
-        assignmentStatus.setTitle(title, forState: UIControlState.Normal)
-        assignmentStatus.titleLabel?.font = UIFont(name:"Avenir Next Demi Bold ", size: 24)
-        assignmentStatus.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
-        assignmentStatus.addTarget(self, action:#selector(PLProjectAssignmentViewController.performButtonActionOfFooterView), forControlEvents: UIControlEvents.TouchUpInside)
-        assignmentStatus.frame = CGRectMake(0, 0, self.view.frame.size.width, 40)
-        assignmentStatus.contentHorizontalAlignment = .Center
-        assignmentStatus.contentEdgeInsets = UIEdgeInsetsMake(0, 0, 0, 0)
-        addOnView.addSubview(assignmentStatus)
-    }
-
+    
     func performButtonActionOfFooterView(sender:UIButton)
     {
         print(sender.tag)
@@ -579,17 +626,6 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
         
     }
     
-    @IBAction func didChangeAssignmentProgress(sender: UISlider) {
-        
-      let completed =  Int(sender.value)
-       completeStatusLabel.text = "\(completed) % Done"
-       isSliderValueChanged = true
-       let cell  = assigneeListTableView.cellForRowAtIndexPath(NSIndexPath(forRow: 0, inSection: 0)) as! PLAssigneeTableViewCell
-        let value = Int(sender.value)
-        cell.statusField.progress = CGFloat(sender.value/100)
-        cell.statusField.text = "\(value)%"
-        
-    }
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
         
