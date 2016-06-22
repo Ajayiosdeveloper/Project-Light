@@ -619,7 +619,7 @@ class PLQuickbloxHttpClient
         if type == 0 {
             chatDialog.name = "\(name) \(projectId)"
         }else{
-            chatDialog.name = "\(name) \("Private") \(projectId)"
+            chatDialog.name = "\(name) \("Private")"
         }
         
         chatDialog.occupantIDs = membersIds
@@ -688,13 +688,17 @@ class PLQuickbloxHttpClient
                 }
                 
                 
+                let creatorName = PLSharedManager.manager.projectCreatedByName
+                let userName = (QBSession.currentSession().currentUser?.fullName)!
                 
-                let searchString2 = "Private \(PLSharedManager.manager.projectId)"
+                let searchString2 = "\(creatorName) &"
+                
+                print("Search String 2 is \(searchString2)")
                 
                 let extendedRequest2 = ["name[ctn]" : searchString2]
  
                 QBRequest.dialogsForPage(page, extendedRequest:extendedRequest2, successBlock: {[weak self] (response: QBResponse, dialogs: [QBChatDialog]?, dialogsUsersIDs: Set<NSNumber>?, page: QBResponsePage?) -> Void in
-                    var personalChatGroups:[PLChatGroup] = [PLChatGroup]()
+                    let personalChatGroups:[PLChatGroup] = [PLChatGroup]()
                     
                     if let _ = dialogs{
                         

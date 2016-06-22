@@ -257,6 +257,7 @@ class PLProjectsViewController: UITableViewController,UIImagePickerControllerDel
         selectedProejctCreatorId = selected.createdBy
         selectedSection = indexPath.section
         PLSharedManager.manager.projectCreatedByUserId = selected.createdBy
+        PLSharedManager.manager.projectCreatedByName = selected.createdByName
         projectViewModel.getProjectMembersList(selectedProjectId!){ resultedMembers,err in
             
             print(resultedMembers)
@@ -367,6 +368,7 @@ class PLProjectsViewController: UITableViewController,UIImagePickerControllerDel
         detailViewController.projectCreatedBy = selectedProejctCreatorId
         detailViewController.projectDescription = selectedProjectDescription
         detailViewController.fromNotification = false
+        
         let projectDetailViewModel = PLProjectDetailViewModel(members:resulted)
         if let _ = selectedSection{
             projectDetailViewModel.numberOfSections = selectedSection!

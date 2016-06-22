@@ -16,6 +16,7 @@ class PLProjectTeamChatViewController: UIViewController,UITableViewDelegate,UITa
     var projectTeamChatViewModel:PLProjectTeamChatViewModel!
     var teamCommunicationViewController:PLTeamCommunicationViewController!
     var selectedRow = 0
+    var selectedSection = 0
     var enbleAndDisable : Bool = false
     
     override func viewDidLoad() {
@@ -64,10 +65,8 @@ class PLProjectTeamChatViewController: UIViewController,UITableViewDelegate,UITa
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if section == 0{
-        return projectTeamChatViewModel.numberOfRows()
-        }
-        return 0
+       
+        return projectTeamChatViewModel.numberOfRows(section)
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
@@ -82,9 +81,9 @@ class PLProjectTeamChatViewController: UIViewController,UITableViewDelegate,UITa
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCellWithIdentifier("Cell") as! PLTableViewCell
-        cell.memberName.text = projectTeamChatViewModel.titleForRow(indexPath.row)
-        cell.memberDetail.text = projectTeamChatViewModel.detailTitle(indexPath.row)
-        let unreadMessages = projectTeamChatViewModel.getUnreadMessageCount(indexPath.row)
+        cell.memberName.text = projectTeamChatViewModel.titleForRow(indexPath.section,row: indexPath.row)
+        cell.memberDetail.text = projectTeamChatViewModel.detailTitle(indexPath.section,row: indexPath.row)
+        let unreadMessages = projectTeamChatViewModel.getUnreadMessageCount(indexPath.section,row: indexPath.row)
         if unreadMessages == "0"
         {
             cell.messageCountLabel.hidden = true
@@ -105,6 +104,7 @@ class PLProjectTeamChatViewController: UIViewController,UITableViewDelegate,UITa
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
        selectedRow = indexPath.row
+       selectedSection = indexPath.section
         let user = QBUUser()
         user.ID = (QBSession.currentSession().currentUser?.ID)!
         user.password = NSUserDefaults.standardUserDefaults().valueForKey("USER_PASSWORD")! as? String
@@ -135,7 +135,7 @@ class PLProjectTeamChatViewController: UIViewController,UITableViewDelegate,UITa
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         
            let chatDetailViewController = segue.destinationViewController as! PLChatDetailViewController
-           chatDetailViewController.chatDetailViewModel = PLChatDetailViewModel(chatGroup: projectTeamChatViewModel.selectedGroup(selectedRow))
+           chatDetailViewController.chatDetailViewModel = PLChatDetailViewModel(chatGroup: projectTeamChatViewModel.selectedGroup(selectedSection,row: selectedRow))
            //chatDetailViewController.selectedChatGroupIndex = selectedRow
     }
     

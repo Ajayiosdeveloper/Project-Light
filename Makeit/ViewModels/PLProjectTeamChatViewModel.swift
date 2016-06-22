@@ -35,38 +35,65 @@ class PLProjectTeamChatViewModel: NSObject {
     
     }
     
-    func numberOfRows()->Int{
-        
+    func numberOfRows(section:Int)->Int{
+        if section == 0{
         return projectChatGroupsList.count
+        }
+        return personalChatGroupList.count
     }
     
-    func titleForRow(row:Int)->String{
-        
+    func titleForRow(section:Int,row:Int)->String{
+        if section == 0{
         let group = projectChatGroupsList[row]
         return group.name
-        
+        }else{
+            
+            let group = personalChatGroupList[row]
+            return group.name
+        }
     }
     
-    func getUnreadMessageCount(row:Int)->String{
-        
+    func getUnreadMessageCount(section:Int,row:Int)->String{
+        if section == 0{
         let group = projectChatGroupsList[row]
         return String(group.unReadMessageCount)
+        }else{
+            let group = personalChatGroupList[row]
+            return String(group.unReadMessageCount)
+        }
     }
     
-    func detailTitle(row:Int)->String{
-        
+    func detailTitle(section:Int,row:Int)->String{
+        if section == 0{
         let group = projectChatGroupsList[row]
         if let _ = group.lastMessage{
             return group.lastMessage!
         }
+        }
+        else{
+            
+            let group = personalChatGroupList[row]
+            if let _ = group.lastMessage{
+                return group.lastMessage!
+            }
+        }
+        
+        
+        
         return ""
     }
     
-    func selectedGroup(row:Int)->PLChatGroup{
-        
+    func selectedGroup(section:Int,row:Int)->PLChatGroup{
+        if section == 0{
        PLSharedManager.manager.groupName = projectChatGroupsList[row].name
         
         return projectChatGroupsList[row]
+        }else{
+            
+            PLSharedManager.manager.groupName = personalChatGroupList[row].name
+            
+            return personalChatGroupList[row]
+        }
     }
     
     func fetchChatGroups(completion:(Bool, ServerErrorHandling?)->Void){
@@ -76,6 +103,7 @@ class PLProjectTeamChatViewModel: NSObject {
             if result{
                 
                 self!.projectChatGroupsList.appendContentsOf(chatGroups)
+                self!.personalChatGroupList.appendContentsOf(personalChatGroups)
                 
                 completion(true, nil)
             }

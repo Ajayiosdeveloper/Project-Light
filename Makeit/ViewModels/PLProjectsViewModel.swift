@@ -59,7 +59,7 @@ class PLProjectsViewModel: NSObject {
             let description = remoteObject.fields!["description"] as? String
             let project = PLProject(projectName:name, subTitle:description)
             project.projectId = remoteObject.ID
-            project.createdByName = "You"
+            project.createdByName = remoteObject.fields!["projectCreatorName"] as! String/////"You"
             project.createdBy = remoteObject.userID
             project.parentId = remoteObject.parentID
             createdProjectList.append(project)
