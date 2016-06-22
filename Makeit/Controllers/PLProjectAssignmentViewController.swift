@@ -349,18 +349,11 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
         addOnView.addSubview(assignmentStatus)
     }
     
-    @IBAction func didChangeAssignmentProgress(sender: UISlider) {
-        
-        let completed =  Int(sender.value)
-        completeStatusLabel.text = "\(completed) % Done"
-        isSliderValueChanged = true
-        let cell  = assigneeListTableView.cellForRowAtIndexPath(NSIndexPath(forRow: 0, inSection: 0)) as! PLAssigneeTableViewCell
-        let value = Int(sender.value)
-        cell.statusField.progress = CGFloat(sender.value/100)
-        cell.statusField.text = "\(value)%"
+    @IBAction func didChangeAssignmentProgress(sender: UISlider)
+    {
         if loggedInUserStatus == "0"
         {
-            if completed == 100
+            if sender.value == 100
             {
                 flag = true
                 headerView.alpha = 1
@@ -371,9 +364,16 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
                 flag = false
                 headerView.alpha = 0
                 assigneeListTableView.reloadData()
-           }
+            }
         }
 
+        let completed =  Int(sender.value)
+        completeStatusLabel.text = "\(completed) % Done"
+        isSliderValueChanged = true
+        let cell  = assigneeListTableView.cellForRowAtIndexPath(NSIndexPath(forRow: 0, inSection: 0)) as! PLAssigneeTableViewCell
+        let value = Int(sender.value)
+        cell.statusField.progress = CGFloat(sender.value/100)
+        cell.statusField.text = "\(value)%"
     }
     
     func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
@@ -402,9 +402,6 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
                                 headerView.backgroundColor = UIColor(colorLiteralRed: 89/255, green: 181/255, blue: 50/255, alpha: 0)
                                 self.addButtonForTableViewFooterOnView(headerView, title: "Completed ?", tag: 1)
                                 assignmentStatus.alpha = 0
-                                for view in headerView.subviews{
-                                    view.removeFromSuperview()
-                                }
                             }
                             else
                             {
@@ -414,7 +411,8 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
                             }
                             
                         }
-                        else if loggedInUserStatus == "1"{
+                        else if loggedInUserStatus == "1"
+                        {
                             headerView.backgroundColor = UIColor(colorLiteralRed: 89/255, green: 181/255, blue: 50/255, alpha: 0.5)
                             self.addButtonForTableViewFooterOnView(headerView, title: "Submitted", tag: 1)
                             assignmentStatus.enabled = false
@@ -459,9 +457,11 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
         return nil
   }
     
-    func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
-        PLDynamicEngine.animateCell(cell, withTransform: PLDynamicEngine.TransformFlip, andDuration: 1)
-    }
+   // func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+       
+       // PLDynamicEngine.animateCell(cell, withTransform: PLDynamicEngine.TransformFlip, andDuration: 1)
+        
+   // }
     
     func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 40
