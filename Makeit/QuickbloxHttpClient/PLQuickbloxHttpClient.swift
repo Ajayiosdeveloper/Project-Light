@@ -619,7 +619,7 @@ class PLQuickbloxHttpClient
         if type == 0 {
             chatDialog.name = "\(name) \("****")\(projectId)"
         }else{
-            chatDialog.name = "\(name) \("@@@@") \(projectId)"
+            chatDialog.name = "\(name) \("@@@@")\(projectId)"
             
         }
         
@@ -661,7 +661,7 @@ class PLQuickbloxHttpClient
     
     func fetchChatGroupsForProject(completion:(Bool,[PLChatGroup],[PLChatGroup],ServerErrorHandling?)->Void){
         
-        let searchString = "**** " + PLSharedManager.manager.projectId
+        let searchString = "****\(PLSharedManager.manager.projectId)"
         
         let extendedRequest = ["name[ctn]" : searchString]
 
@@ -671,6 +671,7 @@ class PLQuickbloxHttpClient
         QBRequest.dialogsForPage(page, extendedRequest:extendedRequest, successBlock: {[weak self] (response: QBResponse, dialogs: [QBChatDialog]?, dialogsUsersIDs: Set<NSNumber>?, page: QBResponsePage?) -> Void in
             
             var chatGroups:[PLChatGroup] = [PLChatGroup]()
+            var personalChatGroups:[PLChatGroup] = [PLChatGroup]()
             
             if let _ = dialogs{
                 
@@ -690,18 +691,18 @@ class PLQuickbloxHttpClient
                 
                 
                 
-                let searchString2 = "@@@@ \(PLSharedManager.manager.projectId)"
+                let searchString2 = "@@@@\(PLSharedManager.manager.projectId)"
                 
                 print("Search String 2 is \(searchString2)")
                 
                 let extendedRequest2 = ["name[ctn]" : searchString2]
  
                 QBRequest.dialogsForPage(page, extendedRequest:extendedRequest2, successBlock: {[weak self] (response: QBResponse, dialogs: [QBChatDialog]?, dialogsUsersIDs: Set<NSNumber>?, page: QBResponsePage?) -> Void in
-                    let personalChatGroups:[PLChatGroup] = [PLChatGroup]()
+                  
                     
                     if let _ = dialogs{
                         
-                        var personalChatGroups:[PLChatGroup] = [PLChatGroup]()
+                    
                         
                         for eachGroup in dialogs!{
                             
@@ -720,6 +721,7 @@ class PLQuickbloxHttpClient
                        completion(true,chatGroups,personalChatGroups,nil)
                     }
                     
+                    
                 }) { (response) -> Void in
                     
                 
@@ -727,7 +729,7 @@ class PLQuickbloxHttpClient
                 
             }
             
-            //completion(true,chatGroups,nil)
+            
             
         }) { (response) -> Void in
            

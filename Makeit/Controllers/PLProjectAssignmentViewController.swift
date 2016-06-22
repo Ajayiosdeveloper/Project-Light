@@ -363,7 +363,7 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
             {
                 flag = false
                 headerView.alpha = 0
-                assigneeListTableView.reloadData()
+               // assigneeListTableView.reloadData()
             }
         }
 
