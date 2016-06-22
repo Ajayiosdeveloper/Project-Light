@@ -380,7 +380,7 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
                             
                                 headerView.backgroundColor = UIColor(colorLiteralRed: 89/255, green: 181/255, blue: 50/255, alpha: 1)
                                 self.addButtonForTableViewFooterOnView(headerView, title: "Completed ?", tag: 1)
-                                 self.assignmentStatus.alpha = 1
+                                 self.assignmentStatus.enabled = true
                         }
                         else if loggedInUserStatus == "1"
                         {
@@ -463,6 +463,7 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
         if sender.tag == 1{
             assignmentViewModel.updateAssigmentStatusOfLoggedInUser(1){res,err in
                 if res{
+                    self.assignmentViewModel.updateAssignmentPercentage(Int(self.assignmentStatusSlider.value))
                     self.assignmentStatus.setTitle("Submitted", forState:.Normal)
                     self.assignmentStatus.enabled = false
                     self.loggedInUserStatus = "1"
