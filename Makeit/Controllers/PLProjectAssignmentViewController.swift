@@ -351,13 +351,13 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
         {
             if sender.value == 100
             {
-                flag = true
+                
                 headerView.alpha = 1
                 assigneeListTableView.reloadData()
             }
             else
             {
-                flag = false
+                
                 headerView.alpha = 0
                // assigneeListTableView.reloadData()
             }

@@ -125,5 +125,28 @@ class PLTeamMemberDetailViewModel: NSObject {
             }
         }
     }
+    
+    func checkChatGroupExist(selectedMemberName:String,completion:(Bool,PLChatGroup?)->Void){ //rajeshnath & Ajay Nath @@@@575fe696a28f9a0dc800000a
+        
+      let creator = PLSharedManager.manager.projectCreatedByName
+      
+      let loggedInName = selectedMemberName
+      
+      let projectId = PLSharedManager.manager.projectId
+        
+      let searchString = "\(creator) & \(loggedInName) @@@@\(projectId)"
+        
+      quickBloxClient.checkChatGroupExist(searchString) { (chatGroup) in
+        
+        if let _ = chatGroup{
+            
+            completion(true, chatGroup!)
+        }else{
+            completion(false, nil)
+        }
+        }
+    }
+
+
 
 }

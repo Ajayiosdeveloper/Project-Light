@@ -204,29 +204,53 @@ class PLTeamMemberDetailsTableViewController: UITableViewController {
     
     func presentProjectTeamChatViewController()
     {
+        
+        func setUp(){
+            
+            projectTeamChatViewController.enbleAndDisable = false
+            projectTeamChatViewController.allowHeaders = false
+            
+            SVProgressHUD.showWithStatus("Loading")
+            teamMemberDetailViewModel.checkChatGroupExist(selectedMember.fullName){res,chat in
+                
+                if res{
+                    
+                    print("Chat Exist")
+                    SVProgressHUD.dismiss()
+                    self.projectTeamChatViewController.projectTeamChatViewModel = PLProjectTeamChatViewModel()
+                    self.projectTeamChatViewController.projectTeamChatViewModel.addChatGroup(chat!)
+                    self.navigationController?.pushViewController(self.projectTeamChatViewController, animated: true)
+                    
+                }else{
+                    
+                    print("Create Chat")
+                    
+                    SVProgressHUD.showWithStatus("Loading")
+                     self.teamMemberDetailViewModel.createGroupWithMember(self.selectedMember.memberUserId, memberName: self.selectedMember.fullName, completion: { (res,group) in
+                     SVProgressHUD.dismiss()
+                     self.projectTeamChatViewController.projectTeamChatViewModel = PLProjectTeamChatViewModel()
+                     self.projectTeamChatViewController.projectTeamChatViewModel.addChatGroup(group)
+                     
+                     
+                     self.navigationController?.pushViewController(self.projectTeamChatViewController, animated: true)
+                     
+                     })
+                }
+            }
+        }
+        
         if projectTeamChatViewController == nil
         {
             projectTeamChatViewController = self.storyboard?.instantiateViewControllerWithIdentifier("PLProjectTeamChatViewController") as! PLProjectTeamChatViewController
-            projectTeamChatViewController.enbleAndDisable = false
             
-            SVProgressHUD.showWithStatus("Loading")
-            
-            
-            
-            teamMemberDetailViewModel.createGroupWithMember(selectedMember.memberUserId, memberName: selectedMember.fullName, completion: { (res,group) in
-            SVProgressHUD.dismiss()
-            self.projectTeamChatViewController.projectTeamChatViewModel = PLProjectTeamChatViewModel()
-            self.projectTeamChatViewController.projectTeamChatViewModel.addChatGroup(group)
-                
-                
-            self.navigationController?.pushViewController(self.projectTeamChatViewController, animated: true)
-
-            })
-            
-          }
-            else
-            {
-                self.navigationController?.pushViewController(projectTeamChatViewController, animated: true)
-            }
+            setUp()
         }
+        else
+        {
+            setUp()
+        }
+        
+        
+        
+    }
 }

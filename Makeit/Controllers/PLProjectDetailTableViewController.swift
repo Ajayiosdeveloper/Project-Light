@@ -779,6 +779,7 @@ class PLProjectDetailTableViewController: UITableViewController,EKEventEditViewD
         print("Contributors")
         print(projectDetailViewModel.contributors)
         SVProgressHUD.showWithStatus("Loading")
+        
         projectTeamChatViewController.projectTeamChatViewModel.fetchChatGroups {[weak self] (res,err) in
             
             if res

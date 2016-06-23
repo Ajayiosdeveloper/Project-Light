@@ -18,6 +18,7 @@ class PLProjectTeamChatViewController: UIViewController,UITableViewDelegate,UITa
     var selectedRow = 0
     var selectedSection = 0
     var enbleAndDisable : Bool = false
+    var allowHeaders:Bool = true
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -61,11 +62,13 @@ class PLProjectTeamChatViewController: UIViewController,UITableViewDelegate,UITa
     
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        if allowHeaders{
         return 2
+        }
+        return 1
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-       
         return projectTeamChatViewModel.numberOfRows(section)
     }
     
@@ -124,11 +127,14 @@ class PLProjectTeamChatViewController: UIViewController,UITableViewDelegate,UITa
     }
     
     func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        if allowHeaders{
         if section == 0{
             return "Team Chat Groups"
         }else{
             return "Personal Chat Groups"
         }
+        }
+        return ""
     }
     
     

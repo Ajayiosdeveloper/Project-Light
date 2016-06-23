@@ -1391,6 +1391,47 @@ class PLQuickbloxHttpClient
         }
     }
     
+    
+    func checkChatGroupExist(name:String,completion:(PLChatGroup?)->Void){
+        
+         let page = QBResponsePage(limit: 20, skip: 0)
+        
+         let extendedRequest2 = ["name" : name]
+        
+        QBRequest.dialogsForPage(page, extendedRequest:extendedRequest2, successBlock: {[weak self] (response: QBResponse, dialogs: [QBChatDialog]?, dialogsUsersIDs: Set<NSNumber>?, page: QBResponsePage?) -> Void in
+            
+            
+            if let _ = dialogs where dialogs?.count > 0{
+                
+                  let chatGroup =  PLChatGroup()
+                
+                for eachGroup in dialogs!{
+                    
+                    chatGroup.name = self!.removeProjectIdFromChatGroupName((eachGroup.name)!)
+                    chatGroup.chatGroupId = (eachGroup.ID)!
+                    chatGroup.lastMessage = eachGroup.lastMessageText
+                    chatGroup.unReadMessageCount = eachGroup.unreadMessagesCount
+                    if let _ = eachGroup.lastMessageDate{
+                        chatGroup.lastMessageDate = NSDateFormatter.localizedStringFromDate(eachGroup.lastMessageDate!, dateStyle: NSDateFormatterStyle.MediumStyle, timeStyle: NSDateFormatterStyle.ShortStyle)
+                    }
+                    chatGroup.opponents = eachGroup.occupantIDs! as! [UInt]
+                 
+                }
+                completion(chatGroup)
+            }else{
+                
+                completion(nil)
+            }
+            
+            
+        }) { (response) -> Void in
+            
+            
+        }
+        
+        
+    }
+    
     //sending group craeation invitation
     
 /*createdDialog!.occupantIDs?.forEach({ (occupantID) in
