@@ -252,6 +252,7 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
                 let assigneeStatus = assignmentViewModel.assigneeStatus(indexPath.row)
                 cell.statusField.progressColor = UIColor.blueColor()
                cell.statusField.progress = assignmentViewModel.percentageCompletedByAssignee(indexPath.row)
+               cell.statusField.font = UIFont(name:"Helveticaneue", size: 16)
                cell.statusField.text = "\(assignmentViewModel.percentageCompletedByAssignee(indexPath.row) * 100)%"
                 if assigneeStatus == "1"{
                   cell.statusField.text = "Submitted"
@@ -268,8 +269,8 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
                     assignmentStatusSlider.hidden = true
                 }else{
                     
-                    cell.statusField.trackWidth = 10
-                    cell.statusField.progressWidth = 10
+                    cell.statusField.trackWidth = 5
+                    cell.statusField.progressWidth = 5
                     cell.statusField.textColor = UIColor.greenColor()
                 }
                 
@@ -347,22 +348,6 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
     
     @IBAction func didChangeAssignmentProgress(sender: UISlider)
     {
-        if loggedInUserStatus == "0"
-        {
-            if sender.value == 100
-            {
-                
-                headerView.alpha = 1
-                assigneeListTableView.reloadData()
-            }
-            else
-            {
-                
-                headerView.alpha = 0
-               // assigneeListTableView.reloadData()
-            }
-        }
-
         let completed =  Int(sender.value)
         completeStatusLabel.text = "\(completed) % Done"
         isSliderValueChanged = true
