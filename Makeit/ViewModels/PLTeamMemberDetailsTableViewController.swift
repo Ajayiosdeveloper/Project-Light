@@ -29,6 +29,7 @@ class PLTeamMemberDetailsTableViewController: UITableViewController {
 
     override func viewWillAppear(animated: Bool) {
       super.viewWillAppear(animated)
+        memberDetailsTableview.userInteractionEnabled = true
       self.title = teamMemberDetailViewModel.getTeamMemberName()
         teamMemberDetailViewModel.getAssignmentsOfUserForProject(){[weak self] res,err in
             
@@ -82,6 +83,7 @@ class PLTeamMemberDetailsTableViewController: UITableViewController {
         cell.endTime.text =
             "End: " + teamMemberDetailViewModel.getAssignmentTargetDateWithTime(indexPath.row)
         cell.assignmentDetail.text = teamMemberDetailViewModel.getAssignmentDetail(indexPath.row)
+        cell.selectionStyle = .None
         return cell
         }
         else if indexPath.section == 1
@@ -135,7 +137,7 @@ class PLTeamMemberDetailsTableViewController: UITableViewController {
                 presentProjectTeamChatViewController()
             }
         }
-        
+       memberDetailsTableview.userInteractionEnabled = false
     }
     
   

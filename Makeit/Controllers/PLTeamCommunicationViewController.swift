@@ -32,6 +32,7 @@ class PLTeamCommunicationViewController: UIViewController,UITableViewDelegate,UI
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
+        teamListTableView.userInteractionEnabled = true
         PLDynamicEngine.animateView(self.footerView, withTransform: PLDynamicEngine.TransformHelix, andDuration: 1.0)
         if communicationType == 2{
             
@@ -137,6 +138,7 @@ class PLTeamCommunicationViewController: UIViewController,UITableViewDelegate,UI
             communicationViewModel.addTeamMember(indexPath.row)
             
         }
+        teamListTableView.userInteractionEnabled = false
     }
     
     

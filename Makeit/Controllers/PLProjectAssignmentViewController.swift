@@ -54,6 +54,7 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
     override func viewWillAppear(animated: Bool)
     {
        super.viewWillAppear(animated)
+       assigneeListTableView.userInteractionEnabled = true
        PLDynamicEngine.animateView(self.view, withTransform: PLDynamicEngine.TransformFlip, andDuration: 0.4)
         if let _ = assignmentViewModel, _ = assignmentViewModel.assigneeList{
             
@@ -455,6 +456,7 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
                 assignmentViewModel.addAssignee(indexPath.row)
             }
         }
+         assigneeListTableView.userInteractionEnabled = false
      }
     
     
