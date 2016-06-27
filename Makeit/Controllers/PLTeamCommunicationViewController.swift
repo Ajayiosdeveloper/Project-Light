@@ -32,7 +32,7 @@ class PLTeamCommunicationViewController: UIViewController,UITableViewDelegate,UI
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        teamListTableView.userInteractionEnabled = true
+       
         PLDynamicEngine.animateView(self.footerView, withTransform: PLDynamicEngine.TransformHelix, andDuration: 1.0)
         if communicationType == 2{
             
@@ -138,7 +138,7 @@ class PLTeamCommunicationViewController: UIViewController,UITableViewDelegate,UI
             communicationViewModel.addTeamMember(indexPath.row)
             
         }
-        teamListTableView.userInteractionEnabled = false
+       
     }
     
     
@@ -190,10 +190,9 @@ class PLTeamCommunicationViewController: UIViewController,UITableViewDelegate,UI
     func createNewChatGroupForProject()  {
         
         if communicationViewModel.isMembersSelectedForChatGroup(){
-
             
                 if communicationViewModel.isGroupWithSameMembersExist(chatGroups){
-                    
+                    print("True")
                     self.showAlertWithMessage("Group Members Existing", message: "Already one group existing with these all selected members")
                     //Showing alert for existing
                     
@@ -202,7 +201,8 @@ class PLTeamCommunicationViewController: UIViewController,UITableViewDelegate,UI
                     if #available(iOS 8.0, *) {
                             let alertViewController = UIAlertController.init(title: "Enter Group Name", message: nil, preferredStyle: .Alert)
                             let okAction = UIAlertAction.init(title: "Ok", style: .Default) {[weak self] (action) -> Void in
-                            
+                               if self!.textFld.text != ""
+                               {
                                self!.communicationViewModel.createProjectGroup(self!.textFld.text!){[weak self] resu, chatGroup,err in
                                         if resu
                                         {
@@ -210,10 +210,24 @@ class PLTeamCommunicationViewController: UIViewController,UITableViewDelegate,UI
                                             self?.navigationController?.popViewControllerAnimated(true)
                                         }
                                     }
-                                
-                                
+                                }
+                               else
+                               {
+                                if #available(iOS 8.0, *)
+                                {
+                                    let alertView = UIAlertController.init(title: "Group Name should not be empty", message: nil, preferredStyle: .Alert)
+                                    let okAction = UIAlertAction(title: "Ok", style: .Default , handler: nil)
+                                    alertView.addAction(okAction)
+                                    self?.presentViewController(alertView, animated: true, completion: nil)
+                                }
+                                else
+                                {
+                                    let alertView = UIAlertView(title: "Group Name should not be empty", message: "", delegate: self, cancelButtonTitle: nil, otherButtonTitles: "Ok", "Cancel")
+                                    alertView.alertViewStyle = .PlainTextInput
+                                    alertView.show()
+                                }
+                                }
                             }
-                            
                             let cancelAction = UIAlertAction(title:"Cancel", style: UIAlertActionStyle.Cancel, handler:nil)
                             alertViewController.addAction(okAction)
                             alertViewController.addAction(cancelAction)

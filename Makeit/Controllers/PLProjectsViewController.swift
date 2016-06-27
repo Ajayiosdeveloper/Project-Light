@@ -28,19 +28,17 @@ class PLProjectsViewController: UITableViewController,UIImagePickerControllerDel
     var editProjectButton:UIBarButtonItem!
     var selectedSection:Int!
     var fetchDataFlag = false
-    var customCell : UITableViewCell!
     
-  override func viewDidLoad() {
+    override func viewDidLoad()
+    {
         super.viewDidLoad()
-    print("Came here!")
-    
-    self.projectTableView.registerNib(UINib(nibName:"PLProjectViewCell", bundle:NSBundle.mainBundle()), forCellReuseIdentifier: "ProjectCell")
-         self.projectTableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "Cell")
-         self.navigationItem.title = "Projects"
+        self.projectTableView.registerNib(UINib(nibName:"PLProjectViewCell", bundle:NSBundle.mainBundle()), forCellReuseIdentifier: "ProjectCell")
+        self.projectTableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "Cell")
+        self.navigationItem.title = "Projects"
         addLogoutBarButtonItem()
         addNewProject()
-       projectViewModel = PLProjectsViewModel()
-       print(QBSession.currentSession().currentUser?.customData)
+        projectViewModel = PLProjectsViewModel()
+        print(QBSession.currentSession().currentUser?.customData)
     
        let user = QBUUser()
        user.ID = (QBSession.currentSession().currentUser?.ID)!
@@ -166,7 +164,6 @@ class PLProjectsViewController: UITableViewController,UIImagePickerControllerDel
             cell.createdAt.text = "Created At :" + " " + projectViewModel.projectCreatedDate(indexPath.row,section: indexPath.section)
             cell.createdBy.text = "Created by : You"
             cell.accessoryType = .DisclosureIndicator
-            customCell = cell
             return cell
             }
           if indexPath.section == 1{
@@ -252,8 +249,6 @@ class PLProjectsViewController: UITableViewController,UIImagePickerControllerDel
         }
         else
         {
-//        customCell.contentView.exclusiveTouch = true
-//        customCell.exclusiveTouch = true
         let selected = projectViewModel.didSelectRow(indexPath.row,section:indexPath.section) as PLProject
         PLSharedManager.manager.projectName = selected.name
         PLSharedManager.manager.projectId = selected.projectId!

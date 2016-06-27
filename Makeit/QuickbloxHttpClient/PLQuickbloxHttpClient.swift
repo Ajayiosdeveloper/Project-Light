@@ -106,12 +106,12 @@ class PLQuickbloxHttpClient
     //Creating a New Project in QuickBlox
     
     func createNewProjectWith(name:String,description:String,completion:(Bool,String,ServerErrorHandling?)->Void) {
-        
+        let userName = NSUserDefaults.standardUserDefaults().valueForKey("USER_NAME") as! String
         let customObject = QBCOCustomObject()
         customObject.className = "PLProject"
         customObject.fields?.setValue(name, forKey: "name")
         customObject.fields?.setValue(description, forKey: "description")
-        customObject.fields?.setValue(PLSharedManager.manager.userName, forKey: "projectCreatorName")
+        customObject.fields?.setValue(userName, forKey: "projectCreatorName")
         QBRequest.createObject(customObject, successBlock: { (response,object) in
             
             completion(true,object!.ID!,nil)

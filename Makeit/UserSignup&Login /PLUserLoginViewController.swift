@@ -42,6 +42,12 @@ class PLUserLoginViewController: UIViewController,UITextFieldDelegate {
         // Dispose of any resources that can be recreated.
     }
     
+    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        super.touchesBegan(touches, withEvent: event)
+        loginUserPasswordTextField.resignFirstResponder()
+        loginUserNameTextField.resignFirstResponder()
+    }
+    
     //MARK: UITextfield Delegate
     
     func textFieldShouldReturn(textField: UITextField) -> Bool {

@@ -76,7 +76,7 @@ class PLTeamMemberDetailsTableViewController: UITableViewController {
         let cell = tableView.dequeueReusableCellWithIdentifier("Cells", forIndexPath: indexPath) as! PLTeamMemberDetailsTableViewCell
         cell.assignmentTitle.text = teamMemberDetailViewModel.getAssignmentTitle(indexPath.row)
         cell.assignmentDetail.hidden = false
-        cell.statusField.hidden = false
+        cell.statusField.hidden = true
         cell.startTime.hidden = false
         cell.endTime.hidden = false
         cell.startTime.text = "Start: " + teamMemberDetailViewModel.getAssignmentStartDateWithTime(indexPath.row)
@@ -97,18 +97,21 @@ class PLTeamMemberDetailsTableViewController: UITableViewController {
         return UITableViewCell()
     }
     
-   override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-    
-     if section == 0{
+   override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String?
+   {
+     if section == 0
+     {
         return "Assignments"
-      }
-     else if section == 1{
+     }
+     else if section == 1
+     {
         return "Communicate"
-    }
+     }
         return ""
     }
     
-    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat
+    {
         if indexPath.section == 0
         {
         return 76
