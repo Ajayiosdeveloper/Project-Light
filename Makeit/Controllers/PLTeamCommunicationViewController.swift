@@ -24,7 +24,9 @@ class PLTeamCommunicationViewController: UIViewController,UITableViewDelegate,UI
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         QBRTCClient.initializeRTC()
+        
         self.teamListTableView.registerNib(UINib(nibName:"PLTableViewCell", bundle:NSBundle.mainBundle()), forCellReuseIdentifier: "Cell")
         teamListTableView.dataSource = self
         teamListTableView.delegate = self

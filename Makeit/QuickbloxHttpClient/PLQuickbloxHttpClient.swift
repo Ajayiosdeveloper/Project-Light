@@ -664,9 +664,8 @@ class PLQuickbloxHttpClient
         let searchString = "****\(PLSharedManager.manager.projectId)"
         
         let extendedRequest = ["name[ctn]" : searchString]
-
-       
-       let page = QBResponsePage(limit: 20, skip: 0)
+        
+        let page = QBResponsePage(limit: 20, skip: 0)
         
         QBRequest.dialogsForPage(page, extendedRequest:extendedRequest, successBlock: {[weak self] (response: QBResponse, dialogs: [QBChatDialog]?, dialogsUsersIDs: Set<NSNumber>?, page: QBResponsePage?) -> Void in
             

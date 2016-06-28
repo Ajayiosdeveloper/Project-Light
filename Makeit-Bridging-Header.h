@@ -9,6 +9,8 @@
 
 #import <Quickblox/Quickblox.h>
 #import <QuickbloxWebRTC/QuickbloxWebRTC.h>
+#import <SystemConfiguration/SystemConfiguration.h>
+#import <MobileCoreServices/MobileCoreServices.h>
 #import "Reachability.h"
 #import "SVProgressHUD.h"
 #import "WYPopoverController.h"
