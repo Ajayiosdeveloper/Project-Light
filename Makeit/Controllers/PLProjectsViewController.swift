@@ -49,6 +49,7 @@ class PLProjectsViewController: UITableViewController,UIImagePickerControllerDel
             print("Success in connection")
          }
       }
+    
     }
 
     override func viewWillAppear(animated: Bool) {

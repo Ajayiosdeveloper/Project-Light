@@ -112,6 +112,20 @@ class PLTeamCommunicationViewModel: NSObject {
         return false
     }
     
+    func selectedMembersUserIdsForConference()->[UInt]{
+        
+        var membersIds = [UInt]()
+        
+        
+        for member in selectedTeamMembers
+        {
+            membersIds.append(member.memberUserId)
+            
+        }
+
+        return membersIds
+    }
+    
    
     func createProjectGroup(name:String,completion:(Bool,PLChatGroup?,ServerErrorHandling?)->Void){
         

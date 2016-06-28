@@ -24,6 +24,7 @@ class PLTeamCommunicationViewController: UIViewController,UITableViewDelegate,UI
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        QBRTCClient.initializeRTC()
         self.teamListTableView.registerNib(UINib(nibName:"PLTableViewCell", bundle:NSBundle.mainBundle()), forCellReuseIdentifier: "Cell")
         teamListTableView.dataSource = self
         teamListTableView.delegate = self
@@ -284,23 +285,24 @@ class PLTeamCommunicationViewController: UIViewController,UITableViewDelegate,UI
     {
             if communicationType == 0{
             
-           // self.callWithConferenceType(.Audio)
+            self.callWithConferenceType(.Audio)
         }
         else if communicationType == 1{
             
-            //self.callWithConferenceType(.Video)
+            self.callWithConferenceType(.Video)
         }
         
     }
     
-   /* func callWithConferenceType(type:QBRTCConferenceType){
+    func callWithConferenceType(type:QBRTCConferenceType){
         
-        if  communicationViewModel.isAnymemberSelected(){
+        if  communicationViewModel.isMembersSelectedForChatGroup(){
             
         QBRTCClient.initializeRTC()
         QBRTCClient.instance().addDelegate(self)
         let opponentsIds =  communicationViewModel.selectedMembersUserIdsForConference()
         let session = QBRTCClient.instance().createNewSessionWithOpponents(opponentsIds, withConferenceType: type)
+            QBRTCConfig.setAnswerTimeInterval(60)
             if (session != nil){
                currentSession = session
                currentSession.startCall(nil)
@@ -341,7 +343,7 @@ class PLTeamCommunicationViewController: UIViewController,UITableViewDelegate,UI
         
         print("Rejected By User \(userID)")
         self.currentSession.rejectCall(userInfo)
-    }*/
+    }
     
        deinit{
         QBRTCClient.deinitializeRTC()

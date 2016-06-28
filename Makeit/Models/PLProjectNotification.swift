@@ -34,18 +34,7 @@ class PLProjectNotification: NSObject {
                 
                 print(err)
         }
-        
-        
-//    
-//    QBRequest.sendPushWithText(message, toUsers:String(member), successBlock: { (_, _) in
-//        
-//        print("Push sent succesfully")
-//        
-//    }) { (error) in
-//        
-//        print("Error occured")
-//        print(error)
-//    }
+
     
     }
     
@@ -76,16 +65,7 @@ class PLProjectNotification: NSObject {
             print(err)
         }
 
-    
-//    QBRequest.sendPushWithText(message, toUsers:String(member), successBlock: { (_, _) in
-//        
-//        print("Push sent succesfully")
-//        
-//        }) { (error) in
-//            
-//          print("Error occured")
-//          print(error)
-//    }
+
  }
     
    static func sendBirthdayPushNotification(member:UInt,birthdayCard:Int,message:String){

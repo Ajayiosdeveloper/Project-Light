@@ -6,7 +6,7 @@
 //  Copyright © 2016 Exilant Technologies. All rights reserved.
 //
 
-import UIKit
+import Foundation
 
 class PLProject: NSObject {
     
