@@ -876,7 +876,7 @@ class PLQuickbloxHttpClient
     }
     
     
-    func updateProfileOfAnUser(dateOfBirth:String?, companyName:String?, technology:String?, experience:String?, designation: String?,emailId : String?, completion:(Bool,ServerErrorHandling?)->Void)
+    func updateProfileOfAnUser(dateOfBirth:String?, companyName:String?, technology:String?, experience:String?, designation: String?,emailId : String?,phoneNumber: String? , completion:(Bool,ServerErrorHandling?)->Void)
     {
         
         let userId = QBSession.currentSession().currentUser?.ID
@@ -884,6 +884,7 @@ class PLQuickbloxHttpClient
         let customObject = QBCOCustomObject()
         customObject.className = "UserInfo"
         customObject.fields?.setValue(dateOfBirth, forKey: "dateOfBirth")
+        customObject.fields?.setValue(phoneNumber, forKey: "phoneNumber")
         customObject.fields?.setValue(companyName, forKey: "companyName")
         customObject.fields?.setValue(technology, forKey: "technology")
         customObject.fields?.setValue(experience, forKey: "experience")
@@ -909,6 +910,7 @@ class PLQuickbloxHttpClient
                 let objectToUpdate = objects!.first
                 
                 objectToUpdate!.fields?.setValue(dateOfBirth, forKey: "dateOfBirth")
+                objectToUpdate!.fields?.setValue(phoneNumber, forKey: "phoneNumber")
                 objectToUpdate!.fields?.setValue(companyName, forKey: "companyName")
                 objectToUpdate!.fields?.setValue(technology, forKey: "technology")
                 objectToUpdate!.fields?.setValue(experience, forKey: "experience")
@@ -920,8 +922,7 @@ class PLQuickbloxHttpClient
                 }) { (res) in
                     completion(false,self.handleErrors(res))
                 }
-                
-            }
+           }
             
         }) { (_) in
             
@@ -947,6 +948,7 @@ class PLQuickbloxHttpClient
                 var infoDict = [String:AnyObject]()
                 infoDict["dateOfBirth"] = objectToUpdate?.fields?.valueForKey("dateOfBirth")
                 infoDict["experience"] = objectToUpdate?.fields?.valueForKey("experience")
+                infoDict["phoneNumber"] = objectToUpdate?.fields?.valueForKey("phoneNumber")
                 infoDict["companyName"] = objectToUpdate?.fields?.valueForKey("companyName")
                 infoDict["technology"] = objectToUpdate?.fields?.valueForKey("technology")
                 infoDict["designation"] = objectToUpdate?.fields?.valueForKey("designation")
@@ -973,8 +975,6 @@ class PLQuickbloxHttpClient
         }
         
     }
-    
-    
     
     func countOfTodayCommitments(completion:(UInt,ServerErrorHandling?)->Void){
         
