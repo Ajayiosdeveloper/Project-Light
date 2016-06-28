@@ -54,7 +54,12 @@ class PLUserSignUpViewController: UIViewController,UITextFieldDelegate
         return true
     }
     
-
+    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        signupUserNameTextField.resignFirstResponder()
+        signupUserPasswordTextField.resignFirstResponder()
+        signupUserConfirmPasswordTextField.resignFirstResponder()
+        emailIdField.resignFirstResponder()
+    }
     func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool
     {
         //Signup button enabling & disabling

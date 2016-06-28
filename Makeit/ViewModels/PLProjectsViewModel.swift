@@ -107,7 +107,7 @@ class PLProjectsViewModel: NSObject {
         return contributingProjectList.count
     }
     
-    func ProjectTitle(row : NSInteger) -> String { //change indexpath variable name
+    func ProjectTitle(row : NSInteger) -> String {
         
         let project = createdProjectList[row]
         
@@ -120,7 +120,7 @@ class PLProjectsViewModel: NSObject {
         
     }
     
-    func subTitle(row: NSInteger) -> String { //change indexpath variable name
+    func subTitle(row: NSInteger) -> String {
         
         let project = createdProjectList[row]
         
@@ -131,7 +131,7 @@ class PLProjectsViewModel: NSObject {
         return ""
     }
     
-    func projectCreatedDate(row:Int, section:Int)->String{ //rename the method
+    func projectCreatedDate(row:Int, section:Int)->String{
         
         if section == 0{
             let project = createdProjectList[row]
@@ -156,7 +156,7 @@ class PLProjectsViewModel: NSObject {
     
     }
     
-    func projectCreator(row:Int) -> String{ //rename as projectCreator
+    func projectCreator(row:Int) -> String{
         
         let project = contributingProjectList[row]
         return "Created by : \(project.createdByName)"

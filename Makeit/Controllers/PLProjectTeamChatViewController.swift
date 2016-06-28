@@ -32,6 +32,7 @@ class PLProjectTeamChatViewController: UIViewController,UITableViewDelegate,UITa
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
+        chatGroupsListTableView.userInteractionEnabled = true
         print(projectTeamChatViewModel.projectChatGroupsList.count)
         self.chatGroupsListTableView.reloadData()
     }
@@ -124,6 +125,7 @@ class PLProjectTeamChatViewController: UIViewController,UITableViewDelegate,UITa
             }
         }
       }
+        chatGroupsListTableView.userInteractionEnabled = false
     }
     
     func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {

@@ -28,6 +28,10 @@ class PLResetPasswordViewController: UIViewController,UIAlertViewDelegate,UIText
         // Dispose of any resources that can be recreated.
     }
     
+    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        emailIdField.resignFirstResponder()
+    }
+    
     @IBAction func resetPassword(sender: UIButton)
     {
         PLDynamicEngine.animateButton(resetPasswordButton)

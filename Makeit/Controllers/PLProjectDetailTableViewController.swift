@@ -61,6 +61,7 @@ class PLProjectDetailTableViewController: UITableViewController,EKEventEditViewD
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
+        projectDetailsTableView.userInteractionEnabled = true
         if (fetchDataFlag == false)
         {
             fetchDataFromServer()
@@ -731,7 +732,7 @@ class PLProjectDetailTableViewController: UITableViewController,EKEventEditViewD
             //end of else part
         }
         
-        
+         projectDetailsTableView.userInteractionEnabled = false
     }
     
     func fetchDataFromServer()  {

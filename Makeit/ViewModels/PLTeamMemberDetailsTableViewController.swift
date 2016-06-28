@@ -29,6 +29,7 @@ class PLTeamMemberDetailsTableViewController: UITableViewController {
 
     override func viewWillAppear(animated: Bool) {
       super.viewWillAppear(animated)
+        memberDetailsTableview.userInteractionEnabled = true
       self.title = teamMemberDetailViewModel.getTeamMemberName()
         teamMemberDetailViewModel.getAssignmentsOfUserForProject(){[weak self] res,err in
             
@@ -75,13 +76,14 @@ class PLTeamMemberDetailsTableViewController: UITableViewController {
         let cell = tableView.dequeueReusableCellWithIdentifier("Cells", forIndexPath: indexPath) as! PLTeamMemberDetailsTableViewCell
         cell.assignmentTitle.text = teamMemberDetailViewModel.getAssignmentTitle(indexPath.row)
         cell.assignmentDetail.hidden = false
-        cell.statusField.hidden = false
+        cell.statusField.hidden = true
         cell.startTime.hidden = false
         cell.endTime.hidden = false
         cell.startTime.text = "Start: " + teamMemberDetailViewModel.getAssignmentStartDateWithTime(indexPath.row)
         cell.endTime.text =
             "End: " + teamMemberDetailViewModel.getAssignmentTargetDateWithTime(indexPath.row)
         cell.assignmentDetail.text = teamMemberDetailViewModel.getAssignmentDetail(indexPath.row)
+        cell.selectionStyle = .None
         return cell
         }
         else if indexPath.section == 1
@@ -95,18 +97,21 @@ class PLTeamMemberDetailsTableViewController: UITableViewController {
         return UITableViewCell()
     }
     
-   override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-    
-     if section == 0{
+   override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String?
+   {
+     if section == 0
+     {
         return "Assignments"
-      }
-     else if section == 1{
+     }
+     else if section == 1
+     {
         return "Communicate"
-    }
+     }
         return ""
     }
     
-    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat
+    {
         if indexPath.section == 0
         {
         return 76
@@ -135,7 +140,7 @@ class PLTeamMemberDetailsTableViewController: UITableViewController {
                 presentProjectTeamChatViewController()
             }
         }
-        
+       memberDetailsTableview.userInteractionEnabled = false
     }
     
   

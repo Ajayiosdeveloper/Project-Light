@@ -94,8 +94,8 @@ class PLTeamCommunicationViewModel: NSObject {
         {
             membersIds.append(member.memberUserId)
         }
-        
-        membersIds.append(PLSharedManager.manager.loggedInUserId)
+        let userId = NSUserDefaults.standardUserDefaults().valueForKey("USER_ID") as! UInt
+        membersIds.append(userId)
         
         let selectedMembersSet = NSSet(array:membersIds)
         

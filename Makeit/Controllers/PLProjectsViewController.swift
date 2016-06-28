@@ -28,17 +28,17 @@ class PLProjectsViewController: UITableViewController,UIImagePickerControllerDel
     var editProjectButton:UIBarButtonItem!
     var selectedSection:Int!
     var fetchDataFlag = false
-
-  override func viewDidLoad() {
+    
+    override func viewDidLoad()
+    {
         super.viewDidLoad()
-    print("Came here!")
-    self.projectTableView.registerNib(UINib(nibName:"PLProjectViewCell", bundle:NSBundle.mainBundle()), forCellReuseIdentifier: "ProjectCell")
-         self.projectTableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "Cell")
-         self.navigationItem.title = "Projects"
+        self.projectTableView.registerNib(UINib(nibName:"PLProjectViewCell", bundle:NSBundle.mainBundle()), forCellReuseIdentifier: "ProjectCell")
+        self.projectTableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "Cell")
+        self.navigationItem.title = "Projects"
         addLogoutBarButtonItem()
         addNewProject()
-       projectViewModel = PLProjectsViewModel()
-       print(QBSession.currentSession().currentUser?.customData)
+        projectViewModel = PLProjectsViewModel()
+        print(QBSession.currentSession().currentUser?.customData)
     
        let user = QBUUser()
        user.ID = (QBSession.currentSession().currentUser?.ID)!
@@ -54,6 +54,7 @@ class PLProjectsViewController: UITableViewController,UIImagePickerControllerDel
 
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
+        projectTableView.userInteractionEnabled = true
         if fetchDataFlag == false
         {
           projectViewModel.addObserver(self, forKeyPath:"createdProjectList", options: NSKeyValueObservingOptions.New, context:&observerContext)
@@ -237,12 +238,12 @@ class PLProjectsViewController: UITableViewController,UIImagePickerControllerDel
         return 40
     }
     
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath)
+    {
         fetchDataFlag = true
-        if indexPath.section == 2{
-      
-            
-            self.userProfileController = self.storyboard?.instantiateViewControllerWithIdentifier("PLUserProfileInfoTableViewController") as? PLUserProfileInfoTableViewController
+        if indexPath.section == 2
+        {
+                  self.userProfileController = self.storyboard?.instantiateViewControllerWithIdentifier("PLUserProfileInfoTableViewController") as? PLUserProfileInfoTableViewController
             self.userProfileController?.disablingBtn = true
             self.navigationController?.pushViewController(self.userProfileController!, animated: true)
             
@@ -272,7 +273,8 @@ class PLProjectsViewController: UITableViewController,UIImagePickerControllerDel
                 PLSharedManager.showAlertIn(self, error: err!, title: "Error occured while fetching project member list", message: err.debugDescription)
             }
         }
-     }
+    }
+        projectTableView.userInteractionEnabled = false
    }
     override func tableView(tableView: UITableView, commitEditingStyle editingStyle:
         UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
