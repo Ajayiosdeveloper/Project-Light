@@ -102,13 +102,8 @@ class PLUserProfileInfoTableViewController: UITableViewController,UITextFieldDel
     {
         dateOfBirth.resignFirstResponder()
         dateOfBirth.text = NSDateFormatter.localizedStringFromDate(dobPicker.date, dateStyle: NSDateFormatterStyle.MediumStyle, timeStyle: NSDateFormatterStyle.NoStyle)
-
     }
    
-    func textFieldDidEndEditing(textField: UITextField) {
-        self.validatePhoneNumber()
-    }
-    
     func validatePhoneNumber() -> Bool
     {
         if phoneNumber.text == ""
@@ -159,6 +154,21 @@ class PLUserProfileInfoTableViewController: UITableViewController,UITextFieldDel
             }
             return false
         }
+        return true
+    }
+    
+    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        phoneNumber.resignFirstResponder()
+        dateOfBirth.resignFirstResponder()
+        emailId.resignFirstResponder()
+        companyName.resignFirstResponder()
+        designation.resignFirstResponder()
+        experience.resignFirstResponder()
+        technology.resignFirstResponder()
+    }
+    
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        validatePhoneNumber()
         return true
     }
     
