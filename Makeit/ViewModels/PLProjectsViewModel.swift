@@ -463,7 +463,23 @@ class PLProjectsViewModel: NSObject {
                     member.memberUserId = each.fields?.objectForKey("member_User_Id") as! UInt
                     member.profilePicture = each.fields?.objectForKey("avatar") as! String
                     member.birthdayDate = each.fields?.objectForKey("birthday") as! Int
-                    birthdaysOfMembers.append(member)
+                    
+                    QBRequest.userWithID(member.memberUserId, successBlock: { (_, user) in
+                        
+                        if let _ = user?.facebookID
+                        {
+                            print("The phone number is \(user?.facebookID)")
+                            member.phoneNumber = user!.facebookID!
+                        }
+                        
+                       
+                       
+                        }, errorBlock: { (_) in
+                            
+                    })
+                    
+                     birthdaysOfMembers.append(member)
+                    
                 }
                 
                 var uniqueArray = [PLTeamMember]()

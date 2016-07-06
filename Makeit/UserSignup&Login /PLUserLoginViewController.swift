@@ -43,7 +43,6 @@ class PLUserLoginViewController: UIViewController,UITextFieldDelegate {
     }
     
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
-        super.touchesBegan(touches, withEvent: event)
         loginUserPasswordTextField.resignFirstResponder()
         loginUserNameTextField.resignFirstResponder()
     }
@@ -134,13 +133,13 @@ class PLUserLoginViewController: UIViewController,UITextFieldDelegate {
         userAccountViewModel.removeObserver(self,forKeyPath:KeyPath)
     }
     
-    func presentProjectsViewController(){
-        
-        if (projectsViewController == nil)
-        {
-                sideBarRootViewController = self.storyboard?.instantiateViewControllerWithIdentifier("PLSidebarRootViewController") as! PLSidebarRootViewController
-        }
-        self.presentViewController(sideBarRootViewController, animated: true, completion:nil)
+    func presentProjectsViewController()
+    {
+      if (projectsViewController == nil)
+      {
+        sideBarRootViewController = self.storyboard?.instantiateViewControllerWithIdentifier("PLSidebarRootViewController") as! PLSidebarRootViewController
+      }
+       self.presentViewController(sideBarRootViewController, animated: true, completion:nil)
     }
     
     func clearTextfields(){

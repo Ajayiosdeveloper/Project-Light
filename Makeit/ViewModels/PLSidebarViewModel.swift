@@ -265,7 +265,7 @@ class PLSidebarViewModel: NSObject {
         }
         else{
             
-            qbClient.downloadTeamMemberAvatar(avatar){result,err in
+            qbClient.downloadTeamMemberProfilePicture(avatar){result,err in
                 
                 if result != nil{
                     

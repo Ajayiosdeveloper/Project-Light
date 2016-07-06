@@ -27,6 +27,15 @@ class PLUserProfileInfoViewModel: NSObject {
            qbClient.saveUserBirthday(UInt(birthdayInterval))
         }
         
+        if let _ = phoneNumber
+        {
+            let x = UInt(phoneNumber!)
+            if let _ = x
+            {
+                qbClient.saveUserPhoneNumber(x!)
+            }
+        }
+        
         qbClient.updateProfileOfAnUser(targetDateString, companyName: companyName, technology: technology, experience:experience, designation: designation, emailId: emailId, phoneNumber: phoneNumber){ result,err in
             if result
             {

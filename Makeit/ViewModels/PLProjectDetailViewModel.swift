@@ -98,7 +98,7 @@ class PLProjectDetailViewModel: NSObject {
         }
         else{
             
-            qbClient.downloadTeamMemberAvatar(avatar){result,error in
+            qbClient.downloadTeamMemberProfilePicture(avatar){result,error in
                 
                 if result != nil{
                     

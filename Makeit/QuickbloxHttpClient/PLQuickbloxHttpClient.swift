@@ -538,7 +538,7 @@ class PLQuickbloxHttpClient
     }
     
     
-    func downloadTeamMemberAvatar(avatarFileId:String,completion:(UIImage?,ServerErrorHandling?)->Void){
+    func downloadTeamMemberProfilePicture(avatarFileId:String,completion:(UIImage?,ServerErrorHandling?)->Void){
         
         let id = UInt(avatarFileId)
         
@@ -1181,6 +1181,18 @@ class PLQuickbloxHttpClient
         }
     }
     
+    func saveUserPhoneNumber(interval:UInt){
+        
+        let user = QBUpdateUserParameters()
+        user.facebookID = String(interval)
+        QBRequest.updateCurrentUser(user, successBlock: { (_, _) in
+            
+            // success
+            
+        }) { (_) in   // error response
+            
+        }
+    }
     
     func updateAssigmentStatus(id:String?,status:Int,completion:(Bool, ServerErrorHandling?)->Void){
         

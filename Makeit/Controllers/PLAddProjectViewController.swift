@@ -133,7 +133,7 @@ class PLAddProjectViewController: UIViewController,UISearchBarDelegate,UITextFie
             self.presentViewController(alertController, animated:true, completion:nil)
         }
         else{
-            let alert = UIAlertView(title: title, message: message, delegate:self, cancelButtonTitle:nil, otherButtonTitles:"Ok") as UIAlertView
+            let alert = UIAlertView(title: title, message: message, delegate:self, cancelButtonTitle:nil, otherButtonTitles:"Ok") 
             alert.show()
         }
         

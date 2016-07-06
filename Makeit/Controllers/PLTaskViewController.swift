@@ -16,7 +16,7 @@ class PLTaskViewController: UIViewController,UITableViewDelegate,UITableViewData
     var sidebarViewModel:PLSidebarViewModel!
     var selectedType : Int!
     var birthdayRange : Int!
-    
+  
     override func viewDidLoad() {
         super.viewDidLoad()
         print("loaded")
@@ -223,7 +223,10 @@ class PLTaskViewController: UIViewController,UITableViewDelegate,UITableViewData
         PLDynamicEngine.animateCell(cell, withTransform: PLDynamicEngine.TransformWave, andDuration:0.5)
     }
     
-    func makeCall(sender:UIButton){
+    func makeCall(sender:UIButton)
+    {
+        let member = PLTeamMember(name: "", id: 0)
+        print(member.phoneNumber)
         let callUrl = NSURL(string:"telprompt://8904867753")
         if UIApplication.sharedApplication().canOpenURL(callUrl!){
             
@@ -233,8 +236,8 @@ class PLTaskViewController: UIViewController,UITableViewDelegate,UITableViewData
         }
     }
     
-    func sendMessage(sender:UIButton){
-        
+    func sendMessage(sender:UIButton)
+    {
         let message = NSURL(string:"sms://8904867753")
         if UIApplication.sharedApplication().canOpenURL(message!){
             

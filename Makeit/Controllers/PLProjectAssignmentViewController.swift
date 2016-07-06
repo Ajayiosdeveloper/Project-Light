@@ -9,8 +9,8 @@
 import UIKit
 import Quickblox
 
-class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,UITableViewDelegate,DataTransform {
-
+class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,UITableViewDelegate,DataTransform,UIAlertViewDelegate
+{
     @IBOutlet var completeStatusLabel: UILabel!
     @IBOutlet var assignmentStatusSlider: UISlider!
     @IBOutlet var assignmentNameTextFiled: UITextField!
@@ -33,6 +33,8 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
     var headerColor = UIColor(colorLiteralRed: 89/255, green: 181/255, blue: 50/255, alpha: 1)
     var loggedInUserStatus = "0"
     var isSliderValueChanged = false
+    var cancelled : Bool = false
+    var membersRow : Int = 0
     
     override func viewDidLoad()
     {
@@ -572,7 +574,8 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
         if #available(iOS 8.0, *) {
             let alertController = UIAlertController(title:title, message:message, preferredStyle: UIAlertControllerStyle.Alert)
             let action = UIAlertAction(title:"Ok", style: UIAlertActionStyle.Default, handler: { (action) -> Void in
-                
+                self.cancelled = cancelNeeded
+                self.membersRow = memberRow
                 if cancelNeeded{
                     
                     if title.containsString("close"){
@@ -597,15 +600,26 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
             self.presentViewController(alertController, animated:true, completion:nil)
             
         } else {
-            let alert = UIAlertView(title: title, message: message, delegate:nil, cancelButtonTitle:nil, otherButtonTitles:"Ok") as UIAlertView
+            let alert = UIAlertView(title: title, message: message, delegate:self, cancelButtonTitle:"Cancel", otherButtonTitles:"Ok")
             alert.show()
             
             // Fallback on earlier versions
         }
-        
-        
     }
     
+    func alertView(alertView: UIAlertView, clickedButtonAtIndex buttonIndex: Int)
+    {
+        if cancelled
+        {
+           if title!.containsString("close"){
+                self.closeAssignmentForMemeber([membersRow])
+            }
+           else{
+               self.reopenAssignmentForMember([membersRow])
+            }
+        }
+    }
+
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
         
