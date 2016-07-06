@@ -71,7 +71,8 @@ class PLProjectAssignmentViewController: UIViewController,UITableViewDataSource,
                 assignmentStartDateTextField.text = assignmentViewModel.assignmentStartDate()
                 assignmenttargetDateTextField.text = assignmentViewModel.assignmentTargetDate()
                 assignmentDescriptionTextView.text = assignmentViewModel.assignmentDescription()
-             if PLSharedManager.manager.projectCreatedByUserId == PLSharedManager.manager.loggedInUserId{
+            // if PLSharedManager.manager.projectCreatedByUserId == PLSharedManager.manager.loggedInUserId{
+            if PLSharedManager.manager.projectCreatedByUserId == NSUserDefaults.standardUserDefaults().valueForKey("USER_ID") as! UInt {
                 completeStatusLabel.hidden = true
                 assignmentStatusSlider.hidden = true
              }else{

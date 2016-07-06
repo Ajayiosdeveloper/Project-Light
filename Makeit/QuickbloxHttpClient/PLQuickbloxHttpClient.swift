@@ -66,7 +66,7 @@ class PLQuickbloxHttpClient
             NSUserDefaults.standardUserDefaults().setBool(true, forKey: "isLoggedIn")
             PLSharedManager.manager.userName = name
             PLSharedManager.manager.userPassword = password
-            PLSharedManager.manager.loggedInUserId = (retrievedUser?.ID)!
+          //  PLSharedManager.manager.loggedInUserId = NSUserDefaults.standardUserDefaults().valueForKey("USER_ID") as! UInt
             self.registerForAPNS()
             completion(true,nil)
             SVProgressHUD.dismiss()
