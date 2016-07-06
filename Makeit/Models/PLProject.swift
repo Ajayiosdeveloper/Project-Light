@@ -39,6 +39,8 @@ class PLTeamMember: NSObject {
     var birthdayInterval:UInt = 0
     var profilePicture:String
     var birthdayDate = 0
+    var phoneNumber : String = ""
+    
     static var creatorDetails:[String:AnyObject]?
     
     init(name:String,id:UInt) {

@@ -218,7 +218,7 @@ class PLAddProjectViewModel: NSObject {
         }
         else{
             
-            quickBloxClient.downloadTeamMemberAvatar(avatar){result,err in
+            quickBloxClient.downloadTeamMemberProfilePicture(avatar){result,err in
                 
                 if result != nil{
                     

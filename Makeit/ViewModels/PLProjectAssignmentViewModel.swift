@@ -295,7 +295,7 @@ class PLProjectAssignmentViewModel: NSObject {
         }
         else{
             
-            qbClient.downloadTeamMemberAvatar(avatar)
+            qbClient.downloadTeamMemberProfilePicture(avatar)
             {  result,err in
                 
                 if result != nil{
