@@ -225,9 +225,10 @@ class PLTaskViewController: UIViewController,UITableViewDelegate,UITableViewData
     
     func makeCall(sender:UIButton)
     {
-        let member = PLTeamMember(name: "", id: 0)
-        print(member.phoneNumber)
-        let callUrl = NSURL(string:"telprompt://8904867753")
+        let phoneNumber = sidebarViewModel.getPhoneNumber(sender.tag)
+        print("phoneNumber")
+        print(phoneNumber)
+        let callUrl = NSURL(string:"telprompt://\(phoneNumber)")
         if UIApplication.sharedApplication().canOpenURL(callUrl!){
             
             UIApplication.sharedApplication().openURL(callUrl!)
@@ -238,7 +239,8 @@ class PLTaskViewController: UIViewController,UITableViewDelegate,UITableViewData
     
     func sendMessage(sender:UIButton)
     {
-        let message = NSURL(string:"sms://8904867753")
+        let phoneNumber = sidebarViewModel.getPhoneNumber(sender.tag)
+        let message = NSURL(string:"sms://\(phoneNumber)")
         if UIApplication.sharedApplication().canOpenURL(message!){
             
             UIApplication.sharedApplication().openURL(message!)
