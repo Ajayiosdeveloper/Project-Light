@@ -29,9 +29,6 @@ class PLChatDetailViewController: JSQMessagesViewController, UIActionSheetDelega
         
         super.viewDidLoad()
         QBChat.instance().addDelegate(self)
-        print("ome")
-        print(self.chatDetailViewModel.selectedChatGroup.name)
-        print(self.chatDetailViewModel.selectedChatGroup.chatGroupId)
         self.chatGroup = QBChatDialog(dialogID:self.chatDetailViewModel.selectedChatGroup.chatGroupId, type: QBChatDialogType.Group)
         self.chatGroup.occupantIDs = self.chatDetailViewModel.selectedChatGroup.opponents
         self.chatGroup.joinWithCompletionBlock { (err) in

@@ -12,8 +12,12 @@ import UIKit
 //import DigitsKit
 import Quickblox
 
+
+
+
+
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate,QBChatDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate,QBChatDelegate,QBRTCClientDelegate {
 
     var window: UIWindow?
     var reachability:Reachability!
@@ -23,6 +27,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate,QBChatDelegate {
     var projectViewModel:PLProjectsViewModel!
     var sideBarRootViewController:PLSidebarRootViewController!
     var storyBoard:UIStoryboard!
+    var dialingTimer:NSTimer!
+    var currentSession:QBRTCSession!
+    var player:AVAudioPlayer!
+ 
     
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
        
@@ -31,8 +39,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate,QBChatDelegate {
         QBSettings.setAuthKey(kAuthorizationKey)
         QBSettings.setAuthSecret(kAuthorizationSecret)
         QBSettings.setAccountKey(kAccountKey)
-        
         QBChat.instance().addDelegate(self)
+       
+        
+        //QBWebRTC Config
+        
+        QBRTCConfig.setAnswerTimeInterval(60.0)//60
+        QBRTCConfig.setDisconnectTimeInterval(30.0)//30
+        QBRTCConfig.setDialingTimeInterval(5.0)//5.0
+        let mediaConfig = QBRTCMediaStreamConfiguration.defaultConfiguration()
+        mediaConfig.audioCodec = QBRTCAudioCodec.CodeciLBC
+        QBRTCConfig.setMediaStreamConfiguration(mediaConfig)
+        QBRTCClient.initializeRTC()
+        QBRTCClient.instance().addDelegate(self)
         
         //Checking Newtwork Reachability and observing Newtork changes with observer
         
@@ -61,9 +80,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate,QBChatDelegate {
                     }, errorBlock: { (_) in
                 })
                 
-            }else{
-                
-                print("Not Logged In")
             }
         }
         
@@ -179,7 +195,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate,QBChatDelegate {
             
         }
         
-         print(userInfo)
+       
     }
     
     func chatRoomDidReceiveMessage(message: QBChatMessage, fromDialogID dialogID: String) {
@@ -205,10 +221,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate,QBChatDelegate {
     }
     
     func chatDidReceiveSystemMessage(message: QBChatMessage) {
-       print("chatDidReceiveSystemMessage")
-        print(message)
-       
+      
     }
+    
+
+
     
     func presentProjectDetailViewController(selectedProjectId:String,projectName:String){
     
@@ -218,7 +235,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate,QBChatDelegate {
     
     projectViewModel.getProjectMembersList(selectedProjectId){ resultedMembers,err in
         
-        print(resultedMembers)
+   
         
         if let _ = resultedMembers{
             var navController : UINavigationController!
@@ -238,7 +255,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate,QBChatDelegate {
         }
         else
         {
-            print("else exe")
+         
             navController = UINavigationController.init(rootViewController: self.projectDetail)
             self.window?.rootViewController = navController
 
@@ -248,6 +265,129 @@ class AppDelegate: UIResponder, UIApplicationDelegate,QBChatDelegate {
     
 }
     
+    
+    func didReceiveNewSession(session: QBRTCSession!, userInfo: [NSObject : AnyObject]!) {
+   
+        if self.currentSession != nil{
+      
+            var info = Dictionary<String,String>()
+            info["reject"] = "busy"
+            session.rejectCall(info)
+            return
+        }
+        self.currentSession = session
+        QBRTCSoundRouter.instance().initialize()
+        QBRTCSoundRouter.instance().setCurrentSoundRoute(QBRTCSoundRoute.Receiver)
+        setupIncomingcall()
+    }
+    
+    func session(session: QBRTCSession!, acceptedByUser userID: NSNumber!, userInfo: [NSObject : AnyObject]!) {
+        
+     }
+    
+    func session(session: QBRTCSession!, rejectedByUser userID: NSNumber!, userInfo: [NSObject : AnyObject]!) {
+        
+      
+    }
+    
+    func session(session: QBRTCSession!, startedConnectingToUser userID: NSNumber!) {
+        
+      
+    }
+    
+    func session(session: QBRTCSession!, connectionClosedForUser userID: NSNumber!) {
+      
+    }
+    
+    func session(session: QBRTCSession!, initializedLocalMediaStream mediaStream: QBRTCMediaStream!) {
+        
+        }
+    
+    
+    func sessionDidClose(session: QBRTCSession!) {
+        
+
+        player.stop()
+        self.currentSession = nil
+        
+    }
+    
+    func session(session: QBRTCSession!, updatedStatsReport report: QBRTCStatsReport!, forUserID userID: NSNumber!) {
+        
+        var result: String = ""
+        let systemStatsFormat: String = "(cpu)%ld%%\n"
+        result.appendContentsOf(String(format: systemStatsFormat, 50))
+        // Connection stats.
+        let connStatsFormat: String = "CN %@ms | %@->%@/%@ | (s)%@ | (r)%@\n"
+        result.appendContentsOf(String(format: connStatsFormat, report.connectionRoundTripTime, report.localCandidateType, report.remoteCandidateType, report.transportType, report.connectionSendBitrate, report.connectionReceivedBitrate))
+        // Audio send stats.
+        let audioSendFormat: String = "AS %@ | %@\n"
+        result.appendContentsOf(String(format: audioSendFormat, report.audioSendBitrate, report.audioSendCodec))
+        
+        // Audio receive stats.
+        let audioReceiveFormat: String = "AR %@ | %@ | %@ms | (expandrate)%@"
+        result.appendContentsOf(String(format: audioReceiveFormat, report.audioReceivedBitrate, report.audioReceivedCodec, report.audioReceivedCurrentDelay, report.audioReceivedExpandRate))
+        
+        
+    }
+
+ 
+    
+    
+    func setupIncomingcall(){
+        
+        startDialingTone()
+        let viewController = UIViewController.currentViewController()
+         self.showAlertWithMessage("\(PLSharedManager.manager.userName) is calling", message: "", controller:viewController)
+        
+    }
+    
+    func startDialingTone(){
+        
+        //JSQSystemSoundPlayer.jsq_playMessageSentSound()
+        
+        //QMSoundManager.playRingtoneSound()
+        
+        let soundFilePath: String = NSBundle.mainBundle().pathForResource("ringtone", ofType:"mp3")!
+        let soundFileURL: NSURL = NSURL.fileURLWithPath(soundFilePath)
+        player = try! AVAudioPlayer(contentsOfURL: soundFileURL)
+        player.numberOfLoops = -1
+        player.play()
+    }
+
+    func showAlertWithMessage(title:String,message:String,controller : UIViewController)
+    {
+        if #available(iOS 8.0, *) {
+            let alertController = UIAlertController(title:title, message:message, preferredStyle: UIAlertControllerStyle.Alert)
+            let accept = UIAlertAction(title:"Accept", style: UIAlertActionStyle.Default, handler: { (action) -> Void in
+                print("call accepted")
+                self.player.stop()
+                self.currentSession.acceptCall(nil)
+            })
+            
+            let reject = UIAlertAction(title:"Reject", style: UIAlertActionStyle.Default, handler: { (action) -> Void in
+                print("call rejected")
+                self.player.stop()
+                self.currentSession.rejectCall(nil)
+                
+            })
+            
+            alertController.addAction(accept)
+            alertController.addAction(reject)
+            controller.presentViewController(alertController, animated: true, completion: nil)
+            
+        } else {
+            
+         
+            
+//            let alert = UIAlertView(title: title, message: message, delegate:nil, cancelButtonTitle:"Ok", otherButtonTitles:"") as UIAlertView
+//            alert.show()
+    
+        }
+    }
+
 
 }
+
+
 

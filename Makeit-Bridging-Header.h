@@ -21,5 +21,7 @@
 #import "AFDropdownNotification.h"
 #import "Popup.h"
 #import "KAProgressLabel.h"
+#import "QMSoundManager.h"
+#import <mach/mach.h>
 
 

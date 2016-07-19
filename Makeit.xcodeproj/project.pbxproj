@@ -30,6 +30,7 @@
 		804889681CED90F800484284 /* PLTasksViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 804889661CED90F800484284 /* PLTasksViewCell.xib */; };
 		8049FF591CE9D25400FF24C5 /* PLSideBarTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8049FF581CE9D25400FF24C5 /* PLSideBarTableViewCell.swift */; };
 		804CDDF91CF029EF00DD7DD2 /* PLProjectNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 804CDDF81CF029EF00DD7DD2 /* PLProjectNotification.swift */; };
+		804DE47C1D378BD500D31A2F /* QMSoundManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 804DE47B1D378BD500D31A2F /* QMSoundManager.m */; };
 		805144401CE19E410000B1AF /* PLSidebarRootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8051443F1CE19E410000B1AF /* PLSidebarRootViewController.swift */; };
 		805144421CE19F640000B1AF /* PLSidebarMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 805144411CE19F640000B1AF /* PLSidebarMenuViewController.swift */; };
 		805144441CE1AB060000B1AF /* sideBar.png in Resources */ = {isa = PBXBuildFile; fileRef = 805144431CE1AB060000B1AF /* sideBar.png */; };
@@ -80,6 +81,7 @@
 		8073C8CE1CC737F400AE4CB6 /* PLDisplayMembersPopover.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8073C8CD1CC737F400AE4CB6 /* PLDisplayMembersPopover.swift */; };
 		8073C8D01CC744DE00AE4CB6 /* PLTeamMemberModelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8073C8CF1CC744DE00AE4CB6 /* PLTeamMemberModelView.swift */; };
 		8074F7371CE4423D00CAADB9 /* Popup.m in Sources */ = {isa = PBXBuildFile; fileRef = 8074F7361CE4423D00CAADB9 /* Popup.m */; };
+		8076F04C1D37536C00A37E79 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8076F04B1D37536C00A37E79 /* AudioToolbox.framework */; };
 		8078A46B1CC88BD1008AC4DD /* PLProjectDetailTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8078A46A1CC88BD1008AC4DD /* PLProjectDetailTableViewController.swift */; };
 		8078A46D1CC88C11008AC4DD /* PLProjectDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8078A46C1CC88C11008AC4DD /* PLProjectDetailViewModel.swift */; };
 		807FC87A1CCB47920094112E /* PLTeamMemberDetailsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 807FC8791CCB47920094112E /* PLTeamMemberDetailsTableViewController.swift */; };
@@ -168,6 +170,7 @@
 		80C61B9F1CDB64900022CAFA /* PLChatDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80C61B9E1CDB64900022CAFA /* PLChatDetailViewModel.swift */; };
 		80CED1231CFD9E0200809B37 /* KAProgressLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 80CED1201CFD9E0200809B37 /* KAProgressLabel.m */; };
 		80CED1241CFD9E0200809B37 /* TPPropertyAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = 80CED1221CFD9E0200809B37 /* TPPropertyAnimation.m */; };
+		80D29F171D379BCF00A081DA /* ringtone.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 80D29F161D379BCF00A081DA /* ringtone.mp3 */; };
 		80DE821D1CC0D87700D5017A /* PLUserSignupAndLoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80DE821C1CC0D87700D5017A /* PLUserSignupAndLoginViewModel.swift */; };
 		80E900261D0536A300C739F3 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 80E900251D0536A300C739F3 /* AVFoundation.framework */; };
 		80ED65A41CE09F4600C61090 /* AFDropdownNotification.m in Sources */ = {isa = PBXBuildFile; fileRef = 80ED65A31CE09F4600C61090 /* AFDropdownNotification.m */; };
@@ -240,6 +243,8 @@
 		804889661CED90F800484284 /* PLTasksViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PLTasksViewCell.xib; sourceTree = "<group>"; };
 		8049FF581CE9D25400FF24C5 /* PLSideBarTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLSideBarTableViewCell.swift; sourceTree = "<group>"; };
 		804CDDF81CF029EF00DD7DD2 /* PLProjectNotification.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLProjectNotification.swift; sourceTree = "<group>"; };
+		804DE47A1D378BD500D31A2F /* QMSoundManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QMSoundManager.h; sourceTree = "<group>"; };
+		804DE47B1D378BD500D31A2F /* QMSoundManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QMSoundManager.m; sourceTree = "<group>"; };
 		8051443F1CE19E410000B1AF /* PLSidebarRootViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLSidebarRootViewController.swift; sourceTree = "<group>"; };
 		805144411CE19F640000B1AF /* PLSidebarMenuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLSidebarMenuViewController.swift; sourceTree = "<group>"; };
 		805144431CE1AB060000B1AF /* sideBar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sideBar.png; sourceTree = "<group>"; };
@@ -314,6 +319,7 @@
 		8073C8CF1CC744DE00AE4CB6 /* PLTeamMemberModelView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLTeamMemberModelView.swift; sourceTree = "<group>"; };
 		8074F7351CE4423D00CAADB9 /* Popup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Popup.h; sourceTree = "<group>"; };
 		8074F7361CE4423D00CAADB9 /* Popup.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Popup.m; sourceTree = "<group>"; };
+		8076F04B1D37536C00A37E79 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		8078A46A1CC88BD1008AC4DD /* PLProjectDetailTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLProjectDetailTableViewController.swift; sourceTree = "<group>"; };
 		8078A46C1CC88C11008AC4DD /* PLProjectDetailViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLProjectDetailViewModel.swift; sourceTree = "<group>"; };
 		807FC8791CCB47920094112E /* PLTeamMemberDetailsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PLTeamMemberDetailsTableViewController.swift; path = ../ViewModels/PLTeamMemberDetailsTableViewController.swift; sourceTree = "<group>"; };
@@ -411,6 +417,7 @@
 		80CED1201CFD9E0200809B37 /* KAProgressLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KAProgressLabel.m; sourceTree = "<group>"; };
 		80CED1211CFD9E0200809B37 /* TPPropertyAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TPPropertyAnimation.h; sourceTree = "<group>"; };
 		80CED1221CFD9E0200809B37 /* TPPropertyAnimation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TPPropertyAnimation.m; sourceTree = "<group>"; };
+		80D29F161D379BCF00A081DA /* ringtone.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = ringtone.mp3; sourceTree = "<group>"; };
 		80DE821C1CC0D87700D5017A /* PLUserSignupAndLoginViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PLUserSignupAndLoginViewModel.swift; sourceTree = "<group>"; };
 		80E900251D0536A300C739F3 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		80ED65A21CE09F4600C61090 /* AFDropdownNotification.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFDropdownNotification.h; sourceTree = "<group>"; };
@@ -447,6 +454,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8076F04C1D37536C00A37E79 /* AudioToolbox.framework in Frameworks */,
 				80E900261D0536A300C739F3 /* AVFoundation.framework in Frameworks */,
 				9439811D1CE45603000B362E /* Social.framework in Frameworks */,
 				80C49EF11CDCB8FF0073B6E2 /* MapKit.framework in Frameworks */,
@@ -505,6 +513,7 @@
 		803E03EE1CBCC85600C59233 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				8076F04B1D37536C00A37E79 /* AudioToolbox.framework */,
 				80E900251D0536A300C739F3 /* AVFoundation.framework */,
 				9439811C1CE45603000B362E /* Social.framework */,
 				80C49EF01CDCB8FF0073B6E2 /* MapKit.framework */,
@@ -535,9 +544,19 @@
 			path = Makeit;
 			sourceTree = "<group>";
 		};
+		804DE4791D378BD500D31A2F /* QMSoundManager */ = {
+			isa = PBXGroup;
+			children = (
+				804DE47A1D378BD500D31A2F /* QMSoundManager.h */,
+				804DE47B1D378BD500D31A2F /* QMSoundManager.m */,
+			);
+			path = QMSoundManager;
+			sourceTree = "<group>";
+		};
 		806B1E0B1CD8A7070018B026 /* SupportingFiles */ = {
 			isa = PBXGroup;
 			children = (
+				80D29F161D379BCF00A081DA /* ringtone.mp3 */,
 				94971E5E1CFEEACD00AB310B /* birthday_1.png */,
 				94971E5F1CFEEACD00AB310B /* birthday_2.png */,
 				94971E601CFEEACD00AB310B /* birthday_3.png */,
@@ -627,6 +646,7 @@
 		806D4ADC1CC20FCD0054A9AF /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				804DE4791D378BD500D31A2F /* QMSoundManager */,
 				80CED11E1CFD9E0200809B37 /* KAProgressLabel */,
 				8074F7341CE4423D00CAADB9 /* PopupView */,
 				80711A791CE323A700473856 /* DLHamburguerMenu */,
@@ -1046,6 +1066,11 @@
 					809F96C61CBCC35000DD1FE9 = {
 						CreatedOnToolsVersion = 7.1;
 						DevelopmentTeam = 43L66PNJ7D;
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
+						};
 					};
 					809F96DA1CBCC35000DD1FE9 = {
 						CreatedOnToolsVersion = 7.1;
@@ -1124,6 +1149,7 @@
 				80C49FF11CDCBB500073B6E2 /* JSQMessagesAssets.bundle in Resources */,
 				807024901CD869A200DD8DE5 /* DigitsKitResources.bundle in Resources */,
 				80C49FFB1CDCBB500073B6E2 /* JSQMessagesViewController.xib in Resources */,
+				80D29F171D379BCF00A081DA /* ringtone.mp3 in Resources */,
 				80C4A0011CDCBB500073B6E2 /* Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1228,6 +1254,7 @@
 				806D4AD71CC1FF3C0054A9AF /* PLConstants.swift in Sources */,
 				806B1E3F1CD8AA080018B026 /* UIImage+MultiFormat.m in Sources */,
 				806D4AF61CC2607C0054A9AF /* PLProjectsViewModel.swift in Sources */,
+				804DE47C1D378BD500D31A2F /* QMSoundManager.m in Sources */,
 				806B1E391CD8AA080018B026 /* SDWebImageDownloader.m in Sources */,
 				809F96CB1CBCC35000DD1FE9 /* AppDelegate.swift in Sources */,
 				806B1E401CD8AA080018B026 /* UIImage+WebP.m in Sources */,

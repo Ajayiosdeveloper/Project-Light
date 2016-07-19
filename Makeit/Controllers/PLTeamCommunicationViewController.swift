@@ -9,6 +9,7 @@
 import UIKit
 import Quickblox
 
+
 class PLTeamCommunicationViewController: UIViewController,UITableViewDelegate,UITableViewDataSource,QBRTCClientDelegate,UIAlertViewDelegate
 {
     var communicationType:Int!
@@ -17,6 +18,8 @@ class PLTeamCommunicationViewController: UIViewController,UITableViewDelegate,UI
     var projectDetailViewModel:PLProjectDetailViewModel!
     var teamChatViewController:PLProjectTeamChatViewController!
     var chatGroups:[PLChatGroup]!
+    var dialingTimer:NSTimer!
+    var callingTimer:NSTimer!
     var textFld = UITextField()
     var footerView : UIView!
     
@@ -25,7 +28,7 @@ class PLTeamCommunicationViewController: UIViewController,UITableViewDelegate,UI
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        QBRTCClient.initializeRTC()
+        QBRTCClient.instance().addDelegate(self)
         
         self.teamListTableView.registerNib(UINib(nibName:"PLTableViewCell", bundle:NSBundle.mainBundle()), forCellReuseIdentifier: "Cell")
         teamListTableView.dataSource = self
@@ -316,14 +319,40 @@ class PLTeamCommunicationViewController: UIViewController,UITableViewDelegate,UI
         
         if  communicationViewModel.isMembersSelectedForChatGroup(){
             
-        QBRTCClient.initializeRTC()
-        QBRTCClient.instance().addDelegate(self)
         let opponentsIds =  communicationViewModel.selectedMembersUserIdsForConference()
         let session = QBRTCClient.instance().createNewSessionWithOpponents(opponentsIds, withConferenceType: type)
-            QBRTCConfig.setAnswerTimeInterval(60)
-            if (session != nil){
+          
+            if ((session) != nil){
                currentSession = session
-               currentSession.startCall(nil)
+                let userInfo = ["Name": PLSharedManager.manager.userName]
+                QBRTCSoundRouter.instance().initialize()
+                QBRTCSoundRouter.instance().setCurrentSoundRoute(QBRTCSoundRoute.Receiver)
+                
+                 currentSession.startCall(userInfo)
+                
+                let conferenceMessage = "\(PLSharedManager.manager.userName) is calling you to join \(PLSharedManager.manager.projectName) conference"
+                var users = ""
+                
+                for user in opponentsIds{
+                    
+                    users.appendContentsOf(String(user))
+                    users.appendContentsOf(",")
+                }
+                
+                users = users.substringToIndex(users.endIndex.predecessor())
+                
+                print("the users string is \(users)")
+               
+                QBRequest.sendPushWithText(conferenceMessage, toUsers:users, successBlock: { (_, _) in
+                
+                print("Push went succesfully")
+                
+                }, errorBlock: { (_) in
+                    
+               })
+                
+                
+                
             }
             else{
                 
@@ -342,29 +371,80 @@ class PLTeamCommunicationViewController: UIViewController,UITableViewDelegate,UI
     func didReceiveNewSession(session: QBRTCSession!, userInfo: [NSObject : AnyObject]!) {
         
         if self.currentSession != nil{
-            
-           var info = Dictionary<String,String>()
-           info["Key"] = "Busy"
-           session.rejectCall(info)
+           print("Session is existing")
+           session.rejectCall(nil)
            return
         }
         self.currentSession = session
+       // setupIncomingcall()
     }
     
     func session(session: QBRTCSession!, acceptedByUser userID: NSNumber!, userInfo: [NSObject : AnyObject]!) {
         
-        print("Accepted by User \(userID)")
-        self.currentSession.acceptCall(userInfo)
-    }
+        print("Accepted by User")
+        
+
+        
+       }
     
     func session(session: QBRTCSession!, rejectedByUser userID: NSNumber!, userInfo: [NSObject : AnyObject]!) {
         
-        print("Rejected By User \(userID)")
-        self.currentSession.rejectCall(userInfo)
+        print("Rejected By User")
+        
+        if session.opponentsIDs.count == 1{
+            self.currentSession = nil
+        }
     }
     
-       deinit{
-        QBRTCClient.deinitializeRTC()
+    func session(session: QBRTCSession!, updatedStatsReport report: QBRTCStatsReport!, forUserID userID: NSNumber!) {
+        
+        var result: String = ""
+        let systemStatsFormat: String = "(cpu)%ld%%\n"
+        result.appendContentsOf(String(format: systemStatsFormat, 50))
+        // Connection stats.
+        let connStatsFormat: String = "CN %@ms | %@->%@/%@ | (s)%@ | (r)%@\n"
+        result.appendContentsOf(String(format: connStatsFormat, report.connectionRoundTripTime, report.localCandidateType, report.remoteCandidateType, report.transportType, report.connectionSendBitrate, report.connectionReceivedBitrate))
+        // Audio send stats.
+        let audioSendFormat: String = "AS %@ | %@\n"
+        result.appendContentsOf(String(format: audioSendFormat, report.audioSendBitrate, report.audioSendCodec))
+        
+        // Audio receive stats.
+        let audioReceiveFormat: String = "AR %@ | %@ | %@ms | (expandrate)%@"
+       result.appendContentsOf(String(format: audioReceiveFormat, report.audioReceivedBitrate, report.audioReceivedCodec, report.audioReceivedCurrentDelay, report.audioReceivedExpandRate))
+
+        
     }
+    
+    
+    func session(session: QBRTCSession!, startedConnectingToUser userID: NSNumber!) {
+        
+        print("Started connecting to user")
+    }
+    
+    func session(session: QBRTCSession!, connectionClosedForUser userID: NSNumber!) {
+        print("connection closed for user")
+    }
+    
+    
+   func sessionDidClose(session: QBRTCSession!) {
+        
+        self.currentSession = nil
+    }
+    
+    
+    func setupIncomingcall(){
+        
+        
+    }
+    
+    func startDialingTone(){
+       
+    }
+    
+    func startCallingTone(){
+        
+      
+    }
+    
 
 }

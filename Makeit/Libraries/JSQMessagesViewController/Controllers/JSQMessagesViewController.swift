@@ -193,7 +193,7 @@ public class JSQMessagesViewController: UIViewController, JSQMessagesCollectionV
         
         super.didReceiveMemoryWarning()
         
-        //print("MEMORY WARNING: \(__FUNCTION__)")
+      
     }
     
     // MARK: - View rotation
@@ -321,17 +321,13 @@ public class JSQMessagesViewController: UIViewController, JSQMessagesCollectionV
     // MARK: - JSQMessages collection view data source
     
     public func collectionView(collectionView: JSQMessagesCollectionView, messageDataForItemAtIndexPath indexPath: NSIndexPath) -> JSQMessageData? {
-        
-       // print("ERROR: required method not implemented: \(__FUNCTION__)")
-        //abort()
+    
         
        return nil
     }
     
     public func collectionView(collectionView: JSQMessagesCollectionView, messageBubbleImageDataForItemAtIndexPath indexPath: NSIndexPath) -> JSQMessageBubbleImageDataSource? {
-        
-        //print("ERROR: required method not implemented: \(__FUNCTION__)")
-       // abort()
+     
         
         return nil
     }
