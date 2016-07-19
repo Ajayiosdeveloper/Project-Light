@@ -424,4 +424,10 @@ class PLSidebarViewModel: NSObject {
         return targetTime
     }
 
+    func getPhoneNumber(row:Int) -> String
+    {
+        let pNumber = teamMembersForBirthday[row]
+        return pNumber.phoneNumber
+    }
+    
  }

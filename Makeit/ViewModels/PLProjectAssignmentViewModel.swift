@@ -243,7 +243,9 @@ class PLProjectAssignmentViewModel: NSObject {
         
         if let _ = selectedAssignment{
             
-            if selectedAssignment!.creatorId == PLSharedManager.manager.loggedInUserId{
+            //if selectedAssignment!.creatorId == PLSharedManager.manager.loggedInUserId{
+            if selectedAssignment!.creatorId == NSUserDefaults.standardUserDefaults().valueForKey("USER_ID") as! UInt
+            {
                 return true
             }
         }

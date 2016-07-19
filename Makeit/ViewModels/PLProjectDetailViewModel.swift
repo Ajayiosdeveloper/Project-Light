@@ -211,9 +211,11 @@ class PLProjectDetailViewModel: NSObject {
     {
         var isUserProjectCreator = false
         
-        if PLSharedManager.manager.projectCreatedByUserId == PLSharedManager.manager.loggedInUserId{
-            isUserProjectCreator = true
-        }
+       // if PLSharedManager.manager.projectCreatedByUserId == PLSharedManager.manager.loggedInUserId{
+            if PLSharedManager.manager.projectCreatedByUserId == NSUserDefaults.standardUserDefaults().valueForKey("USER_ID") as! UInt
+             {
+                isUserProjectCreator = true
+             }
         
         qbClient.fetchAssignmentsForProject(id,isCreator:isUserProjectCreator){res,assignments,error in
             
